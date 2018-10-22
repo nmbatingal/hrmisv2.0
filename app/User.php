@@ -10,6 +10,12 @@ class User extends Authenticatable
     use Notifiable;
     use Uuids;
 
+    protected $table         = "users";
+    public    $incrementing  = false;
+    protected $casts = [
+        'isactive' => 'boolean',
+    ];
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -33,4 +39,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function verifyUser()
+    {
+        return $this->belongsTo('App\VerifyUser', 'user_id', 'id');
+    }
 }

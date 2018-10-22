@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
 use App\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\AuthActivate\ActivationService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -29,15 +33,31 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $activationService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ActivationService $activationService)
     {
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => 'logout']);
+        $this->activationService = $activationService;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        $this->activationService->sendActivationMail($user);
+        return redirect('/login')->with('status', 'We sent you an activation code. Check your email.');
     }
 
     /**
@@ -65,12 +85,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        return $user;
     }
 }

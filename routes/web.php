@@ -19,6 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/reg', function(Request $request) {
-	return dd($request);
-})->name('reg');
+Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
