@@ -175,7 +175,7 @@
                         </div>
 
                         <!-- FORMAL EDUCATION INFORMATION -->
-                        <h3 class="box-title">Remarks</h3>
+                        <h3 class="box-title">Other Info</h3>
                         <hr class="m-t-0 m-b-40">
                         <!--/row-->
                         <!-- DYNAMIC FORM FIELD -->
@@ -183,31 +183,39 @@
                         <!-- END OF DYNAMIC FORM FIELD -->
                         <!--/row-->
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Gender</label>
-                                    <div class="col-md-9">
-                                        <select class="form-control custom-select" name="sex">
-                                            <option value="1">Male</option>
-                                            <option value="2">Female</option>
-                                        </select>
-                                        <small class="form-control-feedback"> Select your gender. </small> 
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-3">Hire Status</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control custom-select" name="hireStatus">
+                                                    <option value="0">Not yet hired</option>
+                                                    <option value="1">Hired</option>
+                                                </select>
+                                                <small class="form-control-feedback"> Select applicant hiring status. </small> 
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Date of Birth</label>
-                                    <div class="col-md-9">
-                                        <input type="date" class="form-control" name="birthday" placeholder="dd/mm/yyyy" required>
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-3">Interview Status</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control custom-select" name="interviewStatus">
+                                                    <option value="0">Not yet interviewed</option>
+                                                    <option value="1">Interviewed</option>
+                                                </select>
+                                                <small class="form-control-feedback"> Select your gender. </small> 
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Age</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="age" placeholder="age">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-3">Remarks</label>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" rows="5" name="remarks"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -217,12 +225,10 @@
                     <hr>
                     <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-offset-3 col-md-9">
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                        <button type="button" class="btn btn-inverse">Cancel</button>
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="float-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button type="button" class="btn btn-inverse">Cancel</button>
                                 </div>
                             </div>
                         </div>
