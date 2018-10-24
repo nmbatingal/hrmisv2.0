@@ -18,5 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
+
+Route::get('/hr/dashboard', 'Applicants\ApplicantsController@applicantsDashboard')->name('applicants.dashboard');
+Route::get('/hr/applicants/list', 'Applicants\ApplicantsController@listOfApplicants')->name('applicants.list');
+Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
