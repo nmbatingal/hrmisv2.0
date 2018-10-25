@@ -4,13 +4,14 @@ namespace App\Models\Applicants;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicantsEligibility extends Model
+class ApplicantsExperience extends Model
 {
     protected $table = "applicants_experiences";
     protected $dates = [
         'created_at', 
         'updated_at', 
-        'exam_date',
+        'start_date', 
+        'end_date'
     ];
     
     /**
@@ -19,10 +20,11 @@ class ApplicantsEligibility extends Model
      * @var array
      */
     protected $fillable = [
-        'licenseTitle',
-        'licenseNumber',
-        'rating',
-        'exam_date',
+        'agency',
+        'position',
+        'salaryGrade',
+        'start_date',
+        'end_date',
         'applicant_id',
     ];
 

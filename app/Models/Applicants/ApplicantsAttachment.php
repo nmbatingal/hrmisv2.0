@@ -4,14 +4,9 @@ namespace App\Models\Applicants;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicantsEligibility extends Model
+class ApplicantsAttachment extends Model
 {
-    protected $table = "applicants_experiences";
-    protected $dates = [
-        'created_at', 
-        'updated_at', 
-        'exam_date',
-    ];
+    protected $table = "applicants_attachments";
     
     /**
      * The attributes that are mass assignable.
@@ -19,10 +14,9 @@ class ApplicantsEligibility extends Model
      * @var array
      */
     protected $fillable = [
-        'licenseTitle',
-        'licenseNumber',
-        'rating',
-        'exam_date',
+        'filename',
+        'filesize',
+        'filepath',
         'applicant_id',
     ];
 

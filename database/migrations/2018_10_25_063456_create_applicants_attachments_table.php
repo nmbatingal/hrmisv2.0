@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateApplicantsEligibilitiesTable extends Migration
+class CreateApplicantsAttachmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateApplicantsEligibilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants_eligibilities', function (Blueprint $table) {
+        Schema::create('applicants_attachments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('licenseTitle')->nullable();
-            $table->string('licenseNumber')->nullable();
-            $table->double('rating', 5, 2)->nullable();
-            $table->year('exam_date')->nullable();
+            $table->string('filename')->nullable();
+            $table->integer('filesize')->nullable();
+            $table->string('filepath')->nullable();
             $table->uuid('applicant_id');
             $table->timestamps();
-
+            
             $table->foreign('applicant_id')->references('id')->on('applicants_infos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -33,6 +32,6 @@ class CreateApplicantsEligibilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants_eligibilities');
+        Schema::dropIfExists('applicants_attachments');
     }
 }

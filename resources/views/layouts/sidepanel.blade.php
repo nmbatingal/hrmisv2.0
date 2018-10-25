@@ -14,7 +14,7 @@
                     </form>
                 </div> -->
                 <ul class="sidebar-menu">
-                    <li><a href="{{ url('/home') }}">Dashboard </a></li>
+                    <li><a href="{{ url('/') }}">Dashboard </a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>

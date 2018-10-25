@@ -36,6 +36,11 @@ class ApplicantsInfo extends Model
         'interviewStatus',
     ];
 
+    public function applicantAttachment()
+    {
+        return $this->hasMany('App\Models\Applicants\ApplicantsAttachment', 'applicant_id', 'id');
+    }
+
     public function applicantEducations()
     {
         return $this->hasMany('App\Models\Applicants\ApplicantsEducation', 'applicant_id', 'id');
@@ -44,5 +49,10 @@ class ApplicantsInfo extends Model
     public function applicantEligibilities()
     {
         return $this->hasMany('App\Models\Applicants\ApplicantsEligibility', 'applicant_id', 'id');
+    }
+
+    public function applicantExperiences()
+    {
+        return $this->hasMany('App\Models\Applicants\ApplicantsExperience', 'applicant_id', 'id');
     }
 }

@@ -44,7 +44,7 @@ class ApplicantsController extends Controller
      */
     public function create()
     {
-        return view('hrapplicants.addApplicant');
+        return view('hrapplicants.create');
     }
 
     /**

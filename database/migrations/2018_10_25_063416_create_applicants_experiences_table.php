@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateApplicantsEligibilitiesTable extends Migration
+class CreateApplicantsExperiencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateApplicantsEligibilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants_eligibilities', function (Blueprint $table) {
+        Schema::create('applicants_experiences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('licenseTitle')->nullable();
-            $table->string('licenseNumber')->nullable();
-            $table->double('rating', 5, 2)->nullable();
-            $table->year('exam_date')->nullable();
+            $table->string('agency');
+            $table->string('position')->nullable();
+            $table->decimal('salaryGrade', 10, 2)->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->uuid('applicant_id');
             $table->timestamps();
 
@@ -33,6 +34,6 @@ class CreateApplicantsEligibilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants_eligibilities');
+        Schema::dropIfExists('applicants_experiences');
     }
 }
