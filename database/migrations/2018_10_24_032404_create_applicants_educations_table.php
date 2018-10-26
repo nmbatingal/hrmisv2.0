@@ -17,7 +17,7 @@ class CreateApplicantsEducationsTable extends Migration
             $table->increments('id');
             $table->string('program');
             $table->string('school');
-            $table->year('yearGraduated');
+            $table->date('yearGraduated');
             $table->uuid('applicant_id');
             $table->timestamps();
 

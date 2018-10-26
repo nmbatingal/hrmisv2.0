@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+<link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -36,29 +37,69 @@
     <div class="col-lg-12">
 		<div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Table</h4>
-                <h6 class="card-subtitle">Data table example</h6>
+                <h4 class="card-title">List of Applicants
+                    <a href="{{ route('applicants.create') }}" class="btn btn-rounded btn-primary float-right">Add new applicant</a>
+                </h4>
+                <h6 class="card-subtitle">Display information of applicants</h6>
+
                 <div class="table-responsive m-t-40">
-                    <table id="myTable" class="table table-bordered table-striped">
+                    <table id="demo-foo-pagination" class="table table-bordered table-striped" data-sorting="true" data-paging="true" data-paging-size="5" data-toggle-column="first">
                         <thead>
-                            <tr>
+                            <tr class="footable-filtering">
                                 <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Contact Details</th>
+                                <th data-breakpoints="xs sm">Eligibility</th>
+                                <th data-breakpoints="xs sm">Hire Status</th>
+                                <th data-breakpoints="xs sm">Interview Status</th>
+                                <th data-breakpoints="all" data-title="Birthday">Birthday</th>
+                                <th data-breakpoints="all" data-title="Education">Education</th>
+                                <th data-breakpoints="all" data-title="Experience">Experience</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
+                            @forelse ( $applicants as $applicant )
+                                <tr>
+                                    <td>
+                                        <a href="javascript:void(0)">{{ $applicant->full_name }}</a>
+                                    </td>
+                                    <td>
+                                        <address>
+                                            {{ $applicant->contactNumber }}
+                                            <br><a href="mailto:#">{{ $applicant->email }}</a>
+                                        </address>
+                                    </td>
+                                    <td>
+                                        @forelse ( $applicant->applicantEligibilities as $eligible )
+                                            {{ $eligible->licensed }} <br/>
+                                        @empty
+                                            Not provided
+                                        @endforelse
+                                    </td>
+                                    <td>
+                                        <span class="label label-table label-danger">Suspended</span>
+                                    </td>
+                                    <td>
+                                        <span class="label label-table label-danger">Suspended</span>
+                                    </td>
+                                    <td>{{ $applicant->birth_date }}</td>
+                                    <td>
+                                        @forelse ( $applicant->applicantEducations as $education )
+                                            {!! $education->education_background !!} <br/>
+                                        @empty
+                                            Not provided
+                                        @endforelse
+                                    </td>
+                                    <td>
+                                        @forelse ( $applicant->applicantExperiences as $experience )
+                                            {!! $experience->work_experience !!} <br/>
+                                        @empty
+                                            Not provided
+                                        @endforelse
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">No data available in table</td></tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -71,9 +112,24 @@
 @section('scripts')
 <!-- This is data table -->
 <script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
+<!-- Footable -->
+<script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
+<script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
 <script>
-    $(function() {
-        $('#myTable').DataTable();
+    $(document).ready(function() { 
+
+        //
+        $('[data-page-size]').on('click', function(e){
+            e.preventDefault();
+            var newSize = $(this).data('pageSize');
+            FooTable.get('#demo-foo-pagination').pageSize(newSize);
+        });
+        $('#demo-foo-pagination').footable({
+            filtering: {
+                enabled: true
+            }
+        });
     });
+
 </script>
 @endsection

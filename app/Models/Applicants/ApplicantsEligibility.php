@@ -2,15 +2,15 @@
 
 namespace App\Models\Applicants;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicantsEligibility extends Model
 {
-    protected $table = "applicants_experiences";
+    protected $table = "applicants_eligibilities";
     protected $dates = [
         'created_at', 
-        'updated_at', 
-        'exam_date',
+        'updated_at',
     ];
     
     /**
@@ -25,6 +25,12 @@ class ApplicantsEligibility extends Model
         'exam_date',
         'applicant_id',
     ];
+
+    // Applicant ELIGIBILITY accessor
+    public function getLicensedAttribute()
+    {
+        return "{$this->licenseTitle}, " . Carbon::parse($this->exam_date)->format('Y');
+    }
 
     public function applicant()
     {

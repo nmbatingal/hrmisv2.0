@@ -47,7 +47,7 @@
                     <h3 class="text-info"><i class="fa fa-exclamation-circle"></i> Information</h3> This is an example top alert. You can edit what u wish. Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.
                 </div>
 
-                <form action="{{ route('submit') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{ route('applicants.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-body">
                         <!-- PERSONAL INFORMATION ROW -->
@@ -158,12 +158,12 @@
                         <div class="row">
                             <div class="col-sm-5 nopadding">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="program[]" value="" placeholder="Degree">
+                                    <input type="text" class="form-control" name="program[]" value="" placeholder="Degree" required>
                                 </div>
                             </div>
                             <div class="col-sm-4 nopadding">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="school[]" value="" placeholder="School name">
+                                    <input type="text" class="form-control" name="school[]" value="" placeholder="School name" required>
                                 </div>
                             </div>
                             <div class="col-sm-3 nopadding">
@@ -244,7 +244,7 @@
                                     </div>
                                     <div class="col-md-3 col-sm-12 nopadding">
                                         <div class="form-group">
-                                            <input type="month" class="form-control" name="exam_date" value="{{ date('Y-m') }}">
+                                            <input type="month" class="form-control" name="exam_date[]" value="{{ date('Y-m') }}">
                                             <small class="form-control-feedback">Select month and year</small> 
                                         </div>
                                     </div>

@@ -61,12 +61,12 @@ class LoginController extends Controller
         $request->merge([
             $login_type => $request->input('login')
         ]);
-     
-        if ( Auth::attempt( array_merge($request->only($login_type, 'password')), $remember )) {
+
+        if ( Auth::attempt( array_merge($request->only($login_type, 'password')), $remember == 'on' ? true : false )) {
             
             return $this->authenticated($request, $this->guard()->user());
         }
- 
+        
         return redirect('/login')->with('warning', 'These credentials do not match our records.');
     }
     /*
@@ -100,5 +100,20 @@ class LoginController extends Controller
         }
 
         return redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/login');
     }
 }

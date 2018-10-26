@@ -14,12 +14,12 @@ function education_fields() {
         '<div class="row">'+
             '<div class="col-sm-5 nopadding">'+
                 '<div class="form-group">'+
-                    '<input type="text" class="form-control" name="program[]" value="" placeholder="Degree">'+
+                    '<input type="text" class="form-control" name="program[]" value="" placeholder="Degree" required>'+
                 '</div>'+
             '</div>'+
             '<div class="col-sm-4 nopadding">'+
                 '<div class="form-group">'+
-                    '<input type="text" class="form-control" name="school[]" value="" placeholder="School name">'+
+                    '<input type="text" class="form-control" name="school[]" value="" placeholder="School name" required>'+
                 '</div>'+
             '</div>'+
             '<div class="col-sm-3 nopadding">'+

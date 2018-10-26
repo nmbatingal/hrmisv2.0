@@ -2,17 +2,22 @@
 
 namespace App\Models\Applicants;
 
+use App\Uuids;
+use Carbon\Carbon;
 use App\Models\Applicants\ApplicantsInfo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ApplicantsInfo extends Model
 {
+    use SoftDeletes;
     use Uuids;
 
     protected $table         = "applicants_infos";
     public    $incrementing  = false;
+    protected $dates = ['deleted_at'];
     protected $casts = [
-        'hireStatus' 	  => 'boolean',
+        'hireStatus'      => 'boolean',
         'interviewStatus' => 'boolean',
     ];
     
@@ -35,6 +40,18 @@ class ApplicantsInfo extends Model
         'hireStatus',
         'interviewStatus',
     ];
+
+    // Applicant fullname accessor
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
+
+    // Applicant fullname accessor
+    public function getBirthDateAttribute()
+    {
+        return Carbon::parse($this->birthday)->format('F d, Y');
+    }
 
     public function applicantAttachment()
     {

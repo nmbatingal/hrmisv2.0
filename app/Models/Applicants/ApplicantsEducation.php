@@ -2,6 +2,7 @@
 
 namespace App\Models\Applicants;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicantsEducation extends Model
@@ -19,6 +20,12 @@ class ApplicantsEducation extends Model
         'yearGraduated', 
         'applicant_id',
     ];
+
+    // Applicant EDUCATION accessor
+    public function getEducationBackgroundAttribute()
+    {
+        return "<b>{$this->program}</b>, {$this->school}, " . Carbon::parse($this->yearGraduated)->format('Y');
+    }
 
     public function applicant()
     {

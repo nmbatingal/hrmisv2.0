@@ -2,17 +2,12 @@
 
 namespace App\Models\Applicants;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicantsExperience extends Model
 {
     protected $table = "applicants_experiences";
-    protected $dates = [
-        'created_at', 
-        'updated_at', 
-        'start_date', 
-        'end_date'
-    ];
     
     /**
      * The attributes that are mass assignable.
@@ -27,6 +22,22 @@ class ApplicantsExperience extends Model
         'end_date',
         'applicant_id',
     ];
+
+    // Applicant WORK EXPERIENCE accessor
+    public function getWorkExperienceAttribute()
+    {
+        return "<b>{$this->position}</b>, {$this->agency}, " . Carbon::parse($this->end_date)->format('Y');
+    }
+
+    public function setStartDateAttribute($value) { 
+
+        $this->attributes['start_date'] = Carbon::parse($value)->format('Y-m-d');
+    }
+
+    public function setEndDateAttribute($value) { 
+
+        $this->attributes['end_date'] = Carbon::parse($value)->format('Y-m-d');
+    }
 
     public function applicant()
     {

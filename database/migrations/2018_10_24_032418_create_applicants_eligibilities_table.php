@@ -18,7 +18,7 @@ class CreateApplicantsEligibilitiesTable extends Migration
             $table->string('licenseTitle')->nullable();
             $table->string('licenseNumber')->nullable();
             $table->double('rating', 5, 2)->nullable();
-            $table->year('exam_date')->nullable();
+            $table->date('exam_date')->nullable();
             $table->uuid('applicant_id');
             $table->timestamps();
 
