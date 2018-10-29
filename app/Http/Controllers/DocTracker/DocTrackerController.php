@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DocTracker;
 
+use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,15 @@ class DocTrackerController extends Controller
      */
     public function index()
     {
-        return view('doctracker.index');
+        $barcode = new BarcodeGenerator();
+        $barcode->setText(route('home'));
+        $barcode->setType(BarcodeGenerator::Code128);
+        $barcode->setFontSize(10);
+        $code = $barcode->generate();
+
+        $img = '<img src="data:image/png;base64,'.$code.'" />';
+
+        return view('doctracker.index', compact('img'));
     }
 
     /**

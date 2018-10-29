@@ -39,6 +39,10 @@
                         ->generate(Request::url())) !!} ">
                     <p>Scan me to return to the original page.</p>
                 </div>
+
+                <div class="visible-print text-center">
+                    {!! $img !!}
+                </div>
             </div>
         </div>
     </div>
