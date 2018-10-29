@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Auth::routes();
 
@@ -25,6 +25,9 @@ Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name
 Route::get('/hr/dashboard', 'Applicants\ApplicantsController@applicantsDashboard')->name('applicants.dashboard');
 Route::get('/hr/applicants/list', 'Applicants\ApplicantsController@listOfApplicants')->name('applicants.list');
 Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
+
+
+Route::resource('/doctracker', 'DocTracker\DocTrackerController');
 
 Route::post('/send', function(Request $request) {
 
