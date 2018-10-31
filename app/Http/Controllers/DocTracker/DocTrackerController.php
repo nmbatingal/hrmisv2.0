@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DocTracker;
 
+use CodeItNow\BarcodeBundle\Utils\QrCode;
 use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,14 +17,31 @@ class DocTrackerController extends Controller
     public function index()
     {
         $barcode = new BarcodeGenerator();
-        $barcode->setText(route('home'));
-        $barcode->setType(BarcodeGenerator::Code128);
-        $barcode->setFontSize(10);
+        $barcode->setText('201800001');
+        $barcode->setType(BarcodeGenerator::Code39);
+        $barcode->setLabel('TSS-2018-10-31-00001');
+        //$barcode->setScale(2);
+        $barcode->setThickness(30);
+        $barcode->setFontSize(8);
         $code = $barcode->generate();
 
-        $img = '<img src="data:image/png;base64,'.$code.'" />';
+        $img = '<img src="data:image/png;base64,'.$code.'" height="45px" />';
 
-        return view('doctracker.index', compact('img'));
+
+        $qrCode = new QrCode();
+        $qrCode
+            ->setText('TSS-2018-10-31-00001')
+            ->setSize(50)
+            ->setPadding(8)
+            ->setErrorCorrection('high')
+            //->setForegroundColor(array('r' => 0, 'g' => 0, 'b' => 0, 'a' => 0))
+            //->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
+            // ->setLabel('TSS-2018-10-31-00001')
+            ->setLabelFontSize(5)
+            ->setImageType(QrCode::IMAGE_TYPE_PNG);
+        $qrimg = '<img src="data:'.$qrCode->getContentType().';base64,'.$qrCode->generate().'" />';
+
+        return view('doctracker.index', compact('img', 'qrimg'));
     }
 
     /**

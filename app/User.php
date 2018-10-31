@@ -10,8 +10,9 @@ class User extends Authenticatable
     use Notifiable;
     use Uuids;
 
-    protected $table         = "users";
-    public    $incrementing  = false;
+    protected $connection   = 'mysql';
+    protected $table        = "users";
+    public    $incrementing = false;
     protected $casts = [
         'isactive' => 'boolean',
     ];

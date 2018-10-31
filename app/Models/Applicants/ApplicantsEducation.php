@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicantsEducation extends Model
 {
+    protected $connection    = 'mysql';
     protected $table = "applicants_educations";
     
     /**
