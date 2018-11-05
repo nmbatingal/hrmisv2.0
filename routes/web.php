@@ -13,22 +13,34 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+// Route::get('/home', function () { return view('home'); })->name('home');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
 
+/*
+ * DOCUMENT TRACKER SYSTEM
+ *
+ */
+Route::resource('/doctracker', 'DocTracker\DocTrackerController');
+
+/*
+ * HR-APPLICANTS SYSTEM
+ *
+ */
 Route::get('/hr/dashboard', 'Applicants\ApplicantsController@applicantsDashboard')->name('applicants.dashboard');
 Route::get('/hr/applicants/list', 'Applicants\ApplicantsController@listOfApplicants')->name('applicants.list');
 Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
 
 
-Route::resource('/doctracker', 'DocTracker\DocTrackerController');
 
+
+/*
+ * SAMPLE ROUTES
+ *
+ */
 Route::post('/send', function(Request $request) {
 
 	return dd($request);

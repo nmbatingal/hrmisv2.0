@@ -3,16 +3,19 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
     use Uuids;
 
     protected $connection   = 'mysql';
     protected $table        = "users";
     public    $incrementing = false;
+    protected $dates = ['deleted_at'];
     protected $casts = [
         'isactive' => 'boolean',
     ];

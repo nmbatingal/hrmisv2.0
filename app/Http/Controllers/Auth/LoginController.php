@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,6 +39,7 @@ class LoginController extends Controller
      */
     public function __construct(ActivationService $activationService)
     {
+        DB::connection('mysql');
         $this->middleware('guest', ['except' => 'logout']);
         $this->activationService = $activationService;
     }

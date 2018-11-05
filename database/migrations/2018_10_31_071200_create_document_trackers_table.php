@@ -13,19 +13,19 @@ class CreateDocumentTrackersTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql_doctracker')->create('document_trackers', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('document_trackers', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('code', 20)->primary();
-            $table->string('tracking_code')->primary();
+            $table->char('code', 20)->nullable()->unique();
+            $table->string('tracking_code')->nullable()->unique();
             $table->uuid('employee_id');
-            $table->integer('document_type')->nullable();
+            $table->integer('doc_type_id')->unsigned()->nullable();
             $table->string('document_name')->nullable();
             $table->text('details')->nullable();
             $table->date('document_date')->nullable();
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('document_type')->references('id')->on('doctracker.document_types')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('doc_type_id')->references('id')->on('doctracker.document_types')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

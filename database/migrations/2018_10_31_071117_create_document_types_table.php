@@ -13,7 +13,7 @@ class CreateDocumentTypesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql_doctracker')->create('document_types', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('document_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('document_name')->nullable();
             $table->timestamps();

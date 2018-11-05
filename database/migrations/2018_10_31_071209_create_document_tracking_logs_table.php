@@ -13,9 +13,9 @@ class CreateDocumentTrackingLogsTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql_doctracker')->create('document_tracking_logs', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('document_tracking_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tracking_code');
+            $table->string('tracking_code')->index();
             $table->enum('action', ['forwarded', 'received', 'closed', 'cancelled'])->nullable();
             $table->uuid('employee_id')->nullable();
             $table->uuid('addressee_id')->nullable();
@@ -23,7 +23,7 @@ class CreateDocumentTrackingLogsTable extends Migration
             $table->text('attachment')->nullable();
             $table->timestamps();
 
-            $table->foreign('tracking_code')->references('id')->on('document_trackers')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('tracking_code')->references('tracking_code')->on('doctracker.document_trackers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('employee_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('addressee_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
         });
