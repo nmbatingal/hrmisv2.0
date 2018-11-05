@@ -60,128 +60,62 @@
                                     </div>
                                 </div>
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">First Name</label>
+                                    <label class="control-label text-right col-md-2">Document Type</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control custom-select" name="sex">
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+                                        </select>
+                                        <small class="form-control-feedback">&nbsp;</small> 
+                                    </div>
+                                    <label class="control-label text-right col-md-2">Document Date</label>
+                                    <div class="col-md-4">
+                                        <input type="date" class="form-control" name="birthday" placeholder="dd/mm/yyyy" required>
+                                        <small class="form-control-feedback">&nbsp;</small> 
+                                    </div>
+                                </div>
+                                <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Keywords</label>
                                     <div class="col-md-10">
                                         <input type="text" class="form-control" name="firstname" placeholder="first name" required autofocus>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">First Name</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="firstname" placeholder="first name" required autofocus>
-                                                <small class="form-control-feedback">&nbsp;</small> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Middle Name</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="middlename" placeholder="middle name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Last Name</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="lastname" placeholder="last name" required>
-                                            </div>
-                                        </div>
+                                <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Document Details</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" rows="4"></textarea>
+                                        <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Gender</label>
-                                            <div class="col-md-9">
-                                                <select class="form-control custom-select" name="sex">
-                                                    <option value="1">Male</option>
-                                                    <option value="2">Female</option>
-                                                </select>
-                                                <small class="form-control-feedback"> Select your gender. </small> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Date of Birth</label>
-                                            <div class="col-md-9">
-                                                <input type="date" class="form-control" name="birthday" placeholder="dd/mm/yyyy" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Age</label>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control" name="age" placeholder="age">
-                                            </div>
-                                        </div>
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">Attachments</label>
+                                    <div class="col-md-10">
+                                        <input type="file" class="form-control" name="attachment[]" accept=".pdf" multiple>
+                                        <small class="form-control-feedback">Select pdf files only. </small> 
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- OTHER INFORMATION -->
-                        <h3 class="m-t-40 box-title">Other Info</h3>
+                        <h3 class="m-t-40 box-title">Routing Details</h3>
                         <hr class="m-t-0 m-b-40">
                         <!--/row-->
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Attachments</label>
-                                            <div class="col-md-9">
-                                                <input type="file" class="form-control" name="attachment[]" accept=".pdf" multiple>
-                                                <small class="form-control-feedback">Select pdf files only. </small> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Hire Status</label>
-                                            <div class="col-md-9">
-                                                <select class="form-control custom-select" name="hireStatus">
-                                                    <option value="0">Not yet hired</option>
-                                                    <option value="1">Hired</option>
-                                                </select>
-                                                <small class="form-control-feedback"> Select applicant hiring status. </small> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Interview Status</label>
-                                            <div class="col-md-9">
-                                                <select class="form-control custom-select" name="interviewStatus">
-                                                    <option value="0">Not yet interviewed</option>
-                                                    <option value="1">Interviewed</option>
-                                                </select>
-                                                <small class="form-control-feedback"> Select your gender. </small> 
-                                            </div>
-                                        </div>
+                            <div class="col-md-12">
+                                <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Keywords</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="firstname" placeholder="first name" required autofocus>
+                                        <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Remarks</label>
-                                            <div class="col-md-9">
-                                                <textarea class="form-control" rows="5" name="remarks"></textarea>
-                                            </div>
-                                        </div>
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">Attachments</label>
+                                    <div class="col-md-10">
+                                        <input type="file" class="form-control" name="attachment[]" accept=".pdf" multiple>
+                                        <small class="form-control-feedback">Select pdf files only. </small> 
                                     </div>
                                 </div>
                             </div>
