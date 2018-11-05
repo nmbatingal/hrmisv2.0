@@ -57,7 +57,7 @@ class RegisterController extends Controller
         $validator = $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
         $this->activationService->sendActivationMail($user);
-        return redirect('/login')->with('status', 'We sent you an activation code. Check your email.');
+        return redirect('/login')->with('warning', 'We have sent you an activation code. Please check your email.');
     }
 
     /**

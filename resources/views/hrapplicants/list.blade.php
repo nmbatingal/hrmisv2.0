@@ -42,8 +42,8 @@
                 </h4>
                 <h6 class="card-subtitle">Display information of applicants</h6>
 
-                <div class="table-responsive m-t-40">
-                    <table id="demo-foo-pagination" class="table table-bordered table-striped" data-sorting="true" data-paging="true" data-paging-size="5" data-toggle-column="first">
+                <div class="table-responsive-md m-t-40">
+                    <table id="demo-foo-pagination" class="table table-bordered table-hover table-striped table-sm" data-sorting="true" data-paging="true" data-paging-size="5" data-toggle-column="first">
                         <thead>
                             <tr class="footable-filtering">
                                 <th>Name</th>
@@ -75,11 +75,15 @@
                                             Not provided
                                         @endforelse
                                     </td>
-                                    <td>
-                                        <span class="label label-table label-danger">Suspended</span>
+                                    <td class="text-center">
+                                        @if ( $applicant->hireStatus )
+                                            <span class="label label-table label-success">Hired</span>
+                                        @endif
                                     </td>
-                                    <td>
-                                        <span class="label label-table label-danger">Suspended</span>
+                                    <td class="text-center">
+                                        @if ( !$applicant->interviewStatus )
+                                            <span class="label label-table label-warning">Not yet interviewed</span>
+                                        @endif
                                     </td>
                                     <td>{{ $applicant->birth_date }}</td>
                                     <td>
@@ -98,7 +102,6 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">No data available in table</td></tr>
                             @endforelse
                         </tbody>
                     </table>

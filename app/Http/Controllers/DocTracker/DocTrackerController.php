@@ -49,9 +49,9 @@ class DocTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function dashboard()
+    public function myDocuments()
     {
-        return view('doctracker.dashboard');
+        return view('doctracker.mydocuments');
     }
 
     /**
@@ -61,7 +61,7 @@ class DocTrackerController extends Controller
      */
     public function create()
     {
-        //
+        return view('doctracker.create');
     }
 
     /**

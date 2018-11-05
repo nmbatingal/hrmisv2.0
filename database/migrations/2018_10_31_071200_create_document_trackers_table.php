@@ -19,10 +19,13 @@ class CreateDocumentTrackersTable extends Migration
             $table->string('tracking_code')->nullable()->unique();
             $table->uuid('employee_id');
             $table->integer('doc_type_id')->unsigned()->nullable();
-            $table->string('document_name')->nullable();
+            $table->string('subject')->nullable();
             $table->text('details')->nullable();
+            $table->string('keywords')->nullable();
+            $table->string('attachments')->nullable();
             $table->date('document_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('employee_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('doc_type_id')->references('id')->on('doctracker.document_types')->onDelete('cascade')->onUpdate('cascade');
@@ -36,6 +39,6 @@ class CreateDocumentTrackersTable extends Migration
      */
     public function down()
     {
-        Schema::connection('mysql_doctracker')->dropIfExists('document_trackers');
+        Schema::connection('mysql2')->dropIfExists('document_trackers');
     }
 }

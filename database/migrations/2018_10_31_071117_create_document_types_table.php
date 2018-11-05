@@ -27,6 +27,6 @@ class CreateDocumentTypesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('mysql_doctracker')->dropIfExists('document_types');
+        Schema::connection('mysql2')->dropIfExists('document_types');
     }
 }

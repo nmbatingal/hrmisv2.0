@@ -17,7 +17,7 @@ class User extends Authenticatable
     public    $incrementing = false;
     protected $dates = ['deleted_at'];
     protected $casts = [
-        'isactive' => 'boolean',
+        'isActive' => 'boolean',
     ];
     
     /**

@@ -24,6 +24,7 @@ Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name
  * DOCUMENT TRACKER SYSTEM
  *
  */
+Route::get('/doctracker/mydocuments', 'DocTracker\DocTrackerController@myDocuments')->name('doctracker.mydocuments');
 Route::resource('/doctracker', 'DocTracker\DocTrackerController');
 
 /*
@@ -42,7 +43,5 @@ Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
  *
  */
 Route::post('/send', function(Request $request) {
-
 	return dd($request);
-
 })->name('submit');
