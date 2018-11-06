@@ -15,7 +15,7 @@
                             <label for="firstname" class="col-md-4 col-form-label text-md-right">Firstname</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('firstname') ? ' is-invalid' : '' }}" name="firstname" value="{{ old('firstname') }}" required autofocus>
+                                <input id="firstname" type="text" class="form-control{{ $errors->has('firstname') ? ' is-invalid' : '' }}" name="firstname" value="{{ old('firstname') }}" required autofocus>
 
                                 @if ($errors->has('firstname'))
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
                             <label for="lastname" class="col-md-4 col-form-label text-md-right">Lastname</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" required>
+                                <input id="lastname" type="text" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" required>
 
                                 @if ($errors->has('lastname'))
                                     <span class="invalid-feedback" role="alert">
@@ -40,10 +40,43 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="office" class="col-md-4 col-form-label text-md-right">Office</label>
+
+                            <div class="col-md-6">
+                                <select id="office" class="form-control{{ $errors->has('office') ? ' is-invalid' : '' }}" name="office" required>
+                                    <option value="">Select office</option>
+                                    @forelse( $offices as $office )
+                                        <option value="{{ $office->id }}">{{ $office->division_name }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                @if ($errors->has('office'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('office') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="position" class="col-md-4 col-form-label text-md-right">Position</label>
+
+                            <div class="col-md-6">
+                                <input id="position" type="text" class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}" name="position" value="{{ old('position') }}" required>
+
+                                @if ($errors->has('position'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('position') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required>
+                                <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required>
 
                                 @if ($errors->has('username'))
                                     <span class="invalid-feedback" role="alert">

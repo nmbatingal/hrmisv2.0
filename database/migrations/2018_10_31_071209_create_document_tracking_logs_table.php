@@ -17,15 +17,17 @@ class CreateDocumentTrackingLogsTable extends Migration
             $table->increments('id');
             $table->string('tracking_code')->index();
             $table->enum('action', ['forwarded', 'received', 'closed', 'cancelled'])->nullable();
-            $table->uuid('employee_id')->nullable();
-            $table->uuid('addressee_id')->nullable();
+            $table->integer('sender_id')->unsigned()->nullable();
+            $table->integer('office_id')->unsigned()->nullable();
+            $table->integer('recipient_id')->unsigned()->nullable();
             $table->text('remarks')->nullable();
             $table->text('attachment')->nullable();
             $table->timestamps();
 
             $table->foreign('tracking_code')->references('tracking_code')->on('doctracker.document_trackers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('employee_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('addressee_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('sender_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('office_id')->references('id')->on('hrmis.offices')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('recipient_id')->references('id')->on('hrmis.users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

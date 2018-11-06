@@ -1,11 +1,19 @@
 @extends('layouts.app')
 
 @section('styles')
-<!-- Date picker plugins css -->
-<link href="{{ asset('assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<!-- Daterange picker plugins css -->
-<link href="{{ asset('assets/node_modules/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/node_modules/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .select2 {
+        width: 100% !important;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background: #fb9678;
+        color: #fff;
+        border-color: #fb9678;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -44,7 +52,7 @@
                     <h3 class="text-info"><i class="fa fa-exclamation-circle"></i> Information</h3> This is an example top alert. You can edit what u wish. Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.
                 </div>
 
-                <form method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{ route('submit') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-body">
                         <!-- PERSONAL INFORMATION ROW -->
@@ -55,43 +63,46 @@
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Subject</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="firstname" placeholder="first name" required autofocus>
+                                        <input type="text" class="form-control" name="subject" placeholder="enter subject" required autofocus>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Document Type</label>
                                     <div class="col-md-4">
-                                        <select class="form-control custom-select" name="sex">
-                                            <option value="1">Male</option>
-                                            <option value="2">Female</option>
+                                        <select class="select2 form-control custom-select" name="docType" required>
+                                            <option value="">-- Select document type --</option>
+                                            @forelse( $docTypes as $doctype )
+                                                <option value="{{ $doctype->id }}">{{ $doctype->document_name }}</option>
+                                            @empty
+                                            @endforelse
                                         </select>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                     <label class="control-label text-right col-md-2">Document Date</label>
                                     <div class="col-md-4">
-                                        <input type="date" class="form-control" name="birthday" placeholder="dd/mm/yyyy" required>
+                                        <input type="date" class="form-control" name="document_date" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
-                                <div class="form-group row m-b-0">
+                                <div class="form-group row m-b-20">
                                     <label class="control-label text-right col-md-2">Keywords</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="firstname" placeholder="first name" required autofocus>
-                                        <small class="form-control-feedback">&nbsp;</small> 
+                                        <input id="keywords" type="text" class="" data-role="tagsinput" name="keywords" placeholder="add keywords" required>
+                                        <br><small class="form-control-feedback">Separate keywords using enter or comma key.</small> 
                                     </div>
                                 </div>
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Document Details</label>
                                     <div class="col-md-10">
-                                        <textarea class="form-control" rows="4"></textarea>
+                                        <textarea class="form-control" name="details" rows="4"></textarea>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-2">Attachments</label>
                                     <div class="col-md-10">
-                                        <input type="file" class="form-control" name="attachment[]" accept=".pdf" multiple>
+                                        <input type="file" class="form-control" name="attachments[]" accept=".pdf" multiple>
                                         <small class="form-control-feedback">Select pdf files only. </small> 
                                     </div>
                                 </div>
@@ -105,17 +116,50 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Keywords</label>
+                                    <label class="control-label text-right col-md-2">Action</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="firstname" placeholder="first name" required autofocus>
+                                        <select class="form-control custom-select" name="action" required>
+                                            <option value="">-- Select action --</option>
+                                            <option value="forwarded">Forwarded</option>
+                                            <option value="received">Received</option>
+                                            <option value="closed">Closed</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-2">Attachments</label>
+
+                                <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
+                                <div id="routeAction" style="display: none;">
+                                    <div class="form-group row m-b-0">
+                                        <label class="control-label text-right col-md-2">Route To</label>
+                                        <div class="col-md-10">
+                                            <select class="select2 form-control custom-select" name="routeToOffice" required>
+                                                <option>Select office</option>
+                                                @forelse( $offices as $office )
+                                                    <option value="{{ $office->id }}">{{ $office->division_name }}</option>
+                                                @empty
+                                                @endforelse
+                                            </select>
+                                            <small class="form-control-feedback">&nbsp;</small> 
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row m-b-20">
+                                        <label class="control-label text-right col-md-2"></label>
+                                        <div class="col-md-10">
+                                            <select id="recipient" class="select2 form-control select2-multiple" name="recipient[]" multiple="multiple" data-placeholder="Choose">
+                                            </select>
+                                            <br><small class="form-control-feedback">Leave blank if document will be routed to whole division.</small> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Note</label>
                                     <div class="col-md-10">
-                                        <input type="file" class="form-control" name="attachment[]" accept=".pdf" multiple>
-                                        <small class="form-control-feedback">Select pdf files only. </small> 
+                                        <textarea class="form-control" name="note" rows="4"></textarea>
+                                        <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
                             </div>
@@ -141,47 +185,43 @@
 @endsection
 
 @section('scripts')
-<!-- Plugin JavaScript -->
-<script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
-<script src="{{ asset('js/hrapplicants/create.blade.js') }}"></script>
-<!-- Date Picker Plugin JavaScript -->
-<script src="{{ asset('assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-<!-- Date range Plugin JavaScript -->
-<script src="{{ asset('assets/node_modules/timepicker/bootstrap-timepicker.min.js') }}"></script>
-<script src="{{ asset('assets/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-<!-- Custom JS Picker -->
-<script>
-    // Daterange picker
-    $(document).ready(function() {
-        $(document).on("focus", ".input-daterange-datepicker", function(){
-            $(this).daterangepicker({
-                showDropdowns: true,
-                locale: {
-                    separator: "   to   ",
-                },
-                buttonClasses: ['btn', 'btn-sm'],
-                applyClass: 'btn-danger',
-                cancelClass: 'btn-inverse'
-            });
+<script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $("select[name=routeToOffice]").change(function(){
+        
+        var office_id = $(this).val();
+        var token = $("input[name=_token]").val();
+
+        $.ajax({
+            method: 'POST',
+            url: "{{ route('doctracker.recipientlist') }}",
+            data: { office_id:office_id, _token:token},
+            success: function(data) {
+                $("select#recipient").attr('disabled', false);
+                $("select#recipient").html('');
+                $("select#recipient").html(data.options);
+            }
         });
     });
 </script>
 <script>
-    // Daterange picker
-    $('.input-daterange-datepicker').daterangepicker({
-        showDropdowns: true,
-        locale: {
-            separator: "   to   ",
-        },
-        buttonClasses: ['btn', 'btn-sm'],
-        applyClass: 'btn-danger',
-        cancelClass: 'btn-inverse'
-    });
+    $(function () {
 
-    jQuery('.datepicker-autoclose').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
+        $('input#keywords').tagsinput({
+            confirmKeys: [186]
+        });
 
+        $('select[name=action]').on('change', function(){
+            if ( this.value == "forwarded") {
+                $('div#routeAction').css('display', 'block');
+            } else {
+                $('div#routeAction').css('display', 'none');
+            }
+        });
+
+        $(".select2").select2();
+    });
 </script>
 @endsection

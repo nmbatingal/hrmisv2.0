@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use DB;
 use App\User;
+use App\Office;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -47,6 +48,17 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $offices = Office::all();
+        return view('auth.register', compact('offices'));
+    }
+
+    /**
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -57,6 +69,7 @@ class RegisterController extends Controller
         $validator = $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
         $this->activationService->sendActivationMail($user);
+        
         return redirect('/login')->with('warning', 'We have sent you an activation code. Please check your email.');
     }
 
@@ -88,8 +101,10 @@ class RegisterController extends Controller
         $user = User::create([
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
+            'office_id' => $data['office'],
+            'position' => $data['position'],
             'username' => $data['username'],
-            'email' => $data['email'],
+            'email'    => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 

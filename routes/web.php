@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::get('/home', function () { return view('home'); })->name('home');
+Route::get('/', function () { return view('home'); })->name('home');
 
 Auth::routes();
 
@@ -24,8 +24,9 @@ Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name
  * DOCUMENT TRACKER SYSTEM
  *
  */
-Route::get('/doctracker/mydocuments', 'DocTracker\DocTrackerController@myDocuments')->name('doctracker.mydocuments');
-Route::resource('/doctracker', 'DocTracker\DocTrackerController');
+Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
+Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@showEmployeeList')->name('doctracker.recipientlist');
+Route::resource('/doctracker', 'DocumentTracker\DocumentTrackerController');
 
 /*
  * HR-APPLICANTS SYSTEM
@@ -34,8 +35,6 @@ Route::resource('/doctracker', 'DocTracker\DocTrackerController');
 Route::get('/hr/dashboard', 'Applicants\ApplicantsController@applicantsDashboard')->name('applicants.dashboard');
 Route::get('/hr/applicants/list', 'Applicants\ApplicantsController@listOfApplicants')->name('applicants.list');
 Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
-
-
 
 
 /*

@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\DocTracker;
+namespace App\Http\Controllers\DocumentTracker;
 
+use App\User;
+use App\Office;
+use App\Models\DocumentTracker\DocumentTypes;
+use App\Models\DocumentTracker\DocumentTracker;
 use CodeItNow\BarcodeBundle\Utils\QrCode;
 use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class DocTrackerController extends Controller
+class DocumentTrackerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -61,7 +65,10 @@ class DocTrackerController extends Controller
      */
     public function create()
     {
-        return view('doctracker.create');
+        $offices  = Office::all();
+        $users    = User::employee()->notSelf()->get();
+        $docTypes = DocumentTypes::all();
+        return view('doctracker.create', compact('docTypes', 'offices', 'users'));
     }
 
     /**
@@ -118,5 +125,18 @@ class DocTrackerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /*** JS ***/
+    public function showEmployeeList(Request $request)
+    {   
+        $office    = $request->office_id;
+        $employees = User::employee()->employeeOffice($office)->notSelf()->get();
+        $data      = view('list.recipient-list', compact('employees'))->render();
+
+        if($request->ajax())
+        {
+            return response()->json(['options' => $data]);
+        } 
     }
 }
