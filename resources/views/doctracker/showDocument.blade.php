@@ -11,7 +11,7 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white">My Documents</h4>
+        <h4 class="text-white">{{ $myDocument->tracking_code }}</h4>
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
