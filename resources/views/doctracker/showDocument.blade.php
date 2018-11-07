@@ -16,8 +16,9 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Document Tracker</a></li>
-            <li class="breadcrumb-item active">My Documents</li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">Document Tracker</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
+            <li class="breadcrumb-item active">{{ $myDocument->tracking_code }}</li>
         </ol>
     </div>
 </div>
@@ -33,29 +34,30 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">My Documents
+                <h4 class="card-title">Tracking Code: {{ $myDocument->tracking_code }}
                     <a href="{{ route('doctracker.create') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
                 </h4>
                 <p class="card-text">List of documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to be tracked.</p>
 
-                <div class="table-responsive-md m-t-20">
-                    <table id="demo-foo-pagination" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
+
+
+                <h4 class="card-title m-t-40">Tracking Log</h4>
+                <div class="table-responsive-md">
+                    <table id="demo-foo-pagination" class="table table-hover color-table dark-table" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr class="footable-filtering">
-                                <th>Tracking Code</th>
-                                <th>Subject</th>
-                                <th>Document date</th>
-                                <th>Document type</th>
-                                <th>Tracking Date</th>
+                                <th>Routed by</th>
+                                <th>Routing Division</th>
+                                <th>Recipient</th>
+                                <th>Action</th>
+                                <th>Note</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse( $trackLogs as $log )
                                 <tr>
                                     <td>
-                                        <a href="javascript:void(0)">{{ $log->tracking_code }}</a>
-                                    </td>
-                                    <td>
                                         {{ $log->tracking_code }}
                                     </td>
                                     <td>
@@ -65,7 +67,13 @@
                                         {{ $log->tracking_code }}
                                     </td>
                                     <td>
-                                        {{ $log->tracking_code }}
+                                        <a href="javascript:void(0)">{{ $log->action }}</a>
+                                    </td>
+                                    <td>
+                                        {{ $log->remarks }}
+                                    </td>
+                                    <td>
+                                        {{ $log->created_at }}
                                     </td>
                                 </tr>
                             @empty
@@ -96,7 +104,7 @@
         });
         $('#demo-foo-pagination').footable({
             filtering: {
-                enabled: true
+                enabled: false
             }
         });
     });

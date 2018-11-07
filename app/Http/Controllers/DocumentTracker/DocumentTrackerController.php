@@ -72,7 +72,7 @@ class DocumentTrackerController extends Controller
         $myDocument = DocumentTracker::where('tracking_code', $tracking_code)->first();
         $trackLogs  = DocumentTrackingLogs::where('tracking_code', $tracking_code)->orderBy('created_at', 'DESC')->get();
         
-        return view('doctracker.showDocument', compact('trackLogs'));
+        return view('doctracker.showDocument', compact('myDocument', 'trackLogs'));
     }
 
     /**
