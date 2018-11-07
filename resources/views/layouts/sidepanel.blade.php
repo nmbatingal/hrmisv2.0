@@ -27,21 +27,9 @@
                 <!-- Left navbar-header -->
                 <h3 class="menu-title">Document Tracker</h3>
                 <ul class="sidebar-menu">
-                    <li><a href="{{ route('doctracker.index') }}">Dashboard</a></li>
-                    <li class="menu">
-                        <a href="javascript:void(0)" 
-                           class="{{ Request::is('hr/positions/*') ? 'active' : '' }}">
-                           Document Tracker <i class="fa fa-angle-left float-right"></i>
-                       </a>
-                        <!-- .Second level -->
-                        <ul class="sub-menu"
-                            {{ Request::is('hr/positions/*') ? 'style=display:block;' : '' }}
-                            >
-                            <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
-                            <li><a href="{{ route('doctracker.create') }}">Create Tracker</a></li>
-                        </ul>
-                        <!-- /.Second level -->
-                    </li>
+                    <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
+                    <li><a href="{{ route('doctracker.create') }}">Create Tracker</a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>

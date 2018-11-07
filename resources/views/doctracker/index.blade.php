@@ -53,8 +53,10 @@
                     </div>
                 </form>
 
+                {!! $img !!}
+
                 <div class="table-responsive-md m-t-20">
-                    <table id="demo-foo-pagination" class="table table-bordered table-hover table-striped table-sm" data-paging="true" data-paging-size="5" data-toggle-column="first">
+                    <table id="demo-foo-pagination" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr>
                                 <th>Tracking Code</th>

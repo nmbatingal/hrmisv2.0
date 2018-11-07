@@ -13,8 +13,10 @@ class CodeTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql')->create('_code_table', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('code_table', function (Blueprint $table) {
+            $table->increments('id');
             $table->char('doc_code', 30)->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,6 +27,6 @@ class CodeTable extends Migration
      */
     public function down()
     {
-        Schema::connection('mysql')->dropIfExists('_code_table');
+        Schema::connection('mysql2')->dropIfExists('code_table');
     }
 }

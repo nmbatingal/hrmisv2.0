@@ -50,22 +50,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse( $myDocuments as $document )
+                            @forelse( $trackLogs as $log )
                                 <tr>
                                     <td>
-                                        <a href="{{ route('doctracker.showdocument', $document->tracking_code)}}">{{ $document->tracking_code }}</a>
+                                        <a href="javascript:void(0)">{{ $log->tracking_code }}</a>
                                     </td>
                                     <td>
-                                        {{ $document->subject }}
+                                        {{ $log->tracking_code }}
                                     </td>
                                     <td>
-                                        {{ $document->date_of_document }}
+                                        {{ $log->tracking_code }}
                                     </td>
                                     <td>
-                                        {{ $document->documentType->document_name }}
+                                        {{ $log->tracking_code }}
                                     </td>
                                     <td>
-                                        {{ $document->tracking_date }}
+                                        {{ $log->tracking_code }}
                                     </td>
                                 </tr>
                             @empty

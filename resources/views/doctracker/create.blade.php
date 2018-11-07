@@ -27,7 +27,7 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">Document Tracker</a></li>
             <li class="breadcrumb-item active">Create New Tracker</li>
         </ol>
     </div>
@@ -52,7 +52,7 @@
                     <h3 class="text-info"><i class="fa fa-exclamation-circle"></i> Information</h3> This is an example top alert. You can edit what u wish. Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.
                 </div>
 
-                <form action="{{ route('submit') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{ route('doctracker.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-body">
                         <!-- PERSONAL INFORMATION ROW -->
@@ -116,6 +116,44 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Routed by</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control custom-select" name="routedBy" disabled>
+                                            <option value="">-- Select action --</option>
+                                            @forelse( $userSelf as $user )
+                                                @if ( $user->id == Auth::user()->id )
+                                                    <option value="{{ $user->id }}" selected>{{ $user->full_name }}</option>
+                                                @else
+                                                    <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+                                                @endif
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                        <input type="hidden" name="routedBy" value="{{ Auth::user()->id }}">
+                                        <small class="form-control-feedback">&nbsp;</small> 
+                                    </div>
+                                </div>
+
+                                <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Routing Division</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control custom-select" name="routeDiv" disabled>
+                                            <option value="">-- Select action --</option>
+                                            @forelse( $offices as $office )
+                                                @if ( $office->id == Auth::user()->office_id )
+                                                    <option value="{{ $office->id }}" selected>{{ $office->division_name }}</option>
+                                                @else
+                                                    <option value="{{ $office->id }}">{{ $office->division_name }}</option>
+                                                @endif
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                        <input type="hidden" name="routeDiv" value="{{ Auth::user()->office_id }}">
+                                        <small class="form-control-feedback">&nbsp;</small> 
+                                    </div>
+                                </div>
+
+                                <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Action</label>
                                     <div class="col-md-10">
                                         <select class="form-control custom-select" name="action" required>
@@ -134,8 +172,7 @@
                                     <div class="form-group row m-b-0">
                                         <label class="control-label text-right col-md-2">Route To</label>
                                         <div class="col-md-10">
-                                            <select class="select2 form-control custom-select" name="routeToOffice" required>
-                                                <option>Select office</option>
+                                            <select class="select2 form-control custom-select" name="routeToOffice">
                                                 @forelse( $offices as $office )
                                                     <option value="{{ $office->id }}">{{ $office->division_name }}</option>
                                                 @empty
@@ -148,7 +185,8 @@
                                     <div class="form-group row m-b-20">
                                         <label class="control-label text-right col-md-2"></label>
                                         <div class="col-md-10">
-                                            <select id="recipient" class="select2 form-control select2-multiple" name="recipient[]" multiple="multiple" data-placeholder="Choose">
+                                            <select id="recipient" class="select2 form-control select2-multiple" name="recipient[]" multiple="multiple">
+                                                <option value="">Select office</option>
                                             </select>
                                             <br><small class="form-control-feedback">Leave blank if document will be routed to whole division.</small> 
                                         </div>
@@ -159,7 +197,7 @@
                                     <label class="control-label text-right col-md-2">Note</label>
                                     <div class="col-md-10">
                                         <textarea class="form-control" name="note" rows="4"></textarea>
-                                        <small class="form-control-feedback">&nbsp;</small> 
+                                        <small class="form-control-feedback">Additional notes on routing the document.</small> 
                                     </div>
                                 </div>
                             </div>
@@ -189,20 +227,22 @@
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">
-    $("select[name=routeToOffice]").change(function(){
-        
-        var office_id = $(this).val();
-        var token = $("input[name=_token]").val();
+    $(document).ready(function() {
+        $("select[name=routeToOffice]").change(function(){
+            
+            var office_id = $(this).val();
+            var token = $("input[name=_token]").val();
 
-        $.ajax({
-            method: 'POST',
-            url: "{{ route('doctracker.recipientlist') }}",
-            data: { office_id:office_id, _token:token},
-            success: function(data) {
-                $("select#recipient").attr('disabled', false);
-                $("select#recipient").html('');
-                $("select#recipient").html(data.options);
-            }
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('doctracker.recipientlist') }}",
+                data: { office_id:office_id, _token:token},
+                success: function(data) {
+                    $("select#recipient").attr('disabled', false);
+                    $("select#recipient").html('');
+                    $("select#recipient").html(data.options);
+                }
+            });
         });
     });
 </script>

@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DocumentTrackingLogs extends Model
 {
-    use SoftDeletes;
-
     protected $connection = "mysql2";
     protected $table = "document_tracking_logs";
 
@@ -20,6 +18,7 @@ class DocumentTrackingLogs extends Model
      * @var array
      */
     protected $fillable = [
+        'code',
         'tracking_code',
         'action',
         'sender_id',
@@ -28,6 +27,11 @@ class DocumentTrackingLogs extends Model
         'remarks',
         'attachment',
     ];
+
+    public function documentCode()
+    {
+        return $this->belongsTo(DocumentTracker::class, 'code', 'code');
+    }
 
     public function documentTracker()
     {

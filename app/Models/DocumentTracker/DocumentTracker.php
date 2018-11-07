@@ -2,7 +2,9 @@
 
 namespace App\Models\DocumentTracker;
 
+use Auth;
 use App\User;
+use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTypes;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +30,7 @@ class DocumentTracker extends Model
         'code',
         'tracking_code',
         'user_id',
+        'office_id',
         'doc_type_id',
         'subject',
         'details',
@@ -44,5 +47,25 @@ class DocumentTracker extends Model
     public function userEmployee()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function userDivision()
+    {
+        return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    public function scopeMyDocuments($query)
+    {
+        return $query->where('user_id', Auth::user()->id);
+    }
+
+    public function getDateOfDocumentAttribute()
+    {
+        return Carbon::parse($this->document_date)->format('M-d-Y');
+    }
+
+    public function getTrackingDateAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('M-d-Y, h:i A');
     }
 }

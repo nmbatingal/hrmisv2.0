@@ -33,4 +33,9 @@ class Office extends Model
     {
         return $this->belongsTo(User::class, 'receiver_id', 'id');
     }
+
+    public function order()
+    {
+        return "<asdasds>";
+    }
 }

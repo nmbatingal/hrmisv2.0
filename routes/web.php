@@ -24,7 +24,9 @@ Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name
  * DOCUMENT TRACKER SYSTEM
  *
  */
+Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
 Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
+Route::get('/doctracker/mydocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showdocument');
 Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@showEmployeeList')->name('doctracker.recipientlist');
 Route::resource('/doctracker', 'DocumentTracker\DocumentTrackerController');
 
@@ -41,6 +43,11 @@ Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
  * SAMPLE ROUTES
  *
  */
-Route::post('/send', function(Request $request) {
-	return dd($request);
+Route::get('/send', function(Request $request) {
+	
+    $office = App\Office::find(2)->first();
+	
+	return json_encode($office);
+
+	// return dd($request);
 })->name('submit');
