@@ -34,8 +34,8 @@ class Office extends Model
         return $this->belongsTo(User::class, 'receiver_id', 'id');
     }
 
-    public function order()
+    public function getOfficeFullTitleAttribute()
     {
-        return "<asdasds>";
+        return "{$this->division_name} ({$this->div_acronym})";
     }
 }

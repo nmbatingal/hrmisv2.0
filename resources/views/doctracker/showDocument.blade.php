@@ -37,9 +37,92 @@
                 <h4 class="card-title">Tracking Code: {{ $myDocument->tracking_code }}
                     <a href="{{ route('doctracker.create') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
                 </h4>
-                <p class="card-text">List of documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to be tracked.</p>
+                <p class="card-text m-b-40">List of documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to be tracked.</p>
 
+                    <a href="javascript:void(0);" class="btn btn-rounded btn-info">Update</a>
+                    <a href="javascript:void(0);" class="btn btn-rounded btn-danger">Close</a>
 
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <h3 class="box-title">Routing Details</h3>
+                        <hr class="m-t-0 m-b-40">
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2 p-t-5">Subject:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" value="{{ $myDocument->subject }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4 p-t-5">Document Type:</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" value="{{ $myDocument->documentType->document_name }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-3 p-t-5">Document Date:</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{ $myDocument->dateOfDocument }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4 p-t-5">Routed By:</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->fullName }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-3 p-t-5">Division:</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{ $myDocument->userDivision->officeFullTitle }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2 p-t-5">Details:</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" rows="4" disabled>{{ $myDocument->details }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">Attachments:</label>
+                                    <div class="col-md-10">
+                                        <p class="form-control-static">
+                                            <a href="javascript:void(0)" class="text-underlined p-r-20">
+                                                <i class="fas fa-file-pdf"></i> {{ $myDocument->subject }}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
                 <h4 class="card-title m-t-40">Tracking Log</h4>
                 <div class="table-responsive-md">

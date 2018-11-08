@@ -46,7 +46,7 @@
                                 <th>Subject</th>
                                 <th>Document date</th>
                                 <th>Document type</th>
-                                <th>Tracking Date</th>
+                                <th>Date tracked</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,6 +57,9 @@
                                     </td>
                                     <td>
                                         {{ $document->subject }}
+                                        @if ( !is_null($document->attachment) )
+                                            <span class="float-right"><i class="fas fa-file-pdf"></i></span>
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $document->date_of_document }}
