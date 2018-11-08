@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\DocumentTracker;
 
-use Carbon\Carbon;
+use Auth;
 use App\User;
 use App\Office;
+use Carbon\Carbon;
 use App\Models\DocumentTracker\CodeTable;
 use App\Models\DocumentTracker\DocumentTypes;
 use App\Models\DocumentTracker\DocumentTracker;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
-use CodeItNow\BarcodeBundle\Utils\QrCode;
-use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,32 +22,18 @@ class DocumentTrackerController extends Controller
      */
     public function index()
     {
-        $barcode = new BarcodeGenerator();
-        $barcode->setText('201800001');
-        $barcode->setType(BarcodeGenerator::Code39);
-        $barcode->setLabel('TSS-2018-10-31-00001');
-        //$barcode->setScale(2);
-        $barcode->setThickness(30);
-        $barcode->setFontSize(8);
-        $code = $barcode->generate();
+        $documents = [];
 
-        $img = '<img src="data:image/png;base64,'.$code.'" height="45px" />';
+        return view('doctracker.index', compact('documents'));
+    }
 
-
-        $qrCode = new QrCode();
-        $qrCode
-            ->setText('TSS-2018-10-31-00001')
-            ->setSize(50)
-            ->setPadding(8)
-            ->setErrorCorrection('high')
-            //->setForegroundColor(array('r' => 0, 'g' => 0, 'b' => 0, 'a' => 0))
-            //->setBackgroundColor(array('r' => 255, 'g' => 255, 'b' => 255, 'a' => 0))
-            // ->setLabel('TSS-2018-10-31-00001')
-            ->setLabelFontSize(5)
-            ->setImageType(QrCode::IMAGE_TYPE_PNG);
-        $qrimg = '<img src="data:'.$qrCode->getContentType().';base64,'.$qrCode->generate().'" />';
-
-        return view('doctracker.index', compact('img', 'qrimg'));
+    public function search(Request $request)
+    {
+        $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$request->code)
+                                            ->orWhere('tracking_code', 'LIKE', '%'. $request->get('code'))
+                                            ->orderBy('created_at', 'DESC')->get();
+        
+        return view('doctracker.index', compact('documents'));
     }
 
     /**
@@ -59,7 +44,7 @@ class DocumentTrackerController extends Controller
     public function myDocuments()
     {
         $myDocuments = DocumentTracker::myDocuments()->orderBy('created_at', 'DESC')->get();
-        return view('doctracker.mydocuments', compact('myDocuments'));
+        return view('doctracker.myDocuments', compact('myDocuments'));
     }
 
     /**
@@ -73,6 +58,32 @@ class DocumentTrackerController extends Controller
         $trackLogs  = DocumentTrackingLogs::where('tracking_code', $tracking_code)->orderBy('created_at', 'DESC')->get();
         
         return view('doctracker.showDocument', compact('myDocument', 'trackLogs'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function receivedDocuments()
+    {
+        $receivedDocuments = DocumentTrackingLogs::where('recipient_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        
+        return view('doctracker.receivedDocuments', compact('receivedDocuments'));
+        // return dd($receivedDocuments);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showReceivedDocument($tracking_code)
+    {
+        $myDocument = DocumentTracker::where('tracking_code', $tracking_code)->first();
+        $trackLogs  = DocumentTrackingLogs::where('tracking_code', $tracking_code)->orderBy('created_at', 'DESC')->get();
+        
+        return view('doctracker.showReceivedDocument', compact('myDocument', 'trackLogs'));
     }
 
     /**
@@ -137,7 +148,7 @@ class DocumentTrackerController extends Controller
                 $tracker->sender_id      = $request->routedBy;
                 $tracker->office_id      = $request->routeToOffice;
                 $tracker->recipient_id   = $recipient;
-                $tracker->remarks        = $request->note;
+                $tracker->notes          = $request->note;
                 $tracker->save();
             }
         }

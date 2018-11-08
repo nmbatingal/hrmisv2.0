@@ -29,6 +29,7 @@
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
+                    <li><a href="{{ route('doctracker.receivedDocuments') }}">Received Documents</a></li>
                     <li><a href="{{ route('doctracker.create') }}">Create Tracker</a></li>
                 </ul>
                 <!-- Left navbar-header end -->

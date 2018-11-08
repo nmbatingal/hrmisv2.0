@@ -145,10 +145,11 @@
                     <table id="demo-foo-pagination" class="table table-hover color-table dark-table" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr class="footable-filtering">
-                                <th>Action</th>
-                                <th>Action by</th>
+                                <th>Routed by</th>
+                                <th>Routing Division</th>
                                 <th>Recipient</th>
-                                <th>Notes</th>
+                                <th>Action</th>
+                                <th>Note</th>
                                 <th>Date & Time</th>
                             </tr>
                         </thead>
@@ -156,22 +157,22 @@
                             @forelse( $trackLogs as $log )
                                 <tr>
                                     <td>
-                                        <strong>{{ $log->action }}</strong>
+                                        {{ $log->tracking_code }}
                                     </td>
                                     <td>
-                                        {{ $log->userEmployee->fullName }}
-                                        <br><small>{{ $log->office->division_name }}</small>
+                                        {{ $log->tracking_code }}
                                     </td>
                                     <td>
-                                        {{ $log->recipient->fullName }}
-                                        <br><small>{{ $log->office->division_name }}</small>
+                                        {{ $log->tracking_code }}
                                     </td>
                                     <td>
-                                        {{ $log->notes }}
+                                        <a href="javascript:void(0)">{{ $log->action }}</a>
                                     </td>
                                     <td>
-                                        {{ $log->dateAction }}
-                                        <br>({{ $log->diffForHumans }})
+                                        {{ $log->remarks }}
+                                    </td>
+                                    <td>
+                                        {{ $log->created_at }}
                                     </td>
                                 </tr>
                             @empty

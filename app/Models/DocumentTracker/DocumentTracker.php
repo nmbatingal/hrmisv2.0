@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTypes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
 
 class DocumentTracker extends Model
 {
@@ -66,6 +67,19 @@ class DocumentTracker extends Model
 
     public function getTrackingDateAttribute()
     {
-        return Carbon::parse($this->created_at)->format('M-d-Y, h:i A');
+        return Carbon::parse($this->created_at)->toDayDateTimeString();
+    }
+
+    public function getBarcodeLogoAttribute()
+    {
+        $barcode = new BarcodeGenerator();
+        $barcode->setText($this->code);
+        $barcode->setType(BarcodeGenerator::Code39);
+        $barcode->setLabel($this->tracking_code);
+        $barcode->setThickness(30);
+        $barcode->setFontSize(8);
+        $code = $barcode->generate();
+        
+        return '<img src="data:image/png;base64,'.$code.'" height="45px" />';
     }
 }

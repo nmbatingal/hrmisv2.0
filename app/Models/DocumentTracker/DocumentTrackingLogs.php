@@ -3,6 +3,7 @@
 namespace App\Models\DocumentTracker;
 
 use App\User;
+use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTracker;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,7 @@ class DocumentTrackingLogs extends Model
         'sender_id',
         'office_id',
         'recipient_id',
-        'remarks',
+        'notes',
         'attachment',
     ];
 
@@ -40,6 +41,26 @@ class DocumentTrackingLogs extends Model
 
     public function userEmployee()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'sender_id', 'id');
+    }
+
+    public function recipient()
+    {
+        return $this->belongsTo(User::class, 'recipient_id', 'id');
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    public function getDateActionAttribute()
+    {
+        return Carbon::parse($this->created_at)->toDayDateTimeString();
+    }
+
+    public function getDiffForHumansAttribute()
+    {
+        return Carbon::parse($this->created_at)->diffForHumans();
     }
 }

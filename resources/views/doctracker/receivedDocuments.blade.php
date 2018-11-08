@@ -11,12 +11,13 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white">Document Tracker</h4>
+        <h4 class="text-white">My Documents</h4>
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Document Tracker</li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">Document Tracker</a></li>
+            <li class="breadcrumb-item active">My Documents</li>
         </ol>
     </div>
 </div>
@@ -32,30 +33,11 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Document Tracker
-                    <a href="javascript:void(0)" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
-                </h4>
-                <p class="card-text">Search for a document using tracking code or <a href="javascript:void(0)">add a new document</a> to track.</p>
-                <form action="{{ route('doctracker.search') }}" class="form-horizontal" method="GET">
-                    <div class="row p-t-20">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <div class="input-group p-0">
-                                    <input type="text" class="form-control" name="code" placeholder="Enter tracking code" value="{{ request('code') }}" required autofocus>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit"><i class="icon-magnifier"></i></button>
-                                    </div>
-                                </div>
-                                <small class="form-control-feedback">&nbsp; </small> 
-                            </div>
-                        </div>
-                        <!--/span-->
-                    </div>
-                </form>
+                <h4 class="card-title">Received Documents</h4>
+                <p class="card-text">List of documents with tracking codes. Search a document using tracking code.</p>
 
-                <h5 class="card-subtitle">Showing {{ count($documents) }} results</h5>
-                <div class="table-responsive-md m-t-10">
-                    <table id="demo-foo-pagination" class="table table-hover color-table dark-table" data-paging="true" data-paging-size="5">
+                <div class="table-responsive-md m-t-20">
+                    <table id="demo-foo-pagination" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr>
                                 <th>Tracking Code</th>
@@ -67,7 +49,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ( $documents as $document )
+                            @forelse( $receivedDocuments as $document )
                                 <tr>
                                     <td>
                                         <a href="javascript:void(0)">{{ $document->tracking_code }}</a>
@@ -122,7 +104,7 @@
         });
         $('#demo-foo-pagination').footable({
             filtering: {
-                enabled: false
+                enabled: true
             }
         });
     });

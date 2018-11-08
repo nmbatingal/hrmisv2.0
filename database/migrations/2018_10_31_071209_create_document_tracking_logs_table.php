@@ -17,11 +17,11 @@ class CreateDocumentTrackingLogsTable extends Migration
             $table->increments('id');
             $table->char('code', 20)->index();
             $table->string('tracking_code')->index();
-            $table->enum('action', ['forwarded', 'received', 'closed', 'cancelled'])->nullable();
+            $table->enum('action', ['Forwarded', 'Received', 'Closed', 'Cancelled'])->nullable();
             $table->integer('sender_id')->unsigned()->nullable();
             $table->integer('office_id')->unsigned()->nullable();
             $table->integer('recipient_id')->unsigned()->nullable();
-            $table->text('remarks')->nullable();
+            $table->text('notes')->nullable();
             $table->text('attachment')->nullable();
             $table->timestamps();
 

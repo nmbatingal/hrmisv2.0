@@ -25,8 +25,13 @@ Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name
  *
  */
 Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
+Route::get('/doctracker/dashboard/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');
 Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 Route::get('/doctracker/mydocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showdocument');
+Route::get('/doctracker/receiveddocuments', 'DocumentTracker\DocumentTrackerController@receivedDocuments')
+			->name('doctracker.receivedDocuments');
+Route::get('/doctracker/receiveddocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showReceivedDocument')
+			->name('doctracker.showReceivedDocument');
 Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@showEmployeeList')->name('doctracker.recipientlist');
 Route::resource('/doctracker', 'DocumentTracker\DocumentTrackerController');
 
