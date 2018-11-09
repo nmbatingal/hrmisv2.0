@@ -7,6 +7,7 @@ use App\User;
 use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTypes;
+use App\Models\DocumentTracker\DocumentTrackingLogs;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
@@ -53,6 +54,17 @@ class DocumentTracker extends Model
     public function userDivision()
     {
         return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(DocumentTrackingLogs::class, 'tracking_code', 'tracking_code');
+    }
+
+    public function scopeLastTracked($query)
+    {
+        $log =  $this->logs()->orderBy('created_at', 'DESC')->first();
+        return "{$log->dateAction} <br>({$log->diffForHumans})";
     }
 
     public function scopeMyDocuments($query)

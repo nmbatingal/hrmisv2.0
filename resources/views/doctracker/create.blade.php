@@ -158,10 +158,10 @@
                                     <div class="col-md-10">
                                         <select class="form-control custom-select" name="action" required>
                                             <option value="">-- Select action --</option>
-                                            <option value="forwarded">Forwarded</option>
-                                            <option value="received">Received</option>
-                                            <option value="closed">Closed</option>
-                                            <option value="cancelled">Cancelled</option>
+                                            <option value="Forward">Forward</option>
+                                            <option value="Receive">Receive</option>
+                                            <option value="Close">Close</option>
+                                            <option value="Cancel">Cancel</option>
                                         </select>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
@@ -209,7 +209,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="float-right">
-                                    <button type="submit" class="btn btn-lg btn-success">Submit</button>
+                                    <button type="submit" class="btn btn-lg btn-success"><i class="icon-share-alt"></i> Submit</button>
                                     <button type="button" class="btn btn-lg btn-inverse">Cancel</button>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
 @section('scripts')
 <script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
-
+<!-- CUSTOM JS CODES -->
 <script type="text/javascript">
     $(document).ready(function() {
         $("select[name=routeToOffice]").change(function(){
@@ -254,7 +254,7 @@
         });
 
         $('select[name=action]').on('change', function(){
-            if ( this.value == "forwarded") {
+            if ( this.value == "Forward") {
                 $('div#routeAction').css('display', 'block');
             } else {
                 $('div#routeAction').css('display', 'none');

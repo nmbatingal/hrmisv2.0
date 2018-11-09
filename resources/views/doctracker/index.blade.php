@@ -53,41 +53,57 @@
                     </div>
                 </form>
 
-                <h5 class="card-subtitle">Showing {{ count($documents) }} results</h5>
+                <h5 class="card-subtitle">Showing {{ count($documents) }} results for tracking code <u>{{ request('code') }}</u></h5>
                 <div class="table-responsive-md m-t-10">
-                    <table id="demo-foo-pagination" class="table table-hover color-table dark-table" data-paging="true" data-paging-size="5">
+                    <table id="demo-foo-pagination" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr>
-                                <th>Tracking Code</th>
-                                <th>Subject</th>
+                                <th>Tracking code</th>
                                 <th>Action</th>
                                 <th>Action by</th>
                                 <th>Recipient</th>
-                                <th>Date & Time</th>
+                                <th>Subject</th>
+                                <th>Date tracked</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ( $documents as $document )
                                 <tr>
                                     <td>
-                                        <a href="javascript:void(0)">{{ $document->tracking_code }}</a>
+                                        <a href="javascript:void(0)">
+                                            {{ $document->tracking_code }}
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong>{{ $document->action }}</strong>
+                                        @if ( $document->action == 'Forward' )
+                                            @if ( $document->recipient_id == Auth::user()->id )
+                                                @if (  !$document->recipient_received )
+                                                    <br>
+                                                    <button class="btn btn-sm btn-primary" 
+                                                            onclick="receiveDocument(this)"
+                                                            data-log-id="{{ $document->id }}" >
+                                                        <i class="mdi mdi-file-check"></i> Receive
+                                                    </button>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $document->userEmployee->fullName }}
+                                        <br><small>{{ $document->office->division_name }}</small>
+                                    </td>
+                                    <td>
+                                        @if ( $document->recipient )
+                                            {{ $document->recipient->fullName }}
+                                            <br><small>{{ $document->office->division_name }}</small>
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $document->documentCode->subject }}
                                         @if ( !is_null($document->documentCode->attachment) )
                                             <span class="float-right"><i class="fas fa-file-pdf"></i></span>
                                         @endif
-                                    </td>
-                                    <td>
-                                        <strong>{{ $document->action }}</strong>
-                                    </td>
-                                    <td>
-                                        {{ $document->userEmployee->fullName }}
-                                        <br><small>{{ $document->office->div_acronym }}</small>
-                                    </td>
-                                    <td>
-                                        {{ $document->recipient->fullName }}
-                                        <br><small>{{ $document->office->div_acronym }}</small>
                                     </td>
                                     <td>
                                         {{ $document->dateAction }}
@@ -126,6 +142,24 @@
             }
         });
     });
+</script>
+<script>
+    function receiveDocument(document) {
 
+        var log_id = document.getAttribute("data-log-id");
+        var token = $("input[name=_token]").val();
+
+        $.ajax({
+            method: 'POST',
+            url: "{{ route('doctracker.recieveForwaredDocument') }}",
+            data: { log_id:log_id, _token:token},
+            success: function(data) {
+                if ( data.result )
+                {
+                    window.location = data.url;
+                }
+            }
+        });
+    }
 </script>
 @endsection

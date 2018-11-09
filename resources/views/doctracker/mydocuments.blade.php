@@ -44,16 +44,16 @@
                             <tr class="footable-filtering">
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
-                                <th>Document date</th>
                                 <th>Document type</th>
                                 <th>Date tracked</th>
+                                <th>Last tracked</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse( $myDocuments as $document )
                                 <tr>
                                     <td>
-                                        <a href="{{ route('doctracker.showdocument', $document->tracking_code)}}">{{ $document->tracking_code }}</a>
+                                        <a href="{{ route('doctracker.showdocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
                                     </td>
                                     <td>
                                         {{ $document->subject }}
@@ -62,13 +62,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $document->date_of_document }}
-                                    </td>
-                                    <td>
                                         {{ $document->documentType->document_name }}
                                     </td>
                                     <td>
                                         {{ $document->tracking_date }}
+                                    </td>
+                                    <td>
+                                        {!! $document->lastTracked() !!}
                                     </td>
                                 </tr>
                             @empty

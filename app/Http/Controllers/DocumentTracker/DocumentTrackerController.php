@@ -27,6 +27,11 @@ class DocumentTrackerController extends Controller
         return view('doctracker.index', compact('documents'));
     }
 
+    /**
+     * Display a listing of the resources search by a user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function search(Request $request)
     {
         $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$request->code)
@@ -37,7 +42,7 @@ class DocumentTrackerController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the documents created by a specific user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -48,7 +53,7 @@ class DocumentTrackerController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -61,7 +66,7 @@ class DocumentTrackerController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the documents forwarded by a user to a recipient.
      *
      * @return \Illuminate\Http\Response
      */
@@ -70,20 +75,22 @@ class DocumentTrackerController extends Controller
         $receivedDocuments = DocumentTrackingLogs::where('recipient_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
         
         return view('doctracker.receivedDocuments', compact('receivedDocuments'));
-        // return dd($receivedDocuments);
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a specific received document.
      *
      * @return \Illuminate\Http\Response
      */
     public function showReceivedDocument($tracking_code)
     {
+        $offices  = Office::all();
+        $users    = User::employee()->notSelf()->get();
+        $userSelf = User::employee()->get();
         $myDocument = DocumentTracker::where('tracking_code', $tracking_code)->first();
         $trackLogs  = DocumentTrackingLogs::where('tracking_code', $tracking_code)->orderBy('created_at', 'DESC')->get();
         
-        return view('doctracker.showReceivedDocument', compact('myDocument', 'trackLogs'));
+        return view('doctracker.showReceivedDocument', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
     }
 
     /**
@@ -108,7 +115,6 @@ class DocumentTrackerController extends Controller
      */
     public function store(Request $request)
     {
-
         /****** Create tracking code *******/
         $office          = Office::find($request->routeDiv)->first()->div_acronym;
         $seriesCode      = CodeTable::first()->doc_code;
@@ -117,7 +123,6 @@ class DocumentTrackerController extends Controller
         $fullDate        = Carbon::now()->toDateString();
         $tracking_code   = $office .'-'. $fullDate .'-'. $seriesCode;
         /****** End Create tracking code *******/
-
 
         $document                = new DocumentTracker;
         $document->code          = $code;
@@ -155,6 +160,33 @@ class DocumentTrackerController extends Controller
 
 
         return dd($request);
+    }
+
+    public function forwardDocument(Request $request)
+    {
+        if ( $request->has('recipient') )
+        {
+            $recipients = $request->recipient;
+        }
+        else {
+            $recipients = [0=>null];
+        }
+
+        foreach ($recipients as $i => $recipient) 
+        {
+            $tracker                 = new DocumentTrackingLogs;
+            $tracker->code           = $request->code;
+            $tracker->tracking_code  = $request->tracking_code;
+            $tracker->action         = $request->action;
+            $tracker->sender_id      = $request->routedBy;
+            $tracker->office_id      = $request->routeToOffice;
+            $tracker->recipient_id   = $recipient;
+            $tracker->notes          = $request->note;
+            $tracker->save();
+        }
+
+        return redirect()->route('doctracker.showReceivedDocument', $tracker->tracking_code);
+        // return $recipients;
     }
 
     /**
@@ -203,7 +235,7 @@ class DocumentTrackerController extends Controller
     }
 
     /*** JS ***/
-    public function showEmployeeList(Request $request)
+    public function recipientList(Request $request)
     {   
         $office    = $request->office_id;
         $employees = User::employee()->employeeOffice($office)->notSelf()->get();
@@ -212,6 +244,38 @@ class DocumentTrackerController extends Controller
         if($request->ajax())
         {
             return response()->json(['options' => $data]);
+        } 
+    }
+
+    /*** JS ***/
+    public function recieveForwaredDocument(Request $request)
+    {   
+        $data   = false;
+        $log_id = $request->log_id;
+
+        // UPDATE TRACKER LOG TO RECEIVE FORWARED DOCUMENT
+        $logger = DocumentTrackingLogs::find($log_id);
+        $logger->recipient_received = true;
+        $tracking_code = $logger->tracking_code;
+
+        if ( $logger->save() )
+        {
+            $newLog = new DocumentTrackingLogs;
+            $newLog->code = $logger->code;
+            $newLog->tracking_code = $tracking_code;
+            $newLog->action     = "Receive";
+            $newLog->sender_id  = Auth::user()->id;
+            $newLog->office_id  = Auth::user()->office_id;
+            
+            if ( $newLog->save() )
+            {
+                $data = true;
+            }
+        }
+
+        if($request->ajax())
+        {
+            return response()->json(['result' => $data, 'url' => route('doctracker.showReceivedDocument', $tracking_code)]);
         } 
     }
 }

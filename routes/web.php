@@ -28,11 +28,11 @@ Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@i
 Route::get('/doctracker/dashboard/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');
 Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 Route::get('/doctracker/mydocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showdocument');
-Route::get('/doctracker/receiveddocuments', 'DocumentTracker\DocumentTrackerController@receivedDocuments')
-			->name('doctracker.receivedDocuments');
-Route::get('/doctracker/receiveddocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showReceivedDocument')
-			->name('doctracker.showReceivedDocument');
-Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@showEmployeeList')->name('doctracker.recipientlist');
+Route::get('/doctracker/receiveddocuments', 'DocumentTracker\DocumentTrackerController@receivedDocuments')->name('doctracker.receivedDocuments');
+Route::get('/doctracker/receiveddocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showReceivedDocument')->name('doctracker.showReceivedDocument');
+Route::post('/doctracker/receiveddocuments/receive', 'DocumentTracker\DocumentTrackerController@recieveForwaredDocument')->name('doctracker.recieveForwaredDocument');
+Route::post('/doctracker/receiveddocuments/forwardDocument', 'DocumentTracker\DocumentTrackerController@forwardDocument')->name('doctracker.forwardDocument');
+Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@recipientList')->name('doctracker.recipientlist');
 Route::resource('/doctracker', 'DocumentTracker\DocumentTrackerController');
 
 /*
@@ -49,10 +49,10 @@ Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
  *
  */
 Route::get('/send', function(Request $request) {
-	
+    
     $office = App\Office::find(2)->first();
-	
-	return json_encode($office);
+    
+    return json_encode($office);
 
-	// return dd($request);
+    // return dd($request);
 })->name('submit');

@@ -45,11 +45,19 @@
                         <hr class="m-t-0 m-b-40">
                         <!--/row-->
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="control-label text-right col-md-2 p-t-5">Code:</label>
-                                    <div class="col-md-10">
-                                        {!! $myDocument->barcodeLogo !!} 
+                                    <label class="control-label text-right col-md-4 p-t-5">Routed By:</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->fullName }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-3 p-t-5">Division:</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{ $myDocument->userDivision->officeFullTitle }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -86,25 +94,6 @@
                         </div>
                         <!--/row-->
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-4 p-t-5">Routed By:</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->fullName }}" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-3 p-t-5">Division:</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" value="{{ $myDocument->userDivision->officeFullTitle }}" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/row-->
-                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-2 p-t-5">Details:</label>
@@ -129,20 +118,36 @@
                                 </div>
                             </div>
                         </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2 p-t-5">Code:</label>
+                                    <div class="col-md-10">
+                                        {!! $myDocument->barcodeLogo !!} 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">Action:</label>
+                                    <div class="col-md-10">
+                                        <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+                                        <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a>
+                                        <a href="javascript:void(0);" class="btn btn-outline-danger"><i class="icon-lock"></i> Close Tracker</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
 
-                <div class="row m-t-10 m-b-40">
-                    <div class="offset-md-2 col-md-10">
-                        <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
-                        <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a>
-                        <a href="javascript:void(0);" class="btn btn-outline-danger"><i class="icon-lock"></i> Close Tracker</a>
-                    </div>
-                </div>
-
                 <h4 class="card-title m-t-40">Tracking Log: <i>{{ $myDocument->tracking_code }}</i></h4>
                 <div class="table-responsive-md">
-                    <table id="demo-foo-pagination" class="table table-hover color-table dark-table" data-paging="true" data-paging-size="5">
+                    <table id="demo-foo-pagination" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr class="footable-filtering">
                                 <th>Action</th>
@@ -163,8 +168,10 @@
                                         <br><small>{{ $log->office->division_name }}</small>
                                     </td>
                                     <td>
-                                        {{ $log->recipient->fullName }}
-                                        <br><small>{{ $log->office->division_name }}</small>
+                                        @if ( $log->recipient )
+                                            {{ $log->recipient->fullName }}
+                                            <br><small>{{ $log->office->division_name }}</small>
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $log->notes }}
