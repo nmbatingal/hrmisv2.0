@@ -171,6 +171,8 @@
                                         @if ( $log->recipient )
                                             {{ $log->recipient->fullName }}
                                             <br><small>{{ $log->office->division_name }}</small>
+                                        @else
+                                            {{ $log->office->division_name }}
                                         @endif
                                     </td>
                                     <td>

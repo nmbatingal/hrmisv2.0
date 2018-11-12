@@ -34,7 +34,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">My Documents
-                    <a href="{{ route('doctracker.create') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+                    <a href="{{ route('doctracker.createTracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
                 </h4>
                 <p class="card-text">List of documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to be tracked.</p>
 

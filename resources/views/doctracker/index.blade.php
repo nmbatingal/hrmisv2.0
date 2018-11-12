@@ -151,7 +151,7 @@
 
         $.ajax({
             method: 'POST',
-            url: "{{ route('doctracker.recieveForwaredDocument') }}",
+            url: "{{ route('doctracker.recieveForwardedDocument') }}",
             data: { log_id:log_id, _token:token},
             success: function(data) {
                 if ( data.result )

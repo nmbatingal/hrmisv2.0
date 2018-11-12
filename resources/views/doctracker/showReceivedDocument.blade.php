@@ -29,7 +29,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">Document Tracker</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.mydocuments') }}">Received Documents</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.mydocuments') }}">Incoming Documents</a></li>
             <li class="breadcrumb-item active">{{ $myDocument->tracking_code }}</li>
         </ol>
     </div>
