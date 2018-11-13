@@ -49,8 +49,9 @@ class DocumentTrackerController extends Controller
      */
     public function myDocuments()
     {
-        $myDocuments = DocumentTracker::myDocuments()->orderBy('created_at', 'DESC')->get();
+        $myDocuments = DocumentTracker::myDocuments()->get();
         return view('doctracker.myDocuments', compact('myDocuments'));
+        // return $myDocuments;
     }
 
     /**
@@ -71,16 +72,16 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function incomingDocuments()
+    public function receivedDocuments()
     {
-        $incomingDocuments = DocumentTrackingLogs::where(function ($query) {
+        $receivedDocuments = DocumentTrackingLogs::where(function ($query) {
                                                         $query->where('action', "Forward")
-                                                              ->whereNull('recipient_id');
+                                                              ->where('recipient_id', true);
                                                     })
                                                     ->orWhere('recipient_id', Auth::user()->id)
                                                     ->orderBy('created_at', 'DESC')->get();
         
-        return view('doctracker.incomingDocuments', compact('incomingDocuments'));
+        return view('doctracker.receivedDocuments', compact('receivedDocuments'));
         // return dd($incomingDocuments);
 
     }
@@ -268,17 +269,31 @@ class DocumentTrackerController extends Controller
     {   
         $data   = false;
         $log_id = $request->log_id;
+        $logDetail = array();
 
         // UPDATE TRACKER LOG TO RECEIVE FORWARED DOCUMENT
-        $logger = DocumentTrackingLogs::find($log_id);
-        $logger->recipient_id       = Auth::user()->id;
+        $logger = DocumentTrackingLogs::where( function($query) use ($log_id) {
+                                            $query->where('action', 'Forward')
+                                                  ->where('recipient_received', false)
+                                                  ->where(function ($query) use ($log_id) {
+                                                        $query->where('id', '=', $log_id)
+                                                              ->orWhere('code', '=', $log_id)
+                                                              ->orWhere('tracking_code', '=', $log_id);
+                                                  });
+                                        })->orderBy('created_at', 'DESC')->first();
+
+        // Update document tracking log to update received field
         $logger->recipient_received = true;
         $tracking_code = $logger->tracking_code;
+        if ( is_null( $logger->recipient_id ) )
+        {
+            $logger->recipient_id = Auth::user()->id;
+        }
 
         if ( $logger->save() )
         {
             $newLog = new DocumentTrackingLogs;
-            $newLog->code = $logger->code;
+            $newLog->code          = $logger->code;
             $newLog->tracking_code = $tracking_code;
             $newLog->action        = "Receive";
             $newLog->sender_id     = Auth::user()->id;
@@ -286,13 +301,23 @@ class DocumentTrackerController extends Controller
             
             if ( $newLog->save() )
             {
-                $data = true;
+                // $logDetail = ['result' => $newLog, 'url' => route('doctracker.showReceivedDocument', $tracking_code)];
+                $logDetail = [
+                    'tracking_code'     => $logger->tracking_code,
+                    'received_by'       => $logger->recipient->fullName,
+                    'received_office'   => $logger->recipient->office->division_name,
+                    'from'              => $logger->userEmployee->fullName,
+                    'from_office'       => $logger->userEmployee->office->division_name,
+                    'subject'           => $logger->documentCode->subject,
+                    'datetime'          => $newLog->dateAction,
+                ];
             }
         }
 
         if($request->ajax())
         {
-            return response()->json(['result' => $data, 'url' => route('doctracker.showReceivedDocument', $tracking_code)]);
+            return response()->json($logDetail);
+            // return response()->json($logDetail);
         } 
     }
 }

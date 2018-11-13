@@ -47,6 +47,7 @@
                                 <th>Document type</th>
                                 <th>Date tracked</th>
                                 <th>Last tracked</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,6 +70,9 @@
                                     </td>
                                     <td>
                                         {!! $document->lastTracked() !!}
+                                    </td>
+                                    <td>
+                                        {!! $document->action !!}
                                     </td>
                                 </tr>
                             @empty
