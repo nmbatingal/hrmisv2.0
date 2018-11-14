@@ -110,9 +110,13 @@
                                     <label class="control-label text-right col-md-2">Attachments:</label>
                                     <div class="col-md-10">
                                         <p class="form-control-static">
-                                            <a href="javascript:void(0)" class="text-underlined p-r-20">
-                                                <i class="fas fa-file-pdf"></i> {{ $myDocument->subject }}
-                                            </a>
+                                            @forelse ( $myDocument->docAttachments as $file )
+                                                <a href="{{ asset($file->filepath) }}" target="_blank" class="text-underlined p-r-20">
+                                                    <i class="fas fa-file-pdf"></i> {{ $file->filename }}
+                                                </a><br>
+                                            @empty
+                                                <small>no attachments available</small>
+                                            @endforelse
                                         </p>
                                     </div>
                                 </div>
@@ -135,9 +139,8 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-2">Action:</label>
                                     <div class="col-md-10">
-                                        <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+                                        <a href="{{ route('print.barcode', $myDocument->id) }}" target="_blank" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
                                         <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a>
-                                        <a href="javascript:void(0);" class="btn btn-outline-danger"><i class="icon-lock"></i> Close Tracker</a>
                                     </div>
                                 </div>
                             </div>
@@ -146,6 +149,7 @@
                 </form>
 
                 <h4 class="card-title m-t-40">Tracking Log: <i>{{ $myDocument->tracking_code }}</i></h4>
+                <h6 class="card-subtitletitle">Order of log is from latest to oldest.</i></h6>
                 <div class="table-responsive-md">
                     <table id="demo-foo-pagination" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
                         <thead>
@@ -161,7 +165,7 @@
                             @forelse( $trackLogs as $log )
                                 <tr>
                                     <td>
-                                        <strong>{{ $log->action }}</strong>
+                                        {{ $log->action }}
                                     </td>
                                     <td>
                                         {{ $log->userEmployee->fullName }}
@@ -171,12 +175,17 @@
                                         @if ( $log->recipient )
                                             {{ $log->recipient->fullName }}
                                             <br><small>{{ $log->office->division_name }}</small>
-                                        @else
-                                            {{ $log->office->division_name }}
                                         @endif
                                     </td>
                                     <td>
                                         {{ $log->notes }}
+                                        <br><small>
+                                        @forelse ( $log->docAttachments as $file )
+                                            <a href="{{ asset($file->filepath) }}" target="_blank" class="text-underlined p-r-20">
+                                                <i class="icon-paper-clip"></i> {{ $file->filename }}
+                                            </a></small><br>
+                                        @empty
+                                        @endforelse
                                     </td>
                                     <td>
                                         {{ $log->dateAction }}

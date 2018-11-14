@@ -30,6 +30,7 @@
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
                     <li><a href="{{ route('doctracker.receivedDocuments') }}">Received Documents</a></li>
+                    <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>

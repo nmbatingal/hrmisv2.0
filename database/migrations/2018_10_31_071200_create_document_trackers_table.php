@@ -23,7 +23,6 @@ class CreateDocumentTrackersTable extends Migration
             $table->string('subject')->nullable();
             $table->text('details')->nullable();
             $table->string('keywords')->nullable();
-            $table->string('attachments')->nullable();
             $table->date('document_date')->nullable();
             $table->enum('doc_status', ['forwarded', 'completed', 'cancelled'])->nullable();
             $table->timestamps();

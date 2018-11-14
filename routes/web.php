@@ -16,8 +16,6 @@ use Illuminate\Http\Request;
 Route::get('/', function () { return redirect()->route('login'); })->name('home');
 
 Auth::routes();
-
-
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('/home', 'HomeController@index')->name('home');
@@ -25,10 +23,12 @@ Route::group(['middleware' => 'auth'], function() {
 
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
 	Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
-	Route::get('/doctracker/dashboard/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');
+	Route::get('/doctracker/logs', 'DocumentTracker\DocumentTrackerController@logs')->name('doctracker.logs');
+	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');
 	Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.createTracker');
-	Route::get('/doctracker/mydocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showdocument');
+	Route::get('/doctracker/mydocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showDocument');
+	Route::get('/doctracker/mydocuments/{id}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 	Route::get('/doctracker/receiveddocuments', 'DocumentTracker\DocumentTrackerController@receivedDocuments')->name('doctracker.receivedDocuments');
 	Route::get('/doctracker/receiveddocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showReceivedDocument')->name('doctracker.showReceivedDocument');
 	Route::post('/doctracker/receiveddocuments/receive', 'DocumentTracker\DocumentTrackerController@recieveForwardedDocument')->name('doctracker.recieveForwardedDocument');
@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/hr/applicants/list', 'Applicants\ApplicantsController@listOfApplicants')->name('applicants.list');
 	Route::resource('/hr/applicants', 'Applicants\ApplicantsController');
 	// ----------- HR-APPLICANTS SYSTEM ------------- //
+
 
 });
 /*

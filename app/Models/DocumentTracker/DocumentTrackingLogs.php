@@ -6,6 +6,7 @@ use App\User;
 use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTracker;
+use App\Models\DocumentTracker\DocumentTrackerAttachment;
 use Illuminate\Database\Eloquent\Model;
 
 class DocumentTrackingLogs extends Model
@@ -56,6 +57,11 @@ class DocumentTrackingLogs extends Model
     public function office()
     {
         return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    public function docAttachments()
+    {
+        return $this->hasMany(DocumentTrackerAttachment::class, 'tracklog_id', 'id');
     }
 
     public function getDateActionAttribute()

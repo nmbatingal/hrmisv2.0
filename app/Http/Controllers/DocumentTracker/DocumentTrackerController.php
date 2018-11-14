@@ -10,6 +10,7 @@ use App\Models\DocumentTracker\CodeTable;
 use App\Models\DocumentTracker\DocumentTypes;
 use App\Models\DocumentTracker\DocumentTracker;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
+use App\Models\DocumentTracker\DocumentTrackerAttachment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,9 +24,17 @@ class DocumentTrackerController extends Controller
     public function index()
     {
         $documents = [];
-
-        // return view('doctracker.index', compact('documents'));
         return view('doctracker.dashboard');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logs()
+    {
+        $documents = [];
+        return view('doctracker.logs', compact('documents'));
     }
 
     /**
@@ -35,11 +44,35 @@ class DocumentTrackerController extends Controller
      */
     public function search(Request $request)
     {
-        $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$request->code)
-                                            ->orWhere('tracking_code', 'LIKE', '%'. $request->get('code'))
+        $logDetail = array();
+        $log_id    = $request->code;
+        $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$log_id)
+                                            ->orWhere('tracking_code', 'LIKE', '%'. $log_id)
                                             ->orderBy('created_at', 'DESC')->get();
-        
-        return view('doctracker.index', compact('documents'));
+        /*if ( count($documents) > 0 )
+        {
+            $logDetail = [
+                        'tracking_code'     => $documents->tracking_code,
+                        'received_by'       => $documents->recipient->fullName,
+                        'received_office'   => $documents->recipient->office->division_name,
+                        'from'              => $documents->userEmployee->fullName,
+                        'from_office'       => $documents->userEmployee->office->division_name,
+                        'subject'           => $documents->documentCode->subject,
+                        'datetime'          => $documents->dateAction,
+                    ];
+        }*/
+
+        foreach ($documents as $i => $value) {
+            $logDetail[$i]    = ['tracking_code'=> $value->tracking_code];
+            $logDetail[$i]    = ['received_by'=> $value->tracking_code];
+        }
+     
+        if($request->ajax())
+        {
+            return response()->json($documents->toArray());
+        } else {
+            return view('doctracker.logs', compact('documents'));
+        }
     }
 
     /**
@@ -51,7 +84,6 @@ class DocumentTrackerController extends Controller
     {
         $myDocuments = DocumentTracker::myDocuments()->get();
         return view('doctracker.myDocuments', compact('myDocuments'));
-        // return $myDocuments;
     }
 
     /**
@@ -125,7 +157,7 @@ class DocumentTrackerController extends Controller
     public function store(Request $request)
     {
         /****** Create tracking code *******/
-        $office          = Office::find($request->routeDiv)->first()->div_acronym;
+        $office          = Office::find($request->routeDiv)->div_acronym;
         $seriesCode      = CodeTable::first()->doc_code;
         $year            = Carbon::now()->format('Y');
         $code            = $year.$seriesCode;
@@ -143,10 +175,29 @@ class DocumentTrackerController extends Controller
         $document->details       = $request->details;
         $document->keywords      = $request->keywords;
         $document->document_date = $request->document_date;
-        // $tracker->attachments      = $request->attachments;
 
         if ($document->save() )
         {
+            // SAVE ATTACHMENTS
+            foreach ($request->attachments as $i => $file) {
+                $doc_id      = $document->id;
+                $foldercode  = $document->tracking_code;
+                $code        = $document->code;
+                $destination = 'upload/documenttracker/'.$foldercode.'/'; 
+                $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
+                $filesize    = $file->getClientSize();
+
+                $docu                = new DocumentTrackerAttachment;
+                $docu->doctracker_id = $doc_id;
+                $docu->filename      = $file->getClientOriginalName();
+                $docu->filepath      = $destination.$filename;
+                $docu->filesize      = $filesize;
+
+                $file->move($destination, $filename);
+                $docu->save();
+            }
+
+
             /**** UPDATE CODE TABLE ********/
             $updateCode = CodeTable::where('doc_code', $seriesCode)->first();
             $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
@@ -176,7 +227,6 @@ class DocumentTrackerController extends Controller
         }
 
         return redirect()->route('doctracker.showDocument', $tracker->tracking_code);
-        // return dd($request);
     }
 
     public function forwardDocument(Request $request)
@@ -199,11 +249,31 @@ class DocumentTrackerController extends Controller
             $tracker->office_id      = $request->routeToOffice;
             $tracker->recipient_id   = $recipient;
             $tracker->notes          = $request->note;
-            $tracker->save();
+            
+            if ( $tracker->save() )
+            {
+                // SAVE ATTACHMENTS
+                foreach ($request->attachments as $i => $file) {
+                    $doc_id      = $tracker->id;
+                    $foldercode  = $tracker->tracking_code;
+                    $code        = $tracker->code;
+                    $destination = 'upload/documenttracker/'.$foldercode.'/'; 
+                    $filename    = $doc_id .'-LOG-'. $code .' '. $file->getClientOriginalName();
+                    $filesize    = $file->getClientSize();
+
+                    $docu = new DocumentTrackerAttachment;
+                    $docu->tracklog_id   = $doc_id;
+                    $docu->filename      = $file->getClientOriginalName();
+                    $docu->filepath      = $destination.$filename;
+                    $docu->filesize      = $filesize;
+
+                    $file->move($destination, $filename);
+                    $docu->save();
+                }
+            }
         }
 
         return redirect()->route('doctracker.showReceivedDocument', $tracker->tracking_code);
-        // return $recipients;
     }
 
     /**

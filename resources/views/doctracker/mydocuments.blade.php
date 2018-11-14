@@ -46,21 +46,17 @@
                                 <th>Subject</th>
                                 <th>Document type</th>
                                 <th>Date tracked</th>
-                                <th>Last tracked</th>
-                                <th>Status</th>
+                                <th>Last tracked status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse( $myDocuments as $document )
                                 <tr>
                                     <td>
-                                        <a href="{{ route('doctracker.showdocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
+                                        <a href="{{ route('doctracker.showDocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
                                     </td>
                                     <td>
                                         {{ $document->subject }}
-                                        @if ( !is_null($document->attachment) )
-                                            <span class="float-right"><i class="fas fa-file-pdf"></i></span>
-                                        @endif
                                     </td>
                                     <td>
                                         {{ $document->documentType->document_name }}
@@ -69,10 +65,8 @@
                                         {{ $document->tracking_date }}
                                     </td>
                                     <td>
-                                        {!! $document->lastTracked() !!}
-                                    </td>
-                                    <td>
-                                        {!! $document->action !!}
+                                        <strong>{!! $document->action !!}</strong>
+                                        <br>{!! $document->lastTracked() !!}
                                     </td>
                                 </tr>
                             @empty

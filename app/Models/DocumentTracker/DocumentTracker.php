@@ -9,6 +9,7 @@ use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTypes;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
+use App\Models\DocumentTracker\DocumentTrackerAttachment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
@@ -57,6 +58,11 @@ class DocumentTracker extends Model
         return $this->belongsTo(Office::class, 'office_id', 'id');
     }
 
+    public function docAttachments()
+    {
+        return $this->hasMany(DocumentTrackerAttachment::class, 'doctracker_id', 'id');
+    }
+
     public function logs()
     {
         return $this->hasMany(DocumentTrackingLogs::class, 'tracking_code', 'tracking_code');
@@ -70,14 +76,7 @@ class DocumentTracker extends Model
 
     public function scopeMyDocuments($query)
     {
-        /*return $query->where('document_trackers.user_id', Auth::user()->id)
-                     ->leftJoin('document_tracking_logs', function($join) {
-                         $join->on('document_tracking_logs.tracking_code', '=', 'document_trackers.tracking_code')
-                              ->orderBy('document_tracking_logs.created_at', 'DESC')
-                              ->limit(1);
-                     })->orderBy('document_trackers.created_at', 'DESC');*/
-
-        $trackers = $query->where('user_id', Auth::user()->id)
+        return $query->where('user_id', Auth::user()->id)
                           ->orderBy('document_trackers.created_at', 'DESC')
                           ->join('document_tracking_logs', function($join) {
                                 $join->on('document_tracking_logs.id', '=', DB::raw('(SELECT DISTINCT (id) FROM document_tracking_logs
@@ -85,10 +84,6 @@ class DocumentTracker extends Model
                                                 ORDER BY created_at DESC
                                                 LIMIT 1)'));
                             });
-
-        // $trackers = DB::select( DB::raw("SELECT * FROM doctracker.document_trackers"));
-
-        return $trackers;
     }
 
     public function getDateOfDocumentAttribute()

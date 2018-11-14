@@ -158,7 +158,7 @@
                         <!-- COLLAPSIBLE ROUTING DETAILS FORM-->
                         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <div class="card-body p-0">
-                                <form action="{{ route('doctracker.forwardDocument') }}" method="POST" class="form-horizontal m-t-30" role="form">
+                                <form action="{{ route('doctracker.forwardDocument') }}" method="POST" class="form-horizontal m-t-30" role="form" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="code" value="{{ $myDocument->code }}">
                                     <input type="hidden" name="tracking_code" value="{{ $myDocument->tracking_code }}">
@@ -241,11 +241,19 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row m-b-0">
+                                        <div class="form-group row m-b-20">
                                             <label class="control-label text-right col-md-2">Note</label>
                                             <div class="col-md-10">
                                                 <textarea class="form-control" name="note" rows="4"></textarea>
                                                 <small class="form-control-feedback">Additional notes on routing the document.</small> 
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-2">Attachments</label>
+                                            <div class="col-md-10">
+                                                <input type="file" class="form-control" name="attachments[]" accept=".pdf" multiple>
+                                                <small class="form-control-feedback">Select pdf files only. </small> 
                                             </div>
                                         </div>
 
@@ -269,6 +277,7 @@
                 <!-- END OF COLLAPSIBLE FORM -->
 
                 <h4 class="card-title m-t-40">Tracking Log: <i>{{ $myDocument->tracking_code }}</i></h4>
+                <h6 class="card-subtitletitle">Order of log is from latest to oldest.</i></h6>
                 <div class="table-responsive-md">
                     <table id="demo-foo-pagination" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
                         <thead>
@@ -284,7 +293,7 @@
                             @forelse( $trackLogs as $log )
                                 <tr>
                                     <td>
-                                        <strong>{{ $log->action }}</strong>
+                                        {{ $log->action }}
                                     </td>
                                     <td>
                                         {{ $log->userEmployee->fullName }}
@@ -298,6 +307,13 @@
                                     </td>
                                     <td>
                                         {{ $log->notes }}
+                                        <br><small>
+                                        @forelse ( $log->docAttachments as $file )
+                                            <a href="{{ asset($file->filepath) }}" target="_blank" class="text-underlined p-r-20">
+                                                <i class="icon-paper-clip"></i> {{ $file->filename }}
+                                            </a></small><br>
+                                        @empty
+                                        @endforelse
                                     </td>
                                     <td>
                                         {{ $log->dateAction }}

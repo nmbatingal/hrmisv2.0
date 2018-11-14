@@ -15,15 +15,14 @@ class CreateDocumentTrackingLogsTable extends Migration
     {
         Schema::connection('mysql2')->create('document_tracking_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('code', 20)->index();
-            $table->string('tracking_code')->index();
+            $table->char('code', 20)->index()->nullable();
+            $table->string('tracking_code')->index()->nullable();
             $table->enum('action', ['Forward', 'Receive', 'Close', 'Cancel'])->nullable();
             $table->integer('sender_id')->unsigned()->nullable();
             $table->integer('office_id')->unsigned()->nullable();
             $table->integer('recipient_id')->unsigned()->nullable();
             $table->boolean('recipient_received')->default(false);
             $table->text('notes')->nullable();
-            $table->text('attachment')->nullable();
             $table->timestamps();
 
             $table->foreign('code')->references('code')->on('doctracker.document_trackers')->onDelete('cascade')->onUpdate('cascade');
