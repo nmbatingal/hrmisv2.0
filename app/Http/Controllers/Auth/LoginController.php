@@ -65,11 +65,14 @@ class LoginController extends Controller
         ]);
 
         if ( Auth::attempt( array_merge($request->only($login_type, 'password')), $remember == 'on' ? true : false )) {
-            
+
+            // return $request;
             return $this->authenticated($request, $this->guard()->user());
         }
+
         
-        return redirect('/login')->with('warning', 'These credentials do not match our records.');
+        
+        // return redirect('/login')->with('warning', 'These credentials do not match our records.');
     }
     /*
      * activate user on email request

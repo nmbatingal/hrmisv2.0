@@ -14,12 +14,12 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () { return redirect()->route('login'); })->name('home');
+Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('/home', 'HomeController@index')->name('home');
-	Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
 
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
 	Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');

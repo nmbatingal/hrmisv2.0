@@ -161,7 +161,7 @@ class DocumentTrackerController extends Controller
         $code            = $year.$seriesCode;
         $fullDate        = Carbon::now()->toDateString();
         $tracking_code   = $office .'-'. $fullDate .'-'. $seriesCode;
-        /****** End Create tracking code *******/
+        //****** End Create tracking code *******/
 
         $document                = new DocumentTracker;
         $document->code          = $code;
@@ -177,24 +177,26 @@ class DocumentTrackerController extends Controller
         if ($document->save() )
         {
             // SAVE ATTACHMENTS
-            foreach ($request->attachments as $i => $file) {
-                $doc_id      = $document->id;
-                $foldercode  = $document->tracking_code;
-                $code        = $document->code;
-                $destination = 'upload/documenttracker/'.$foldercode.'/'; 
-                $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
-                $filesize    = $file->getClientSize();
+            if ( $request->has('attachments'))
+            {
+                foreach ($request->attachments as $i => $file) {
+                    $doc_id      = $document->id;
+                    $foldercode  = $document->tracking_code;
+                    $code        = $document->code;
+                    $destination = 'upload/documenttracker/'.$foldercode.'/'; 
+                    $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
+                    $filesize    = $file->getClientSize();
 
-                $docu                = new DocumentTrackerAttachment;
-                $docu->doctracker_id = $doc_id;
-                $docu->filename      = $file->getClientOriginalName();
-                $docu->filepath      = $destination.$filename;
-                $docu->filesize      = $filesize;
+                    $docu                = new DocumentTrackerAttachment;
+                    $docu->doctracker_id = $doc_id;
+                    $docu->filename      = $file->getClientOriginalName();
+                    $docu->filepath      = $destination.$filename;
+                    $docu->filesize      = $filesize;
 
-                $file->move($destination, $filename);
-                $docu->save();
+                    $file->move($destination, $filename);
+                    $docu->save();
+                }
             }
-
 
             /**** UPDATE CODE TABLE ********/
             $updateCode = CodeTable::where('doc_code', $seriesCode)->first();
@@ -251,22 +253,25 @@ class DocumentTrackerController extends Controller
             if ( $tracker->save() )
             {
                 // SAVE ATTACHMENTS
-                foreach ($request->attachments as $i => $file) {
-                    $doc_id      = $tracker->id;
-                    $foldercode  = $tracker->tracking_code;
-                    $code        = $tracker->code;
-                    $destination = 'upload/documenttracker/'.$foldercode.'/'; 
-                    $filename    = $doc_id .'-LOG-'. $code .' '. $file->getClientOriginalName();
-                    $filesize    = $file->getClientSize();
+                if ( $request->has('attachments') )
+                {
+                    foreach ($request->attachments as $i => $file) {
+                        $doc_id      = $tracker->id;
+                        $foldercode  = $tracker->tracking_code;
+                        $code        = $tracker->code;
+                        $destination = 'upload/documenttracker/'.$foldercode.'/'; 
+                        $filename    = $doc_id .'-LOG-'. $code .' '. $file->getClientOriginalName();
+                        $filesize    = $file->getClientSize();
 
-                    $docu = new DocumentTrackerAttachment;
-                    $docu->tracklog_id   = $doc_id;
-                    $docu->filename      = $file->getClientOriginalName();
-                    $docu->filepath      = $destination.$filename;
-                    $docu->filesize      = $filesize;
+                        $docu = new DocumentTrackerAttachment;
+                        $docu->tracklog_id   = $doc_id;
+                        $docu->filename      = $file->getClientOriginalName();
+                        $docu->filepath      = $destination.$filename;
+                        $docu->filesize      = $filesize;
 
-                    $file->move($destination, $filename);
-                    $docu->save();
+                        $file->move($destination, $filename);
+                        $docu->save();
+                    }
                 }
             }
         }
