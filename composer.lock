@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af862235d2d50faa51350f1398609075",
+    "content-hash": "85ecc11095f8f8205fcd967bf089a59f",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2187,16 +2187,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.23.0",
+            "version": "2.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82"
+                "reference": "6b41d1d1726d432342546f9d3c79144b082812dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6b41d1d1726d432342546f9d3c79144b082812dc",
+                "reference": "6b41d1d1726d432342546f9d3c79144b082812dc",
                 "shasum": ""
             },
             "require": {
@@ -2247,7 +2247,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2018-10-15T19:10:43+00:00"
+            "time": "2018-11-07T22:48:36+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

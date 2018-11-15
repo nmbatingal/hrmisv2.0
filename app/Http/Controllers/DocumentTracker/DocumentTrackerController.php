@@ -46,30 +46,28 @@ class DocumentTrackerController extends Controller
     {
         $logDetail = array();
         $log_id    = $request->code;
+        $code      = $request->code;
         $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$log_id)
                                             ->orWhere('tracking_code', 'LIKE', '%'. $log_id)
-                                            ->orderBy('created_at', 'DESC')->get();
-        /*if ( count($documents) > 0 )
-        {
-            $logDetail = [
-                        'tracking_code'     => $documents->tracking_code,
-                        'received_by'       => $documents->recipient->fullName,
-                        'received_office'   => $documents->recipient->office->division_name,
-                        'from'              => $documents->userEmployee->fullName,
-                        'from_office'       => $documents->userEmployee->office->division_name,
-                        'subject'           => $documents->documentCode->subject,
-                        'datetime'          => $documents->dateAction,
-                    ];
-        }*/
+                                            ->latest()->get();
 
         foreach ($documents as $i => $value) {
-            $logDetail[$i]    = ['tracking_code'=> $value->tracking_code];
-            $logDetail[$i]    = ['received_by'=> $value->tracking_code];
+            $code             = $value->tracking_code;
+            $logDetail[$i]    = [
+                                    'tracking_code' => $value->tracking_code,
+                                    'action' => $value->action,
+                                    'received_by' => $value->recipient ? $value->recipient->fullName : '',
+                                    'received_office' => $value->recipient ? $value->recipient->office->division_name : '',
+                                    'from' => $value->userEmployee->fullName,
+                                    'from_office' => $value->userEmployee->office->division_name,
+                                    'dateTime' => $value->dateAction,
+                                ];
         }
      
         if($request->ajax())
         {
-            return response()->json($documents->toArray());
+            $view = view('doctracker.logs', compact('documents'));
+            return response()->json(['results' => $logDetail, 'result' => count($documents), 'code' => $code, 'view' => $view]);
         } else {
             return view('doctracker.logs', compact('documents'));
         }

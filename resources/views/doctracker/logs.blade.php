@@ -52,9 +52,9 @@
                     </div>
                 </form>
 
-                <h5 class="card-subtitle">Showing {{ count($documents) }} results for tracking code <u>{{ request('code') }}</u></h5>
+                <h5 class="card-subtitle">Showing <span id="code-result">{{ count($documents) }}</span> results for tracking code <u id="tracker-code">{{ request('code') }}</u></h5>
                 <div class="table-responsive-md m-t-10">
-                    <table id="demo-foo-pagination" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
+                    <table id="search-tracker" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr>
                                 <th>Tracking code</th>
@@ -91,6 +91,7 @@
                                     </td>
                                 </tr>
                             @empty
+                                <tr class="footable-empty"><td colspan="5">No results</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -132,14 +133,16 @@
                 data   : form.serialize(),
                 success: function(data) {
 
-                    $.each(data, function(index, item){
-                        var row = appendTableRowReceived(item);
+                    $('#code-result').html(data.result);
+                    $('#tracker-code').html(data.code);
 
-                        $('table#document-tracker-received tbody tr').remove();
-                        $('table#document-tracker-received tbody').append(row);
+                    $('table#search-tracker tbody tr').remove();  
+                    $.each(data.results, function(index, item){
+                        var row = appendTableRowSearch(item);
+                        $('table#search-tracker tbody').append(row);
                     });
 
-                    $('#document-tracker-received').trigger('footable_initialize');
+                    $('#search-tracker').trigger('footable_initialize');
                 },
                 error  : function(xhr, err) {
                     alert("Error! Could not retrieve the data.");
@@ -150,13 +153,13 @@
         });
 
         // row to be added
-        function appendTableRowReceived (item) {
+        function appendTableRowSearch (item) {
             var row = $('<tr>' +
-                            '<td><a href="{!! route('doctracker.showReceivedDocument', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
-                            '<td>' + item.received_by + '<br><small>' + item.received_office + '</small></td>' +
+                            '<td><a href="javascript:void(0)" target="_blank">' + item.tracking_code + '</a></td>' +
+                            '<td>' + item.action + '</td>' +
                             '<td>' + item.from + '<br><small>' + item.from_office + '</small></td>' +
-                            '<td>' + item.subject + '</td>' +
-                            '<td>' + item.datetime + '</td>' +
+                            '<td>' + item.received_by + '<br><small>' + item.received_office + '</small></td>' +
+                            '<td>' + item.dateTime + '</td>' +
                         '</tr>');
             return row;
         }
