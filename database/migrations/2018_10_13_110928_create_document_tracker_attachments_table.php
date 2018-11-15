@@ -17,6 +17,7 @@ class CreateDocumentTrackerAttachmentsTable extends Migration
             $table->increments('id');
             $table->integer('doctracker_id')->unsigned()->nullable();
             $table->integer('tracklog_id')->unsigned()->nullable();
+            $table->string('filename')->nullable();
             $table->string('filepath')->nullable();
             $table->integer('filesize')->nullable();
             $table->timestamps();

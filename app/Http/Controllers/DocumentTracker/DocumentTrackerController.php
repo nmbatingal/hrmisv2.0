@@ -154,79 +154,81 @@ class DocumentTrackerController extends Controller
      */
     public function store(Request $request)
     {
-        /****** Create tracking code *******/
-        $office          = Office::find($request->routeDiv)->div_acronym;
-        $seriesCode      = CodeTable::first()->doc_code;
-        $year            = Carbon::now()->format('Y');
-        $code            = $year.$seriesCode;
-        $fullDate        = Carbon::now()->toDateString();
-        $tracking_code   = $office .'-'. $fullDate .'-'. $seriesCode;
-        //****** End Create tracking code *******/
+        return dd($request);
 
-        $document                = new DocumentTracker;
-        $document->code          = $code;
-        $document->tracking_code = $tracking_code;
-        $document->user_id       = $request->routedBy;
-        $document->office_id     = $request->routeDiv;
-        $document->doc_type_id   = $request->docType;
-        $document->subject       = $request->subject;
-        $document->details       = $request->details;
-        $document->keywords      = $request->keywords;
-        $document->document_date = $request->document_date;
+        // /****** Create tracking code *******/
+        // $office          = Office::find($request->routeDiv)->div_acronym;
+        // $seriesCode      = CodeTable::first()->doc_code;
+        // $year            = Carbon::now()->format('Y');
+        // $code            = $year.$seriesCode;
+        // $fullDate        = Carbon::now()->toDateString();
+        // $tracking_code   = $office .'-'. $fullDate .'-'. $seriesCode;
+        // //****** End Create tracking code *******/
 
-        if ($document->save() )
-        {
-            // SAVE ATTACHMENTS
-            if ( $request->has('attachments'))
-            {
-                foreach ($request->attachments as $i => $file) {
-                    $doc_id      = $document->id;
-                    $foldercode  = $document->tracking_code;
-                    $code        = $document->code;
-                    $destination = 'upload/documenttracker/'.$foldercode.'/'; 
-                    $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
-                    $filesize    = $file->getClientSize();
+        // $document                = new DocumentTracker;
+        // $document->code          = $code;
+        // $document->tracking_code = $tracking_code;
+        // $document->user_id       = $request->routedBy;
+        // $document->office_id     = $request->routeDiv;
+        // $document->doc_type_id   = $request->docType;
+        // $document->subject       = $request->subject;
+        // $document->details       = $request->details;
+        // $document->keywords      = $request->keywords;
+        // $document->document_date = $request->document_date;
 
-                    $docu                = new DocumentTrackerAttachment;
-                    $docu->doctracker_id = $doc_id;
-                    $docu->filename      = $file->getClientOriginalName();
-                    $docu->filepath      = $destination.$filename;
-                    $docu->filesize      = $filesize;
+        // if ($document->save() )
+        // {
+        //     // SAVE ATTACHMENTS
+        //     if ( $request->has('attachments'))
+        //     {
+        //         foreach ($request->attachments as $i => $file) {
+        //             $doc_id      = $document->id;
+        //             $foldercode  = $document->tracking_code;
+        //             $code        = $document->code;
+        //             $destination = 'upload/documenttracker/'.$foldercode.'/'; 
+        //             $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
+        //             $filesize    = $file->getClientSize();
 
-                    $file->move($destination, $filename);
-                    $docu->save();
-                }
-            }
+        //             $docu                = new DocumentTrackerAttachment;
+        //             $docu->doctracker_id = $doc_id;
+        //             $docu->filename      = $file->getClientOriginalName();
+        //             $docu->filepath      = $destination.$filename;
+        //             $docu->filesize      = $filesize;
 
-            /**** UPDATE CODE TABLE ********/
-            $updateCode = CodeTable::where('doc_code', $seriesCode)->first();
-            $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
-            $updateCode->save();
-            /**** END UPDATE CODE TABLE ********/
+        //             $file->move($destination, $filename);
+        //             $docu->save();
+        //         }
+        //     }
 
-            if ( $request->has('recipient') )
-            {
-                $recipients = $request->recipient;
-            }
-            else {
-                $recipients = [0=>null];
-            }
+        //     /**** UPDATE CODE TABLE ********/
+        //     $updateCode = CodeTable::where('doc_code', $seriesCode)->first();
+        //     $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
+        //     $updateCode->save();
+        //     /**** END UPDATE CODE TABLE ********/
 
-            foreach ($request->recipient as $i => $recipient) 
-            {
-                $tracker                 = new DocumentTrackingLogs;
-                $tracker->code           = $document->code;
-                $tracker->tracking_code  = $document->tracking_code;
-                $tracker->action         = $request->action;
-                $tracker->sender_id      = $request->routedBy;
-                $tracker->office_id      = $request->routeToOffice;
-                $tracker->recipient_id   = $recipient;
-                $tracker->notes          = $request->note;
-                $tracker->save();
-            }
-        }
+        //     if ( $request->has('recipient') )
+        //     {
+        //         $recipients = $request->recipient;
+        //     }
+        //     else {
+        //         $recipients = [0=>null];
+        //     }
 
-        return redirect()->route('doctracker.showDocument', $tracker->tracking_code);
+        //     foreach ($request->recipient as $i => $recipient) 
+        //     {
+        //         $tracker                 = new DocumentTrackingLogs;
+        //         $tracker->code           = $document->code;
+        //         $tracker->tracking_code  = $document->tracking_code;
+        //         $tracker->action         = $request->action;
+        //         $tracker->sender_id      = $request->routedBy;
+        //         $tracker->office_id      = $request->routeToOffice;
+        //         $tracker->recipient_id   = $recipient;
+        //         $tracker->notes          = $request->note;
+        //         $tracker->save();
+        //     }
+        // }
+
+        // return redirect()->route('doctracker.showDocument', $tracker->tracking_code);
     }
 
     public function forwardDocument(Request $request)
@@ -327,9 +329,17 @@ class DocumentTrackerController extends Controller
     /*** JS ***/
     public function recipientList(Request $request)
     {   
-        $office    = $request->office_id;
-        $employees = User::employee()->employeeOffice($office)->notSelf()->get();
-        $data      = view('list.recipient-list', compact('employees'))->render();
+        $id = $request->office_id;
+
+        if ( $id == 'individual')
+        {
+            $employees = User::employee()->notSelf()->get();
+        } else {
+            $office    = $request->office_id;
+            $employees = User::employee()->employeeOffice($office)->notSelf()->get();
+        }
+
+        $data = view('list.recipient-list', compact('employees'))->render();
 
         if($request->ajax())
         {

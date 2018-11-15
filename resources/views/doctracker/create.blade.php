@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+<link href="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <style type="text/css">
@@ -53,7 +54,7 @@
                 </div>
 
                 <form action="{{ route('doctracker.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                    {{ csrf_field() }}
+                    @csrf
                     <div class="form-body">
                         <!-- PERSONAL INFORMATION ROW -->
                         <h3 class="m-t-20 box-title">Document Info</h3>
@@ -81,9 +82,10 @@
                                     </div>
                                     <label class="control-label text-right col-md-2">Document Date</label>
                                     <div class="col-md-4">
-                                        <input type="date" class="form-control" name="document_date" required>
+                                        <input type="text" class="form-control mdate" name="document_date" placeholder="2017-06-04" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
+
                                 </div>
                                 <div class="form-group row m-b-20">
                                     <label class="control-label text-right col-md-2">Keywords</label>
@@ -117,9 +119,8 @@
                             <div class="col-md-12">
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Routed by</label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-4">
                                         <select class="form-control custom-select" name="routedBy" disabled>
-                                            <option value="">-- Select action --</option>
                                             @forelse( $userSelf as $user )
                                                 @if ( $user->id == Auth::user()->id )
                                                     <option value="{{ $user->id }}" selected>{{ $user->full_name }}</option>
@@ -132,13 +133,11 @@
                                         <input type="hidden" name="routedBy" value="{{ Auth::user()->id }}">
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
-                                </div>
 
-                                <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Routing Division</label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-4">
                                         <select class="form-control custom-select" name="routeDiv" disabled>
-                                            <option value="">-- Select action --</option>
+                                            <option value="">-- Select office --</option>
                                             @forelse( $offices as $office )
                                                 @if ( $office->id == Auth::user()->office_id )
                                                     <option value="{{ $office->id }}" selected>{{ $office->division_name }}</option>
@@ -154,9 +153,24 @@
                                 </div>
 
                                 <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Document Recipient</label>
+                                    <div class="col-md-10">
+                                        <select class="select2 form-control custom-select" name="recipient" required>
+                                            <option value="">-- Select user --</option>
+                                            @forelse( $users as $user )
+                                                <option value="{{ $user->id }}">{{ $user->full_name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                        <small class="form-control-feedback">&nbsp;</small> 
+                                    </div>
+                                </div>
+
+                                <div class="form-group row m-b-0" style="display: none;">
                                     <label class="control-label text-right col-md-2">Action</label>
                                     <div class="col-md-10">
-                                        <select class="form-control custom-select" name="action" required>
+                                        <input type="hidden" name="action" value="Forward">
+                                        <select class="form-control custom-select" name="" required>
                                             <option value="">-- Select action --</option>
                                             <option value="Forward">Forward</option>
                                             <option value="Receive">Receive</option>
@@ -168,11 +182,13 @@
                                 </div>
 
                                 <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
-                                <div id="routeAction" style="display: none;">
+                                <div id="routeAction" style="">
                                     <div class="form-group row m-b-0">
                                         <label class="control-label text-right col-md-2">Route To</label>
                                         <div class="col-md-10">
                                             <select class="select2 form-control custom-select" name="routeToOffice">
+                                                <option value="all">All Division</option>
+                                                <option value="individual">Individual</option>
                                                 @forelse( $offices as $office )
                                                     <option value="{{ $office->id }}">{{ $office->division_name }}</option>
                                                 @empty
@@ -182,13 +198,15 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row m-b-20">
-                                        <label class="control-label text-right col-md-2"></label>
-                                        <div class="col-md-10">
-                                            <select id="recipient" class="select2 form-control select2-multiple" name="recipient[]" multiple="multiple">
-                                                <option value="">Select office</option>
-                                            </select>
-                                            <br><small class="form-control-feedback">Leave blank if document will be routed to whole division.</small> 
+                                    <div id="sendRoute" style="display: none;">
+                                        <div class="form-group row m-b-20">
+                                            <label class="control-label text-right col-md-2"></label>
+                                            <div class="col-md-10">
+                                                <select id="recipient" class="select2 form-control select2-multiple" name="recipient[]" multiple="multiple">
+                                                    <option value="">Select employee</option>
+                                                </select>
+                                                <br><small class="form-control-feedback">Leave blank if document will be routed to whole division.</small> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -223,6 +241,8 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
+<script src="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 <script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
 <!-- CUSTOM JS CODES -->
@@ -230,20 +250,34 @@
     $(document).ready(function() {
         $("select[name=routeToOffice]").change(function(){
             
-            var office_id = $(this).val();
-            var token = $("input[name=_token]").val();
+            var $id = $(this).val();
 
-            $.ajax({
-                method: 'POST',
-                url: "{{ route('doctracker.recipientlist') }}",
-                data: { office_id:office_id, _token:token},
-                success: function(data) {
-                    $("select#recipient").attr('disabled', false);
-                    $("select#recipient").html('');
-                    $("select#recipient").html(data.options);
-                }
-            });
+            if ( $id == 'all')
+            {
+                $('div#sendRoute').css('display', 'none');
+                $("select#recipient").html('');
+
+            } else {
+
+                $('div#sendRoute').css('display', 'block');
+
+                var office_id = $id;
+                var token = $("input[name=_token]").val();
+
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('doctracker.recipientlist') }}",
+                    data: { office_id:office_id, _token:token},
+                    success: function(data) {
+                        $("select#recipient").attr('disabled', false);
+                        $("select#recipient").html('');
+                        $("select#recipient").html(data.options);
+                    }
+                });
+            }
         });
+
+        $('.mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
     });
 </script>
 <script>
@@ -253,13 +287,13 @@
             confirmKeys: [186]
         });
 
-        $('select[name=action]').on('change', function(){
-            if ( this.value == "Forward") {
-                $('div#routeAction').css('display', 'block');
-            } else {
-                $('div#routeAction').css('display', 'none');
-            }
-        });
+        // $('select[name=action]').on('change', function(){
+        //     if ( this.value == "Forward") {
+        //         $('div#routeAction').css('display', 'block');
+        //     } else {
+        //         $('div#routeAction').css('display', 'none');
+        //     }
+        // });
 
         $(".select2").select2();
     });

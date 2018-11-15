@@ -17,7 +17,7 @@ class ApplicantsInfo extends Model
     use SoftDeletes;
     use Uuids;
 
-    protected $connection    = 'mysql';
+    protected $connection    = 'mysql3';
     protected $table         = "applicants_infos";
     public    $incrementing  = false;
     protected $dates = ['deleted_at'];

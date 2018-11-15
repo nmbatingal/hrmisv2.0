@@ -13,7 +13,7 @@ class CreateApplicantsEligibilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants_eligibilities', function (Blueprint $table) {
+        Schema::connection('mysql3')->create('applicants_eligibilities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('licenseTitle')->nullable();
             $table->string('licenseNumber')->nullable();
@@ -33,6 +33,6 @@ class CreateApplicantsEligibilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants_eligibilities');
+        Schema::connection('mysql3')->dropIfExists('applicants_eligibilities');
     }
 }

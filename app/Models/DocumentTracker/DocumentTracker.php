@@ -20,6 +20,10 @@ class DocumentTracker extends Model
 
     protected $connection = "mysql2";
     protected $table = "document_trackers";
+    protected $casts = [
+        'isRouteComplete' => 'boolean',
+        'isDocCancelled'  => 'boolean',
+    ];
     protected $dates = [ 
         'document_date', 
         'deleted_at',
@@ -33,14 +37,17 @@ class DocumentTracker extends Model
     protected $fillable = [
         'code',
         'tracking_code',
-        'user_id',
-        'office_id',
+        'creator_id',
+        'recipient_id',
+        'route_to_office_id',
+        'route_to_user_id',
         'doc_type_id',
+        'document_date',
         'subject',
         'details',
         'keywords',
-        'attachments',
-        'document_date',
+        'isRouteComplete',
+        'isDocCancelled',
     ];
 
     public function documentType()
@@ -50,12 +57,22 @@ class DocumentTracker extends Model
 
     public function userEmployee()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 
-    public function userDivision()
+    public function recipientUser()
     {
-        return $this->belongsTo(Office::class, 'office_id', 'id');
+        return $this->belongsTo(User::class, 'recipient_id', 'id');
+    }
+
+    public function routeToOffice()
+    {
+        return $this->belongsTo(Office::class, 'route_to_office_id', 'id');
+    }
+
+    public function routeToUser()
+    {
+        return $this->belongsTo(Office::class, 'route_to_user_id', 'id');
     }
 
     public function docAttachments()
@@ -63,20 +80,20 @@ class DocumentTracker extends Model
         return $this->hasMany(DocumentTrackerAttachment::class, 'doctracker_id', 'id');
     }
 
-    public function logs()
+    public function trackLogs()
     {
         return $this->hasMany(DocumentTrackingLogs::class, 'tracking_code', 'tracking_code');
     }
 
     public function scopeLastTracked($query)
     {
-        $log =  $this->logs()->latest()->first();
+        $log =  $this->trackLogs()->latest()->first();
         return "{$log->dateAction} <br>({$log->diffForHumans})";
     }
 
     public function scopeMyDocuments($query)
     {
-        return $query->where('user_id', Auth::user()->id)
+        return $query->where('creator_id', Auth::user()->id)
                           ->orderBy('document_trackers.created_at', 'DESC')
                           ->join('document_tracking_logs', function($join) {
                                 $join->on('document_tracking_logs.id', '=', DB::raw('(SELECT DISTINCT (id) FROM document_tracking_logs

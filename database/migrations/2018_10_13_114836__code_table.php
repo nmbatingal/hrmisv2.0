@@ -13,7 +13,7 @@ class CodeTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql2')->create('code_table', function (Blueprint $table) {
+        Schema::create('code_table', function (Blueprint $table) {
             $table->increments('id');
             $table->char('doc_code', 30)->nullable();
             $table->timestamps();

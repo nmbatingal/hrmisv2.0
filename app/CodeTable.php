@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\DocumentTracker;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
 class CodeTable extends Model
 {
-    protected $connection   = 'mysql2';
+    protected $connection   = 'mysql';
     protected $table        = "code_table";
     
     /**

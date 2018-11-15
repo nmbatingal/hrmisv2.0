@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicantsExperience extends Model
 {   
-    protected $connection    = 'mysql';
+    protected $connection    = 'mysql3';
     protected $table = "applicants_experiences";
     
     /**

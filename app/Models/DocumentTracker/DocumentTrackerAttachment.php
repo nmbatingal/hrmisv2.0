@@ -28,9 +28,4 @@ class DocumentTrackerAttachment extends Model
     {
         return $this->belongsTo(DocumentTracker::class, 'doctracker_id', 'id');
     }
-
-    public function documentTrackingLog()
-    {
-        return $this->belongsTo(DocumentTrackingLogs::class, 'tracklog_id', 'id');
-    }
 }

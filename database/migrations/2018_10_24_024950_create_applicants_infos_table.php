@@ -13,7 +13,7 @@ class CreateApplicantsInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants_infos', function (Blueprint $table) {
+        Schema::connection('mysql3')->create('applicants_infos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('firstname');
             $table->string('middlename')->nullable();
@@ -39,6 +39,6 @@ class CreateApplicantsInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants_infos');
+        Schema::connection('mysql3')->dropIfExists('applicants_infos');
     }
 }

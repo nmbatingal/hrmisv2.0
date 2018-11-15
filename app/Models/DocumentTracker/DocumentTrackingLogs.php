@@ -13,9 +13,6 @@ class DocumentTrackingLogs extends Model
 {
     protected $connection = "mysql2";
     protected $table = "document_tracking_logs";
-    protected $casts = [
-        'recipient_received' => 'boolean',
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -25,13 +22,11 @@ class DocumentTrackingLogs extends Model
     protected $fillable = [
         'code',
         'tracking_code',
+        'user_id',
         'action',
-        'sender_id',
-        'office_id',
-        'recipient_id',
-        'recipient_received',
+        'route_to_office_id',
+        'route_to_user_id',
         'notes',
-        'attachment',
     ];
 
     public function documentCode()
@@ -46,22 +41,17 @@ class DocumentTrackingLogs extends Model
 
     public function userEmployee()
     {
-        return $this->belongsTo(User::class, 'sender_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function recipient()
+    public function routeToOffice()
     {
-        return $this->belongsTo(User::class, 'recipient_id', 'id');
+        return $this->belongsTo(Office::class, 'route_to_office_id', 'id');
     }
 
-    public function office()
+    public function routeToUser()
     {
-        return $this->belongsTo(Office::class, 'office_id', 'id');
-    }
-
-    public function docAttachments()
-    {
-        return $this->hasMany(DocumentTrackerAttachment::class, 'tracklog_id', 'id');
+        return $this->belongsTo(Office::class, 'route_to_user_id', 'id');
     }
 
     public function getDateActionAttribute()

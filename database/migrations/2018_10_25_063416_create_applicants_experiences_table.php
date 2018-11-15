@@ -13,7 +13,7 @@ class CreateApplicantsExperiencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants_experiences', function (Blueprint $table) {
+        Schema::connection('mysql3')->create('applicants_experiences', function (Blueprint $table) {
             $table->increments('id');
             $table->string('agency');
             $table->string('position')->nullable();
@@ -34,6 +34,6 @@ class CreateApplicantsExperiencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants_experiences');
+        Schema::connection('mysql3')->dropIfExists('applicants_experiences');
     }
 }
