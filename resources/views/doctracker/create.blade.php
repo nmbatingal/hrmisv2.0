@@ -82,7 +82,7 @@
                                     </div>
                                     <label class="control-label text-right col-md-2">Document Date</label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control mdate" name="document_date" placeholder="2017-06-04" required>
+                                        <input type="text" class="form-control mdate" name="document_date" placeholder="Select date document created" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
 
@@ -155,7 +155,7 @@
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Document Recipient</label>
                                     <div class="col-md-10">
-                                        <select class="select2 form-control custom-select" name="recipient" required>
+                                        <select class="select2 form-control custom-select" name="docRecipient" required>
                                             <option value="">-- Select user --</option>
                                             @forelse( $users as $user )
                                                 <option value="{{ $user->id }}">{{ $user->full_name }}</option>
@@ -166,25 +166,10 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row m-b-0" style="display: none;">
-                                    <label class="control-label text-right col-md-2">Action</label>
-                                    <div class="col-md-10">
-                                        <input type="hidden" name="action" value="Forward">
-                                        <select class="form-control custom-select" name="" required>
-                                            <option value="">-- Select action --</option>
-                                            <option value="Forward">Forward</option>
-                                            <option value="Receive">Receive</option>
-                                            <option value="Close">Close</option>
-                                            <option value="Cancel">Cancel</option>
-                                        </select>
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-                                </div>
-
                                 <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
                                 <div id="routeAction" style="">
                                     <div class="form-group row m-b-0">
-                                        <label class="control-label text-right col-md-2">Route To</label>
+                                        <label class="control-label text-right col-md-2">Route to Office</label>
                                         <div class="col-md-10">
                                             <select class="select2 form-control custom-select" name="routeToOffice">
                                                 <option value="all">All Division</option>
@@ -200,9 +185,9 @@
 
                                     <div id="sendRoute" style="display: none;">
                                         <div class="form-group row m-b-20">
-                                            <label class="control-label text-right col-md-2"></label>
+                                            <label class="control-label text-right col-md-2">Route to Staff</label>
                                             <div class="col-md-10">
-                                                <select id="recipient" class="select2 form-control select2-multiple" name="recipient[]" multiple="multiple">
+                                                <select id="recipient" class="select2 form-control select2-multiple" name="recipients[]" multiple="multiple">
                                                     <option value="">Select employee</option>
                                                 </select>
                                                 <br><small class="form-control-feedback">Leave blank if document will be routed to whole division.</small> 
@@ -286,14 +271,6 @@
         $('input#keywords').tagsinput({
             confirmKeys: [186]
         });
-
-        // $('select[name=action]').on('change', function(){
-        //     if ( this.value == "Forward") {
-        //         $('div#routeAction').css('display', 'block');
-        //     } else {
-        //         $('div#routeAction').css('display', 'none');
-        //     }
-        // });
 
         $(".select2").select2();
     });

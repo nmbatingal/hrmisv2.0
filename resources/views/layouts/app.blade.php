@@ -21,7 +21,7 @@
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
-<body class="fixed-layout skin-default-dark">
+<body class="fixed-layout skin-megna-dark">
     <div id="app">
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
