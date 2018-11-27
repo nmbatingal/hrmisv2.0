@@ -20,6 +20,9 @@
             <li class="breadcrumb-item active">My Documents</li>
         </ol>
     </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ route('doctracker.createTracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+    </div>
 </div>
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
@@ -33,40 +36,46 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">My Documents
-                    <a href="{{ route('doctracker.createTracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
-                </h4>
-                <p class="card-text">List of documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to be tracked.</p>
+                <p class="card-text">List of created documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to track.</p>
 
                 <div class="table-responsive-md m-t-20">
-                    <table id="demo-foo-pagination" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
+                    <table id="demo-foo-pagination" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr class="footable-filtering">
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <th>Document type</th>
-                                <th>Date tracked</th>
-                                <th>Last tracked status</th>
+                                <th>Tracking status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse( $myDocuments as $document )
                                 <tr>
                                     <td>
-                                        <a href="{{ route('doctracker.showDocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
+                                        <h5>
+                                            <a href="{{ route('doctracker.showDocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
+                                        </h5>
                                     </td>
                                     <td>
-                                        {{ $document->subject }}
+                                        <h5 class="font-weight-bold">{{ $document->subject }}</h5>
+                                        {!! $document->status !!}
+                                        Created on: {{ $document->tracking_date }} 
                                     </td>
                                     <td>
-                                        {{ $document->documentType->document_name }}
+                                        {{ $document->other_document }}
                                     </td>
                                     <td>
-                                        {{ $document->tracking_date }}
-                                    </td>
-                                    <td>
-                                        <strong>{!! $document->action !!}</strong>
-                                        <br>{!! $document->lastTracked() !!}
+                                        <h5 class="font-weight-bold">{!! $document->lastAction() !!}</h5>
+                                        {!! $document->lastTracked() !!}
+                                        <ul>
+                                            @if ( !is_null( $document->recipients ) )
+                                                @foreach( json_decode($document->recipients) as $recipient)
+                                                    <li>{{ $recipient->name }}</li>
+                                                @endforeach
+                                            @else
+                                                <li>All</li>
+                                            @endif
+                                        </ul>
                                     </td>
                                 </tr>
                             @empty

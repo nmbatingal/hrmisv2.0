@@ -5,8 +5,9 @@ namespace App\Http\Controllers\DocumentTracker;
 use Auth;
 use App\User;
 use App\Office;
+use App\CodeTable;
+use App\Notifications;
 use Carbon\Carbon;
-use App\Models\DocumentTracker\CodeTable;
 use App\Models\DocumentTracker\DocumentTypes;
 use App\Models\DocumentTracker\DocumentTracker;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
@@ -89,10 +90,33 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showDocument($tracking_code)
+    public function incomingDocuments()
     {
+        $incomingDocuments = [];
+        
+        return view('doctracker.incoming', compact('incomingDocuments'));
+    }
+
+    public function showIncoming($code = null)
+    {
+        $offices  = Office::all();
+        $users    = User::employee()->notSelf()->get();
+        $userSelf = User::employee()->get();
         $myDocument = DocumentTracker::where('tracking_code', $tracking_code)->first();
         $trackLogs  = DocumentTrackingLogs::where('tracking_code', $tracking_code)->orderBy('created_at', 'DESC')->get();
+        
+        return view('doctracker.showReceivedDocument', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showDocument($code = null)
+    {
+        $myDocument = DocumentTracker::where('tracking_code', $code)->first();
+        $trackLogs  = DocumentTrackingLogs::where('tracking_code', $code)->latest()->get();
         
         return view('doctracker.showDocument', compact('myDocument', 'trackLogs'));
     }
@@ -154,32 +178,96 @@ class DocumentTrackerController extends Controller
      */
     public function store(Request $request)
     {
-        return dd($request);
+        // ------------ CREATE TRACKING CODE -------------------- //
+        $office          = Office::find($request->routeDiv)->div_acronym;
+        $seriesCode      = CodeTable::first()->doc_code;
+        $year            = Carbon::now()->format('Y');
+        $code            = $year.'-'.$seriesCode;
+        $fullDate        = Carbon::now()->toDateString();
+        $tracking_code   = $office .'-'. $fullDate .'-'. $seriesCode;
+        // ------------ END CREATE TRACKING CODE --------------- //
 
-        // /****** Create tracking code *******/
-        // $office          = Office::find($request->routeDiv)->div_acronym;
-        // $seriesCode      = CodeTable::first()->doc_code;
-        // $year            = Carbon::now()->format('Y');
-        // $code            = $year.$seriesCode;
-        // $fullDate        = Carbon::now()->toDateString();
-        // $tracking_code   = $office .'-'. $fullDate .'-'. $seriesCode;
-        // //****** End Create tracking code *******/
+        $document                = new DocumentTracker;
+        $document->code          = $code;
+        $document->tracking_code = $tracking_code;
+        $document->user_id       = $request->routedBy;
+        $document->route_mode    = $request->routeMode;
+        $document->doc_type_id   = $request->docType;
+        $document->other_document = $request->otherDocument;
+        $document->document_date = $request->documentDate;
+        $document->subject       = $request->subject;
+        $document->details       = $request->details;
+        $document->keywords      = $request->keywords;
 
-        // $document                = new DocumentTracker;
-        // $document->code          = $code;
-        // $document->tracking_code = $tracking_code;
-        // $document->user_id       = $request->routedBy;
-        // $document->office_id     = $request->routeDiv;
-        // $document->doc_type_id   = $request->docType;
-        // $document->subject       = $request->subject;
-        // $document->details       = $request->details;
-        // $document->keywords      = $request->keywords;
-        // $document->document_date = $request->document_date;
+        if ( $document->save() ) {
+
+            // --------------- UPDATE CODE TABLE ------------------- //
+            $updateCode           = CodeTable::where('doc_code', $seriesCode)->first();
+            $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
+            $updateCode->save();
+            // --------------- END UPDATE CODE TABLE --------------- //
+
+            // --------------- FETCH ALL ACTIVE RECIPIENTS --------- //
+            $mode = $request->routeMode;
+            $recipients = null;
+
+            if ( $mode == "all" ) {
+
+                $employees = User::employee()->notSelf()->get();
+
+            } elseif ( $mode == "group" ) {
+
+                $office_id  = $request->recipients;
+                $employees  = User::employee()->notSelf()->whereIn('office_id', $office_id)->get();
+                $offices    = Office::whereIn('id', $office_id)->get();
+                
+                foreach ($offices as $office) {
+                    $recipients[] = [ 'id' => $office->id , 'name' => $office->division_name ];
+                }
+
+            } elseif ( $mode == "individual" ) {
+
+                $id            = $request->recipients;
+                $employees     = User::employee()->notSelf()->whereIn('id', $id)->get();
+
+                foreach ($employees as $employee) {
+                    $recipients[] = [ 'id' => $employee->id , 'name' => $employee->full_name ];
+                }
+
+            }
+
+            // ----------------- CREATE NEW LOG -------------------- //
+            $log                 = new DocumentTrackingLogs;
+            $log->code           = $document->code;
+            $log->tracking_code  = $document->tracking_code;
+            $log->user_id        = $document->user_id;
+            $log->action         = $request->action;
+            $log->route_mode     = $document->route_mode;
+            $log->recipients     = $recipients;
+            $log->notes          = $request->note;
+            $log->save();
+            // ----------------- END CREATE NEW LOG --------------- //
+
+            // ----------------- CREATE NOTIFICATIONS -------------------- //
+            foreach ($employees as $employee) {
+                $notif               = new Notifications;
+                $notif->user_id      = $document->user_id;
+                $notif->recipient_id = $employee->id;
+                $notif->route        = "doctracker.incoming.show";
+                $notif->route_id     = $document->code;
+                $notif->remarks      = "has forwarded a document with tracking code.";
+                $notif->save();
+            }
+            // ----------------- END CREATE NOTIFICATIONS --------------- //
+
+        }
+
+        return redirect()->route('doctracker.showDocument', $document->tracking_code);
 
         // if ($document->save() )
         // {
         //     // SAVE ATTACHMENTS
-        //     if ( $request->has('attachments'))
+        //     /*if ( $request->has('attachments'))
         //     {
         //         foreach ($request->attachments as $i => $file) {
         //             $doc_id      = $document->id;
@@ -198,33 +286,55 @@ class DocumentTrackerController extends Controller
         //             $file->move($destination, $filename);
         //             $docu->save();
         //         }
-        //     }
+        //     }*/
 
-        //     /**** UPDATE CODE TABLE ********/
-        //     $updateCode = CodeTable::where('doc_code', $seriesCode)->first();
+        //     // --------------- UPDATE CODE TABLE ------------------- //
+        //     $updateCode           = CodeTable::where('doc_code', $seriesCode)->first();
         //     $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
         //     $updateCode->save();
-        //     /**** END UPDATE CODE TABLE ********/
+        //     // --------------- END UPDATE CODE TABLE --------------- //
 
+        //     // --------------- CREATE TRACKING LOG ----------------- //
         //     if ( $request->has('recipient') )
         //     {
         //         $recipients = $request->recipient;
         //     }
         //     else {
-        //         $recipients = [0=>null];
+        //         $recipients = [ 0 => null];
         //     }
 
-        //     foreach ($request->recipient as $i => $recipient) 
+        //     foreach ($recipients as $i => $recipient) 
         //     {
+        //         // ----------------- CREATE NEW LOG -------------------- //
         //         $tracker                 = new DocumentTrackingLogs;
         //         $tracker->code           = $document->code;
         //         $tracker->tracking_code  = $document->tracking_code;
+        //         $tracker->user_id        = $request->routedBy;
         //         $tracker->action         = $request->action;
-        //         $tracker->sender_id      = $request->routedBy;
-        //         $tracker->office_id      = $request->routeToOffice;
-        //         $tracker->recipient_id   = $recipient;
+        //         $tracker->route_to_office_id = $request->routeToOffice;
+        //         $tracker->route_to_user_id   = $recipient;
         //         $tracker->notes          = $request->note;
         //         $tracker->save();
+        //         // ----------------- END CREATE NEW LOG --------------- //
+        //     }
+        //     // --------------- END CREATE TRACKING LOG ------------- //
+
+        //     if (is_null($recipients))
+        //     {
+        //         foreach ($variable as $key => $value) {
+        //             # code...
+        //         }
+        //         // ----------------- CREATE NOTIFICATION--------------- //
+        //         $notif                 = new Notification;
+        //         $notif->code           = $document->code;
+        //         $notif->tracking_code  = $document->tracking_code;
+        //         $notif->user_id        = $request->routedBy;
+        //         $notif->action         = $request->action;
+        //         $notif->route_to_office_id = $request->routeToOffice;
+        //         $notif->route_to_user_id   = $recipient;
+        //         $notif->notes          = $request->note;
+        //         $notif->save();
+        //         // ----------------- END CREATE NOTIFICATION ---------- //
         //     }
         // }
 
@@ -330,18 +440,21 @@ class DocumentTrackerController extends Controller
     public function recipientList(Request $request)
     {   
         $id = $request->office_id;
+        $data = null;
 
         if ( $id == 'individual')
         {
             $employees = User::employee()->notSelf()->get();
-        } else {
-            $office    = $request->office_id;
-            $employees = User::employee()->employeeOffice($office)->notSelf()->get();
+            $data      = view('list.recipient-list', compact('employees'))->render();
+
+        } else if ( $id == 'group' ) {
+
+            $offices   = Office::all();
+            $data      = view('list.office-list', compact('offices'))->render();
+
         }
 
-        $data = view('list.recipient-list', compact('employees'))->render();
-
-        if($request->ajax())
+        if ( $request->ajax() )
         {
             return response()->json(['options' => $data]);
         } 

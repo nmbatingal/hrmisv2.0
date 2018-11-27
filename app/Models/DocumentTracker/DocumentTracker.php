@@ -37,11 +37,12 @@ class DocumentTracker extends Model
     protected $fillable = [
         'code',
         'tracking_code',
-        'creator_id',
-        'recipient_id',
-        'route_to_office_id',
-        'route_to_user_id',
+        'user_id',
+        'route_mode',
+        // 'route_to_office_id',
+        // 'route_to_user_id',
         'doc_type_id',
+        'other_document',
         'document_date',
         'subject',
         'details',
@@ -88,12 +89,18 @@ class DocumentTracker extends Model
     public function scopeLastTracked($query)
     {
         $log =  $this->trackLogs()->latest()->first();
-        return "{$log->dateAction} <br>({$log->diffForHumans})";
+        return "{$log->dateAction}";
+    }
+
+    public function scopeLastAction($query)
+    {
+        $log =  $this->trackLogs()->latest()->first();
+        return "{$log->action}";
     }
 
     public function scopeMyDocuments($query)
     {
-        return $query->where('creator_id', Auth::user()->id)
+        return $query->where('document_trackers.user_id', Auth::user()->id)
                           ->orderBy('document_trackers.created_at', 'DESC')
                           ->join('document_tracking_logs', function($join) {
                                 $join->on('document_tracking_logs.id', '=', DB::raw('(SELECT DISTINCT (id) FROM document_tracking_logs
@@ -101,6 +108,8 @@ class DocumentTracker extends Model
                                                 ORDER BY created_at DESC
                                                 LIMIT 1)'));
                             });
+
+        // return $query->where('user_id', Auth::user()->id)->orderBy('document_trackers.created_at', 'DESC');
     }
 
     public function getDateOfDocumentAttribute()

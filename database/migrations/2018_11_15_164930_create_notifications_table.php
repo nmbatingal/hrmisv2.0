@@ -17,9 +17,10 @@ class CreateNotificationsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('recipient_id')->unsigned()->nullable();
-            $table->string('table_name')->nullable();
-            $table->integer('table_id')->unsigned()->nullable();
+            $table->string('route')->nullable();
+            $table->string('route_id')->nullable();
             $table->boolean('isSeen')->default(false);
+            $table->timestamp('seen_at')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();

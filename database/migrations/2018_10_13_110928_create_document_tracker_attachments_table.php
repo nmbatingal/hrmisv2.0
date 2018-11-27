@@ -22,8 +22,8 @@ class CreateDocumentTrackerAttachmentsTable extends Migration
             $table->integer('filesize')->nullable();
             $table->timestamps();
 
-            $table->foreign('doctracker_id')->references('id')->on('doctracker.document_trackers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('tracklog_id')->references('id')->on('doctracker.document_tracking_logs')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('doctracker_id')->references('id')->on('doctracker.document_trackers')->onDelete('cascade');
+            $table->foreign('tracklog_id')->references('id')->on('doctracker.document_tracking_logs')->onDelete('cascade');
         });
     }
 

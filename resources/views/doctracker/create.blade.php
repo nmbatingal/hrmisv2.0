@@ -48,10 +48,7 @@
     <div class="col-lg-12">
         <div class="card ">
             <div class="card-body">
-                <div class="alert alert-info">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                    <h3 class="text-info"><i class="fa fa-exclamation-circle"></i> Information</h3> This is an example top alert. You can edit what u wish. Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.
-                </div>
+                <div class="alert alert-info"><i class="mdi mdi-information p-r-10"></i> Please fill out the fields below completely before submitting the form. </div>
 
                 <form action="{{ route('doctracker.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
@@ -80,9 +77,8 @@
                                         </select>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
-                                    <label class="control-label text-right col-md-2">Document Date</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control mdate" name="document_date" placeholder="Select date document created" required>
+                                    <div id="specifyDocument" class="col-md-6" style="display: none;">
+                                        <input type="text" class="form-control" name="otherDocument" placeholder="Please specify" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
 
@@ -95,19 +91,27 @@
                                     </div>
                                 </div>
                                 <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Document Date</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control mdate" name="documentDate" placeholder="Select date document created" required>
+                                        <small class="form-control-feedback">&nbsp;</small> 
+                                    </div>
+
+                                </div>
+                                <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Document Details</label>
                                     <div class="col-md-10">
-                                        <textarea class="form-control" name="details" rows="4"></textarea>
+                                        <textarea class="form-control" name="details" rows="1"></textarea>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <!-- <div class="form-group row">
                                     <label class="control-label text-right col-md-2">Attachments</label>
                                     <div class="col-md-10">
                                         <input type="file" class="form-control" name="attachments[]" accept=".pdf" multiple>
                                         <small class="form-control-feedback">Select pdf files only. </small> 
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -152,54 +156,42 @@
                                     </div>
                                 </div>
 
+                                <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Document Recipient</label>
+                                    <label class="control-label text-right col-md-2">Action</label>
                                     <div class="col-md-10">
-                                        <select class="select2 form-control custom-select" name="docRecipient" required>
-                                            <option value="">-- Select user --</option>
-                                            @forelse( $users as $user )
-                                                <option value="{{ $user->id }}">{{ $user->full_name }}</option>
-                                            @empty
-                                            @endforelse
+                                        <input type="text" class="form-control" name="action" value="Forward" readonly>
+                                        <small class="form-control-feedback">&nbsp;</small> 
+                                    </div>
+                                </div>
+
+                                <div class="form-group row m-b-0">
+                                    <label class="control-label text-right col-md-2">Route Mode</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control custom-select" name="routeMode">
+                                            <option value="all">All Employee</option>
+                                            <option value="group">Group</option>
+                                            <option value="individual">Individual</option>
                                         </select>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
 
-                                <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
-                                <div id="routeAction" style="">
+                                <div id="sendRoute" style="display: none;">
                                     <div class="form-group row m-b-0">
-                                        <label class="control-label text-right col-md-2">Route to Office</label>
+                                        <label class="control-label text-right col-md-2">Route to</label>
                                         <div class="col-md-10">
-                                            <select class="select2 form-control custom-select" name="routeToOffice">
-                                                <option value="all">All Division</option>
-                                                <option value="individual">Individual</option>
-                                                @forelse( $offices as $office )
-                                                    <option value="{{ $office->id }}">{{ $office->division_name }}</option>
-                                                @empty
-                                                @endforelse
+                                            <select id="recipient" class="select2 form-control select2-multiple" name="recipients[]" multiple="multiple">
+                                                <option value="">Select employee</option>
                                             </select>
                                             <small class="form-control-feedback">&nbsp;</small> 
                                         </div>
                                     </div>
-
-                                    <div id="sendRoute" style="display: none;">
-                                        <div class="form-group row m-b-20">
-                                            <label class="control-label text-right col-md-2">Route to Staff</label>
-                                            <div class="col-md-10">
-                                                <select id="recipient" class="select2 form-control select2-multiple" name="recipients[]" multiple="multiple">
-                                                    <option value="">Select employee</option>
-                                                </select>
-                                                <br><small class="form-control-feedback">Leave blank if document will be routed to whole division.</small> 
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Note</label>
                                     <div class="col-md-10">
-                                        <textarea class="form-control" name="note" rows="4"></textarea>
+                                        <textarea class="form-control" name="note" rows="1"></textarea>
                                         <small class="form-control-feedback">Additional notes on routing the document.</small> 
                                     </div>
                                 </div>
@@ -233,9 +225,10 @@
 <!-- CUSTOM JS CODES -->
 <script type="text/javascript">
     $(document).ready(function() {
-        $("select[name=routeToOffice]").change(function(){
+        $("select[name=routeMode]").change(function(){
             
             var $id = $(this).val();
+            var token = $("input[name=_token]").val();
 
             if ( $id == 'all')
             {
@@ -245,20 +238,29 @@
             } else {
 
                 $('div#sendRoute').css('display', 'block');
-
-                var office_id = $id;
-                var token = $("input[name=_token]").val();
-
-                $.ajax({
-                    method: 'POST',
-                    url: "{{ route('doctracker.recipientlist') }}",
-                    data: { office_id:office_id, _token:token},
-                    success: function(data) {
+                $.post( "{{ route('doctracker.recipientlist') }}", { office_id: $id, _token:token})
+                    .done( function( data ) {
                         $("select#recipient").attr('disabled', false);
                         $("select#recipient").html('');
                         $("select#recipient").html(data.options);
-                    }
-                });
+                    });
+
+            }
+        });
+
+        $("select[name=docType]").change(function(){
+            
+            var $document = $("select[name=docType] option:selected").text();
+            console.log($document);
+
+            if ( $document == 'Others')
+            {
+                $('div#specifyDocument').css('display', 'block');
+                $("input[name=otherDocument]").val('');
+
+            } else {
+                $('div#specifyDocument').css('display', 'none');
+                $("input[name=otherDocument]").val($document);
             }
         });
 

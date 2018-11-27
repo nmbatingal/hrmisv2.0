@@ -13,6 +13,9 @@ class DocumentTrackingLogs extends Model
 {
     protected $connection = "mysql2";
     protected $table = "document_tracking_logs";
+    protected $casts = [
+        'recipients' => 'array',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -24,8 +27,8 @@ class DocumentTrackingLogs extends Model
         'tracking_code',
         'user_id',
         'action',
-        'route_to_office_id',
-        'route_to_user_id',
+        'route_mode',
+        'recipients',
         'notes',
     ];
 
