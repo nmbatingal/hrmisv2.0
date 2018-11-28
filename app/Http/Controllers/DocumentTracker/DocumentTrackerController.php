@@ -97,15 +97,95 @@ class DocumentTrackerController extends Controller
         return view('doctracker.incoming', compact('incomingDocuments'));
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function receiveIncomingDocument(Request $request)
+    {   
+        $result   = false;
+        $code     = $request->code;
+        $data     = array();
+
+        $document = DocumentTracker::where('id', $code)
+                                        ->orWhere('code', $code)
+                                        ->orWhere('tracking_code', $code)
+                                        ->first();
+
+        $old_log  = DocumentTrackingLogs::where('code', $code)
+                                        ->orWhere('tracking_code', $code)
+                                        ->latest()
+                                        ->first();
+        if ( $document )
+        {
+            $logger                = new DocumentTrackingLogs;
+            $logger->code          = $document->code;
+            $logger->tracking_code = $document->tracking_code;
+            $logger->user_id       = Auth::user()->id;
+            $logger->action        = "Receive";
+            
+            if ( $logger->save() )
+            {
+                // ----------------- CREATE NOTIFICATIONS -------------------- //
+                    if ( $old_log->user_id != Auth::user()->id )
+                    {
+                        // ----------------- NOTIFY DOCUMENT CREATOR ----------------- //
+                        $notif_creator               = new Notifications;
+                        $notif_creator->user_id      = $document->user_id;
+                        $notif_creator->recipient_id = $employee->id;
+                        $notif_creator->route        = "doctracker.incoming.show";
+                        $notif_creator->route_id     = $document->code;
+                        $notif_creator->remarks      = "has received a document tracking code.";
+                        $notif_creator->save();
+                        // ----------------- END NOTIFY DOCUMENT CREATOR ------------- //
+
+                        $notif_log               = new Notifications;
+                        $notif_log->user_id      = $logger->user_id;
+                        $notif_log->recipient_id = $old_log->user_id;
+                        $notif_log->route        = "doctracker.incoming.show";
+                        $notif_log->route_id     = $document->code;
+                        $notif_log->remarks      = "has received a document tracking code.";
+                        $notif_log->save();
+                    }
+                // ----------------- END CREATE NOTIFICATIONS --------------- //
+
+                $data = ['result' => $logger, 'url' => null];
+                $data = [
+                    'tracking_code'     => $document->tracking_code,
+                    'subject'           => $document->subject,
+                    'document_type'     => $document->other_document,
+                    'created_by'        => $document->userEmployee->full_name,
+                    'date_created'      => $document->tracking_date,
+                    'note'              => $old_log->notes ?: '',
+                    'action'            => $logger->action,
+                    'date_action'       => $logger->date_action,
+                ];
+            }
+        }
+
+        if($request->ajax())
+        {
+            return response()->json($data);
+        }
+    }
+
     public function showIncoming($code = null)
     {
         $offices  = Office::all();
         $users    = User::employee()->notSelf()->get();
         $userSelf = User::employee()->get();
-        $myDocument = DocumentTracker::where('tracking_code', $tracking_code)->first();
-        $trackLogs  = DocumentTrackingLogs::where('tracking_code', $tracking_code)->orderBy('created_at', 'DESC')->get();
+        //$myDocument = DocumentTracker::where('tracking_code', $code)->first();
         
-        return view('doctracker.showReceivedDocument', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
+        $myDocument = DocumentTracker::with([
+                            'trackLogs' => function ($query) {
+                                $query->latest();
+                            }
+                        ])->where('tracking_code', $code)->first();
+        
+        // return view('doctracker.incoming-show', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
+
+        return $myDocument->trackLogs;
     }
 
     /**

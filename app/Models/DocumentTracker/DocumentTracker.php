@@ -39,8 +39,6 @@ class DocumentTracker extends Model
         'tracking_code',
         'user_id',
         'route_mode',
-        // 'route_to_office_id',
-        // 'route_to_user_id',
         'doc_type_id',
         'other_document',
         'document_date',
@@ -51,29 +49,14 @@ class DocumentTracker extends Model
         'isDocCancelled',
     ];
 
+    public function userEmployee()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function documentType()
     {
         return $this->belongsTo(DocumentTypes::class, 'doc_type_id', 'id');
-    }
-
-    public function userEmployee()
-    {
-        return $this->belongsTo(User::class, 'creator_id', 'id');
-    }
-
-    public function recipientUser()
-    {
-        return $this->belongsTo(User::class, 'recipient_id', 'id');
-    }
-
-    public function routeToOffice()
-    {
-        return $this->belongsTo(Office::class, 'route_to_office_id', 'id');
-    }
-
-    public function routeToUser()
-    {
-        return $this->belongsTo(Office::class, 'route_to_user_id', 'id');
     }
 
     public function docAttachments()
@@ -101,6 +84,11 @@ class DocumentTracker extends Model
     public function scopeMyDocuments($query)
     {
         return $query->where('document_trackers.user_id', Auth::user()->id)
+                          ->select([
+                                'document_trackers.*',
+                                'document_tracking_logs.action',
+                                'document_tracking_logs.created_at AS log_date'
+                            ])
                           ->orderBy('document_trackers.created_at', 'DESC')
                           ->join('document_tracking_logs', function($join) {
                                 $join->on('document_tracking_logs.id', '=', DB::raw('(SELECT DISTINCT (id) FROM document_tracking_logs
@@ -108,8 +96,6 @@ class DocumentTracker extends Model
                                                 ORDER BY created_at DESC
                                                 LIMIT 1)'));
                             });
-
-        // return $query->where('user_id', Auth::user()->id)->orderBy('document_trackers.created_at', 'DESC');
     }
 
     public function getDateOfDocumentAttribute()

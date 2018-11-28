@@ -34,7 +34,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Received Documents
-                    <a href="{{ route('doctracker.createTracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+                    <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
                 </h4>
                 <p class="card-text">List of received documents with tracking codes.</p>
 

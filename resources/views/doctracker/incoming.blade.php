@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
 @endsection
 
@@ -21,7 +20,7 @@
         </ol>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{ route('doctracker.createTracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
     </div>
 </div>
 <!-- ============================================================== -->
@@ -38,13 +37,13 @@
             <div class="card-body">
                 <p class="card-text">Receive incoming documents using tracker code.</p>
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" action="{{ route('doctracker.recieveForwardedDocument') }}" class="form-horizontal" method="POST">
+                <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="POST">
                     {{ csrf_field() }}
                     <div class="row m-t-40">
                         <div class="col-md-12">
                             <div class="form-group m-b-0">
                                 <div class="input-group p-0">
-                                    <input type="text" class="form-control" name="log_id" placeholder="Enter tracking code to receive" required autofocus>
+                                    <input type="text" class="form-control" name="code" placeholder="Enter tracking code to receive" required autofocus>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit"><i class="ti-import"></i> Receive</button>
                                     </div>
@@ -59,13 +58,18 @@
 
                 <div class="table-responsive-md">
                     <table id="document-tracker-received" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="20%">
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th>Tracking Code</th>
-                                <th>Received by</th>
-                                <th>From</th>
                                 <th>Subject</th>
-                                <th>Date & Time</th>
+                                <th>Notes</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,12 +98,6 @@
                                     <td>
                                         {{ $document->userEmployee->fullName }}
                                         <br><small>{{ $document->userEmployee->office->division_name }}</small>
-                                    </td>
-                                    <td>
-                                        {{ $document->documentCode->subject }}
-                                        @if ( !is_null($document->documentCode->attachment) )
-                                            <span class="float-right"><i class="fas fa-file-pdf"></i></span>
-                                        @endif
                                     </td>
                                     <td>
                                         {{ $document->dateAction }}
@@ -150,7 +148,7 @@
                     var row = appendTableRowReceived(data);
 
                     $('tr.footable-empty').remove();
-                    $('table#document-tracker-received tbody').append(row);
+                    $('table#document-tracker-received tbody').prepend(row);
 
                     $('#document-tracker-received').trigger('footable_initialize');
                     form.trigger("reset");
@@ -166,11 +164,18 @@
         // row to be added
         function appendTableRowReceived (item) {
             var row = $('<tr>' +
-                            '<td><a href="{!! route('doctracker.showReceivedDocument', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
-                            '<td>' + item.received_by + '<br><small>' + item.received_office + '</small></td>' +
-                            '<td>' + item.from + '<br><small>' + item.from_office + '</small></td>' +
-                            '<td>' + item.subject + '</td>' +
-                            '<td>' + item.datetime + '</td>' +
+                            '<td><a href="{!! route('doctracker.incoming.show', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
+                            '<td>' + 
+                                '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
+                                    '<h5>' + item.created_by + '</h5>' +  
+                                    '(' + item.document_type + ')<br>' +
+                                    item.date_created + 
+                            '</td>' +
+                            '<td>' + item.note + '</td>' +
+                            '<td>' + 
+                                '<h5 class="font-weight-bold">' + item.action + '</h5>' +
+                                item.date_action +  
+                            '</td>' +
                         '</tr>');
             return row;
         }

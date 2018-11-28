@@ -57,6 +57,11 @@ class DocumentTrackingLogs extends Model
         return $this->belongsTo(Office::class, 'route_to_user_id', 'id');
     }
 
+    public function getLogActionAttribute()
+    {
+        return "<h5 class='font-weight-bold'>" . $this->action . "</h5> (" . ucwords($this->route_mode) . ")";
+    }
+
     public function getDateActionAttribute()
     {
         return Carbon::parse($this->created_at)->toDayDateTimeString();

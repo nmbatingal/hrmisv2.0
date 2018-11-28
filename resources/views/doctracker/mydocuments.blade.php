@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
 @endsection
 
@@ -21,7 +20,7 @@
         </ol>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{ route('doctracker.createTracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
     </div>
 </div>
 <!-- ============================================================== -->
@@ -58,24 +57,28 @@
                                     </td>
                                     <td>
                                         <h5 class="font-weight-bold">{{ $document->subject }}</h5>
-                                        {!! $document->status !!}
-                                        Created on: {{ $document->tracking_date }} 
+                                        {{ $document->tracking_date }} 
                                     </td>
                                     <td>
                                         {{ $document->other_document }}
                                     </td>
                                     <td>
-                                        <h5 class="font-weight-bold">{!! $document->lastAction() !!}</h5>
+                                        <h5 class="font-weight-bold">{!! $document->action !!}</h5>
+                                        
+                                        @if ( $document->action == "Forward")
+                                            <ul class="p-l-20 m-b-0">
+                                                @if ( !is_null( $document->recipients ) )
+                                                    @foreach( json_decode($document->recipients) as $recipient)
+                                                        <li>{{ $recipient->name }}</li>
+                                                    @endforeach
+                                                @else
+                                                    <li>All</li>
+                                                @endif
+                                            </ul>
+                                        @else
+                                            <strong>{{ $document->userEmployee->full_name }}</strong><br>
+                                        @endif
                                         {!! $document->lastTracked() !!}
-                                        <ul>
-                                            @if ( !is_null( $document->recipients ) )
-                                                @foreach( json_decode($document->recipients) as $recipient)
-                                                    <li>{{ $recipient->name }}</li>
-                                                @endforeach
-                                            @else
-                                                <li>All</li>
-                                            @endif
-                                        </ul>
                                     </td>
                                 </tr>
                             @empty
@@ -90,8 +93,6 @@
 @endsection
 
 @section('scripts')
-<!-- This is data table -->
-<script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>

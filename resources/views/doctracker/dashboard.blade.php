@@ -27,7 +27,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Receive Incoming Documents
-                    <a href="{{ route('doctracker.createTracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+                    <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
                 </h4>
                 <p class="card-text">Receive tracked documents.</p>
                 

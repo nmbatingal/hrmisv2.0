@@ -27,12 +27,13 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');
 
 	Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
-	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.createTracker');
+	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.create.tracker');
 	Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showDocument');
 	Route::get('/doctracker/mydocuments/{id}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
 	Route::get('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@incomingDocuments')->name('doctracker.incoming');
 	Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showIncoming')->name('doctracker.incoming.show');
+	Route::post('/doctracker/incoming/receive', 'DocumentTracker\DocumentTrackerController@receiveIncomingDocument')->name('doctracker.incoming.receive');
 
 
 	Route::get('/doctracker/receiveddocuments', 'DocumentTracker\DocumentTrackerController@receivedDocuments')->name('doctracker.receivedDocuments');

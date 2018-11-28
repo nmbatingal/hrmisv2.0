@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
 @endsection
 
@@ -21,6 +20,9 @@
             <li class="breadcrumb-item active">{{ $myDocument->tracking_code }}</li>
         </ol>
     </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+    </div>
 </div>
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
@@ -33,15 +35,34 @@
     <!-- Column -->
     <div class="col-md-12">
         <div class="card">
+            <div class="card-header bg-primary">
+                <h4 class="m-b-0 text-white">Routing Details </h4>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">
-                    <a href="{{ route('doctracker.create') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
-                </h4>
-
-                <form class="form-horizontal m-t-30" role="form">
+                <h4 class="card-title"></h4>
+                <form class="form-horizontal" role="form">
                     <div class="form-body">
-                        <h3 class="box-title">Routing Details <strong>{{ $myDocument->tracking_code }}</strong></h3>
-                                        
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4 p-t-5">Code:</label>
+                                    <div class="col-md-8">
+                                        {!! $myDocument->barcodeLogo !!} 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <div class="float-right">
+                                            <a href="{{ route('print.barcode', $myDocument->id) }}" target="_blank" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+                                            <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <hr class="m-t-0 m-b-40">
                         <!--/row-->
                         <div class="row">
@@ -49,7 +70,7 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-4 p-t-5">Routed By:</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->fullName }}" disabled>
+                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->full_name }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +78,7 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-3 p-t-5">Division:</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" value="{{ $myDocument->userDivision->officeFullTitle }}" disabled>
+                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->office->division_name }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +100,7 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-4 p-t-5">Document Type:</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" value="{{ $myDocument->documentType->document_name }}" disabled>
+                                        <input type="text" class="form-control" value="{{ $myDocument->other_document }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -122,41 +143,37 @@
                                 </div>
                             </div>
                         </div>
-                        <!--/row-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-2 p-t-5">Code:</label>
-                                    <div class="col-md-10">
-                                        {!! $myDocument->barcodeLogo !!} 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/row-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-2">Action:</label>
-                                    <div class="col-md-10">
-                                        <a href="{{ route('print.barcode', $myDocument->id) }}" target="_blank" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
-                                        <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </form>
-
-                <h4 class="card-title m-t-40">Tracking Log: <i>{{ $myDocument->tracking_code }}</i></h4>
-                <h6 class="card-subtitletitle">Order of log is from latest to oldest.</i></h6>
-                <div class="table-responsive-md">
-                    <table id="demo-foo-pagination" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-primary">
+            <div class="card-header bg-primary">
+                <h4 class="m-b-0 text-white">Tracking History</h4>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Tracking code: {{ $myDocument->tracking_code }}</h4>
+                <h6 class="card-subtitletitle">Order of log is from latest to oldest.</h6>
+                <div class="table-responsive-md m-t-20">
+                    <table id="demo-foo-pagination" class="table table-striped full-color-table full-dark-table hover-table" data-paging="true" data-paging-size="5">
+                        <colgroup>
+                            <col width="">
+                            <col width="15%">
+                            <col width="">
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="20%">
+                        </colgroup>
                         <thead>
                             <tr class="footable-filtering">
+                                <th></th>
+                                <th>User</th>
                                 <th>Action</th>
-                                <th>Action by</th>
-                                <th>Recipient</th>
+                                <th></th>
                                 <th>Notes</th>
                                 <th>Date & Time</th>
                             </tr>
@@ -164,32 +181,26 @@
                         <tbody>
                             @forelse( $trackLogs as $log )
                                 <tr>
+                                    <td></td>
+                                    <td><h5>{{ $log->userEmployee->full_name }}</h5></td>
                                     <td>
-                                        {{ $log->action }}
+                                        {!! $log->log_action !!}
                                     </td>
                                     <td>
-                                        {{ $log->userEmployee->fullName }}
-                                        <br><small>{{ $log->office->division_name }}</small>
-                                    </td>
-                                    <td>
-                                        @if ( $log->recipient )
-                                            {{ $log->recipient->fullName }}
-                                            <br><small>{{ $log->office->division_name }}</small>
+                                        <ul>
+                                        @if ( !is_null($log->recipients) )
+                                            @forelse ($log->recipients as $recipient)
+                                                <li> {!! $recipient['name'] !!}</li>
+                                            @empty
+                                            @endforelse
                                         @endif
+                                        </ul>
                                     </td>
                                     <td>
                                         {{ $log->notes }}
-                                        <br><small>
-                                        @forelse ( $log->docAttachments as $file )
-                                            <a href="{{ asset($file->filepath) }}" target="_blank" class="text-underlined p-r-20">
-                                                <i class="icon-paper-clip"></i> {{ $file->filename }}
-                                            </a></small><br>
-                                        @empty
-                                        @endforelse
                                     </td>
                                     <td>
                                         {{ $log->dateAction }}
-                                        <br>({{ $log->diffForHumans }})
                                     </td>
                                 </tr>
                             @empty
@@ -204,8 +215,6 @@
 @endsection
 
 @section('scripts')
-<!-- This is data table -->
-<script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>

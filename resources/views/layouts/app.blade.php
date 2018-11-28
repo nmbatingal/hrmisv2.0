@@ -10,11 +10,6 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <!--Toaster Popup message CSS -->
-    <link href="{{ asset('assets/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
@@ -108,9 +103,6 @@
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
     <!--stickey kit -->
     <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
-    <script src="{{ asset('assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
-    <!-- Popup message jquery -->
-    <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('dist/js/custom.min.js') }}"></script>
     @yield('scripts')
