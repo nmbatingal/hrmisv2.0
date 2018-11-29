@@ -86,7 +86,10 @@ class DocumentTracker extends Model
         return $query->where('document_trackers.user_id', Auth::user()->id)
                           ->select([
                                 'document_trackers.*',
+                                'document_tracking_logs.user_id AS created_by',
                                 'document_tracking_logs.action',
+                                'document_tracking_logs.route_mode',
+                                'document_tracking_logs.recipients',
                                 'document_tracking_logs.created_at AS log_date'
                             ])
                           ->orderBy('document_trackers.created_at', 'DESC')

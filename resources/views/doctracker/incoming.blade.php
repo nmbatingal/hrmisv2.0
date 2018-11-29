@@ -35,6 +35,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+                <h3 class="card-title">Incoming Documents</h3>
                 <p class="card-text">Receive incoming documents using tracker code.</p>
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                 <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="POST">
@@ -73,42 +74,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse( $incomingDocuments as $document )
-                                <tr class="{{ $document->recipient_received ?: 'table-danger' }}">
-                                    <td>
-                                        @if ( $document->action == 'Forward' )
-                                            @if (  !$document->recipient_received )
-                                                {{ $document->tracking_code }}
-                                            @else
-                                                <a href="{{ route('doctracker.showReceivedDocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
-                                            @endif
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ( $document->recipient )
-                                            {{ $document->recipient->fullName }}
-                                            @if ( !$document->recipient_received )
-                                                <small class="text-danger"> <i class="mdi mdi-alert-circle"></i> Not yet received</small>
-                                            @endif
-                                            <br><small>{{ $document->office->division_name }}</small>
-                                        @else
-                                            {{ $document->office->division_name }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {{ $document->userEmployee->fullName }}
-                                        <br><small>{{ $document->userEmployee->office->division_name }}</small>
-                                    </td>
-                                    <td>
-                                        {{ $document->dateAction }}
-                                        <br>({{ $document->diffForHumans }})
-                                    </td>
-                                </tr>
-                            @empty
-                            @endforelse
                         </tbody>
                     </table>
                 </div>
+
+                <a href="{{ route('doctracker.logs') }}" class="btn btn-outline-danger"> View tracking logs >>> </a>
             </div>
         </div>
     </div>

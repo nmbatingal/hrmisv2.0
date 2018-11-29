@@ -7,7 +7,7 @@
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
-<div class="row page-titles">
+<!-- <div class="row page-titles">
     <div class="col-md-12">
         <h4 class="text-white">Home</h4>
     </div>
@@ -17,7 +17,7 @@
             <li class="breadcrumb-item active">Dashboard</li>
         </ol>
     </div>
-</div>
+</div> -->
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
@@ -25,13 +25,16 @@
 <!-- Over Visitor, Our income , slaes different and  sales prediction -->
 <!-- ============================================================== -->
 <div class="m-t-40"></div>
+
 <div class="row">
     <!-- Column -->
     <div class="col-lg-12">
-        <div class="card">
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top" src="{{ asset('img/document-tracking.jpg') }}" alt="Card image cap">
             <div class="card-body">
-                <h4 class="card-title">Dashboard</h4>
-                <p class="card-text">This page is under development. Come back some time.</p>
+                <h4 class="card-title">Document Tracker</h4>
+                <p class="card-text">Add tracking codes to your documents.</p>
+                <a href="{{ route('doctracker.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
             </div>
         </div>
     </div>

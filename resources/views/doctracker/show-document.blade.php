@@ -35,10 +35,14 @@
     <!-- Column -->
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header bg-primary">
-                <h4 class="m-b-0 text-white">Routing Details </h4>
+            <div class="card-header bg-cyan">
+                <h4 class="m-b-0 text-white">Routing Details 
+                    <div class="card-actions">
+                        <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                    </div>
+                </h4>
             </div>
-            <div class="card-body">
+            <div class="card-body collapse show">
                 <h4 class="card-title"></h4>
                 <form class="form-horizontal" role="form">
                     <div class="form-body">
@@ -151,50 +155,52 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="card border-primary">
-            <div class="card-header bg-primary">
-                <h4 class="m-b-0 text-white">Tracking History</h4>
+        <div class="card border-info">
+            <div class="card-header bg-cyan">
+                <h4 class="m-b-0 text-white">Tracking History
+                    <div class="card-actions">
+                        <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                    </div>
+                </h4>
             </div>
-            <div class="card-body">
+            <div class="card-body collapse show">
                 <h4 class="card-title">Tracking code: {{ $myDocument->tracking_code }}</h4>
                 <h6 class="card-subtitletitle">Order of log is from latest to oldest.</h6>
                 <div class="table-responsive-md m-t-20">
                     <table id="demo-foo-pagination" class="table table-striped full-color-table full-dark-table hover-table" data-paging="true" data-paging-size="5">
                         <colgroup>
-                            <col width="">
-                            <col width="15%">
-                            <col width="">
+                            <col width="20%">
                             <col width="30%">
                             <col width="30%">
                             <col width="20%">
                         </colgroup>
                         <thead>
                             <tr class="footable-filtering">
-                                <th></th>
                                 <th>User</th>
                                 <th>Action</th>
-                                <th></th>
                                 <th>Notes</th>
-                                <th>Date & Time</th>
+                                <th>Date Tracked</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse( $trackLogs as $log )
+                            @forelse( $myDocument->trackLogs as $log )
                                 <tr>
-                                    <td></td>
                                     <td><h5>{{ $log->userEmployee->full_name }}</h5></td>
                                     <td>
-                                        {!! $log->log_action !!}
-                                    </td>
-                                    <td>
-                                        <ul>
-                                        @if ( !is_null($log->recipients) )
-                                            @forelse ($log->recipients as $recipient)
-                                                <li> {!! $recipient['name'] !!}</li>
-                                            @empty
-                                            @endforelse
+                                        <h5 class="font-weight-bold">{!! $log->action !!}</h5>
+                                        @if ( $log->action == "Forward")
+                                            <ul class="p-l-20 m-b-0">
+                                                @if ( !is_null( $log->recipients ) )
+                                                    @foreach( $log->recipients as $recipient)
+                                                        <li>{{ $recipient['name'] }}</li>
+                                                    @endforeach
+                                                @else
+                                                    <li>All</li>
+                                                @endif
+                                            </ul>
+                                        @else
+                                            <strong>{{ $log->userEmployee->full_name }}</strong><br>
                                         @endif
-                                        </ul>
                                     </td>
                                     <td>
                                         {{ $log->notes }}

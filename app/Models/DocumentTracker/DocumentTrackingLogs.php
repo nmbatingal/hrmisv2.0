@@ -47,16 +47,6 @@ class DocumentTrackingLogs extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function routeToOffice()
-    {
-        return $this->belongsTo(Office::class, 'route_to_office_id', 'id');
-    }
-
-    public function routeToUser()
-    {
-        return $this->belongsTo(Office::class, 'route_to_user_id', 'id');
-    }
-
     public function getLogActionAttribute()
     {
         return "<h5 class='font-weight-bold'>" . $this->action . "</h5> (" . ucwords($this->route_mode) . ")";

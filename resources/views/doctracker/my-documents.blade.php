@@ -35,9 +35,27 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+                <h3 class="card-title">My Documents</h3>
                 <p class="card-text">List of created documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to track.</p>
+                
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-cyan text-white">
+                            <div class="card-body">
+                                <h6 class="m-b-0">TOTAL TRACKED</h6>
+                                <h3 class="card-title">DOCUMENTS</h3>
+                                <div class="d-flex no-block align-items-center m-t-20 m-b-0">
+                                    <div class="ml-auto">
+                                        <h1 class="text-white"><i class="icon-docs"></i> <span class="">{{ $myDocuments->count() }}</span></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sparkline8" class="sparkchart"></div>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="table-responsive-md m-t-20">
+                <div class="table-responsive-md">
                     <table id="demo-foo-pagination" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
                         <thead>
                             <tr class="footable-filtering">
@@ -64,7 +82,6 @@
                                     </td>
                                     <td>
                                         <h5 class="font-weight-bold">{!! $document->action !!}</h5>
-                                        
                                         @if ( $document->action == "Forward")
                                             <ul class="p-l-20 m-b-0">
                                                 @if ( !is_null( $document->recipients ) )
@@ -86,6 +103,8 @@
                         </tbody>
                     </table>
                 </div>
+
+                <a href="{{ route('doctracker.logs') }}" class="btn btn-outline-danger"> View tracking logs >>> </a>
             </div>
         </div>
     </div>

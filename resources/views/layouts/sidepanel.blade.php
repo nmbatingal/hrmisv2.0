@@ -14,7 +14,7 @@
                     </form>
                 </div> -->
                 <ul class="sidebar-menu">
-                    <li><a href="{{ route('home') }}">Dashboard </a></li>
+                    <li><a href="{{ route('home') }}">Home </a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>
@@ -30,7 +30,7 @@
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
                     <li><a href="{{ route('doctracker.incoming') }}">Incoming Documents</a></li>
-                    <li><a href="{{ route('doctracker.receivedDocuments') }}">Outgoing Documents</a></li>
+                    <li><a href="{{ route('doctracker.outgoing') }}">Outgoing Documents</a></li>
                     <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
                 </ul>
                 <!-- Left navbar-header end -->

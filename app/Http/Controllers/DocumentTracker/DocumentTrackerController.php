@@ -51,24 +51,50 @@ class DocumentTrackerController extends Controller
         $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$log_id)
                                             ->orWhere('tracking_code', 'LIKE', '%'. $log_id)
                                             ->latest()->get();
+        $recipients = "";
 
         foreach ($documents as $i => $value) {
+
+            if ( $value->action == "Forward" ) {
+
+                $li = "";
+
+                if ( !is_null( $value->recipients ) )
+                {
+                    foreach ( $value->recipients as $recipient ) {
+                        $li .= "<li>". $recipient['name'] ."</li>";
+                    }
+                } else {
+                    $li = "<li>All</li>";
+                }
+
+                $recipients = '<ul class="p-l-20 m-b-0">'. $li .'</ul>';
+
+            } else {
+                $recipients = "<strong>". $value->userEmployee->full_name ."</strong><br>";
+            }
+
+
             $code             = $value->tracking_code;
             $logDetail[$i]    = [
-                                    'tracking_code' => $value->tracking_code,
-                                    'action' => $value->action,
-                                    'received_by' => $value->recipient ? $value->recipient->fullName : '',
-                                    'received_office' => $value->recipient ? $value->recipient->office->division_name : '',
-                                    'from' => $value->userEmployee->fullName,
-                                    'from_office' => $value->userEmployee->office->division_name,
-                                    'dateTime' => $value->dateAction,
-                                ];
+                'tracking_code'   => $value->tracking_code,
+                'created_by'      => $value->documentCode->userEmployee->full_name,
+                'action'          => $value->action,
+                'document_type'   => $value->documentCode->other_document,
+
+                'recipients'      => $recipients,
+
+                'date_created'    => $value->documentCode->tracking_date,
+                'notes'           => $value->notes ?: '',
+                'date_time'       => $value->date_action,
+            ];
         }
      
         if($request->ajax())
         {
             $view = view('doctracker.logs', compact('documents'));
             return response()->json(['results' => $logDetail, 'result' => count($documents), 'code' => $code, 'view' => $view]);
+
         } else {
             return view('doctracker.logs', compact('documents'));
         }
@@ -82,7 +108,26 @@ class DocumentTrackerController extends Controller
     public function myDocuments()
     {
         $myDocuments = DocumentTracker::myDocuments()->get();
-        return view('doctracker.myDocuments', compact('myDocuments'));
+        
+        return view('doctracker.my-documents', compact('myDocuments'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showDocument($code = null)
+    {
+        $myDocument = DocumentTracker::with([
+                            'trackLogs' => function ($query) {
+                                $query->latest();
+                            }
+                        ])->where('tracking_code', $code)->first();
+        
+        // return $myDocument->trackLogs[0]['action'];
+        return view('doctracker.show-document', compact('myDocument'));
+        // return $myDocument;
     }
 
     /**
@@ -92,9 +137,7 @@ class DocumentTrackerController extends Controller
      */
     public function incomingDocuments()
     {
-        $incomingDocuments = [];
-        
-        return view('doctracker.incoming', compact('incomingDocuments'));
+        return view('doctracker.incoming');
     }
 
     /**
@@ -193,12 +236,11 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showDocument($code = null)
+    public function outgoingDocuments()
     {
-        $myDocument = DocumentTracker::where('tracking_code', $code)->first();
-        $trackLogs  = DocumentTrackingLogs::where('tracking_code', $code)->latest()->get();
+        $incomingDocuments = [];
         
-        return view('doctracker.showDocument', compact('myDocument', 'trackLogs'));
+        return view('doctracker.outgoing', compact('incomingDocuments'));
     }
 
     /**
