@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicantsAttachment extends Model
 {
+    protected $connection    = 'mysql3';
     protected $table = "applicants_attachments";
     
     /**

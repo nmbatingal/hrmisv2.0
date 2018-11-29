@@ -26,12 +26,12 @@
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
-        <div class="preloader">
+        <!-- <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
                 <p class="loader__label">Elite admin</p>
             </div>
-        </div>
+        </div> -->
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -46,7 +46,9 @@
             <!-- ============================================================== -->
             <!-- Left Sidebar - style you can find in sidebar.scss  -->
             <!-- ============================================================== -->
-            @include('layouts.sidepanel')
+            @auth
+                @include('layouts.sidepanel')
+            @endauth
             <!-- ============================================================== -->
             <!-- End Left Sidebar - style you can find in sidebar.scss  -->
             <!-- ============================================================== -->
@@ -63,7 +65,9 @@
                     <!-- Right sidebar -->
                     <!-- ============================================================== -->
                     <!-- .right-sidebar -->
-                    @include('layouts.rightsidebar')
+                    @auth
+                        @include('layouts.rightsidebar')
+                    @endauth
                     <!-- ============================================================== -->
                     <!-- End Right sidebar -->
                     <!-- ============================================================== -->
@@ -79,7 +83,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2018 Eliteadmin by themedesigner.in
+                © 2018 MyApplication by ICT DOST-Caraga.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

@@ -13,7 +13,7 @@ class CreateApplicantsEducationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants_educations', function (Blueprint $table) {
+        Schema::connection('mysql3')->create('applicants_educations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('program');
             $table->string('school');
@@ -32,6 +32,6 @@ class CreateApplicantsEducationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants_educations');
+        Schema::connection('mysql3')->dropIfExists('applicants_educations');
     }
 }

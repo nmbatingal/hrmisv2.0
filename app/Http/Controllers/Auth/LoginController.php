@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,6 +39,7 @@ class LoginController extends Controller
      */
     public function __construct(ActivationService $activationService)
     {
+        DB::connection('mysql');
         $this->middleware('guest', ['except' => 'logout']);
         $this->activationService = $activationService;
     }
@@ -63,11 +65,14 @@ class LoginController extends Controller
         ]);
 
         if ( Auth::attempt( array_merge($request->only($login_type, 'password')), $remember == 'on' ? true : false )) {
-            
+
+            // return $request;
             return $this->authenticated($request, $this->guard()->user());
         }
+
         
-        return redirect('/login')->with('warning', 'These credentials do not match our records.');
+        
+        // return redirect('/login')->with('warning', 'These credentials do not match our records.');
     }
     /*
      * activate user on email request
@@ -92,7 +97,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if (!$user->isActive) {
+        if ( !$user->isActive ) {
 
             auth()->logout();
 

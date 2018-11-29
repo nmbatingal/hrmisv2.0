@@ -5,6 +5,10 @@ namespace App\Models\Applicants;
 use App\Uuids;
 use Carbon\Carbon;
 use App\Models\Applicants\ApplicantsInfo;
+use App\Models\Applicants\ApplicantsAttachment;
+use App\Models\Applicants\ApplicantsEducation;
+use App\Models\Applicants\ApplicantsEligibility;
+use App\Models\Applicants\ApplicantsExperience;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -13,6 +17,7 @@ class ApplicantsInfo extends Model
     use SoftDeletes;
     use Uuids;
 
+    protected $connection    = 'mysql3';
     protected $table         = "applicants_infos";
     public    $incrementing  = false;
     protected $dates = ['deleted_at'];
@@ -53,23 +58,23 @@ class ApplicantsInfo extends Model
         return Carbon::parse($this->birthday)->format('F d, Y');
     }
 
-    public function applicantAttachment()
+    public function applicantAttachments()
     {
-        return $this->hasMany('App\Models\Applicants\ApplicantsAttachment', 'applicant_id', 'id');
+        return $this->hasMany(ApplicantsAttachment::class, 'applicant_id', 'id');
     }
 
     public function applicantEducations()
     {
-        return $this->hasMany('App\Models\Applicants\ApplicantsEducation', 'applicant_id', 'id');
+        return $this->hasMany(ApplicantsEducation::class, 'applicant_id', 'id');
     }
 
     public function applicantEligibilities()
     {
-        return $this->hasMany('App\Models\Applicants\ApplicantsEligibility', 'applicant_id', 'id');
+        return $this->hasMany(ApplicantsEligibility::class, 'applicant_id', 'id');
     }
 
     public function applicantExperiences()
     {
-        return $this->hasMany('App\Models\Applicants\ApplicantsExperience', 'applicant_id', 'id');
+        return $this->hasMany(ApplicantsExperience::class, 'applicant_id', 'id');
     }
 }

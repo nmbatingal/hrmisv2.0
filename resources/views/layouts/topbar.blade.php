@@ -4,7 +4,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ route('home') }}">
                 <!-- Logo icon -->
                 <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -25,9 +25,10 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav mr-auto">
                 <li class="d-none d-md-block d-lg-block">
-                    <a href="javascript:void(0)" class="p-l-15">
+                    <a href="javascript:void(0)" class="p-l-20">
                         <!--This is logo text-->
-                        <img src="{{ asset('assets/images/logo-light-text.png') }}" alt="home" class="light-logo" alt="home" />
+                        <!-- <img src="{{ asset('assets/images/logo-light-text.png') }}" alt="home" class="light-logo" alt="home" /> -->
+                        <span class="text-white p-0 m-0">MyApplication</span>
                     </a>
                 </li>
             </ul>
@@ -49,30 +50,6 @@
                             </li>
                             <li>
                                 <div class="message-center">
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                    </a>
                                 </div>
                             </li>
                             <li>
@@ -94,34 +71,11 @@
                     <div class="dropdown-menu mailbox dropdown-menu-right" aria-labelledby="2">
                         <ul>
                             <li>
-                                <div class="drop-title">You have 4 new messages</div>
+                                <div class="drop-title">You have 0 messages</div>
                             </li>
                             <li>
                                 <div class="message-center">
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="user-img"> <img src="{{ asset('assets/images/users/1.jpg') }}" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="user-img"> <img src="{{ asset('assets/images/users/2.jpg') }}" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="user-img"> <img src="{{ asset('assets/images/users/3.jpg') }}" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)">
-                                        <div class="user-img"> <img src="{{ asset('assets/images/users/4.jpg') }}" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                    </a>
+                                    
                                 </div>
                             </li>
                             <li>
@@ -143,18 +97,6 @@
                     @endguest
                     
                     <div class="dropdown-menu dropdown-menu-right">
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a>
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
-                        <!-- text-->
-                        <div class="dropdown-divider"></div>
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
-                        <!-- text-->
-                        <div class="dropdown-divider"></div>
                         <!-- text-->
                         <a href="{{ route('logout') }}" class="dropdown-item text-danger" 
                             onclick="event.preventDefault();

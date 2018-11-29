@@ -13,7 +13,7 @@ class CreateApplicantsAttachmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicants_attachments', function (Blueprint $table) {
+        Schema::connection('mysql3')->create('applicants_attachments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('filename')->nullable();
             $table->integer('filesize')->nullable();
@@ -32,6 +32,6 @@ class CreateApplicantsAttachmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicants_attachments');
+        Schema::connection('mysql3')->dropIfExists('applicants_attachments');
     }
 }

@@ -90,10 +90,11 @@
                                             <label class="control-label text-right col-md-3">Gender</label>
                                             <div class="col-md-9">
                                                 <select class="form-control custom-select" name="sex">
+                                                    <option value="">-- Select sex --</option>
                                                     <option value="1">Male</option>
                                                     <option value="2">Female</option>
                                                 </select>
-                                                <small class="form-control-feedback"> Select your gender. </small> 
+                                                <small class="form-control-feedback"> Select your sex. </small> 
                                             </div>
                                         </div>
                                     </div>
@@ -286,6 +287,7 @@
                                             <label class="control-label text-right col-md-3">Hire Status</label>
                                             <div class="col-md-9">
                                                 <select class="form-control custom-select" name="hireStatus">
+                                                    <option value="">-- Select hiring status --</option>
                                                     <option value="0">Not yet hired</option>
                                                     <option value="1">Hired</option>
                                                 </select>
@@ -298,10 +300,11 @@
                                             <label class="control-label text-right col-md-3">Interview Status</label>
                                             <div class="col-md-9">
                                                 <select class="form-control custom-select" name="interviewStatus">
+                                                    <option value="">-- Select interview status --</option>
                                                     <option value="0">Not yet interviewed</option>
                                                     <option value="1">Interviewed</option>
                                                 </select>
-                                                <small class="form-control-feedback"> Select your gender. </small> 
+                                                <small class="form-control-feedback"> Select applicant interview status. </small> 
                                             </div>
                                         </div>
                                     </div>

@@ -2,18 +2,28 @@
 
 namespace App;
 
+use Auth;
+use App\Office;
+use App\VerifyUser;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use Notifiable;
-    use Uuids;
+    use SoftDeletes;
+    use HasRoles;
+    // use Uuids;
 
-    protected $table         = "users";
-    public    $incrementing  = false;
+    protected $connection   = 'mysql';
+    protected $table        = "users";
+    // public    $incrementing = false;
+    protected $dates = ['deleted_at'];
     protected $casts = [
-        'isactive' => 'boolean',
+        'isActive' => 'boolean',
+        'isAdmin' => 'boolean',
     ];
     
     /**
@@ -23,12 +33,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'firstname', 
+        'middlename', 
         'lastname', 
         'username',
         'email', 
         'mobile', 
         'password',
+        'office_id',
+        'position',
         'isActive',
+        'isAdmin',
     ];
 
     /**
@@ -42,6 +56,33 @@ class User extends Authenticatable
 
     public function verifyUser()
     {
-        return $this->belongsTo('App\VerifyUser', 'user_id', 'id');
+        return $this->belongsTo(VerifyUser::class, 'user_id', 'id');
+    }
+
+    // User fullname accessor
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    public function scopeNotSelf($query)
+    {
+        return $query->where('id', '!=', Auth::user()->id);
+    }
+
+    public function scopeEmployeeOffice($query, $office)
+    {
+        return $query->where('office_id', $office);
+    }
+
+    public function scopeEmployee($query)
+    {
+        return $query->where('isActive', 1)
+                     ->where('isAdmin', '!=', 1);
     }
 }
