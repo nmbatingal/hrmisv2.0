@@ -58,6 +58,12 @@
                                 {!! session('warning') !!}
                             </div>
                         @endif
+
+                        @if ($errors->has('email'))
+                            <div class="alert alert-danger">
+                                The credentials do not match our records.
+                            </div>
+                        @endif
                         <div class="form-group ">
                             <div class="col-xs-12">
                                 <input class="form-control" type="text" name="login" placeholder="Username" value="{{ old('login') }}" required autofocus> 

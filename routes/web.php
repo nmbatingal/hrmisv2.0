@@ -25,10 +25,20 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
 	Route::get('/doctracker/logs', 'DocumentTracker\DocumentTrackerController@logs')->name('doctracker.logs');
 	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');
+
 	Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
-	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.createTracker');
-	Route::get('/doctracker/mydocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showDocument');
+	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.create.tracker');
+	Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showDocument');
 	Route::get('/doctracker/mydocuments/{id}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
+
+	Route::get('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@incomingDocuments')->name('doctracker.incoming');
+	Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showIncoming')->name('doctracker.incoming.show');
+	Route::post('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@receiveIncomingDocument')->name('doctracker.incoming.receive');
+
+	Route::get('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing');
+	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing.receive');
+
+
 	Route::get('/doctracker/receiveddocuments', 'DocumentTracker\DocumentTrackerController@receivedDocuments')->name('doctracker.receivedDocuments');
 	Route::get('/doctracker/receiveddocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showReceivedDocument')->name('doctracker.showReceivedDocument');
 	Route::post('/doctracker/receiveddocuments/receive', 'DocumentTracker\DocumentTrackerController@recieveForwardedDocument')->name('doctracker.recieveForwardedDocument');

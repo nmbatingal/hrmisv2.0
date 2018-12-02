@@ -14,7 +14,7 @@
                     </form>
                 </div> -->
                 <ul class="sidebar-menu">
-                    <li><a href="{{ route('home') }}">Dashboard </a></li>
+                    <li><a href="{{ route('home') }}">Home </a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>
@@ -22,14 +22,15 @@
         <!-- /.Home -->
         <!-- .Apps -->
         <li class="{{ Request::is('doctracker/*') ? 'selected' : '' }}">
-            <a href="javascript:void(0)"><i class="mdi mdi-qrcode-scan"></i></a>
+            <a href="javascript:void(0);"><i class="mdi mdi-qrcode-scan"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
                 <h3 class="menu-title">Document Tracker</h3>
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
-                    <li><a href="{{ route('doctracker.receivedDocuments') }}">Received Documents</a></li>
+                    <li><a href="{{ route('doctracker.incoming') }}">Incoming Documents</a></li>
+                    <li><a href="{{ route('doctracker.outgoing') }}">Outgoing Documents</a></li>
                     <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
                 </ul>
                 <!-- Left navbar-header end -->

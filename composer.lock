@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "706c5a2bdbf95d989e12e23241e2337e",
-=======
     "content-hash": "85ecc11095f8f8205fcd967bf089a59f",
->>>>>>> barcode2
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -57,8 +53,6 @@
             "time": "2017-10-17T09:59:25+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "barryvdh/laravel-dompdf",
             "version": "v0.8.3",
             "source": {
@@ -164,7 +158,6 @@
             "time": "2018-10-25T18:32:10+00:00"
         },
         {
->>>>>>> barcode2
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
             "source": {
@@ -1346,8 +1339,6 @@
                 "mathematics"
             ],
             "time": "2018-10-13T23:28:42+00:00"
-<<<<<<< HEAD
-=======
         },
         {
             "name": "milon/barcode",
@@ -1397,7 +1388,6 @@
                 "qrcode"
             ],
             "time": "2017-07-28T00:33:38+00:00"
->>>>>>> barcode2
         },
         {
             "name": "monolog/monolog",
@@ -2091,8 +2081,6 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "sabberworm/php-css-parser",
             "version": "8.1.0",
             "source": {
@@ -2137,7 +2125,6 @@
             "time": "2016-07-19T19:14:21+00:00"
         },
         {
->>>>>>> barcode2
             "name": "simplesoftwareio/simple-qrcode",
             "version": "2.0.0",
             "source": {
@@ -2200,18 +2187,6 @@
         },
         {
             "name": "spatie/laravel-permission",
-<<<<<<< HEAD
-            "version": "2.23.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
-                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
-=======
             "version": "2.25.0",
             "source": {
                 "type": "git",
@@ -2222,7 +2197,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/6b41d1d1726d432342546f9d3c79144b082812dc",
                 "reference": "6b41d1d1726d432342546f9d3c79144b082812dc",
->>>>>>> barcode2
                 "shasum": ""
             },
             "require": {
@@ -2273,11 +2247,7 @@
                 "security",
                 "spatie"
             ],
-<<<<<<< HEAD
-            "time": "2018-10-15T19:10:43+00:00"
-=======
             "time": "2018-11-07T22:48:36+00:00"
->>>>>>> barcode2
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -59,7 +59,6 @@ class User extends Authenticatable
         return $this->belongsTo(VerifyUser::class, 'user_id', 'id');
     }
 
-    // User fullname accessor
     public function getFullNameAttribute()
     {
         return "{$this->firstname} {$this->lastname}";
@@ -83,6 +82,7 @@ class User extends Authenticatable
     public function scopeEmployee($query)
     {
         return $query->where('isActive', 1)
-                     ->where('isAdmin', '!=', 1);
+                     ->where('isAdmin', '!=', 1)
+                     ->orderBy('firstname', 'ASC');
     }
 }

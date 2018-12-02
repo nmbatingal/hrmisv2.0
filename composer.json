@@ -13,16 +13,10 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
-<<<<<<< HEAD
-        "spatie/laravel-permission": "^2.22",
-        "webpatser/laravel-uuid": "^3.0",
-        "simplesoftwareio/simple-qrcode": "~2"
-=======
         "milon/barcode": "^5.3",
         "simplesoftwareio/simple-qrcode": "~2",
         "spatie/laravel-permission": "^2.25",
         "webpatser/laravel-uuid": "^3.0"
->>>>>>> barcode2
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

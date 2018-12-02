@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('styles')
-<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
 @endsection
 
@@ -11,13 +10,13 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white">Tracking Logs</h4>
+        <h4 class="text-white">Incoming Documents</h4>
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">Document Tracker</a></li>
-            <li class="breadcrumb-item active">Logs</li>
+            <li class="breadcrumb-item active">Incoming Documents</li>
         </ol>
     </div>
     <div class="col-md-6 text-right">
@@ -36,17 +35,18 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Outgoing Documents</h3>
-                <p class="card-text">Search for a document using tracking code.</p>
-                
-                <form id="submitCode" action="{{ route('doctracker.search') }}" class="form-horizontal" method="GET">
-                    <div class="row p-t-20">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
+                <h3 class="card-title">Incoming Documents</h3>
+                <p class="card-text">Receive incoming documents using tracker code.</p>
+                <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+                <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="POST">
+                    {{ csrf_field() }}
+                    <div class="row m-t-40">
+                        <div class="col-md-12">
+                            <div class="form-group m-b-0">
                                 <div class="input-group p-0">
-                                    <input type="text" class="form-control" name="code" placeholder="Enter tracking code" value="{{ request('code') }}" required autofocus>
+                                    <input type="text" class="form-control" name="code" placeholder="Enter tracking code to receive" required autofocus>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit"><i class="icon-magnifier"></i></button>
+                                        <button class="btn btn-primary" type="submit"><i class="ti-import"></i> Receive</button>
                                     </div>
                                 </div>
                                 <small class="form-control-feedback">&nbsp; </small> 
@@ -55,11 +55,10 @@
                         <!--/span-->
                     </div>
                 </form>
+                <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
 
-                <h5 id="results-bar" class="card-subtitle" style="display: none;">Showing <span id="code-result">{{ count($documents) }}</span> results for tracking code <u id="tracker-code" class="text-primary">{{ request('code') }}</u></h5>
-                
-                <div class="table-responsive-md m-t-10">
-                    <table id="search-tracker" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
+                <div class="table-responsive-md">
+                    <table id="document-tracker-received" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
                         <colgroup>
                             <col width="20%">
                             <col width="30%">
@@ -68,17 +67,18 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Action</th>
+                                <th>Tracking Code</th>
+                                <th>Subject</th>
                                 <th>Notes</th>
-                                <th>Date tracked</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="footable-empty"><td colspan="4">No results</td></tr>
                         </tbody>
                     </table>
                 </div>
+
+                <a href="{{ route('doctracker.logs') }}" class="btn btn-outline-danger"> View tracking logs >>> </a>
             </div>
         </div>
     </div>
@@ -94,13 +94,12 @@
 <script>
     $(document).ready(function() { 
 
-        //
         $('[data-page-size]').on('click', function(e){
             e.preventDefault();
             var newSize = $(this).data('pageSize');
-            FooTable.get('#demo-foo-pagination').pageSize(newSize);
+            FooTable.get('#document-tracker-received').pageSize(newSize);
         });
-        $('#demo-foo-pagination').footable({
+        $('#document-tracker-received').footable({
             filtering: {
                 enabled: false
             }
@@ -111,30 +110,18 @@
             var form = $(this);
 
             $.ajax({
-                method : 'GET',
+                method : 'POST',
                 url    : form.attr('action'),
                 data   : form.serialize(),
                 success: function(data) {
 
-                    console.log(data);
+                    var row = appendTableRowReceived(data);
 
-                    $('#results-bar').css('display', 'block'); 
-                    $('table#search-tracker tbody tr').remove();  
+                    $('tr.footable-empty').remove();
+                    $('table#document-tracker-received tbody').prepend(row);
 
-                    $('#code-result').html(data.result);
-                    $('#tracker-code').html(data.code);
-
-                    if ( data.result > 0 )
-                    {
-                        $.each(data.results, function(index, item){
-                            var row = appendTableRowSearch(item);
-                            $('table#search-tracker tbody').append(row);
-                        });
-
-                        $('#search-tracker').trigger('footable_initialize');
-                    } else {
-                        $('table#search-tracker tbody').append('<tr class="footable-empty"><td colspan="4">No results</td></tr>');
-                    }
+                    $('#document-tracker-received').trigger('footable_initialize');
+                    form.trigger("reset");
                 },
                 error  : function(xhr, err) {
                     alert("Error! Could not retrieve the data.");
@@ -145,16 +132,20 @@
         });
 
         // row to be added
-        function appendTableRowSearch (item) {
+        function appendTableRowReceived (item) {
             var row = $('<tr>' +
-                            '<td>' + item.created_by + '</td>' +
+                            '<td><a href="{!! route('doctracker.incoming.show', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
+                            '<td>' + 
+                                '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
+                                    '<h5>' + item.created_by + '</h5>' +  
+                                    '(' + item.document_type + ')<br>' +
+                                    item.date_created + 
+                            '</td>' +
+                            '<td>' + item.note + '</td>' +
                             '<td>' + 
                                 '<h5 class="font-weight-bold">' + item.action + '</h5>' +
-                                item.recipients +
-                                item.date_created +
+                                item.date_action +  
                             '</td>' +
-                            '<td>' + item.notes + '</td>' +
-                            '<td>' + item.date_time + '</td>' +
                         '</tr>');
             return row;
         }
