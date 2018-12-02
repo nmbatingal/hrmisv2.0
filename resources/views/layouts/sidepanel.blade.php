@@ -3,7 +3,7 @@
         <div class="togglediv"><a href="javascript:void(0)" id="togglebtn"><i class="ti-menu"></i></a></div>
         <!-- .Dashboard -->
         <li class="{{ Request::is('home') ? 'selected' : '' }}">
-            <a href="javascript:void(0)"><i class="ti-home"></i></a>
+            <a href="{{ route('home') }}"><i class="ti-home"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
                 <h3 class="menu-title">Home</h3>

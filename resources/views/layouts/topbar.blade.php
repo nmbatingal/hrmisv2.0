@@ -64,7 +64,7 @@
                 <!-- ============================================================== -->
                 <!-- Messages -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown">
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-note"></i>
                         <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                     </a>
@@ -83,7 +83,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
                 <!-- ============================================================== -->
                 <!-- End Messages -->
                 <!-- ============================================================== -->
