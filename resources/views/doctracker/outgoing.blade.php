@@ -37,6 +37,24 @@
             <div class="card-body">
                 <h3 class="card-title">Outgoing Documents</h3>
                 <p class="card-text">Forward outgoing documents using tracker code.</p>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-cyan text-white">
+                            <div class="card-body">
+                                <h6 class="m-b-0">Total Documents</h6>
+                                <h3 class="card-title">FORWARDED</h3>
+                                <div class="d-flex no-block align-items-center m-t-20 m-b-0">
+                                    <div class="ml-auto">
+                                        <h1 class="text-white"><i class="icon-docs"></i> <span id="count-received">{{ $outgoingLogs->count() }}</span></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sparkline8" class="sparkchart"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                 <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="POST">
                     {{ csrf_field() }}
@@ -74,6 +92,32 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse( $outgoingLogs as $outgoing )
+                                <tr>
+                                    <td><a href="javascript:void(0)" target="_blank">{{ $outgoing->tracking_code }}</a></td>
+                                    <td>
+                                        <h5 class="font-weight-bold">{{ $outgoing->documentCode->subject }}</h5>
+                                            <h5>{{ $outgoing->userEmployee->full_name }}</h5>
+                                            ({{ $outgoing->documentCode->other_document }})<br>
+                                            {{ $outgoing->documentCode->tracking_date }}
+                                    </td>
+                                    <td>{{ $outgoing->notes }}</td>
+                                    <td>
+                                        <h5 class="font-weight-bold">{{ $outgoing->action }}</h5>
+                                        <ul class="p-l-20 m-b-0">
+                                            @if ( !is_null( $outgoing->recipients ) )
+                                                @foreach( $outgoing->recipients as $recipient)
+                                                    <li>{{ $recipient['name'] }}</li>
+                                                @endforeach
+                                            @else
+                                                <li>All</li>
+                                            @endif
+                                        </ul>
+                                        {{ $outgoing->date_action }}
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

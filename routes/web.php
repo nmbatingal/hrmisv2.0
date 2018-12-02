@@ -39,13 +39,12 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing.receive');
 
 
-	Route::get('/doctracker/receiveddocuments', 'DocumentTracker\DocumentTrackerController@receivedDocuments')->name('doctracker.receivedDocuments');
-	Route::get('/doctracker/receiveddocuments/{tracking_code}', 'DocumentTracker\DocumentTrackerController@showReceivedDocument')->name('doctracker.showReceivedDocument');
-	Route::post('/doctracker/receiveddocuments/receive', 'DocumentTracker\DocumentTrackerController@recieveForwardedDocument')->name('doctracker.recieveForwardedDocument');
-	Route::post('/doctracker/receiveddocuments/forwardDocument', 'DocumentTracker\DocumentTrackerController@forwardDocument')->name('doctracker.forwardDocument');
 	Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@recipientList')->name('doctracker.recipientlist');
 	Route::resource('/doctracker', 'DocumentTracker\DocumentTrackerController');
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
+
+
+
 
 	// ----------- HR-APPLICANTS SYSTEM ------------- //
 	Route::get('/hr/dashboard', 'Applicants\ApplicantsController@applicantsDashboard')->name('applicants.dashboard');

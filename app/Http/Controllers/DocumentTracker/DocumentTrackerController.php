@@ -137,7 +137,8 @@ class DocumentTrackerController extends Controller
      */
     public function incomingDocuments()
     {
-        return view('doctracker.incoming');
+        $incomingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id)->where('action', 'Receive')->latest()->get();
+        return view('doctracker.incoming', compact('incomingLogs'));
     }
 
     /**
@@ -167,6 +168,7 @@ class DocumentTrackerController extends Controller
             $logger->tracking_code = $document->tracking_code;
             $logger->user_id       = Auth::user()->id;
             $logger->action        = "Receive";
+            $logger->notes         = $old_log->notes;
             
             if ( $logger->save() )
             {
@@ -239,8 +241,9 @@ class DocumentTrackerController extends Controller
     public function outgoingDocuments()
     {
         $incomingDocuments = [];
+        $outgoingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id)->where('action', 'Forward')->latest()->get();
         
-        return view('doctracker.outgoing', compact('incomingDocuments'));
+        return view('doctracker.outgoing', compact('incomingDocuments', 'outgoingLogs'));
     }
 
     /**

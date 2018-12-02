@@ -13,8 +13,10 @@ class CreateNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::connection('mysql')->create('notifications', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('type');
+            $table->morphs('notifiable');
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('recipient_id')->unsigned()->nullable();
             $table->string('route')->nullable();
@@ -22,6 +24,7 @@ class CreateNotificationsTable extends Migration
             $table->boolean('isSeen')->default(false);
             $table->timestamp('seen_at')->nullable();
             $table->string('remarks')->nullable();
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -37,6 +40,6 @@ class CreateNotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::connection('mysql')->dropIfExists('notifications');
     }
 }

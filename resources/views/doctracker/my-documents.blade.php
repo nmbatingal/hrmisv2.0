@@ -42,7 +42,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card bg-cyan text-white">
                             <div class="card-body">
-                                <h6 class="m-b-0">TOTAL TRACKED</h6>
+                                <h6 class="m-b-0">Total Created</h6>
                                 <h3 class="card-title">DOCUMENTS</h3>
                                 <div class="d-flex no-block align-items-center m-t-20 m-b-0">
                                     <div class="ml-auto">
