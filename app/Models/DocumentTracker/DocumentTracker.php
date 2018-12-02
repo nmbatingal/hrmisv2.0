@@ -66,7 +66,7 @@ class DocumentTracker extends Model
 
     public function trackLogs()
     {
-        return $this->hasMany(DocumentTrackingLogs::class, 'code', 'code');
+        return $this->hasMany(DocumentTrackingLogs::class, 'tracking_code', 'tracking_code');
     }
 
     public function scopeLastTracked($query)

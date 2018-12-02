@@ -140,7 +140,7 @@
                                                     <i class="fas fa-file-pdf"></i> {{ $file->filename }}
                                                 </a><br>
                                             @empty
-                                                <small>no attachments available</small>
+                                                <div class="alert alert-warning">no attachments available</div>
                                             @endforelse
                                         </p>
                                     </div>

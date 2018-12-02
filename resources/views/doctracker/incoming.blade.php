@@ -83,6 +83,37 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <!-- Column -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive-md">
+                    <table id="" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="20%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Tracking Code</th>
+                                <th>Subject</th>
+                                <th>Notes</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a href="{{ route('doctracker.logs') }}" class="btn btn-outline-danger"> View tracking logs >>> </a>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')

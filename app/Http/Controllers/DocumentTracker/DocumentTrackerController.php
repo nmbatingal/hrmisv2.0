@@ -109,8 +109,7 @@ class DocumentTrackerController extends Controller
     {
         $myDocuments = DocumentTracker::myDocuments()->get();
         
-        // return view('doctracker.my-documents', compact('myDocuments'));
-        return $myDocuments;
+        return view('doctracker.my-documents', compact('myDocuments'));
     }
 
     /**
