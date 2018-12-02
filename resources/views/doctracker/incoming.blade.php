@@ -83,7 +83,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 <div class="row">
     <!-- Column -->
     <div class="col-md-12">
@@ -115,8 +114,6 @@
         </div>
     </div>
 </div>
-=======
->>>>>>> 77b0f8177e0a33a8552695e893b8ebbded040071
 @endsection
 
 @section('scripts')
