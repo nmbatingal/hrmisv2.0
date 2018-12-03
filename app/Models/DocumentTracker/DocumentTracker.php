@@ -21,6 +21,7 @@ class DocumentTracker extends Model
     protected $connection = "mysql2";
     protected $table = "document_trackers";
     protected $casts = [
+        'keywords'        => 'array',
         'isRouteComplete' => 'boolean',
         'isDocCancelled'  => 'boolean',
     ];

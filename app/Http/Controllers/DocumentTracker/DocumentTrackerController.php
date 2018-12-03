@@ -76,14 +76,20 @@ class DocumentTrackerController extends Controller
 
 
             $code             = $value->tracking_code;
+            $tracker          = [
+                'tracking_code'   => $value->tracking_code,
+                'date_created'    => $value->documentCode->tracking_date,
+                'created_by'      => $value->userEmployee->full_name,
+                'document_type'   => $value->documentCode->other_document,
+                'subject'         => $value->documentCode->subject,
+                'keywords'        => $value->documentCode->keywords,
+            ];
             $logDetail[$i]    = [
                 'tracking_code'   => $value->tracking_code,
-                'created_by'      => $value->documentCode->userEmployee->full_name,
+                'created_by'      => $value->userEmployee->full_name,
                 'action'          => $value->action,
                 'document_type'   => $value->documentCode->other_document,
-
                 'recipients'      => $recipients,
-
                 'date_created'    => $value->documentCode->tracking_date,
                 'notes'           => $value->notes ?: '',
                 'date_time'       => $value->date_action,
@@ -93,7 +99,7 @@ class DocumentTrackerController extends Controller
         if($request->ajax())
         {
             $view = view('doctracker.logs', compact('documents'));
-            return response()->json(['results' => $logDetail, 'result' => count($documents), 'code' => $code, 'view' => $view]);
+            return response()->json(['tracker' => $tracker, 'results' => $logDetail, 'result' => count($documents), 'code' => $code, 'view' => $view]);
 
         } else {
             return view('doctracker.logs', compact('documents'));

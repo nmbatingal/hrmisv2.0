@@ -57,18 +57,21 @@
                 </form>
 
                 <div class="card">
-                    <div class="card-header">
-                        <div class="card-actions">
-                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
-                        </div>
+                    <div class="card-header text-white bg-dark">
+                        <h4>
+                            Tracking Details
+                            <div class="card-actions">
+                                <a class="text-white" data-action="collapse"><i class="ti-minus"></i></a>
+                            </div>
+                        </h4>
                     </div>
                     <div class="card-body collapse show">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Tracking Code</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" disabled>
+                                    <label class="control-label text-right col-md-4">Tracking Code</label>
+                                    <div class="col-md-8">
+                                        <input name="tracking_code" type="text" class="form-control" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +79,25 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-3">Document Created</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" disabled>
+                                        <input name="date_created" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">Created by</label>
+                                    <div class="col-md-8">
+                                        <input name="created_by" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-3">Document Type</label>
+                                    <div class="col-md-9">
+                                        <input name="document_type" type="text" class="form-control" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -84,9 +105,19 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row">
-                                    <label class="control-label text-right col-md-1">Subject</label>
-                                    <div class="col-md-11">
-                                        <input type="text" class="form-control" disabled>
+                                    <label class="control-label text-right col-md-2">Subject</label>
+                                    <div class="col-md-10">
+                                        <input name="subject" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">Keywords</label>
+                                    <div id="keywords" class="col-md-10">
+
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +127,7 @@
 
                 <h5 id="results-bar" class="card-subtitle" style="display: none;">Showing <span id="code-result">{{ count($documents) }}</span> results for tracking code <u id="tracker-code" class="text-primary">{{ request('code') }}</u></h5>
                 <div class="table-responsive-md m-t-10">
-                    <table id="search-tracker" class="table table-striped table-hover color-table dark-table" data-paging="true" data-paging-size="5">
+                    <table id="search-tracker" class="table table-striped full-color-table full-dark-table hover-table" data-paging="true" data-paging-size="5">
                         <colgroup>
                             <col width="20%">
                             <col width="30%">
@@ -139,7 +170,7 @@
         });
         $('#demo-foo-pagination').footable({
             filtering: {
-                enabled: false
+                enabled: true
             }
         });
 
@@ -163,6 +194,12 @@
 
                     if ( data.result > 0 )
                     {
+                        $('input[name=tracking_code]').val(data.tracker.tracking_code);
+                        $('input[name=date_created]').val(data.tracker.date_created);
+                        $('input[name=created_by]').val(data.tracker.created_by);
+                        $('input[name=document_type]').val(data.tracker.document_type);
+                        $('input[name=subject]').val(data.tracker.subject);
+
                         $.each(data.results, function(index, item){
                             var row = appendTableRowSearch(item);
                             $('table#search-tracker tbody').append(row);
@@ -188,7 +225,6 @@
                             '<td>' + 
                                 '<h5 class="font-weight-bold">' + item.action + '</h5>' +
                                 item.recipients +
-                                item.date_created +
                             '</td>' +
                             '<td>' + item.notes + '</td>' +
                             '<td>' + item.date_time + '</td>' +
