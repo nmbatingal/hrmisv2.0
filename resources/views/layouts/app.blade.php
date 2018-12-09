@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
@@ -21,12 +20,12 @@
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
         <!-- ============================================================== -->
-        <!-- <div class="preloader">
+        <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">Elite admin</p>
+                <p class="loader__label">My Application</p>
             </div>
-        </div> -->
+        </div>
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -97,19 +96,10 @@
     <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="{{ asset('dist/js/perfect-scrollbar.jquery.min.js') }}"></script>
-    <!--Wave Effects -->
-    <script src="{{ asset('dist/js/waves.js') }}"></script>
     <!--Menu sidebar -->
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
-    <!--stickey kit -->
-    <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('dist/js/custom.min.js') }}"></script>
     @yield('scripts')
-    <!-- Scripts -->
-    <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
-    <script>
-        $('#chat, #msg, #comment, #todo').perfectScrollbar();
-    </script>
 </body>
 </html>

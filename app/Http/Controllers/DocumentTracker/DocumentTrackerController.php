@@ -158,8 +158,7 @@ class DocumentTrackerController extends Controller
         $code     = $request->code;
         $data     = array();
 
-        $document = DocumentTracker::where('id', $code)
-                                        ->orWhere('code', $code)
+        $document = DocumentTracker::where('code', $code)
                                         ->orWhere('tracking_code', $code)
                                         ->first();
 
@@ -179,8 +178,8 @@ class DocumentTrackerController extends Controller
             if ( $logger->save() )
             {
                 // ----------------- CREATE NOTIFICATIONS -------------------- //
-                    if ( $old_log->user_id != Auth::user()->id )
-                    {
+                    //if ( $old_log->user_id != Auth::user()->id )
+                    //{
                         // ----------------- NOTIFY DOCUMENT CREATOR ----------------- //
                         $notif_creator               = new Notifications;
                         $notif_creator->user_id      = $document->user_id;
@@ -198,7 +197,7 @@ class DocumentTrackerController extends Controller
                         $notif_log->route_id     = $document->code;
                         $notif_log->remarks      = "has received a document tracking code.";
                         $notif_log->save();
-                    }
+                    //}
                 // ----------------- END CREATE NOTIFICATIONS --------------- //
 
                 $data = ['result' => $logger, 'url' => null];
@@ -250,6 +249,22 @@ class DocumentTrackerController extends Controller
         $outgoingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id)->where('action', 'Forward')->latest()->get();
         
         return view('doctracker.outgoing', compact('incomingDocuments', 'outgoingLogs'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function outgoingSearch(Request $request)
+    {
+        $code    = $request->code;
+        $tracker = DocumentTracker::where('code', $code)
+                                        ->orWhere('tracking_code', $code)
+                                        ->first();
+        
+        $view = view('doctracker.modal-outgoing', compact('tracker'))->render();
+        return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
     }
 
     /**
@@ -472,56 +487,6 @@ class DocumentTrackerController extends Controller
         // return redirect()->route('doctracker.showDocument', $tracker->tracking_code);
     }
 
-    public function forwardDocument(Request $request)
-    {
-        if ( $request->has('recipient') )
-        {
-            $recipients = $request->recipient;
-        }
-        else {
-            $recipients = [0=>null];
-        }
-
-        foreach ($recipients as $i => $recipient) 
-        {
-            $tracker                 = new DocumentTrackingLogs;
-            $tracker->code           = $request->code;
-            $tracker->tracking_code  = $request->tracking_code;
-            $tracker->action         = $request->action;
-            $tracker->sender_id      = $request->routedBy;
-            $tracker->office_id      = $request->routeToOffice;
-            $tracker->recipient_id   = $recipient;
-            $tracker->notes          = $request->note;
-            
-            if ( $tracker->save() )
-            {
-                // SAVE ATTACHMENTS
-                if ( $request->has('attachments') )
-                {
-                    foreach ($request->attachments as $i => $file) {
-                        $doc_id      = $tracker->id;
-                        $foldercode  = $tracker->tracking_code;
-                        $code        = $tracker->code;
-                        $destination = 'upload/documenttracker/'.$foldercode.'/'; 
-                        $filename    = $doc_id .'-LOG-'. $code .' '. $file->getClientOriginalName();
-                        $filesize    = $file->getClientSize();
-
-                        $docu = new DocumentTrackerAttachment;
-                        $docu->tracklog_id   = $doc_id;
-                        $docu->filename      = $file->getClientOriginalName();
-                        $docu->filepath      = $destination.$filename;
-                        $docu->filesize      = $filesize;
-
-                        $file->move($destination, $filename);
-                        $docu->save();
-                    }
-                }
-            }
-        }
-
-        return redirect()->route('doctracker.showReceivedDocument', $tracker->tracking_code);
-    }
-
     /**
      * Display the specified resource.
      *
@@ -588,63 +553,6 @@ class DocumentTrackerController extends Controller
         if ( $request->ajax() )
         {
             return response()->json(['options' => $data]);
-        } 
-    }
-
-    /*** JS ***/
-    public function recieveForwardedDocument(Request $request)
-    {   
-        $data   = false;
-        $log_id = $request->log_id;
-        $logDetail = array();
-
-        // UPDATE TRACKER LOG TO RECEIVE FORWARED DOCUMENT
-        $logger = DocumentTrackingLogs::where( function($query) use ($log_id) {
-                                            $query->where('action', 'Forward')
-                                                  ->where('recipient_received', false)
-                                                  ->where(function ($query) use ($log_id) {
-                                                        $query->where('id', '=', $log_id)
-                                                              ->orWhere('code', '=', $log_id)
-                                                              ->orWhere('tracking_code', '=', $log_id);
-                                                  });
-                                        })->orderBy('created_at', 'DESC')->first();
-
-        // Update document tracking log to update received field
-        $logger->recipient_received = true;
-        $tracking_code = $logger->tracking_code;
-        if ( is_null( $logger->recipient_id ) )
-        {
-            $logger->recipient_id = Auth::user()->id;
-        }
-
-        if ( $logger->save() )
-        {
-            $newLog = new DocumentTrackingLogs;
-            $newLog->code          = $logger->code;
-            $newLog->tracking_code = $tracking_code;
-            $newLog->action        = "Receive";
-            $newLog->sender_id     = Auth::user()->id;
-            $newLog->office_id     = Auth::user()->office_id;
-            
-            if ( $newLog->save() )
-            {
-                // $logDetail = ['result' => $newLog, 'url' => route('doctracker.showReceivedDocument', $tracking_code)];
-                $logDetail = [
-                    'tracking_code'     => $logger->tracking_code,
-                    'received_by'       => $logger->recipient->fullName,
-                    'received_office'   => $logger->recipient->office->division_name,
-                    'from'              => $logger->userEmployee->fullName,
-                    'from_office'       => $logger->userEmployee->office->division_name,
-                    'subject'           => $logger->documentCode->subject,
-                    'datetime'          => $newLog->dateAction,
-                ];
-            }
-        }
-
-        if($request->ajax())
-        {
-            return response()->json($logDetail);
-            // return response()->json($logDetail);
         } 
     }
 }

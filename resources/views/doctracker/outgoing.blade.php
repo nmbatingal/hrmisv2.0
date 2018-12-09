@@ -2,6 +2,8 @@
 
 @section('styles')
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -56,7 +58,7 @@
                 </div>
 
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="POST">
+                <form id="submitCode" action="{{ route('doctracker.outgoing.receive') }}" class="form-horizontal" method="POST">
                     {{ csrf_field() }}
                     <div class="row m-t-40">
                         <div class="col-md-12">
@@ -64,7 +66,7 @@
                                 <div class="input-group p-0">
                                     <input type="text" class="form-control" name="code" placeholder="Enter tracking code to receive" required autofocus>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit"><i class="ti-import"></i> Submit</button>
+                                        <button class="btn btn-primary" type="submit"><i class="icon-drawar"></i> Open</button>
                                     </div>
                                 </div>
                                 <small class="form-control-feedback">&nbsp; </small> 
@@ -74,6 +76,23 @@
                     </div>
                 </form>
                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+
+                <!-- sample modal content -->
+                <div id="modal-outgoing" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modalOutgoing">Outgoing Document</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div id="outgoing-modal-body" class="modal-body">
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
 
                 <div class="table-responsive-md">
                     <table id="document-tracker-received" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
@@ -130,13 +149,15 @@
 @endsection
 
 @section('scripts')
-<!-- This is data table -->
-<script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
 <script>
     $(document).ready(function() { 
+
+        $(".select2").select2();
 
         $('[data-page-size]').on('click', function(e){
             e.preventDefault();
@@ -151,7 +172,7 @@
 
         $('form#submitCode').on('submit', function(e) {
             e.preventDefault();
-            var form = $(this);
+            var form = $(this); 
 
             $.ajax({
                 method : 'POST',
@@ -159,13 +180,21 @@
                 data   : form.serialize(),
                 success: function(data) {
 
-                    var row = appendTableRowReceived(data);
+                    // console.log(data);
+                        
+                    if (data.success)
+                    {
+                        $('#outgoing-modal-body').html(data.html);
+                        $('#modal-outgoing').modal('show');
+                    }
 
-                    $('tr.footable-empty').remove();
-                    $('table#document-tracker-received tbody').prepend(row);
+                    // var row = appendTableRowReceived(data);
 
-                    $('#document-tracker-received').trigger('footable_initialize');
-                    form.trigger("reset");
+                    // $('tr.footable-empty').remove();
+                    // $('table#document-tracker-received tbody').prepend(row);
+
+                    // $('#document-tracker-received').trigger('footable_initialize');
+                    // form.trigger("reset");
                 },
                 error  : function(xhr, err) {
                     alert("Error! Could not retrieve the data.");
@@ -174,7 +203,7 @@
 
             return false;
         });
-
+        
         // row to be added
         function appendTableRowReceived (item) {
             var row = $('<tr>' +

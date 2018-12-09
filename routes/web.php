@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@receiveIncomingDocument')->name('doctracker.incoming.receive');
 
 	Route::get('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing');
-	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing.receive');
+	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingSearch')->name('doctracker.outgoing.receive');
 
 
 	Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@recipientList')->name('doctracker.recipientlist');

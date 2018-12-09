@@ -225,6 +225,7 @@
 <!-- CUSTOM JS CODES -->
 <script type="text/javascript">
     $(document).ready(function() {
+
         $("select[name=routeMode]").change(function(){
             
             var $id = $(this).val();
@@ -244,7 +245,6 @@
                         $("select#recipient").html('');
                         $("select#recipient").html(data.options);
                     });
-
             }
         });
 
@@ -274,7 +274,9 @@
             confirmKeys: [186]
         });
 
-        $(".select2").select2();
+        $(".select2").select2({
+            'width': '100%'
+        });
     });
 </script>
 @endsection
