@@ -256,7 +256,7 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function outgoingSearch(Request $request)
+    public function searchOutgoing(Request $request)
     {
         $code    = $request->code;
         $tracker = DocumentTracker::where('code', $code)
@@ -268,38 +268,19 @@ class DocumentTrackerController extends Controller
     }
 
     /**
-     * Display a listing of the documents forwarded by a user to a recipient.
+     * Display the specified resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function receivedDocuments()
+    public function storeOutgoing(Request $request)
     {
-        $receivedDocuments = DocumentTrackingLogs::where(function ($query) {
-                                                        $query->where('action', "Forward")
-                                                              ->where('recipient_id', true);
-                                                    })
-                                                    ->orWhere('recipient_id', Auth::user()->id)
-                                                    ->orderBy('created_at', 'DESC')->get();
+        $code    = $request->code;
+        $tracker = DocumentTracker::where('code', $code)
+                                        ->orWhere('tracking_code', $code)
+                                        ->first();
         
-        return view('doctracker.receivedDocuments', compact('receivedDocuments'));
-        // return dd($incomingDocuments);
-
-    }
-
-    /**
-     * Display a specific received document.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showReceivedDocument($tracking_code)
-    {
-        $offices  = Office::all();
-        $users    = User::employee()->notSelf()->get();
-        $userSelf = User::employee()->get();
-        $myDocument = DocumentTracker::where('tracking_code', $tracking_code)->first();
-        $trackLogs  = DocumentTrackingLogs::where('tracking_code', $tracking_code)->orderBy('created_at', 'DESC')->get();
-        
-        return view('doctracker.showReceivedDocument', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
+        $view = view('doctracker.modal-outgoing', compact('tracker'))->render();
+        return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
     }
 
     /**

@@ -36,7 +36,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@receiveIncomingDocument')->name('doctracker.incoming.receive');
 
 	Route::get('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing');
-	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingSearch')->name('doctracker.outgoing.receive');
+	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@searchOutgoing')->name('doctracker.outgoing.receive');
+	Route::post('/doctracker/outgoing/store', 'DocumentTracker\DocumentTrackerController@storeOutgoing')->name('doctracker.outgoing.store');
 
 
 	Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@recipientList')->name('doctracker.recipientlist');
@@ -54,6 +55,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 });
+
 /*
  * SAMPLE ROUTES
  *
@@ -61,8 +63,7 @@ Route::group(['middleware' => 'auth'], function() {
 Route::get('/send', function(Request $request) {
     
     $office = App\Office::find(2)->first();
-    
-    return json_encode($office);
+  
+    return response()->json($office);
 
-    // return dd($request);
 })->name('submit');
