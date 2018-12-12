@@ -18,11 +18,11 @@ class CreateOfficesTable extends Migration
             $table->string('division_name')->nullable();
             $table->char('div_acronym', 20)->nullable();
             $table->integer('div_head_id')->unsigned()->nullable();
-            $table->integer('receiver_id')->unsigned()->nullable();
+            $table->integer('div_under_id')->unsigned()->nullable();
+            // $table->integer('receiver_id')->unsigned()->nullable();
             $table->timestamps();
 
-            $table->foreign('div_head_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('div_under_id')->references('id')->on('offices')->onDelete('cascade')->onUpdate('cascade');
         });
 
         Schema::table('users', function($table) {

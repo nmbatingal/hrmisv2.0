@@ -48,7 +48,7 @@
                                 <h3 class="card-title">FORWARDED</h3>
                                 <div class="d-flex no-block align-items-center m-t-20 m-b-0">
                                     <div class="ml-auto">
-                                        <h1 class="text-white"><i class="icon-docs"></i> <span id="count-received">{{ $outgoingLogs->count() }}</span></h1>
+                                        <h1 class="text-white"><i class="icon-docs"></i> <span id="count-outgoing">{{ $outgoingLogs->count() }}</span></h1>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                 <!-- /.modal -->
 
                 <div class="table-responsive-md">
-                    <table id="document-tracker-received" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="5">
+                    <table id="document-tracker-received" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
                         <colgroup>
                             <col width="20%">
                             <col width="30%">
@@ -179,22 +179,11 @@
                 url    : form.attr('action'),
                 data   : form.serialize(),
                 success: function(data) {
-
-                    // console.log(data);
-                        
                     if (data.success)
                     {
                         $('#outgoing-modal-body').html(data.html);
                         $('#modal-outgoing').modal('show');
                     }
-
-                    // var row = appendTableRowReceived(data);
-
-                    // $('tr.footable-empty').remove();
-                    // $('table#document-tracker-received tbody').prepend(row);
-
-                    // $('#document-tracker-received').trigger('footable_initialize');
-                    // form.trigger("reset");
                 },
                 error  : function(xhr, err) {
                     alert("Error! Could not retrieve the data.");
@@ -203,25 +192,6 @@
 
             return false;
         });
-        
-        // row to be added
-        function appendTableRowReceived (item) {
-            var row = $('<tr>' +
-                            '<td><a href="{!! route('doctracker.incoming.show', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
-                            '<td>' + 
-                                '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
-                                    '<h5>' + item.created_by + '</h5>' +  
-                                    '(' + item.document_type + ')<br>' +
-                                    item.date_created + 
-                            '</td>' +
-                            '<td>' + item.note + '</td>' +
-                            '<td>' + 
-                                '<h5 class="font-weight-bold">' + item.action + '</h5>' +
-                                item.date_action +  
-                            '</td>' +
-                        '</tr>');
-            return row;
-        }
     });
 </script>
 @endsection

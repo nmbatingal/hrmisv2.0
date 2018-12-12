@@ -28,13 +28,23 @@
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-12">
-        <div class="card" style="width: 20rem;">
+    <div class="col-lg-3">
+        <div class="card">
             <img class="card-img-top" src="{{ asset('img/document-tracking.jpg') }}" alt="Card image cap">
             <div class="card-body">
                 <h4 class="card-title">Document Tracker</h4>
                 <p class="card-text">Add tracking codes to your documents.</p>
                 <a href="{{ route('doctracker.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <img class="card-img-top" src="{{ asset('img/morale-survey.jpg') }}" alt="Card image cap">
+            <div class="card-body">
+                <h4 class="card-title">Morale Survey</h4>
+                <p class="card-text">Rate office performance.</p>
+                <a href="{{ route('moralesurvey.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
             </div>
         </div>
     </div>

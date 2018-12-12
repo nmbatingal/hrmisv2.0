@@ -6,7 +6,6 @@ use Auth;
 use App\User;
 use App\Office;
 use App\CodeTable;
-use App\Notifications;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTypes;
 use App\Models\DocumentTracker\DocumentTracker;
@@ -177,29 +176,6 @@ class DocumentTrackerController extends Controller
             
             if ( $logger->save() )
             {
-                // ----------------- CREATE NOTIFICATIONS -------------------- //
-                    //if ( $old_log->user_id != Auth::user()->id )
-                    //{
-                        // ----------------- NOTIFY DOCUMENT CREATOR ----------------- //
-                        $notif_creator               = new Notifications;
-                        $notif_creator->user_id      = $document->user_id;
-                        $notif_creator->recipient_id = $employee->id;
-                        $notif_creator->route        = "doctracker.incoming.show";
-                        $notif_creator->route_id     = $document->code;
-                        $notif_creator->remarks      = "has received a document tracking code.";
-                        $notif_creator->save();
-                        // ----------------- END NOTIFY DOCUMENT CREATOR ------------- //
-
-                        $notif_log               = new Notifications;
-                        $notif_log->user_id      = $logger->user_id;
-                        $notif_log->recipient_id = $old_log->user_id;
-                        $notif_log->route        = "doctracker.incoming.show";
-                        $notif_log->route_id     = $document->code;
-                        $notif_log->remarks      = "has received a document tracking code.";
-                        $notif_log->save();
-                    //}
-                // ----------------- END CREATE NOTIFICATIONS --------------- //
-
                 $data = ['result' => $logger, 'url' => null];
                 $data = [
                     'tracking_code'     => $document->tracking_code,
@@ -263,7 +239,7 @@ class DocumentTrackerController extends Controller
                                         ->orWhere('tracking_code', $code)
                                         ->first();
         
-        $view = view('doctracker.modal-outgoing', compact('tracker'))->render();
+        $view = view('doctracker.outgoing-modal', compact('tracker'))->render();
         return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
     }
 
@@ -274,13 +250,62 @@ class DocumentTrackerController extends Controller
      */
     public function storeOutgoing(Request $request)
     {
-        $code    = $request->code;
-        $tracker = DocumentTracker::where('code', $code)
-                                        ->orWhere('tracking_code', $code)
-                                        ->first();
-        
-        $view = view('doctracker.modal-outgoing', compact('tracker'))->render();
-        return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
+        $tracker = DocumentTracker::find($request->tracker_id);
+        $mode = $request->routeMode;
+        $recipients = null;
+
+        if ( $mode == "all" ) {
+
+            $employees = User::employee()->notSelf()->get();
+
+        } elseif ( $mode == "group" ) {
+
+            $office_id  = $request->recipients;
+            $employees  = User::employee()->notSelf()->whereIn('office_id', $office_id)->get();
+            $offices    = Office::whereIn('id', $office_id)->get();
+            
+            foreach ($offices as $office) {
+                $recipients[] = [ 'id' => $office->id , 'name' => $office->division_name ];
+            }
+
+        } elseif ( $mode == "individual" ) {
+
+            $id            = $request->recipients;
+            $employees     = User::employee()->notSelf()->whereIn('id', $id)->get();
+
+            foreach ($employees as $employee) {
+                $recipients[] = [ 'id' => $employee->id , 'name' => $employee->full_name ];
+            }
+
+        }
+
+        // ----------------- CREATE NEW LOG -------------------- //
+        $log                 = new DocumentTrackingLogs;
+        $log->code           = $tracker->code;
+        $log->tracking_code  = $tracker->tracking_code;
+        $log->user_id        = Auth::user()->id;
+        $log->action         = $request->action;
+        $log->route_mode     = $mode;
+        $log->recipients     = $recipients;
+        $log->notes          = $request->note;
+        $log->save();
+        // ----------------- END CREATE NEW LOG --------------- //
+
+        $data = [
+            'tracking_code'     => $tracker->tracking_code,
+            'subject'           => $tracker->subject,
+            'document_type'     => $tracker->other_document,
+            'created_by'        => $log->userEmployee->full_name,
+            'date_created'      => $tracker->tracking_date,
+            'note'              => $log->notes ?: '',
+            'action'            => $log->action,
+            'date_action'       => $log->dateAction,
+        ];
+
+        if($request->ajax())
+        {
+            return response()->json($data);
+        }
     }
 
     /**
@@ -305,13 +330,15 @@ class DocumentTrackerController extends Controller
      */
     public function store(Request $request)
     {
+        $result = false;
+
         // ------------ CREATE TRACKING CODE -------------------- //
         $office          = Office::find($request->routeDiv)->div_acronym;
         $seriesCode      = CodeTable::first()->doc_code;
-        $year            = Carbon::now()->format('Y');
+        $year            = Carbon::now()->format('y');
         $code            = $year.'-'.$seriesCode;
         $fullDate        = Carbon::now()->toDateString();
-        $tracking_code   = $office .'-'. $fullDate .'-'. $seriesCode;
+        $tracking_code   = $office.'-'.$code;
         // ------------ END CREATE TRACKING CODE --------------- //
 
         $document                = new DocumentTracker;
@@ -327,7 +354,7 @@ class DocumentTrackerController extends Controller
         $document->keywords      = $request->keywords;
 
         if ( $document->save() ) {
-
+            $result = true;
             // --------------- UPDATE CODE TABLE ------------------- //
             $updateCode           = CodeTable::where('doc_code', $seriesCode)->first();
             $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
@@ -369,27 +396,20 @@ class DocumentTrackerController extends Controller
             $log->tracking_code  = $document->tracking_code;
             $log->user_id        = $document->user_id;
             $log->action         = $request->action;
-            $log->route_mode     = $document->route_mode;
+            $log->route_mode     = $mode;
             $log->recipients     = $recipients;
             $log->notes          = $request->note;
             $log->save();
             // ----------------- END CREATE NEW LOG --------------- //
 
-            // ----------------- CREATE NOTIFICATIONS -------------------- //
-            foreach ($employees as $employee) {
-                $notif               = new Notifications;
-                $notif->user_id      = $document->user_id;
-                $notif->recipient_id = $employee->id;
-                $notif->route        = "doctracker.incoming.show";
-                $notif->route_id     = $document->code;
-                $notif->remarks      = "has forwarded a document with tracking code.";
-                $notif->save();
-            }
-            // ----------------- END CREATE NOTIFICATIONS --------------- //
-
         }
 
-        return redirect()->route('doctracker.showDocument', $document->tracking_code);
+        if ( $request->ajax() ) {
+            return response()->json($result);
+        } else {
+            return redirect()->route('doctracker.showDocument', $document->tracking_code);
+        }
+
 
         // if ($document->save() )
         // {
@@ -414,58 +434,6 @@ class DocumentTrackerController extends Controller
         //             $docu->save();
         //         }
         //     }*/
-
-        //     // --------------- UPDATE CODE TABLE ------------------- //
-        //     $updateCode           = CodeTable::where('doc_code', $seriesCode)->first();
-        //     $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
-        //     $updateCode->save();
-        //     // --------------- END UPDATE CODE TABLE --------------- //
-
-        //     // --------------- CREATE TRACKING LOG ----------------- //
-        //     if ( $request->has('recipient') )
-        //     {
-        //         $recipients = $request->recipient;
-        //     }
-        //     else {
-        //         $recipients = [ 0 => null];
-        //     }
-
-        //     foreach ($recipients as $i => $recipient) 
-        //     {
-        //         // ----------------- CREATE NEW LOG -------------------- //
-        //         $tracker                 = new DocumentTrackingLogs;
-        //         $tracker->code           = $document->code;
-        //         $tracker->tracking_code  = $document->tracking_code;
-        //         $tracker->user_id        = $request->routedBy;
-        //         $tracker->action         = $request->action;
-        //         $tracker->route_to_office_id = $request->routeToOffice;
-        //         $tracker->route_to_user_id   = $recipient;
-        //         $tracker->notes          = $request->note;
-        //         $tracker->save();
-        //         // ----------------- END CREATE NEW LOG --------------- //
-        //     }
-        //     // --------------- END CREATE TRACKING LOG ------------- //
-
-        //     if (is_null($recipients))
-        //     {
-        //         foreach ($variable as $key => $value) {
-        //             # code...
-        //         }
-        //         // ----------------- CREATE NOTIFICATION--------------- //
-        //         $notif                 = new Notification;
-        //         $notif->code           = $document->code;
-        //         $notif->tracking_code  = $document->tracking_code;
-        //         $notif->user_id        = $request->routedBy;
-        //         $notif->action         = $request->action;
-        //         $notif->route_to_office_id = $request->routeToOffice;
-        //         $notif->route_to_user_id   = $recipient;
-        //         $notif->notes          = $request->note;
-        //         $notif->save();
-        //         // ----------------- END CREATE NOTIFICATION ---------- //
-        //     }
-        // }
-
-        // return redirect()->route('doctracker.showDocument', $tracker->tracking_code);
     }
 
     /**

@@ -20,7 +20,8 @@
             </div>
         </li>
         <!-- /.Home -->
-        <!-- .Apps -->
+
+        <!-- DOCUMENT TRACKER -->
         <li class="{{ Request::is('doctracker/*') ? 'selected' : '' }}">
             <a href="javascript:void(0);"><i class="mdi mdi-qrcode-scan"></i></a>
             <div class="sidebarmenu">
@@ -36,5 +37,34 @@
                 <!-- Left navbar-header end -->
             </div>
         </li>
+        <!-- END DOCUMENT TRACKER -->
+
+        <!-- MORALE SURVEY  -->
+        <li class="{{ Request::is('moralesurvey/*') ? 'selected' : '' }}">
+            <a href="javascript:void(0);"><i class="ti-bar-chart"></i></a>
+            <div class="sidebarmenu">
+                <!-- Left navbar-header -->
+                <h3 class="menu-title">Morale Survey</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="{{ route('moralesurvey.dashboard') }}">Dashboard</a></li>
+                    <li class="menu {{ Request::is('hr/applicants/*') ? 'active' : '' }}">
+                        <a href="javascript:void(0)" 
+                           class="{{ Request::is('moralesurvey/setting/*') ? 'active' : '' }}
+                           ">Survey Settings <i class="fa fa-angle-left float-right"></i></a>
+                        <!-- .Second level -->
+                        <ul class="sub-menu"
+                            {{ Request::is('moralesurvey/setting/*') ? 'style=display:block;' : '' }}
+                            >
+                            <li><a href="{{ route('moralesurvey.setting.semester') }}">Semester</a></li>
+                            <li><a href="{{ route('moralesurvey.setting.semester') }}">Questions</a></li>
+                        </ul>
+                        <!-- /.Second level -->
+                    </li>
+                    <li><a href="{{ route('moralesurvey.dashboard') }}">Survey Form</a></li>
+                </ul>
+                <!-- Left navbar-header end -->
+            </div>
+        </li>
+        <!-- END MORALE SURVEY  -->
     </ul>
 </div>

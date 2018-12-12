@@ -5,7 +5,7 @@
 <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <style type="text/css">
-    .select2 {
+    .bootstrap-tagsinput {
         width: 100% !important;
     }
 
@@ -50,7 +50,7 @@
             <div class="card-body">
                 <div class="alert alert-info"><i class="mdi mdi-information p-r-10"></i> Please fill out the fields below completely before submitting the form. </div>
 
-                <form action="{{ route('doctracker.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form id="formCreate" action="{{ route('doctracker.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
                         <!-- PERSONAL INFORMATION ROW -->
@@ -83,13 +83,6 @@
                                     </div>
 
                                 </div>
-                                <div class="form-group row m-b-20">
-                                    <label class="control-label text-right col-md-2">Keywords</label>
-                                    <div class="col-md-10">
-                                        <input id="keywords" type="text" class="" data-role="tagsinput" name="keywords" placeholder="add keywords" required>
-                                        <br><small class="form-control-feedback">Separate keywords using enter or comma key.</small> 
-                                    </div>
-                                </div>
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Document Date</label>
                                     <div class="col-md-4">
@@ -97,6 +90,13 @@
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
 
+                                </div>
+                                <div class="form-group row m-b-20">
+                                    <label class="control-label text-right col-md-2">Keywords</label>
+                                    <div class="col-md-10">
+                                        <input id="keywords" type="text" class="" data-role="tagsinput" name="keywords" placeholder="add keywords" required>
+                                        <br><small class="form-control-feedback">Separate keywords using enter or comma key.</small> 
+                                    </div>
                                 </div>
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Document Details</label>
@@ -204,7 +204,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="float-right">
-                                    <button type="submit" class="btn btn-lg btn-success"><i class="icon-share-alt"></i> Submit</button>
+                                    <button id="submit-btn" type="submit" class="btn btn-lg btn-success"><i id="spinner" style="display: none;" class="fas fa-spinner fa-spin"></i> Submit</button>
                                     <button type="button" class="btn btn-lg btn-inverse">Cancel</button>
                                 </div>
                             </div>
@@ -223,6 +223,7 @@
 <script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
 <!-- CUSTOM JS CODES -->
+<script src="{{ asset('js/doctracker/create.blade.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -265,6 +266,32 @@
         });
 
         $('.mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+
+        // sweetalert
+        $('form#formCreate').on('submit', function(e) {
+
+            e.preventDefault();
+            var form = $(this); 
+
+            $.ajax({
+                method : 'POST',
+                url    : form.attr('action'),
+                data   : form.serialize(),
+                success: function(data) {
+
+                    $('#spinner').css('display', 'inline-block');
+                    $('#submit-btn').attr('disabled', 'disabled');
+
+                },
+                error  : function(xhr, err) {
+
+                    alert("Error! Could not retrieve the data.");
+
+                }
+            });
+
+            return false;
+        });
     });
 </script>
 <script>

@@ -11,6 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!--alerts CSS -->
+    <link href="{{ asset('assets/node_modules/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     @yield('styles')
@@ -98,6 +100,8 @@
     <script src="{{ asset('dist/js/perfect-scrollbar.jquery.min.js') }}"></script>
     <!--Menu sidebar -->
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
+    <!-- Sweet-Alert  -->
+    <script src="{{ asset('assets/node_modules/sweetalert/sweetalert.min.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('dist/js/custom.min.js') }}"></script>
     @yield('scripts')

@@ -11,15 +11,19 @@ use Illuminate\Notifications\Messages\MailMessage;
 class DocumentTracking extends Notification
 {
     use Queueable;
+
     public $fromUser;
+    public $data;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct($user, $data)
     {
         $this->fromUser = $user;
+        $this->data     = $data;
     }
 
     /**
@@ -30,7 +34,18 @@ class DocumentTracking extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
+    }
+
+    public function toDatabase($notifiable) 
+    {
+        return [
+            'id'      => $this->fromUser->id,
+            '_img'    => $this->fromUser->_img,
+            'name'    => $this->fromUser->fullNameFirst,
+            'data'    => $this->data['data'],
+            'action'  => $this->data['action'],
+        ];
     }
 
     /**

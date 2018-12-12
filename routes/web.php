@@ -54,6 +54,16 @@ Route::group(['middleware' => 'auth'], function() {
 	// ----------- HR-APPLICANTS SYSTEM ------------- //
 
 
+	// ----------- START MORALE SURVEY SYSTEM ------------- //
+	Route::get('/moralesurvey/dashboard', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.dashboard');
+	Route::get('/moralesurvey/setting', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.dashboard');
+
+	Route::get('/moralesurvey/setting/semester', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.setting.semester');
+
+	Route::resource('/moralesurvey', 'MoraleSurvey\MoraleSurveyController');
+	// ----------- END MORALE SURVEY SYSTEM --------------- //
+
+
 });
 
 /*

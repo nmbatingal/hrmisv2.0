@@ -76,7 +76,7 @@
                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
 
                 <div class="table-responsive-md">
-                    <table id="document-tracker-received" class="table table-bordered table-hover table-striped" data-paging="true" data-paging-size="10">
+                    <table id="document-tracker-received" class="table table-hover table-striped" data-paging="true" data-paging-size="10">
                         <colgroup>
                             <col width="20%">
                             <col width="30%">
@@ -152,7 +152,6 @@
 
                     var sum = 1;
                     sum += +$('#count-received').text();
-
                     $('#count-received').text(sum);
 
                     console.log(sum);

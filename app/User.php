@@ -5,9 +5,10 @@ namespace App;
 use Auth;
 use App\Office;
 use App\VerifyUser;
+use App\MoraleSurvey\MorssSurvey;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -38,6 +39,10 @@ class User extends Authenticatable
         'username',
         'email', 
         'mobile', 
+        'sex',
+        'birthday',
+        'address',
+        'user_image',
         'password',
         'office_id',
         'position',
@@ -85,4 +90,14 @@ class User extends Authenticatable
                      ->where('isAdmin', '!=', 1)
                      ->orderBy('firstname', 'ASC');
     }
+
+
+    // ---------------- MORALE SURVEY FUNCTIONS ------------------ //
+    public function moraleSurveys()
+    {
+        return $this->hasMany(MorssSurvey::class, 'semester_id', 'id');
+    }
+
+    // ---------------- END MORALE SURVEY FUNCTIONS -------------- //
+
 }
