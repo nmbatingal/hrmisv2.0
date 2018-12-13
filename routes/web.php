@@ -45,8 +45,6 @@ Route::group(['middleware' => 'auth'], function() {
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
 
 
-
-
 	// ----------- HR-APPLICANTS SYSTEM ------------- //
 	Route::get('/hr/dashboard', 'Applicants\ApplicantsController@applicantsDashboard')->name('applicants.dashboard');
 	Route::get('/hr/applicants/list', 'Applicants\ApplicantsController@listOfApplicants')->name('applicants.list');
@@ -56,10 +54,12 @@ Route::group(['middleware' => 'auth'], function() {
 
 	// ----------- START MORALE SURVEY SYSTEM ------------- //
 	Route::get('/moralesurvey/dashboard', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.dashboard');
-	Route::get('/moralesurvey/setting', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.dashboard');
-
-	Route::get('/moralesurvey/setting/semester', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.setting.semester');
-
+	// Survey Controller
+	Route::resource('/moralesurvey/survey', 'MoraleSurvey\SurveyController');
+	// Question Controller
+	Route::resource('/moralesurvey/setting/question', 'MoraleSurvey\QuestionController');
+	// Semester Controller
+	Route::resource('/moralesurvey/setting/semester', 'MoraleSurvey\SemesterController');
 	Route::resource('/moralesurvey', 'MoraleSurvey\MoraleSurveyController');
 	// ----------- END MORALE SURVEY SYSTEM --------------- //
 

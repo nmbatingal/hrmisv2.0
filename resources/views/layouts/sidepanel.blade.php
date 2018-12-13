@@ -55,12 +55,12 @@
                         <ul class="sub-menu"
                             {{ Request::is('moralesurvey/setting/*') ? 'style=display:block;' : '' }}
                             >
-                            <li><a href="{{ route('moralesurvey.setting.semester') }}">Semester</a></li>
-                            <li><a href="{{ route('moralesurvey.setting.semester') }}">Questions</a></li>
+                            <li><a href="{{ route('question.index') }}">Questions</a></li>
+                            <li><a href="{{ route('semester.index') }}">Semester</a></li>
                         </ul>
                         <!-- /.Second level -->
                     </li>
-                    <li><a href="{{ route('moralesurvey.dashboard') }}">Survey Form</a></li>
+                    <li><a href="{{ route('survey.index') }}">Survey Form</a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>
