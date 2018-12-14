@@ -5,7 +5,7 @@ namespace App;
 use Auth;
 use App\Office;
 use App\VerifyUser;
-use App\MoraleSurvey\MorssSurvey;
+use App\Models\MoraleSurvey\MorssSurvey;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -95,7 +95,7 @@ class User extends Authenticatable
     // ---------------- MORALE SURVEY FUNCTIONS ------------------ //
     public function moraleSurveys()
     {
-        return $this->hasMany(MorssSurvey::class, 'semester_id', 'id');
+        return $this->hasMany(MorssSurvey::class, 'user_id', 'id');
     }
 
     // ---------------- END MORALE SURVEY FUNCTIONS -------------- //

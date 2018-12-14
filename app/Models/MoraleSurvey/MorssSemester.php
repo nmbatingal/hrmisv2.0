@@ -3,8 +3,9 @@
 namespace App\Models\MoraleSurvey;
 
 use Carbon\Carbon;
-use App\MoraleSurvey\MorssSurvey;
-use App\MoraleSurvey\MorssSurveyRemark;
+use App\Models\MoraleSurvey\MorssSurvey;
+use App\Models\MoraleSurvey\MorssQuestion;
+use App\Models\MoraleSurvey\MorssSurveyRemark;
 use Illuminate\Database\Eloquent\Model;
 
 class MorssSemester extends Model
@@ -22,6 +23,7 @@ class MorssSemester extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'month_from',
         'month_to',
         'status',
@@ -31,6 +33,11 @@ class MorssSemester extends Model
     public function moraleSurveys()
     {
         return $this->hasMany(MorssSurvey::class, 'semester_id', 'id');
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(MorssQuestion::class, 'questions', 'id');
     }
 
     public function moraleSurveyRemarks()
@@ -56,8 +63,13 @@ class MorssSemester extends Model
         return Carbon::parse($this->month_to)->format('M, Y');
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
     public function scopeNowSurvey($query)
     {
-        return $query->where('status', 1)->latest();
+        return $query->active()->latest();
     }
 }

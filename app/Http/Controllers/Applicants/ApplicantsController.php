@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Applicants;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Models\Applicants\ApplicantsInfo as Applicant;
 use App\Models\Applicants\ApplicantsEducation as Education;
 use App\Models\Applicants\ApplicantsExperience as Experience;

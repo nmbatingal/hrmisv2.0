@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function() {
 	// ----------- START MORALE SURVEY SYSTEM ------------- //
 	Route::get('/moralesurvey/dashboard', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.dashboard');
 	// Survey Controller
+	Route::get('/moralesurvey/survey/{uuid}', 'MoraleSurvey\SurveyController@survey')->name('survey.takesurvey');
 	Route::resource('/moralesurvey/survey', 'MoraleSurvey\SurveyController');
 	// Question Controller
 	Route::resource('/moralesurvey/setting/question', 'MoraleSurvey\QuestionController');

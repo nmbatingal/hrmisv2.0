@@ -39,25 +39,27 @@
                 <h6 class="card-subtitle">Just click on word which you want to change and enter</h6>
                 <div class="m-t-40"></div>
                 <div class="table-responsive">
-                    <table id="myTable" class="table table-bordered table-striped">
+                    <table id="semTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th width="5%"></th>
                                 <th>Semester</th>
+                                <th width="5%">Ratee</th>
                                 <th width="10%">Status</th>
                                 <th width="10%"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse( $semesters as $sem)
+                            @forelse( $semesters as $id => $sem)
                                 <tr data-id="{{ $sem->id }}">
-                                    <td></td>
+                                    <td class="text-right">{{ ++$id }}</td>
                                     <td>
                                         <a class="modal-view text-mute" href="javascript:void(0)">
                                             {!! $sem->status ? '' : '<i class="fas fa-lock text-danger"></i>'!!}
                                             {{ $sem->semester }}
-                                        </a>
+                                        </a> (hash: {{ $sem->uuid }})
                                     </td>
+                                    <td class="text-center"></td>
                                     <td class="text-center">
                                         @if ( $sem->status )
                                             <button type="button" class="btn waves-effect waves-light btn-outline-success">Open</button>
@@ -125,6 +127,16 @@
 <!-- Editable -->
 <script src="{{ asset('assets/node_modules/jsgrid/db.js') }}"></script>
 <script>
+
+    $('#semTable').DataTable({
+        "columnDefs": [
+            { "orderable": false, "targets": [0,2,4] }
+        ],
+        "lengthChange": true,
+        "searching": true,
+        "bPaginate": true
+    });
+
     $('.modal-view').on('click', function(e) {
         var id = $(this).closest('tr').data('id');
         $('.modal-body').load( '{{ route('semester.show', '') }}/'+id , function(){

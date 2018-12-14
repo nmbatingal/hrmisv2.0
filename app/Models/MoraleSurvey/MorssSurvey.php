@@ -3,8 +3,8 @@
 namespace App\Models\MoraleSurvey;
 
 use App\User;
-use App\MoraleSurvey\MorssQuestion;
-use App\MoraleSurvey\MoraleSemester;
+use App\Models\MoraleSurvey\MorssQuestion;
+use App\Models\MoraleSurvey\MorssSemester;
 use Illuminate\Database\Eloquent\Model;
 
 class MorssSurvey extends Model
@@ -26,10 +26,10 @@ class MorssSurvey extends Model
 
     public function semester()
     {
-        return $this->belongsTo(MoraleSemester::class, 'semester_id', 'id');
+        return $this->belongsTo(MorssSemester::class, 'semester_id', 'id');
     }
 
-    public function userEmployee()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
