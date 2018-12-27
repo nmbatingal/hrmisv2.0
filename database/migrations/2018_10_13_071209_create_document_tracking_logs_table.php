@@ -20,10 +20,11 @@ class CreateDocumentTrackingLogsTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->enum('action', ['Receive', 'Forward', 'Complete', 'Cancel'])->nullable();
             $table->char('route_mode', 20)->nullable();
-            $table->longText('route_office')->nullable();
-            $table->longText('route_users')->nullable();
+            // $table->longText('route_office')->nullable();
+            $table->longText('recipients')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('code')->references('code')->on('doctracker.document_trackers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('tracking_code')->references('tracking_code')->on('doctracker.document_trackers')->onDelete('cascade')->onUpdate('cascade');

@@ -7,14 +7,20 @@ use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTracker;
 use App\Models\DocumentTracker\DocumentTrackerAttachment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class DocumentTrackingLogs extends Model
 {
+    use SoftDeletes;
+
     protected $connection = "mysql2";
     protected $table = "document_tracking_logs";
     protected $casts = [
         'recipients' => 'array',
+    ];
+    protected $dates = [ 
+        'deleted_at',
     ];
 
     /**
