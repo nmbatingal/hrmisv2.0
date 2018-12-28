@@ -46,7 +46,7 @@
                     <div class="dropdown-menu dropdown-menu-right mailbox">
                         <ul>
                             <li>
-                                <div class="drop-title">Notifications</div>
+                                <div class="drop-title">Notifications <span class="badge badge-info">0</span></div>
                             </li>
                             <li>
                                 <div class="message-center">

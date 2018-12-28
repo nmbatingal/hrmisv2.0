@@ -7,17 +7,22 @@
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
-<!-- <div class="row page-titles">
+<div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white">Home</h4>
+        <h4 class="text-white">Settings</h4>
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item active">Settings</li>
         </ol>
     </div>
-</div> -->
+    <!-- <div class="col-md-6 text-right">
+        <form class="app-search d-none d-md-block d-lg-block">
+            <input type="text" class="form-control" placeholder="Search &amp; enter">
+        </form>
+    </div> -->
+</div>
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
@@ -28,24 +33,23 @@
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-3">
+    <div class="col-md-6">
         <div class="card">
-            <img class="card-img-top" src="{{ asset('img/document-tracking.jpg') }}" alt="Card image cap">
             <div class="card-body">
-                <h4 class="card-title">Document Tracker</h4>
-                <p class="card-text">Add tracking codes to your documents.</p>
-                <a href="{{ route('doctracker.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
+                <h4 class="card-title">User Roles</h4>
+                <p class="card-text">Assign </p>
             </div>
         </div>
     </div>
-    
-    <div class="col-lg-3">
+</div>
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-md-6">
         <div class="card">
-            <img class="card-img-top" src="{{ asset('img/morale-survey.jpg') }}" alt="Card image cap">
             <div class="card-body">
-                <h4 class="card-title">Morale Survey</h4>
-                <p class="card-text">Rate office performance.</p>
-                <a href="{{ route('moralesurvey.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
+                <h4 class="card-title">Account Permissions</h4>
+                <p class="card-text">Add tracking codes to your documents.</p>
             </div>
         </div>
     </div>
