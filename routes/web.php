@@ -21,6 +21,11 @@ Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('/home', 'HomeController@index')->name('home');
 
+	// ----------- SYSTEM ADMIN SETTING ------------- //
+	Route::resource('/user/setting', 'Settings\UserSettingsController', [ 'as' => 'user']);
+	Route::resource('/setting', 'Settings\AdminSettingsController', [ 'as' => 'all']);
+	// ----------- END SYSTEM ADMIN SETTING ------------- //
+
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
 	Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
 	Route::get('/doctracker/logs', 'DocumentTracker\DocumentTrackerController@logs')->name('doctracker.logs');
@@ -29,7 +34,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.create.tracker');
 	Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showDocument');
-	Route::get('/doctracker/mydocuments/{id}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
+	Route::get('/doctracker/mydocuments/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
 	Route::get('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@incomingDocuments')->name('doctracker.incoming');
 	Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showIncoming')->name('doctracker.incoming.show');
@@ -63,7 +68,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::resource('/moralesurvey/setting/semester', 'MoraleSurvey\SemesterController');
 	Route::resource('/moralesurvey', 'MoraleSurvey\MoraleSurveyController');
 	// ----------- END MORALE SURVEY SYSTEM --------------- //
-
 
 });
 

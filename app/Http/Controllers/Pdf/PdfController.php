@@ -9,13 +9,13 @@ use App\Http\Controllers\Controller;
 
 class PdfController extends Controller
 {
-    public function printBarcode(Request $request, $id)
+    public function printBarcode(Request $request, $code)
     {
-        $tracker = DocumentTracker::find($id);
+        $tracker = DocumentTracker::where('tracking_code', $code)->first();
         $view    = view('pdf.barcode.barcode', compact('tracker'));
-        $pdf     = PDF::loadHTML($view);
+        $pdf     = PDF::loadHtml($view);
 
         // return $pdf->download($tracker->tracking_code.'.pdf');
-        return $pdf->stream();
+        return $pdf->stream('barcode.pdf');
     }
 }

@@ -60,7 +60,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <div class="float-right">
-                                            <a href="{{ route('print.barcode', $myDocument->id) }}" target="_blank" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+                                            <a href="{{ route('print.barcode', $myDocument->tracking_code) }}" target="_blank" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
                                             <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a>
                                         </div>
                                     </div>

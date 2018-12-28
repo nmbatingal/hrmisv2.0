@@ -29,9 +29,9 @@ class SemesterController extends Controller
 
         $query2 = MorssSemester::join('morss_surveys','morss_surveys.semester_id','=','morss_semesters.id')->get();
         
-        // return view('moralesurvey.semester.index', compact('semesters'));
+        return view('moralesurvey.semester.index', compact('semesters'));
         // return $query;
-        return $query2;
+        // return $query2;
     }
 
     /**

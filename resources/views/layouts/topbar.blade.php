@@ -98,6 +98,10 @@
                     
                     <div class="dropdown-menu dropdown-menu-right">
                         <!-- text-->
+                        <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
+                        <!-- text-->
+                        <div class="dropdown-divider"></div>
+                        <!-- text-->
                         <a href="{{ route('logout') }}" class="dropdown-item text-danger" 
                             onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

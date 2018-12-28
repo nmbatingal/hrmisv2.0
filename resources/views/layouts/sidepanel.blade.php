@@ -66,5 +66,26 @@
             </div>
         </li>
         <!-- END MORALE SURVEY  -->
+
+        <!-- .SYSTEM SETTINGS -->
+        <li class="{{ Request::is('setting') ? 'selected' : '' }}">
+            <a href="{{ route('all.setting.index') }}"><i class="ti-settings"></i></a>
+            <div class="sidebarmenu">
+                <!-- Left navbar-header -->
+                <h3 class="menu-title">System Setting</h3>
+                <!-- <div class="searchable-menu">
+                    <form role="search" class="menu-search">
+                        <input type="text" placeholder="Search..." class="form-control">
+                        <a href=""><i class="fa fa-search"></i></a>
+                    </form>
+                </div> -->
+                <ul class="sidebar-menu">
+                    <li><a href="{{ route('all.setting.index') }}">All Settings </a></li>
+                    <li><a href="{{ route('user.setting.index') }}">Account Setting </a></li>
+                </ul>
+                <!-- Left navbar-header end -->
+            </div>
+        </li>
+        <!-- /.Home -->
     </ul>
 </div>

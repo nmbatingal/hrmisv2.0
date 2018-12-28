@@ -39,18 +39,16 @@
         </div>
     </div>
     
-    @hasrole('System Administrator')
-        <div class="col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="{{ asset('img/morale-survey.jpg') }}" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Morale Survey</h4>
-                    <p class="card-text">Rate office performance.</p>
-                    <a href="{{ route('moralesurvey.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
-                </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <img class="card-img-top" src="{{ asset('img/morale-survey.jpg') }}" alt="Card image cap">
+            <div class="card-body">
+                <h4 class="card-title">Morale Survey</h4>
+                <p class="card-text">Rate office performance.</p>
+                <a href="{{ route('moralesurvey.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
             </div>
         </div>
-    @endhasrole
+    </div>
 
 </div>
 @endsection
