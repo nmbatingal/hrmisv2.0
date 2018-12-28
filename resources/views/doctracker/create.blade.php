@@ -222,8 +222,6 @@
 <script src="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 <script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
-<!-- CUSTOM JS CODES -->
-<script src="{{ asset('js/doctracker/create.blade.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
 

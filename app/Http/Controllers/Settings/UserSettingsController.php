@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\User;
+use App\Office;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -57,7 +59,9 @@ class UserSettingsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $offices = Office::all();
+        $user = User::find($id);
+        return view('settings.user.update', compact('user', 'offices'));
     }
 
     /**
@@ -68,6 +72,18 @@ class UserSettingsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
+    {
+        // return $request;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request, $id)
     {
         //
     }
