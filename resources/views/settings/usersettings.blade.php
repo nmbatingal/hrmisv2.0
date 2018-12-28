@@ -273,24 +273,15 @@
             e.preventDefault();
             var form = $(this); 
 
-            $('#spinner').css('display', 'inline-block');
-            $('#submit-btn').attr('disabled', 'disabled');
-
             $.ajax({
                 method : 'POST',
                 url    : form.attr('action'),
                 data   : form.serialize(),
                 success: function(data) {
-                    if (data.result) {
 
-                        swal({
-                            title: "Success!",
-                            text:  "Document tracker successfully saved. Tracking Code " + data.tracker,
-                            type: "success"
-                        }).then( function() {
-                            window.location = data.url;
-                        });
-                    }
+                    $('#spinner').css('display', 'inline-block');
+                    $('#submit-btn').attr('disabled', 'disabled');
+
                 },
                 error  : function(xhr, err) {
 

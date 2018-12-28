@@ -405,7 +405,7 @@ class DocumentTrackerController extends Controller
         }
 
         if ( $request->ajax() ) {
-            return response()->json($result);
+            return response()->json(['result' => $result, 'url' => route('doctracker.showDocument', $document->tracking_code), 'tracker' => $document->tracking_code ]);
         } else {
             return redirect()->route('doctracker.showDocument', $document->tracking_code);
         }
