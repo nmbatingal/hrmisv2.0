@@ -18,19 +18,24 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Document Tracker</li>
+            <li class="breadcrumb-item active">OPTIMA</li>
         </ol>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="ti-help-alt"></i></a>
     </div>
 </div>
 <div class="m-t-40"></div>
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-12">
-        <div class="text-center">
-            <img src="{{ asset('img/site_construction.png') }}" alt="user">
-            <h4 class="font-weight-bold p-t-40">This page is under development.</h4>
-            <h5 class="">Come back some time here.</h5>
-        </div>
+    <div class="offset-md-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">OPTIMA</h4>
+                <p class="card-text">Optical Tracking Information Management System</p>
+                <a href="#" class="btn btn-info"><i class="ti-help-alt"></i> About the app</a>
+            </div>
+        </div>    
     </div>
 </div>
 @endsection

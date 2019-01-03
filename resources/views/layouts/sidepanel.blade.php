@@ -33,6 +33,7 @@
                     <li><a href="{{ route('doctracker.incoming') }}">Incoming Documents</a></li>
                     <li><a href="{{ route('doctracker.outgoing') }}">Outgoing Documents</a></li>
                     <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
+                    <li><a href="{{ route('doctracker.logs') }}">About</a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>
