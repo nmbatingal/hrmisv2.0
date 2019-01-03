@@ -26,6 +26,18 @@ class DocumentTrackerController extends Controller
         $documents = [];
         return view('doctracker.dashboard');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function about()
+    {
+        return view('doctracker.about');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -209,9 +221,9 @@ class DocumentTrackerController extends Controller
                             }
                         ])->where('tracking_code', $code)->first();
         
-        // return view('doctracker.incoming-show', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
+        return view('doctracker.incoming-show', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
 
-        return $myDocument->trackLogs;
+        // return $myDocument->trackLogs;
     }
 
     /**
