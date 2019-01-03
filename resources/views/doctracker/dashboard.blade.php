@@ -28,9 +28,10 @@
 <div class="m-t-40"></div>
 <div class="row">
     <!-- Column -->
-    <div class="offset-md-3 col-md-6">
+    <div class="offset-md-4 col-md-4">
         <div class="card">
             <div class="card-body">
+            <img class="card-img-top" src="{{ asset('img/document-tracking.jpg') }}" alt="Card image cap">
                 <h4 class="card-title">OPTIMA</h4>
                 <p class="card-text">Optical Tracking Information Management System</p>
                 <a href="#" class="btn btn-info"><i class="ti-help-alt"></i> About the app</a>

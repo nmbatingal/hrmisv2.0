@@ -106,7 +106,7 @@ class LoginController extends Controller
             return redirect('/login')->with('warning', 'You need to confirm your account. We have sent you an activation code, please check your email.');
         }
 
-        return redirect()->intended($this->redirectPath());
+        // return redirect()->intended($this->redirectPath());
     }
 
     /**
