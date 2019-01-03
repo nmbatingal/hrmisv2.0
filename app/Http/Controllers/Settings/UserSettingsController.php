@@ -73,7 +73,21 @@ class UserSettingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request;
+        $user = User::find($id);
+        $user->firstname       = $request->firstname;
+        $user->middlename       = $request->middlename;
+        $user->lastname       = $request->lastname;
+        $user->sex       = $request->sex;
+        $user->birthday       = $request->birthday;
+        $user->address       = $request->address;
+        $user->email       = $request->email;
+        $user->mobile       = $request->mobile;
+        $user->office_id       = $request->office;
+        $user->position       = $request->position;
+
+        $user->save();
+
+        return redirect()->route('user.setting.edit', $user->id);
     }
 
     /**

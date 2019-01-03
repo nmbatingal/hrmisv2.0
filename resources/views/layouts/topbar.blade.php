@@ -28,7 +28,7 @@
                     <a href="javascript:void(0)" class="p-l-20">
                         <!--This is logo text-->
                         <!-- <img src="{{ asset('assets/images/logo-light-text.png') }}" alt="home" class="light-logo" alt="home" /> -->
-                        <span class="text-white p-0 m-0">MyApplication</span>
+                        <h3 class="text-white p-l-20 m-0">DOST13</h3>
                     </a>
                 </li>
             </ul>

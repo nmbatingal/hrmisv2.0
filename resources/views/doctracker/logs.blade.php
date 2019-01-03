@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+-OPTIMA | Logs
+@endsection
+
 @section('styles')
 <link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
@@ -16,12 +20,13 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">Document Tracker</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">OPTIMA</a></li>
             <li class="breadcrumb-item active">Logs</li>
         </ol>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary float-right">Create new tracker</a>
+        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="ti-help-alt"></i></a>
     </div>
 </div>
 <!-- ============================================================== -->

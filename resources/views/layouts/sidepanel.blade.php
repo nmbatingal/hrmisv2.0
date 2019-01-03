@@ -26,19 +26,21 @@
             <a href="javascript:void(0);"><i class="mdi mdi-qrcode-scan"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
-                <h3 class="menu-title">Document Tracker</h3>
+                <h3 class="menu-title">OPTIMA</h3>
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
                     <li><a href="{{ route('doctracker.incoming') }}">Incoming Documents</a></li>
                     <li><a href="{{ route('doctracker.outgoing') }}">Outgoing Documents</a></li>
                     <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
+                    <li><a href="{{ route('doctracker.logs') }}">About</a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>
         </li>
         <!-- END DOCUMENT TRACKER -->
 
+        @hasrole('System Administrator')
         <!-- MORALE SURVEY  -->
         <li class="{{ Request::is('moralesurvey/*') ? 'selected' : '' }}">
             <a href="javascript:void(0);"><i class="ti-bar-chart"></i></a>
@@ -66,6 +68,7 @@
             </div>
         </li>
         <!-- END MORALE SURVEY  -->
+        @endhasrole
 
         <!-- .SYSTEM SETTINGS -->
         <li class="{{ Request::is('setting') ? 'selected' : '' }}">

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+-OPTIMA | Create New Tracker
+@endsection
+
 @section('styles')
 <link href="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
@@ -28,7 +32,7 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">Document Tracker</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">OPTIMA</a></li>
             <li class="breadcrumb-item active">Create New Tracker</li>
         </ol>
     </div>

@@ -31,10 +31,11 @@
     <div class="col-lg-3">
         <div class="card">
             <img class="card-img-top" src="{{ asset('img/document-tracking.jpg') }}" alt="Card image cap">
+            <div class="card-header">
+                <h4 class="card-title m-0">OPTIMA <a href="{{ route('doctracker.dashboard') }}" class="btn btn-sm btn-info"><i class="icon-login"></i> Open</a></h4>
+            </div>
             <div class="card-body">
-                <h4 class="card-title">Document Tracker</h4>
-                <p class="card-text">Add tracking codes to your documents.</p>
-                <a href="{{ route('doctracker.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
+                <p class="card-text">Optical Tracking Information Management System</p>
             </div>
         </div>
     </div>
@@ -44,9 +45,8 @@
             <div class="card">
                 <img class="card-img-top" src="{{ asset('img/morale-survey.jpg') }}" alt="Card image cap">
                 <div class="card-body">
-                    <h4 class="card-title">Morale Survey</h4>
+                    <h4 class="card-title">Morale Survey <a href="{{ route('moralesurvey.dashboard') }}" class="btn btn-sm btn-info"><i class="icon-login"></i> Open</a></h4>
                     <p class="card-text">Rate office performance.</p>
-                    <a href="{{ route('moralesurvey.dashboard') }}" class="btn btn-block btn-info"><i class="icon-login"></i> Open Application</a>
                 </div>
             </div>
         </div>
