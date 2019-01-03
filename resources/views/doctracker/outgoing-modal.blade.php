@@ -61,7 +61,7 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Note</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" name="note" rows="1"></textarea>
+                    <textarea class="form-control" name="note" rows="1" required></textarea>
                     <small class="form-control-feedback">Additional notes on routing the document.</small> 
                 </div>
             </div>

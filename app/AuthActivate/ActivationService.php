@@ -34,7 +34,7 @@ class ActivationService
 
         $this->mailer->send('emails.verify', $data, function (Message $m) use ($user) {
             $m->to($user->email)->subject('Login Verification');
-            $m->from('rdic.dostcaraga@gmail.com', 'Caraga RDIC');
+            $m->from('rdic.dostcaraga@gmail.com', 'DOST13 Myapplication');
         });
 
     }
