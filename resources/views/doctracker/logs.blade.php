@@ -41,7 +41,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Outgoing Documents</h3>
+                <h3 class="card-title">Tracking Logs</h3>
                 <p class="card-text">Search for a document using tracking code.</p>
                 
                 <form id="submitCode" action="{{ route('doctracker.search') }}" class="form-horizontal" method="GET">
