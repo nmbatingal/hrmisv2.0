@@ -79,7 +79,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2018 MyApplication by ICT DOST-Caraga.
+                © 2018 DOST13 by ICT DOST-Caraga.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

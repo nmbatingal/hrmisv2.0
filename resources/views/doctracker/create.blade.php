@@ -32,7 +32,7 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">Document Tracker</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">OPTIMA</a></li>
             <li class="breadcrumb-item active">Create New Tracker</li>
         </ol>
     </div>
