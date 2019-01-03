@@ -5,6 +5,7 @@ namespace App;
 use Auth;
 use App\Office;
 use App\VerifyUser;
+use App\Notifications\MailResetPasswordNotification;
 use App\Models\MoraleSurvey\MorssSurvey;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -62,6 +63,17 @@ class User extends Authenticatable
     public function verifyUser()
     {
         return $this->belongsTo(VerifyUser::class, 'user_id', 'id');
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MailResetPasswordNotification($token));
     }
 
     public function getFullNameAttribute()
