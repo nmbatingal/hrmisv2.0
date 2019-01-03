@@ -25,7 +25,7 @@
     </div>
     <div class="col-md-6 text-right">
         <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
-        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="ti-help-alt"></i></a>
+        <a href="{{ route('doctracker.about') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="mdi mdi-help"></i></a>
     </div>
 </div>
 <!-- ============================================================== -->
@@ -80,6 +80,23 @@
                 </form>
                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
 
+                <!-- sample modal content -->
+                <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modalOutgoing">Incoming</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div id="incoming-modal-body" class="modal-body">
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
                 <div class="table-responsive-md">
                     <table id="document-tracker-received" class="table table-hover table-striped" data-paging="true" data-paging-size="10">
                         <colgroup>
@@ -99,7 +116,7 @@
                         <tbody>
                             @forelse( $incomingLogs as $incoming )
                                 <tr>
-                                    <td><a href="{!! route('doctracker.incoming.show', $incoming->tracking_code) !!}" target="_blank">{{ $incoming->tracking_code }}</a></td>
+                                    <td><a class="incomingLink" href="javascript:void(0)">{{ $incoming->tracking_code }}</a></td>
                                     <td>
                                         <h5 class="font-weight-bold">{{ $incoming->documentCode->subject }}</h5>
                                             <h5>{{ $incoming->userEmployee->full_name }}</h5>
@@ -131,9 +148,13 @@
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
+<script type="text/javascript">
+    $(".incomingLink").on('click', function(e){
+           e.preventDefault();
+        });
+</script>
 <script>
     $(document).ready(function() { 
-
         $('[data-page-size]').on('click', function(e){
             e.preventDefault();
             var newSize = $(this).data('pageSize');
@@ -155,21 +176,35 @@
                 data   : form.serialize(),
                 success: function(data) {
 
-                    var sum = 1;
-                    sum += +$('#count-received').text();
-                    $('#count-received').text(sum);
+                    if ( data.logger )
+                    {
+                        var sum = 1;
+                        sum += +$('#count-received').text();
+                        $('#count-received').text(sum);
 
-                    console.log(sum);
-                    var row = appendTableRowReceived(data);
+                        console.log(sum);
+                        var row = appendTableRowReceived(data);
 
-                    $('tr.footable-empty').remove();
-                    $('table#document-tracker-received tbody').prepend(row);
+                        $('tr.footable-empty').remove();
+                        $('table#document-tracker-received tbody').prepend(row);
 
-                    $('#document-tracker-received').trigger('footable_initialize');
-                    form.trigger("reset");
+                        $('#document-tracker-received').trigger('footable_initialize');
+                        form.trigger("reset");
+
+                    } else {
+                        swal({
+                            title: "Error!",
+                            text:  "Tracking code undefined.",
+                            type: "error"
+                        });
+                    }
                 },
                 error  : function(xhr, err) {
-                    alert("Error! Could not retrieve the data.");
+                    swal({
+                        title: "Error!",
+                        text:  "Could not retrieve the data.",
+                        type: "error"
+                    });
                 }
             });
 

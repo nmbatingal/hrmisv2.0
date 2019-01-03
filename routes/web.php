@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function() {
 	// ----------- END SYSTEM ADMIN SETTING ------------- //
 
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
+	Route::get('/doctracker/about', 'DocumentTracker\DocumentTrackerController@about')->name('doctracker.about');
 	Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
 	Route::get('/doctracker/logs', 'DocumentTracker\DocumentTrackerController@logs')->name('doctracker.logs');
 	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');

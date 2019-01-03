@@ -36,11 +36,9 @@
             <li class="breadcrumb-item active">Create New Tracker</li>
         </ol>
     </div>
-    <!-- <div class="col-md-6 text-right">
-        <form class="app-search d-none d-md-block d-lg-block">
-            <input type="text" class="form-control" placeholder="Search &amp; enter">
-        </form>
-    </div> -->
+    <div class="col-md-6 text-right">
+        <a href="{{ route('doctracker.about') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="mdi mdi-help"></i></a>
+    </div>
 </div>
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
@@ -292,12 +290,20 @@
                         }).then( function() {
                             window.location = data.url;
                         });
+                    } else {
+                        swal({
+                            title: "Error!",
+                            text:  "Data unsuccessfully saved.",
+                            type: "error"
+                        })
                     }
                 },
                 error  : function(xhr, err) {
-
-                    alert("Error! Could not retrieve the data.");
-
+                    swal({
+                        title: "Error!",
+                        text:  "Could not process data.",
+                        type: "error"
+                    });
                 }
             });
 

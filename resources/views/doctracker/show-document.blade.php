@@ -26,7 +26,7 @@
     </div>
     <div class="col-md-6 text-right">
         <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
-        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="ti-help-alt"></i></a>
+        <a href="{{ route('doctracker.about') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="mdi mdi-help"></i></a>
     </div>
 </div>
 <!-- ============================================================== -->
@@ -66,7 +66,7 @@
                                     <div class="col-md-12">
                                         <div class="float-right">
                                             <a href="{{ route('print.barcode', $myDocument->tracking_code) }}" target="_blank" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
-                                            <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a>
+                                            <!-- <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a> -->
                                         </div>
                                     </div>
                                 </div>

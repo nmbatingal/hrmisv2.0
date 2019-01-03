@@ -27,7 +27,7 @@
     </div>
     <div class="col-md-6 text-right">
         <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
-        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="ti-help-alt"></i></a>
+        <a href="{{ route('doctracker.about') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="mdi mdi-help"></i></a>
     </div>
 </div>
 <!-- ============================================================== -->
@@ -191,7 +191,11 @@
                     }
                 },
                 error  : function(xhr, err) {
-                    alert("Error! Could not retrieve the data.");
+                    swal({
+                        title: "Error!",
+                        text:  "Could not retrieve the data.",
+                        type: "error"
+                    });
                 }
             });
 
