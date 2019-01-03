@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+| Update Account Settings
+@endsection
+
 @section('styles')
 <link href="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -18,13 +22,14 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white">Create New Tracker</h4>
+        <h4 class="text-white">Update Account Settings</h4>
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('all.setting.index') }}">Settings</a></li>
-            <li class="breadcrumb-item active">Account Setting</li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Account Setting</a></li>
+            <li class="breadcrumb-item active">Update</li>
         </ol>
     </div>
     <!-- <div class="col-md-6 text-right">
@@ -44,6 +49,7 @@
         <div class="card ">
             <div class="card-body">
                 <form id="formUpdate" action="{{ route('user.setting.update', $user->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    @method('PUT')
                     @csrf
                     <div class="form-body">
                         <!-- PERSONAL INFORMATION ROW -->
@@ -189,7 +195,7 @@
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Password</label>
                                     <div class="col-md-10">
-                                        <input type="password" class="form-control" name="password" placeholder="enter password" value="{{ $user->address }}" required>
+                                        <input type="password" class="form-control" name="password" placeholder="enter password" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
@@ -198,7 +204,7 @@
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Confirm Password</label>
                                     <div class="col-md-10">
-                                        <input type="password" class="form-control" name="password_confirmation" placeholder="confirm password" value="{{ $user->address }}" required>
+                                        <input type="password" class="form-control" name="password_confirmation" placeholder="confirm password" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>

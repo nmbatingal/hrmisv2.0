@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+-OPTIMA | Outgoing Documents
+@endsection
+
 @section('styles')
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />

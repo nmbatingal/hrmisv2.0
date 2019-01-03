@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+-OPTIMA | Logs
+@endsection
+
 @section('styles')
 <link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">

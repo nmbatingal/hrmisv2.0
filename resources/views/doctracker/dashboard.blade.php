@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+-OPTIMA | Dashboard
+@endsection
+
 @section('styles')
 @endsection
 
@@ -9,7 +13,7 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white">Document Tracker</h4>
+        <h4 class="text-white">OPTIMA</h4>
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">

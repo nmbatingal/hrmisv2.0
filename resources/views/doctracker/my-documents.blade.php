@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+-OPTIMA | My Documents
+@endsection
+
 @section('styles')
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
 @endsection
