@@ -72,7 +72,7 @@
 
         <!-- .SYSTEM SETTINGS -->
         <li class="{{ Request::is('setting') ? 'selected' : '' }}">
-            <a href="{{ route('all.setting.index') }}"><i class="ti-settings"></i></a>
+            <a href="javascript:void(0)"><i class="ti-settings"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
                 <h3 class="menu-title">System Setting</h3>

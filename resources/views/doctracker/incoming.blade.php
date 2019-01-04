@@ -72,15 +72,18 @@
                                         <button class="btn btn-primary" type="submit"><i class="ti-import"></i> Receive</button>
                                     </div>
                                 </div>
-                                <small class="form-control-feedback">&nbsp; </small> 
                             </div>
                         </div>
                         <!--/span-->
                     </div>
+                    <!-- progress bar -->
+                    <div id="upload-progress" class="progress m-t-0 m-b-30">
+                        <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
+                    </div>
                 </form>
                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
 
-                <!-- sample modal content -->
+                <!-- modal content -->
                 <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -176,8 +179,6 @@
                 data   : form.serialize(),
                 success: function(data) {
 
-                    if ( data.logger )
-                    {
                         var sum = 1;
                         sum += +$('#count-received').text();
                         $('#count-received').text(sum);
@@ -191,13 +192,6 @@
                         $('#document-tracker-received').trigger('footable_initialize');
                         form.trigger("reset");
 
-                    } else {
-                        swal({
-                            title: "Error!",
-                            text:  "Tracking code undefined.",
-                            type: "error"
-                        });
-                    }
                 },
                 error  : function(xhr, err) {
                     swal({
