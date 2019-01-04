@@ -188,8 +188,8 @@ class DocumentTrackerController extends Controller
             
             if ( $logger->save() )
             {
-                $data = ['result' => $logger, 'url' => null];
                 $data = [
+                    'result'            => true,
                     'tracking_code'     => $document->tracking_code,
                     'subject'           => $document->subject,
                     'document_type'     => $document->other_document,

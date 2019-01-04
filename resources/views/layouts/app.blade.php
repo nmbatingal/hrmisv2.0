@@ -15,6 +15,7 @@
     <link href="{{ asset('assets/node_modules/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/css/pages/progressbar-page.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
 <body class="fixed-layout skin-megna-dark">
@@ -98,6 +99,8 @@
     <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="{{ asset('dist/js/perfect-scrollbar.jquery.min.js') }}"></script>
+    <!--Wave Effects -->
+    <script src="{{ asset('dist/js/waves.js') }}"></script>
     <!--Menu sidebar -->
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
     <!-- Sweet-Alert  -->

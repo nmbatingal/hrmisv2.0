@@ -201,7 +201,11 @@
                         </div>
                     </div>
 
-                    <hr>
+                    <hr class="m-t-30 m-b-0">
+                    <!-- progress bar -->
+                    <div id="upload-progress" class="progress m-t-0 m-b-20">
+                        <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
+                    </div>
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12">
@@ -280,9 +284,27 @@
                 method : 'POST',
                 url    : form.attr('action'),
                 data   : form.serialize(),
+                xhr: function() {
+                    //upload Progress
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener('progress', function(event) {
+                            var percent = 0;
+                            var position = event.loaded || event.position;
+                            var total = event.total;
+                            if (event.lengthComputable) {
+                                percent = Math.ceil(position / total * 100);
+                            }
+                            //update progressbar
+                            $("#upload-progress .progress-bar").css("width", + percent +"%");
+                        }, true);
+                    }
+                    return xhr;
+                },
                 success: function(data) {
                     if (data.result) {
 
+                        $('#spinner').css('display', 'none');
                         swal({
                             title: "Success!",
                             text:  "Document tracker successfully saved. Tracking Code " + data.tracker,
@@ -295,7 +317,9 @@
                             title: "Error!",
                             text:  "Data unsuccessfully saved.",
                             type: "error"
-                        })
+                        }).then( function() {
+                           $("#upload-progress .progress-bar").css("width", 0);
+                        });
                     }
                 },
                 error  : function(xhr, err) {
@@ -303,6 +327,8 @@
                         title: "Error!",
                         text:  "Could not process data.",
                         type: "error"
+                    }).then( function() {
+                       $("#upload-progress .progress-bar").css("width", 0);
                     });
                 }
             });

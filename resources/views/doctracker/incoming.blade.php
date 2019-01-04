@@ -63,6 +63,7 @@
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                 <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="POST">
                     {{ csrf_field() }}
+                    
                     <div class="row m-t-40">
                         <div class="col-md-12">
                             <div class="form-group m-b-0">
@@ -72,15 +73,18 @@
                                         <button class="btn btn-primary" type="submit"><i class="ti-import"></i> Receive</button>
                                     </div>
                                 </div>
-                                <small class="form-control-feedback">&nbsp; </small> 
                             </div>
                         </div>
                         <!--/span-->
                     </div>
+                    <!-- progress bar -->
+                    <div id="upload-progress" class="progress m-t-0 m-b-30">
+                        <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
+                    </div>
                 </form>
                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
 
-                <!-- sample modal content -->
+                <!-- modal content -->
                 <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -116,7 +120,7 @@
                         <tbody>
                             @forelse( $incomingLogs as $incoming )
                                 <tr>
-                                    <td><a class="incomingLink" href="javascript:void(0)">{{ $incoming->tracking_code }}</a></td>
+                                    <td><a class="incomingLink" href="#">{{ $incoming->tracking_code }}</a></td>
                                     <td>
                                         <h5 class="font-weight-bold">{{ $incoming->documentCode->subject }}</h5>
                                             <h5>{{ $incoming->userEmployee->full_name }}</h5>
@@ -155,6 +159,11 @@
 </script>
 <script>
     $(document).ready(function() { 
+        $('a.incomingLink').on('click', function(e){
+            e.preventDefault();
+            alert("THIS");
+        });
+
         $('[data-page-size]').on('click', function(e){
             e.preventDefault();
             var newSize = $(this).data('pageSize');
@@ -174,15 +183,31 @@
                 method : 'POST',
                 url    : form.attr('action'),
                 data   : form.serialize(),
+                xhr: function() {
+                    //upload Progress
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener('progress', function(event) {
+                            var percent = 0;
+                            var position = event.loaded || event.position;
+                            var total = event.total;
+                            if (event.lengthComputable) {
+                                percent = Math.ceil(position / total * 100);
+                            }
+                            //update progressbar
+                            $("#upload-progress .progress-bar").css("width", + percent +"%");
+                        }, true);
+                    }
+                    return xhr;
+                },
                 success: function(data) {
 
-                    if ( data.logger )
+                    if ( data.result ) 
                     {
                         var sum = 1;
                         sum += +$('#count-received').text();
                         $('#count-received').text(sum);
 
-                        console.log(sum);
                         var row = appendTableRowReceived(data);
 
                         $('tr.footable-empty').remove();
@@ -191,11 +216,21 @@
                         $('#document-tracker-received').trigger('footable_initialize');
                         form.trigger("reset");
 
+                        swal({
+                            title: "Success!",
+                            text:  "Document successfully received.",
+                            type: "success"
+                        }).then( function() {
+                           $("#upload-progress .progress-bar").css("width", 0);
+                        });
+
                     } else {
                         swal({
                             title: "Error!",
                             text:  "Tracking code undefined.",
                             type: "error"
+                        }).then( function() {
+                           $("#upload-progress .progress-bar").css("width", 0);
                         });
                     }
                 },
@@ -204,6 +239,8 @@
                         title: "Error!",
                         text:  "Could not retrieve the data.",
                         type: "error"
+                    }).then( function() {
+                       $("#upload-progress .progress-bar").css("width", 0);
                     });
                 }
             });
