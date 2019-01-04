@@ -9,13 +9,13 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-12">
-        <h4 class="text-white">Create New Tracker</h4>
+        <h4 class="text-white">Profile Settings</h4>
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('all.setting.index') }}">Settings</a></li>
-            <li class="breadcrumb-item active">Account Setting</li>
+            <li class="breadcrumb-item active">Profile Setting</li>
         </ol>
     </div>
     <!-- <div class="col-md-6 text-right">
@@ -30,16 +30,89 @@
 <!-- ============================================================== -->
 <!-- Over Visitor, Our income , slaes different and  sales prediction -->
 <!-- ============================================================== -->
+<!-- Row -->
 <div class="row">
-    <div class="col-lg-12">
-        <div class="card ">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
             <div class="card-body">
-                <a href="{{ route('user.setting.edit', Auth::user()->id) }}" class="btn btn-info">Edit</a>
+                <div class="row float-right">
+                    <a href="{{ route('user.setting.edit', $user->id) }}" class="text-info" title="Edit"><i class="icon-pencil"></i> Edit Profile</a>
+                </div>
+                <center class="m-t-30"> 
+                    <img src="{{ asset($user->userProfilPic) }}" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10">{{ $user->fullName }}</h4>
+                    <h6 class="card-subtitle">{{ $user->position }}</h6>
+                    <h6 class="card-subtitle">{{ $user->office->division_name }}</h6>
+                </center>
+            </div>
+            <div>
+                <hr> </div>
+            <div class="card-body"> 
+                <small class="text-muted">Email address </small>
+                <h6>{{ $user->email }}</h6> 
+                <small class="text-muted p-t-30 db">Phone</small>
+                <h6>{{ $user->mobile }}</h6> 
+                <small class="text-muted p-t-30 db">Address</small>
+                <h6>{{ $user->address }}</h6>
+                <div class="map-box">
+                    
+                </div>
+                <br/>
             </div>
         </div>
     </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Activity Log</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!--first tab-->
+                <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="card-body">
+                        <div class="jumbotron">
+                            <p>No available data yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
 </div>
+<!-- Row -->
 @endsection
 
 @section('scripts')
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var session = {!! json_encode(session('cart')) !!};
+
+        $.each(session, function(key, value) {
+            toastrFunction(value);     
+        });
+
+        function toastrFunction (data) {
+            var toastr = $.toast({
+                loader: false,
+                heading: data.heading,
+                text: data.text,
+                position: 'bottom-left',
+                hideAfter: 7000, 
+                stack: 4,
+                showHideTransition: 'slide'
+            });
+
+            return toastr;
+        }
+    });
+
+
+</script>
 @endsection

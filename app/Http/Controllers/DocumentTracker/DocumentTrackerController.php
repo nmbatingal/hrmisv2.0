@@ -304,6 +304,7 @@ class DocumentTrackerController extends Controller
         // ----------------- END CREATE NEW LOG --------------- //
 
         $data = [
+            'id'                => $log->id,
             'tracking_code'     => $tracker->tracking_code,
             'subject'           => $tracker->subject,
             'document_type'     => $tracker->other_document,

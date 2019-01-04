@@ -103,7 +103,7 @@
                 <!-- /.modal -->
 
                 <div class="table-responsive-md">
-                    <table id="document-tracker-received" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
+                    <table id="documentTableOutgoing" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
                         <colgroup>
                             <col width="20%">
                             <col width="30%">
@@ -116,11 +116,12 @@
                                 <th>Subject</th>
                                 <th>Notes</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse( $outgoingLogs as $outgoing )
-                                <tr>
+                                <tr id="row-{{ $outgoing->id }}">
                                     <td><a href="javascript:void(0)" target="_blank">{{ $outgoing->tracking_code }}</a></td>
                                     <td>
                                         <h5 class="font-weight-bold">{{ $outgoing->documentCode->subject }}</h5>
@@ -141,6 +142,9 @@
                                             @endif
                                         </ul>
                                         {{ $outgoing->date_action }}
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $outgoing->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td>
                                 </tr>
                             @empty
@@ -170,12 +174,17 @@
         $('[data-page-size]').on('click', function(e){
             e.preventDefault();
             var newSize = $(this).data('pageSize');
-            FooTable.get('#document-tracker-received').pageSize(newSize);
+            FooTable.get('#documentTableOutgoing').pageSize(newSize);
         });
-        $('#document-tracker-received').footable({
+
+        $('#documentTableOutgoing').footable({
             filtering: {
                 enabled: false
             }
+        });
+
+        $('#modal-outgoing').on('hidden.bs.modal', function () {
+            $("#upload-progress .progress-bar").css("width", 0);
         });
 
         $('form#submitCode').on('submit', function(e) {
@@ -231,6 +240,56 @@
 
             return false;
         });
+    });
+</script>
+<script>
+    $(document).on("click", ".btnCancelEvent", function () {
+        var btn = $(this),
+            id  = btn.data("id"),
+            token  = $('input[name=_token]').val(),
+            $url = "{{ route('doctracker.trackinglog.destroy', '') }}" + "/" + id;
+
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to undo this action!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!"
+        }).then((data) => {
+
+            if (data.value) {
+                $.ajax({
+                    url: $url,
+                    type: 'POST',
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                    success: function (data) {
+
+                        var $row = 'tr#row-' + data.id;
+                        // decrement tracker cards
+                        var total = 1;
+                        total -= +$('#count-outgoing').text();
+                        $('#count-outgoing').text(total);
+
+
+                        $($row).remove();
+                        $('#documentTableOutgoing').trigger('footable_initialize');
+
+                        Swal(
+                          'Deleted!',
+                          'Action successfully deleted.',
+                          'success'
+                        )
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        swal("Error deleting!", "Please try again", "error");
+                    }
+                });
+            }
+        }); 
     });
 </script>
 @endsection

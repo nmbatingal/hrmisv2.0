@@ -13,6 +13,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--alerts CSS -->
     <link href="{{ asset('assets/node_modules/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
+    <!-- toast CSS -->
+    <link href="{{ asset('assets/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/css/pages/progressbar-page.css') }}" rel="stylesheet">
@@ -107,6 +109,7 @@
     <script src="{{ asset('assets/node_modules/sweetalert/sweetalert.min.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('dist/js/custom.min.js') }}"></script>
+    <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

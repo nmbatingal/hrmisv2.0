@@ -41,7 +41,7 @@
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                        <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox">
                         <ul>
@@ -98,7 +98,7 @@
                     
                     <div class="dropdown-menu dropdown-menu-right">
                         <!-- text-->
-                        <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
+                        <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
                         <!-- text-->
                         <div class="dropdown-divider"></div>
                         <!-- text-->

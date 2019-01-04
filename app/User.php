@@ -4,6 +4,7 @@ namespace App;
 
 use Auth;
 use App\Office;
+use Carbon\Carbon;
 use App\VerifyUser;
 use App\Notifications\MailResetPasswordNotification;
 use App\Models\MoraleSurvey\MorssSurvey;
@@ -79,6 +80,24 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return "{$this->firstname} {$this->lastname}";
+    }
+
+    public function getUserProfilPicAttribute()
+    {
+        $img = $this->user_image;
+
+        if ( !$img ) {
+
+            return "img/blank.png";
+        } else {
+
+            return $img;
+        }
+    }
+
+    public function getDiffTimeAttribute()
+    {
+        return Carbon::parse($this->updated_at)->diffForHumans();
     }
 
     public function office()

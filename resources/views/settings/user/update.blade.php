@@ -28,7 +28,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('all.setting.index') }}">Settings</a></li>
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Account Setting</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('user.setting.index') }}">Profile Setting</a></li>
             <li class="breadcrumb-item active">Update</li>
         </ol>
     </div>
@@ -178,7 +178,7 @@
     <div class="col-md-8">
         <div class="card ">
             <div class="card-body">
-                <form id="formUpdatePassword" action="{{ route('user.setting.update', $user->id) }}" method="POST" class="form-horizontal">
+                <form id="formUpdatePassword" action="{{ route('user.setting.update.password', $user->id) }}" method="POST" class="form-horizontal">
                     @csrf
                     <div class="form-body">
                         <div class="row">
@@ -186,7 +186,7 @@
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Username</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="username" placeholder="enter username" value="{{ $user->username }}" required>
+                                        <input type="text" class="form-control" name="username" placeholder="enter username" value="{{ $user->username }}" readonly required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
