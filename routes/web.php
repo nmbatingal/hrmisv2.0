@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/home', 'HomeController@index')->name('home');
 
 	// ----------- SYSTEM ADMIN SETTING ------------- //
-	// Route::post('/user/setting/{id}/password', 'Settings\UserSettingsController@updatePassword')->name('user.setting.update.password');
+	Route::post('/user/setting/{id}/password', 'Settings\UserSettingsController@updatePassword')->name('user.setting.update.password');
 	Route::resource('/user/setting', 'Settings\UserSettingsController', [ 'as' => 'user']);
 	Route::resource('/setting', 'Settings\AdminSettingsController', [ 'as' => 'all']);
 	// ----------- END SYSTEM ADMIN SETTING ------------- //
@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 	Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@recipientList')->name('doctracker.recipientlist');
+	Route::resource('/doctracker/trackinglog', 'DocumentTracker\DocumentTrackingLogsController', [ 'as' => 'doctracker']);
 	Route::resource('/doctracker', 'DocumentTracker\DocumentTrackerController');
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
 

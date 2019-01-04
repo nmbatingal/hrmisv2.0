@@ -72,7 +72,7 @@
     <div class="form-actions">
         <div class="row">
             <div class="col-md-6">
-                <a id="trackerClose" href="javascript:void(0)" class="btn btn-md btn-danger">Close tracker activity</a>
+                <button type="button" id="trackerClose" class="btn btn-md btn-danger">Close tracker activity</button>
             </div>
             <div class="col-md-6">
                 <div class="float-right">
@@ -87,6 +87,27 @@
 <script>
     $(".select2").select2({
         'width': '100%'
+    });
+
+    $('#trackerClose').on('click', function() {
+        var buttons = $('<div>')
+            .append(
+                $('<button class="btn btn-secondary btn-md">Complete Routing</button>').on('click', function() {
+                    swal.close();
+                })
+            ).append(
+                $('<button class="btn btn-secondary btn-md">Cancel Routing</button>').on('click', function() {
+                    swal.close();
+                })
+            );
+        
+        swal({
+            title: "Continue...",
+            html: buttons,
+            type: "warning",
+            showConfirmButton: false,
+            showCancelButton: false
+        });
     });
 
     // $('.select2-container').css('width', '100%');
@@ -127,9 +148,9 @@
                 var row = prependTableRowReceived(data);
 
                 $('tr.footable-empty').remove();
-                $('table#document-tracker-received tbody').prepend(row);
+                $('table#documentTableOutgoing tbody').prepend(row);
 
-                $('#document-tracker-received').trigger('footable_initialize');
+                $('#documentTableOutgoing').trigger('footable_initialize');
                 form.trigger("reset");
                 // ----------------------------------------------------------- //
 
@@ -160,7 +181,7 @@
 
     // row to be added
     function prependTableRowReceived (item) {
-        var row = $('<tr>' +
+        var row = $('<tr id="row-'+item.id+'">' +
                         '<td><a href="{!! route('doctracker.incoming.show', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
@@ -172,6 +193,9 @@
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.action + '</h5>' +
                             item.date_action +  
+                        '</td>' +
+                        '<td class="text-center">' +
+                            '<button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="'+ item.id +'" title="Cancel"><i class="ti-close"></i></button>' +
                         '</td>' +
                     '</tr>');
         return row;

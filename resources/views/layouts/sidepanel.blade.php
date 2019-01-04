@@ -84,7 +84,7 @@
                 </div> -->
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('all.setting.index') }}">All Settings </a></li>
-                    <li><a href="{{ route('user.setting.index') }}">Account Setting </a></li>
+                    <li><a href="{{ route('user.setting.index') }}">Profile Setting </a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Settings;
 
+use Hash;
+use Auth;
+use Session;
 use App\User;
 use App\Office;
 use Illuminate\Http\Request;
@@ -16,7 +19,8 @@ class UserSettingsController extends Controller
      */
     public function index()
     {
-        return view('settings.usersettings');
+        $user = Auth::user();
+        return view('settings.usersettings', compact('user'));
     }
 
     /**
@@ -84,10 +88,9 @@ class UserSettingsController extends Controller
         $user->mobile       = $request->mobile;
         $user->office_id       = $request->office;
         $user->position       = $request->position;
-
         $user->save();
 
-        return redirect()->route('user.setting.edit', $user->id);
+        return redirect()->route('user.setting.index');
     }
 
     /**
@@ -99,7 +102,21 @@ class UserSettingsController extends Controller
      */
     public function updatePassword(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        $item = [
+            [   
+                'icon'    => '',
+                'heading' => '<h5 class="text-success m-0"><i class="fa fa-check-circle"></i> Success</h5>',
+                'text'    => '<small class="text-muted">'.$user->diffTime.'</small><p class="p-t-10">Password successfully updated.</p>'  
+            ],
+         ];
+
+        // Session::push('cart', $item);
+        $request->session()->flash('cart', $item);
+        return redirect()->route('user.setting.index');
     }
 
     /**
