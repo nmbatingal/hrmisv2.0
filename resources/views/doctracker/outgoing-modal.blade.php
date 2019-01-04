@@ -140,12 +140,18 @@
 
                 // clear form fields
                 $('input[name=code]').val('');
-
+                $("#upload-progress .progress-bar").css("width", + 0);
                 // close modal
                 $('#modal-outgoing').modal('toggle');
             },
             error  : function(xhr, err) {
-                alert("Error! Could not retrieve the data.");
+                swal({
+                    title: "Error!",
+                    text:  "Could not retrieve the data.",
+                    type: "error"
+                }).then( function() {
+                   $("#upload-progress .progress-bar").css("width", 0);
+                });
             }
         });
 

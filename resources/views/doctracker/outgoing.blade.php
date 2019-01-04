@@ -63,7 +63,7 @@
                 </div>
 
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" action="{{ route('doctracker.outgoing.receive') }}" class="form-horizontal" method="POST">
+                <form id="submitCode" action="{{ route('doctracker.outgoing.search') }}" class="form-horizontal" method="POST">
                     {{ csrf_field() }}
                     <div class="row m-t-40">
                         <div class="col-md-12">
@@ -74,10 +74,13 @@
                                         <button class="btn btn-primary" type="submit"><i class="icon-drawar"></i> Open</button>
                                     </div>
                                 </div>
-                                <small class="form-control-feedback">&nbsp; </small> 
                             </div>
                         </div>
                         <!--/span-->
+                    </div>
+                    <!-- progress bar -->
+                    <div id="upload-progress" class="progress m-t-0 m-b-30">
+                        <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
                     </div>
                 </form>
                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
@@ -183,11 +186,36 @@
                 method : 'POST',
                 url    : form.attr('action'),
                 data   : form.serialize(),
+                xhr: function() {
+                    //upload Progress
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener('progress', function(event) {
+                            var percent = 0;
+                            var position = event.loaded || event.position;
+                            var total = event.total;
+                            if (event.lengthComputable) {
+                                percent = Math.ceil(position / total * 100);
+                            }
+                            //update progressbar
+                            $("#upload-progress .progress-bar").css("width", + percent +"%");
+                        }, true);
+                    }
+                    return xhr;
+                },
                 success: function(data) {
                     if (data.success)
                     {
                         $('#outgoing-modal-body').html(data.html);
                         $('#modal-outgoing').modal('show');
+                    } else {
+                        swal({
+                            title: "Error!",
+                            text:  "Tracking code undefined.",
+                            type: "error"
+                        }).then( function() {
+                           $("#upload-progress .progress-bar").css("width", 0);
+                        });
                     }
                 },
                 error  : function(xhr, err) {
@@ -195,6 +223,8 @@
                         title: "Error!",
                         text:  "Could not retrieve the data.",
                         type: "error"
+                    }).then( function() {
+                       $("#upload-progress .progress-bar").css("width", 0);
                     });
                 }
             });
