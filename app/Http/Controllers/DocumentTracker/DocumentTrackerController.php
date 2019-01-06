@@ -87,6 +87,7 @@ class DocumentTrackerController extends Controller
 
 
             $code             = $value->tracking_code;
+
             $tracker          = [
                 'tracking_code'   => $value->tracking_code,
                 'date_created'    => $value->documentCode->tracking_date,
@@ -95,6 +96,7 @@ class DocumentTrackerController extends Controller
                 'subject'         => $value->documentCode->subject,
                 'keywords'        => $value->documentCode->keywords,
             ];
+
             $logDetail[$i]    = [
                 'tracking_code'   => $value->tracking_code,
                 'created_by'      => $value->userEmployee->full_name,
@@ -104,6 +106,7 @@ class DocumentTrackerController extends Controller
                 'date_created'    => $value->documentCode->tracking_date,
                 'notes'           => $value->notes ?: '',
                 'date_time'       => $value->date_action,
+                'deleted'         => $value->deleted_at ? true : false,
             ];
         }
      
