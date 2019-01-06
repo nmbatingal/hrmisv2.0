@@ -189,6 +189,8 @@
                 data   : form.serialize(),
                 success: function(data) {
 
+                    console.log(data);
+
                     $('#results-bar').css('display', 'block'); 
                     $('table#search-tracker tbody tr').remove();  
 
@@ -227,6 +229,13 @@
 
         // row to be added
         function appendTableRowSearch (item) {
+
+            if (item.deleted) {
+                $tr = '<tr class="table-danger">';
+            } else {
+                $tr = '<tr>';
+            }
+
             var row = $('<tr>' +
                             '<td>' + item.created_by + '</td>' +
                             '<td>' + 
