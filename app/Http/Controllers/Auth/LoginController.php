@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use DB;
 use Auth;
+use App\Helpers\LogActivity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\AuthActivate\ActivationService;
@@ -66,7 +67,8 @@ class LoginController extends Controller
 
         if ( Auth::attempt( array_merge($request->only($login_type, 'password')), $remember == 'on' ? true : false )) {
 
-            // return $request;
+            LogActivity::addToLog('user log in.'); // log
+
             return $this->authenticated($request, $this->guard()->user());
         } else {
             return $this->sendFailedLoginResponse($request);
@@ -120,6 +122,8 @@ class LoginController extends Controller
         $this->guard()->logout();
 
         $request->session()->invalidate();
+
+        LogActivity::addToLog('user log out.'); // log
 
         return $this->loggedOut($request) ?: redirect('/login');
     }

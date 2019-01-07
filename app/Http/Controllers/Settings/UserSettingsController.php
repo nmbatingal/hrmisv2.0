@@ -7,6 +7,8 @@ use Auth;
 use Session;
 use App\User;
 use App\Office;
+use App\Helpers\LogActivity;
+use App\Models\Settings\UserActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,6 +23,17 @@ class UserSettingsController extends Controller
     {
         $user = Auth::user();
         return view('settings.usersettings', compact('user'));
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function log()
+    {
+        $logs = UserActivityLog::where('user_id', Auth::user()->id )->latest()->get();
+        
+        return view('settings.user.log', compact('logs'));
     }
 
     /**
@@ -90,6 +103,7 @@ class UserSettingsController extends Controller
         $user->position       = $request->position;
         $user->save();
 
+        LogActivity::addToLog('updated account information.');
         return redirect()->route('user.setting.index');
     }
 
@@ -114,6 +128,7 @@ class UserSettingsController extends Controller
             ],
          ];
 
+        LogActivity::addToLog('updated user password.');
         // Session::push('cart', $item);
         $request->session()->flash('cart', $item);
         return redirect()->route('user.setting.index');

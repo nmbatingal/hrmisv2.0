@@ -96,8 +96,10 @@
                     @endguest
                     
                     <div class="dropdown-menu dropdown-menu-right">
-                        <!-- text-->
+                        <!-- Profile Setting -->
                         <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
+                        <!-- User Activity Log -->
+                        <a href="{{ route('user.setting.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> Activity Log</a>
                         <!-- text-->
                         <div class="dropdown-divider"></div>
                         <!-- text-->
