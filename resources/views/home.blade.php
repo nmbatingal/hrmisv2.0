@@ -30,7 +30,7 @@
     <!-- Column -->
     <div class="col-lg-3">
         <div class="card">
-            <img class="card-img-top" src="{{ asset('img/document-tracking.jpg') }}" alt="Card image cap">
+            <img class="card-img-top" src="{{ asset('img/optima.jpg') }}" alt="Card image cap">
             <div class="card-header">
                 <h4 class="card-title m-0">OPTIMA <a href="{{ route('doctracker.dashboard') }}" class="btn btn-sm btn-info"><i class="icon-login"></i> Open</a></h4>
             </div>

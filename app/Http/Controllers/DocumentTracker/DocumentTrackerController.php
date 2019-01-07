@@ -94,6 +94,7 @@ class DocumentTrackerController extends Controller
                 'created_by'      => $value->userEmployee->full_name,
                 'document_type'   => $value->documentCode->other_document,
                 'subject'         => $value->documentCode->subject,
+                'details'         => $value->documentCode->details,
                 'keywords'        => $value->documentCode->keywords,
             ];
 
@@ -105,6 +106,7 @@ class DocumentTrackerController extends Controller
                 'recipients'      => $recipients,
                 'date_created'    => $value->documentCode->tracking_date,
                 'notes'           => $value->notes ?: '',
+                'remarks'         => $value->remarks ?: '',
                 'date_time'       => $value->date_action,
                 'deleted'         => $value->deleted_at ? true : false,
             ];
@@ -168,6 +170,25 @@ class DocumentTrackerController extends Controller
      */
     public function receiveIncomingDocument(Request $request)
     {   
+        $code     = $request->code;
+        $tracker  = DocumentTracker::where('code', $code)
+                                        ->orWhere('tracking_code', $code)
+                                        ->first();
+
+        if($request->ajax())
+        {
+            $view = view('doctracker.incoming-modal', compact('tracker'))->render();
+            return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeIncomingDocument(Request $request)
+    {   
         $result   = false;
         $code     = $request->code;
         $data     = array();
@@ -188,6 +209,7 @@ class DocumentTrackerController extends Controller
             $logger->user_id       = Auth::user()->id;
             $logger->action        = "Receive";
             $logger->notes         = $old_log->notes;
+            $logger->remarks       = $request->remarks;
             
             if ( $logger->save() )
             {
@@ -198,7 +220,8 @@ class DocumentTrackerController extends Controller
                     'document_type'     => $document->other_document,
                     'created_by'        => $document->userEmployee->full_name,
                     'date_created'      => $document->tracking_date,
-                    'note'              => $old_log->notes ?: '',
+                    'note'              => $logger->notes ?: '',
+                    'remarks'           => $logger->remarks ?: '',
                     'action'            => $logger->action,
                     'date_action'       => $logger->date_action,
                 ];
@@ -224,7 +247,7 @@ class DocumentTrackerController extends Controller
                             }
                         ])->where('tracking_code', $code)->first();
         
-        return view('doctracker.incoming-show', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
+        // return view('doctracker.incoming-show', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
 
         // return $myDocument->trackLogs;
     }

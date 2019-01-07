@@ -49,7 +49,7 @@
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <div class="input-group p-0">
-                                    <input type="text" class="form-control" name="code" placeholder="Enter tracking code" value="{{ request('code') }}" required autofocus>
+                                    <input type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code" value="{{ request('code') }}" required autofocus>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit"><i class="icon-magnifier"></i></button>
                                     </div>
@@ -120,13 +120,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">Details</label>
+                                    <div class="col-md-10">
+                                        <input name="details" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
                                     <label class="control-label text-right col-md-2">Keywords</label>
                                     <div id="keywords" class="col-md-10">
 
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -141,9 +151,9 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>User</th>
                                 <th>Action</th>
                                 <th>Notes</th>
+                                <th>Remarks</th>
                                 <th>Date tracked</th>
                             </tr>
                         </thead>
@@ -204,6 +214,7 @@
                         $('input[name=created_by]').val(data.tracker.created_by);
                         $('input[name=document_type]').val(data.tracker.document_type);
                         $('input[name=subject]').val(data.tracker.subject);
+                        $('input[name=details]').val(data.tracker.details);
 
                         $.each(data.results, function(index, item){
                             var row = appendTableRowSearch(item);
@@ -236,13 +247,13 @@
                 $tr = '<tr>';
             }
 
-            var row = $('<tr>' +
-                            '<td>' + item.created_by + '</td>' +
+            var row = $( $tr +
                             '<td>' + 
                                 '<h5 class="font-weight-bold">' + item.action + '</h5>' +
                                 item.recipients +
                             '</td>' +
                             '<td>' + item.notes + '</td>' +
+                            '<td>' + item.remarks + '</td>' +
                             '<td>' + item.date_time + '</td>' +
                         '</tr>');
             return row;

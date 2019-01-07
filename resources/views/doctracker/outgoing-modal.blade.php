@@ -110,8 +110,6 @@
         });
     });
 
-    // $('.select2-container').css('width', '100%');
-
     $("select[name=routeMode]").change(function(){
             
         var $id = $(this).val();
@@ -182,7 +180,7 @@
     // row to be added
     function prependTableRowReceived (item) {
         var row = $('<tr id="row-'+item.id+'">' +
-                        '<td><a href="{!! route('doctracker.incoming.show', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
+                        '<td><a href="#" target="_blank">' + item.tracking_code + '</a></td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
                                 '<h5>' + item.created_by + '</h5>' +  

@@ -36,6 +36,7 @@ class DocumentTrackingLogs extends Model
         'route_mode',
         'recipients',
         'notes',
+        'remarks',
     ];
 
     public function documentCode()

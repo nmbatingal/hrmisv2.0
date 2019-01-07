@@ -45,30 +45,26 @@
 
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        <div class="card bg-cyan text-white">
-                            <div class="card-body">
-                                <h6 class="m-b-0">Total Documents</h6>
-                                <h3 class="card-title">RECEIVED</h3>
-                                <div class="d-flex no-block align-items-center m-t-20 m-b-0">
-                                    <div class="ml-auto">
-                                        <h1 class="text-white"><i class="icon-docs"></i> <span id="count-received">{{ $incomingLogs->count() }}</span></h1>
-                                    </div>
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
+                                <div class="p-10 bg-cyan">
+                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-success"><span id="count-received">{{ $incomingLogs->count() }}</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents Received</h6>
                                 </div>
                             </div>
-                            <div id="sparkline8" class="sparkchart"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="POST">
-                    {{ csrf_field() }}
-                    
+                <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="GET">
                     <div class="row m-t-40">
                         <div class="col-md-12">
                             <div class="form-group m-b-0">
                                 <div class="input-group p-0">
-                                    <input type="text" class="form-control" name="code" placeholder="Enter tracking code to receive" required autofocus>
+                                    <input type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit"><i class="ti-import"></i> Receive</button>
                                     </div>
@@ -89,7 +85,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="modalOutgoing">Incoming</h4>
+                                <h4 class="modal-title" id="modalOutgoing">Receive Incoming</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div id="incoming-modal-body" class="modal-body">
@@ -104,22 +100,24 @@
                 <div class="table-responsive-md">
                     <table id="document-tracker-received" class="table table-hover table-striped" data-paging="true" data-paging-size="10">
                         <colgroup>
-                            <col width="20%">
-                            <col width="30%">
-                            <col width="30%">
-                            <col width="20%">
+                            <col width="">
+                            <col width="">
+                            <col width="">
+                            <col width="">
+                            <col width="">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <th>Notes</th>
+                                <th>Remarks</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse( $incomingLogs as $incoming )
-                                <tr>
+                                <tr data-id="row-{{ $incoming->id }}">
                                     <td><a class="incomingLink" href="#">{{ $incoming->tracking_code }}</a></td>
                                     <td>
                                         <h5 class="font-weight-bold">{{ $incoming->documentCode->subject }}</h5>
@@ -128,6 +126,9 @@
                                             {{ $incoming->documentCode->tracking_date }}
                                     </td>
                                     <td>{{ $incoming->notes }}</td>
+                                    <td class="remarks">
+                                        {{ $incoming->remarks }}
+                                    </td>
                                     <td>
                                         <h5 class="font-weight-bold">{{ $incoming->action }}</h5>
                                         {{ $incoming->date_action }}
@@ -152,23 +153,14 @@
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
-<script type="text/javascript">
-    $(".incomingLink").on('click', function(e){
-           e.preventDefault();
-        });
-</script>
 <script>
     $(document).ready(function() { 
-        $('a.incomingLink').on('click', function(e){
-            e.preventDefault();
-            alert("THIS");
-        });
-
         $('[data-page-size]').on('click', function(e){
             e.preventDefault();
             var newSize = $(this).data('pageSize');
             FooTable.get('#document-tracker-received').pageSize(newSize);
         });
+
         $('#document-tracker-received').footable({
             filtering: {
                 enabled: false
@@ -180,7 +172,7 @@
             var form = $(this);
 
             $.ajax({
-                method : 'POST',
+                method : form.attr('method'),
                 url    : form.attr('action'),
                 data   : form.serialize(),
                 xhr: function() {
@@ -202,27 +194,10 @@
                 },
                 success: function(data) {
 
-                    if ( data.result ) 
-                    {
-                        var sum = 1;
-                        sum += +$('#count-received').text();
-                        $('#count-received').text(sum);
+                    if ( data.success ) {
 
-                        var row = appendTableRowReceived(data);
-
-                        $('tr.footable-empty').remove();
-                        $('table#document-tracker-received tbody').prepend(row);
-
-                        $('#document-tracker-received').trigger('footable_initialize');
-                        form.trigger("reset");
-
-                        swal({
-                            title: "Success!",
-                            text:  "Document successfully received.",
-                            type: "success"
-                        }).then( function() {
-                           $("#upload-progress .progress-bar").css("width", 0);
-                        });
+                        $('#incoming-modal-body').html(data.html);
+                        $('#modal-incoming').modal('show');
 
                     } else {
                         swal({
@@ -247,25 +222,6 @@
 
             return false;
         });
-
-        // row to be added
-        function appendTableRowReceived (item) {
-            var row = $('<tr>' +
-                            '<td><a href="{!! route('doctracker.incoming.show', "") !!}/'+ item.tracking_code +'" target="_blank">' + item.tracking_code + '</a></td>' +
-                            '<td>' + 
-                                '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
-                                    '<h5>' + item.created_by + '</h5>' +  
-                                    '(' + item.document_type + ')<br>' +
-                                    item.date_created + 
-                            '</td>' +
-                            '<td>' + item.note + '</td>' +
-                            '<td>' + 
-                                '<h5 class="font-weight-bold">' + item.action + '</h5>' +
-                                item.date_action +  
-                            '</td>' +
-                        '</tr>');
-            return row;
-        }
     });
 </script>
 @endsection

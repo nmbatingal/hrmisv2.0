@@ -40,24 +40,11 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">User Roles</h4>
-                <p class="card-text">Assign </p>
+                <h4 class="card-title">User Roles and Permissions</h4>
+                <p class="card-text">Assign roles and permissions to user</p>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <!-- Column -->
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Account Permissions</h4>
-                <p class="card-text">Add tracking codes to your documents.</p>
-            </div>
-        </div>
-    </div>
-
 </div>
 @endsection
 
