@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	// ----------- SYSTEM ADMIN SETTING ------------- //
 	Route::post('/user/setting/{id}/password', 'Settings\UserSettingsController@updatePassword')->name('user.setting.update.password');
+	Route::get('/user/setting/{id}/log', 'Settings\UserSettingsController@log')->name('user.setting.log');
 	Route::resource('/user/setting', 'Settings\UserSettingsController', [ 'as' => 'user']);
 	Route::resource('/setting', 'Settings\AdminSettingsController', [ 'as' => 'all']);
 	// ----------- END SYSTEM ADMIN SETTING ------------- //
@@ -74,6 +75,9 @@ Route::group(['middleware' => 'auth'], function() {
 	// ----------- END MORALE SURVEY SYSTEM --------------- //
 
 });
+
+Route::get('add-to-log', 'HomeController@myTestAddToLog');
+Route::get('logActivity', 'HomeController@logActivity');
 
 /*
  * SAMPLE ROUTES

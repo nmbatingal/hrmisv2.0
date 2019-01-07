@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-| Update Account Settings
+ | Update Account Settings
 @endsection
 
 @section('styles')

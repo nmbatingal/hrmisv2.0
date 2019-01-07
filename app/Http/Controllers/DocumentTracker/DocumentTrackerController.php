@@ -7,6 +7,7 @@ use App\User;
 use App\Office;
 use App\CodeTable;
 use Carbon\Carbon;
+use App\Helpers\LogActivity;
 use App\Models\DocumentTracker\DocumentTypes;
 use App\Models\DocumentTracker\DocumentTracker;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
@@ -213,6 +214,8 @@ class DocumentTrackerController extends Controller
             
             if ( $logger->save() )
             {
+                LogActivity::addToLog('received an incoming document.'); // log
+
                 $data = [
                     'result'            => true,
                     'tracking_code'     => $document->tracking_code,
@@ -327,6 +330,8 @@ class DocumentTrackerController extends Controller
         $log->recipients     = $recipients;
         $log->notes          = $request->note;
         $log->save();
+
+        LogActivity::addToLog('forwarded an outgoing document.'); // log
         // ----------------- END CREATE NEW LOG --------------- //
 
         $data = [
@@ -393,6 +398,9 @@ class DocumentTrackerController extends Controller
         $document->keywords      = $request->keywords;
 
         if ( $document->save() ) {
+
+            LogActivity::addToLog('created a document with tracking code.'); // log
+
             $result = true;
             // --------------- UPDATE CODE TABLE ------------------- //
             $updateCode           = CodeTable::where('doc_code', $seriesCode)->first();
