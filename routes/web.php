@@ -39,8 +39,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/doctracker/mydocuments/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
 	Route::get('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@incomingDocuments')->name('doctracker.incoming');
-	Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showIncoming')->name('doctracker.incoming.show');
-	Route::post('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@receiveIncomingDocument')->name('doctracker.incoming.receive');
+	// Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showIncoming')->name('doctracker.incoming.show');
+	Route::get('/doctracker/incoming/search', 'DocumentTracker\DocumentTrackerController@receiveIncomingDocument')->name('doctracker.incoming.receive');
+	Route::post('/doctracker/incoming/store', 'DocumentTracker\DocumentTrackerController@storeIncomingDocument')->name('doctracker.incoming.store');
 
 	Route::get('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing');
 	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@searchOutgoing')->name('doctracker.outgoing.search');

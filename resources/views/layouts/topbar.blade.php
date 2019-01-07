@@ -37,10 +37,35 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
                 <!-- ============================================================== -->
-                <!-- Comment -->
+                <!-- Message -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
+                        <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mailbox">
+                        <ul>
+                            <li>
+                                <div class="drop-title">Messages <span class="badge badge-info">0</span></div>
+                            </li>
+                            <li>
+                                <div class="message-center">
+                                </div>
+                            </li>
+                            <li>
+                                <a class="nav-link text-center link" href="javascript:void(0);"> <strong>Check all messages</strong> <i class="fa fa-angle-right"></i> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Message -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Notification -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-bell"></i>
                         <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox">
@@ -59,33 +84,7 @@
                     </div>
                 </li>
                 <!-- ============================================================== -->
-                <!-- End Comment -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Messages -->
-                <!-- ============================================================== -->
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-note"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                    </a>
-                    <div class="dropdown-menu mailbox dropdown-menu-right" aria-labelledby="2">
-                        <ul>
-                            <li>
-                                <div class="drop-title">You have 0 messages</div>
-                            </li>
-                            <li>
-                                <div class="message-center">
-                                    
-                                </div>
-                            </li>
-                            <li>
-                                <a class="nav-link text-center link" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> -->
-                <!-- ============================================================== -->
-                <!-- End Messages -->
+                <!-- End Notification -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- User Profile -->

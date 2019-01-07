@@ -42,20 +42,18 @@
             <div class="card-body">
                 <h3 class="card-title">My Documents</h3>
                 <p class="card-text">List of created documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to track.</p>
-                
+
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        <div class="card bg-cyan text-white">
-                            <div class="card-body">
-                                <h6 class="m-b-0">Total Created</h6>
-                                <h3 class="card-title">DOCUMENTS</h3>
-                                <div class="d-flex no-block align-items-center m-t-20 m-b-0">
-                                    <div class="ml-auto">
-                                        <h1 class="text-white"><i class="icon-docs"></i> <span class="">{{ $myDocuments->count() }}</span></h1>
-                                    </div>
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
+                                <div class="p-10 bg-cyan">
+                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-success"><span class="">{{ $myDocuments->count() }}</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents Created</h6>
                                 </div>
                             </div>
-                            <div id="sparkline8" class="sparkchart"></div>
                         </div>
                     </div>
                 </div>

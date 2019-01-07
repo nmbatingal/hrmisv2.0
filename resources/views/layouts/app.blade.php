@@ -82,7 +82,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2018 DOST13 by ICT DOST-Caraga.
+                © {{ date("Y") }} DOST13 by <a href="http://caraga.dost.gov.ph/" target="_blank">ICT DOST-Caraga</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

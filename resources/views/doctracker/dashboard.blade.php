@@ -36,7 +36,7 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <img class="card-img-top" src="{{ asset('img/document-tracking.jpg') }}" alt="Card image cap">
+                                <img class="card-img-top" src="{{ asset('img/optima.jpg') }}" alt="Card image cap">
                             </div>
                         </div>
                     </div>

@@ -47,17 +47,15 @@
 
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        <div class="card bg-cyan text-white">
-                            <div class="card-body">
-                                <h6 class="m-b-0">Total Documents</h6>
-                                <h3 class="card-title">FORWARDED</h3>
-                                <div class="d-flex no-block align-items-center m-t-20 m-b-0">
-                                    <div class="ml-auto">
-                                        <h1 class="text-white"><i class="icon-docs"></i> <span id="count-outgoing">{{ $outgoingLogs->count() }}</span></h1>
-                                    </div>
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
+                                <div class="p-10 bg-cyan">
+                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $outgoingLogs->count() }}</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents Forwarded</h6>
                                 </div>
                             </div>
-                            <div id="sparkline8" class="sparkchart"></div>
                         </div>
                     </div>
                 </div>
@@ -69,7 +67,7 @@
                         <div class="col-md-12">
                             <div class="form-group m-b-0">
                                 <div class="input-group p-0">
-                                    <input type="text" class="form-control" name="code" placeholder="Enter tracking code to receive" required autofocus>
+                                    <input type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit"><i class="icon-drawar"></i> Open</button>
                                     </div>
