@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+ | Profile Setting
+@endsection
+
 @section('styles')
 @endsection
 
@@ -59,27 +63,6 @@
                     
                 </div>
                 <br/>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <!-- Column -->
-    <div class="col-lg-8 col-xlg-9 col-md-7">
-        <div class="card">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs profile-tab" role="tablist">
-                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Activity Log</a> </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <!--first tab-->
-                <div class="tab-pane active" id="home" role="tabpanel">
-                    <div class="card-body">
-                        <div class="jumbotron">
-                            <p>No available data yet.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
