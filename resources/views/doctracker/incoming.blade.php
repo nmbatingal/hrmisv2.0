@@ -64,7 +64,7 @@
                         <div class="col-md-12">
                             <div class="form-group m-b-0">
                                 <div class="input-group p-0">
-                                    <input type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
+                                    <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit"><i class="ti-import"></i> Receive</button>
                                     </div>
@@ -205,7 +205,8 @@
                             text:  "Tracking code undefined.",
                             type: "error"
                         }).then( function() {
-                           $("#upload-progress .progress-bar").css("width", 0);
+                            $("#upload-progress .progress-bar").css("width", 0);
+                            $("#codeInput").select();
                         });
                     }
                 },
@@ -215,7 +216,8 @@
                         text:  "Could not retrieve the data.",
                         type: "error"
                     }).then( function() {
-                       $("#upload-progress .progress-bar").css("width", 0);
+                        $("#upload-progress .progress-bar").css("width", 0);
+                        $("#codeInput").select();
                     });
                 }
             });
