@@ -14,7 +14,7 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Subject</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" value="{{ $tracker['subject'] }}" readonly>
+                    <textarea class="form-control" rows="3" readonly>{{ $tracker['subject'] }}</textarea>
                     <small class="form-control-feedback">&nbsp;</small> 
                 </div>
             </div>
@@ -61,7 +61,7 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Note</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" name="note" rows="1" required></textarea>
+                    <textarea class="form-control" name="note" rows="3"></textarea>
                     <small class="form-control-feedback">Additional notes on routing the document.</small> 
                 </div>
             </div>
@@ -162,6 +162,7 @@
                 $("#upload-progress .progress-bar").css("width", + 0);
                 // close modal
                 $('#modal-outgoing').modal('toggle');
+                $("#codeInput").select();
             },
             error  : function(xhr, err) {
                 swal({
@@ -169,7 +170,8 @@
                     text:  "Could not retrieve the data.",
                     type: "error"
                 }).then( function() {
-                   $("#upload-progress .progress-bar").css("width", 0);
+                    $("#upload-progress .progress-bar").css("width", 0);
+                    $("#codeInput").select();
                 });
             }
         });

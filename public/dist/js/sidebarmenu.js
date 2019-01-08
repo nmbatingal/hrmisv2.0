@@ -9,19 +9,18 @@ File: js
 // ============================================================== 
 $(function () {
     var url = window.location;
-    var element = $('ul#sidebarnav a').filter(function () {
+    var element = $('ul.mini-nav a').filter(function () {
         return this.href == url;
     }).addClass('active').parent().addClass('active');
     while (true) {
         if (element.is('li')) {
             element = element.parent().addClass('in').parent().addClass('active').children('a').addClass('active');
-            
         }
         else {
             break; 
         }
     }
-    $('#sidebarnav a').on('click', function (e) {
+    $('.mini-nav a').on('click', function (e) {
         
             if (!$(this).hasClass("active")) {
                 // hide any open menus and remove all other classes
@@ -39,7 +38,7 @@ $(function () {
                 $(this).next("ul").removeClass("in");
             }
     })
-    $('#sidebarnav >li >a.has-arrow').on('click', function (e) {
+    $('.mini-nav >li >a.has-arrow').on('click', function (e) {
         e.preventDefault();
     });
 });

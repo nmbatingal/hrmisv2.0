@@ -20,7 +20,7 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Subject</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" value="{{ $tracker['subject'] }}" readonly>
+                    <textarea class="form-control" rows="3" readonly>{{ $tracker['subject'] }}</textarea>
                     <small class="form-control-feedback">&nbsp;</small> 
                 </div>
             </div>
@@ -28,7 +28,7 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Details</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" value="{{ $tracker['details'] }}" readonly>
+                    <textarea class="form-control" rows="6" readonly>{{ $tracker['details'] }}</textarea>
                     <small class="form-control-feedback">&nbsp;</small> 
                 </div>
             </div>
@@ -84,6 +84,8 @@
                 return xhr;
             },
             success: function(data) {
+                
+                $('input[name=code]').val('');
 
                 if ( data.result ) 
                 {
@@ -104,9 +106,10 @@
                         text:  "Document successfully received.",
                         type: "success"
                     }).then( function() {
-                       $("#upload-progress .progress-bar").css("width", 0);
-                       // close modal
+                        $("#upload-progress .progress-bar").css("width", 0);
+                        // close modal
                         $('#modal-incoming').modal('toggle');
+                        $("#codeInput").select();
                     });
                 } else {
                     swal({
@@ -114,7 +117,9 @@
                         text:  "Tracking code undefined.",
                         type: "error"
                     }).then( function() {
-                       $("#upload-progress .progress-bar").css("width", 0);
+                        $("#upload-progress .progress-bar").css("width", 0);
+                        // clear form fields
+                        $("#codeInput").select();
                     });
                 }
             },
@@ -124,7 +129,8 @@
                     text:  "Could not retrieve the data.",
                     type: "error"
                 }).then( function() {
-                   $("#upload-progress .progress-bar").css("width", 0);
+                    $("#upload-progress .progress-bar").css("width", 0);
+                    $("#codeInput").select();
                 });
             }
         });
@@ -144,11 +150,11 @@
                         '</td>' +
                         '<td>' + item.note + '</td>' +
                         '<td>' + 
-                            '<h5 class="font-weight-bold">' + item.action + '</h5>' +
-                            item.date_action +  
+                            item.remarks +  
                         '</td>' +
                         '<td>' + 
-                            item.remarks +  
+                            '<h5 class="font-weight-bold">' + item.action + '</h5>' +
+                            item.date_action +  
                         '</td>' +
                     '</tr>');
         return row;

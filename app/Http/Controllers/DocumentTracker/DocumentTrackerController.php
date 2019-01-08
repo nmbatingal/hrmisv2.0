@@ -74,13 +74,13 @@ class DocumentTrackerController extends Controller
                 if ( !is_null( $value->recipients ) )
                 {
                     foreach ( $value->recipients as $recipient ) {
-                        $li .= "<li>". $recipient['name'] ."</li>";
+                        $li .= "<i class='ti-arrow-right'></i> ". $recipient['name'] ."<br/>";
                     }
                 } else {
-                    $li = "<li>All</li>";
+                    $li = "<i class='ti-arrow-right'></i>All";
                 }
 
-                $recipients = '<ul class="p-l-20 m-b-0">'. $li .'</ul>';
+                $recipients = $li;
 
             } else {
                 $recipients = "<strong>". $value->userEmployee->full_name ."</strong><br>";

@@ -147,7 +147,8 @@
     margin-top: 3px; 
 }
 
-.sidebar-menu li.active > a > .fa-angle-left {
+.sidebar-menu li.active > a > .fa-angle-left,
+.sidebar-menu .sub-menu > li > a.active > .fa-angle-left {
     transform: rotate(-90deg); 
 }
 
@@ -172,6 +173,21 @@
     display: block;
     font-size: 14px;  
 }
+
+.sidebar-menu .sub-menu > li > ul > li{
+    margin-bottom: 8px;
+    margin-top: 8px;
+    list-style: none;
+    &.active > a {
+        color: $themecolor;
+        font-weight: 500;
+         border-left: 3px solid $themecolor;
+        i {
+            color: $themecolor;
+        }
+    }
+}
+
 
 /************This is For button************/
 
@@ -216,4 +232,8 @@
     position: absolute;
     right: 35px;
     padding: 5px 12px 4px;
+}
+
+.collapse.in {
+    display: block;
 }
