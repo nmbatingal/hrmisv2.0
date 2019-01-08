@@ -37,8 +37,8 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Remarks</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" name="remarks" rows="3" required></textarea>
-                    <small class="form-control-feedback">Include remarks on the routed document.</small> 
+                    <textarea class="form-control" name="remarks" rows="3"></textarea>
+                    <small class="form-control-feedback">Include remarks regarding on the routed document.</small> 
                 </div>
             </div>
         </div>
@@ -105,6 +105,8 @@
                         type: "success"
                     }).then( function() {
                        $("#upload-progress .progress-bar").css("width", 0);
+                       // close modal
+                        $('#modal-incoming').modal('toggle');
                     });
                 } else {
                     swal({
