@@ -114,13 +114,13 @@
                                     <div class="row m-b-20">
                                         <div class="col-md-3 col-xs-12">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" id="radioReceive" name="routingType" value="Receive" class="custom-control-input">
+                                                <input type="radio" id="radioReceive" name="routingType" value="Receive" required class="custom-control-input">
                                                 <label class="custom-control-label" for="radioReceive">Receive Document</label>
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-xs-12">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" id="radioRelease" name="routingType" value="Release" class="custom-control-input">
+                                                <input type="radio" id="radioRelease" name="routingType" value="Release" required class="custom-control-input">
                                                 <label class="custom-control-label" for="radioRelease">Release Document</label>
                                             </div>
                                         </div>
