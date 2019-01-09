@@ -101,46 +101,56 @@
                     </div>
                 </div>
 
-                <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" class="form-horizontal m-t-40">
-                    {{ csrf_field() }}
+                <div class="card border-info m-t-30 m-b-0">
+                    <div class="card-header bg-dark">
+                        <h4 class="m-b-0 text-white">Receive/Release Document</h4></div>
+                    <div class="card-body p-b-0" style="border: 1px solid #000000;">
+                        <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+                        <form id="submitCode" class="form-horizontal">
+                            {{ csrf_field() }}
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row m-b-10">
-                                <div class="col-md-3 col-xs-12">
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="radioReceive" name="routingType" value="Receive" class="custom-control-input">
-                                        <label class="custom-control-label" for="radioReceive">Receive Document</label>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row m-b-20">
+                                        <div class="col-md-3 col-xs-12">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="radioReceive" name="routingType" value="Receive" class="custom-control-input">
+                                                <label class="custom-control-label" for="radioReceive">Receive Document</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-12">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="radioRelease" name="routingType" value="Release" class="custom-control-input">
+                                                <label class="custom-control-label" for="radioRelease">Release Document</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="text-warning">* Select from receiving/releasing of document</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3 col-xs-12">
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="radioRelease" name="routingType" value="Release" class="custom-control-input">
-                                        <label class="custom-control-label" for="radioRelease">Release Document</label>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group m-b-0">
-                                <div class="input-group p-0">
-                                    <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-success" style="width: 100px;" type="submit">Go </button>
+                                    <div class="form-group m-b-0">
+                                        <div class="input-group p-0">
+                                            <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" style="width: 100px;" type="submit">Go </button>
+                                            </div>
+                                        </div>
+                                        <div id="upload-progress" class="progress m-t-0">
+                                            <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
+                                        </div>
+                                        <small class="form-control-feedback text-muted">&nbsp;</small> 
                                     </div>
                                 </div>
-                                <div id="upload-progress" class="progress m-t-0">
-                                    <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
-                                </div>
-                                <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                <!--/span-->
+                                <!-- progress bar -->
+                                
                             </div>
-                        </div>
-                        <!--/span-->
-                        <!-- progress bar -->
-                        
+                        </form>
+                        <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                     </div>
-                </form>
-                <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+                </div>
+                
 
                 <!-- modal incoming content -->
                 <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
