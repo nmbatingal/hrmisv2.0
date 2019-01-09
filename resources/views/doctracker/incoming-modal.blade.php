@@ -89,8 +89,8 @@
                 if ( data.result ) 
                 {
                     var sum = 1;
-                    sum += +$('#count-received').text();
-                    $('#count-received').text(sum);
+                    sum += +$('#count-receive').text();
+                    $('#count-receive').text(sum);
 
                     var row = appendTableRowReceived(data);
 

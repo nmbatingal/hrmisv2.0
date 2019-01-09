@@ -161,8 +161,8 @@
 
                 // increment tracker cards
                 var sum = 1;
-                sum += +$('#count-outgoing').text();
-                $('#count-outgoing').text(sum);
+                sum += +$('#count-release').text();
+                $('#count-release').text(sum);
 
                 // clear form fields
                 $('input[name=code]').val('');
@@ -197,6 +197,7 @@
                                 item.date_created + 
                         '</td>' +
                         '<td>' + item.note + '</td>' +
+                        '<td>' + item.remarks + '</td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.action + '</h5>' +
                             item.date_action +  

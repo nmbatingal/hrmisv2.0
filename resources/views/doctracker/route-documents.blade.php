@@ -45,15 +45,16 @@
                 <h3 class="card-title">Route Documents</h3>
                 <p class="card-text">Receive and release routed documents using tracker code.</p>
 
+                <!-- INFO CARDS -->
                 <div class="row">
                     <!-- Document Created -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
+                            <div class="d-flex flex-row" style="border: 1px solid #00c292;">
                                 <div class="p-10 bg-success">
                                     <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $outgoingLogs->count() }}</span></h3>
+                                    <h3 class="m-b-0 text-success"><span id="count-created">{{ $documentsCreated->count() }}</span></h3>
                                     <h6 class="text-muted m-b-0">Documents Created</h6>
                                 </div>
                             </div>
@@ -64,9 +65,9 @@
                         <div class="card">
                             <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
                                 <div class="p-10 bg-cyan">
-                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
+                                    <h3 class="text-white box m-b-0"><i class="ti-import"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $outgoingLogs->count() }}</span></h3>
+                                    <h3 class="m-b-0 text-cyan"><span id="count-receive">{{ $documentsReceived->count() }}</span></h3>
                                     <h6 class="text-muted m-b-0">Documents Received</h6>
                                 </div>
                             </div>
@@ -75,12 +76,25 @@
                     <!-- Document Released -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
+                            <div class="d-flex flex-row" style="border: 1px solid #03a9f3;">
                                 <div class="p-10 bg-info">
-                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
+                                    <h3 class="text-white box m-b-0"><i class="icon-cursor"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $outgoingLogs->count() }}</span></h3>
+                                    <h3 class="m-b-0 text-info"><span id="count-release">{{ $documentsReleased->count() }}</span></h3>
                                     <h6 class="text-muted m-b-0">Documents Released</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Document Released -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #e46a76;">
+                                <div class="p-10 bg-danger">
+                                    <h3 class="text-white box m-b-0"><i class="icon-doc"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-danger"><span id="count-release">-</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents</h6>
                                 </div>
                             </div>
                         </div>
@@ -88,31 +102,42 @@
                 </div>
 
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" class="form-horizontal">
+                <form id="submitCode" class="form-horizontal m-t-40">
                     {{ csrf_field() }}
-                    <!-- progress bar -->
-                    <div id="upload-progress" class="progress m-t-30 m-b-0">
-                        <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group m-b-0">
-                                <div class="input-group p-0">
-                                    <div class="input-group-prepend" style="width: 200px;">
-                                        <select id="routingType" name="routing-type" class="form-control custom-select font-weight-bold">
-                                            <option value="Receive">Receive</option>
-                                            <option value="Forward">Release</option>
-                                        </select>
-                                    </div>
-                                    <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-success" type="submit">Go </button>
+                            <div class="row m-b-10">
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="radioReceive" name="routingType" value="Receive" class="custom-control-input">
+                                        <label class="custom-control-label" for="radioReceive">Receive Document</label>
                                     </div>
                                 </div>
-                                <small class="form-control-feedback text-muted">Select dropdown receive/release to process document.</small> 
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="radioRelease" name="routingType" value="Release" class="custom-control-input">
+                                        <label class="custom-control-label" for="radioRelease">Release Document</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-b-0">
+                                <div class="input-group p-0">
+                                    <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" style="width: 100px;" type="submit">Go </button>
+                                    </div>
+                                </div>
+                                <div id="upload-progress" class="progress m-t-0">
+                                    <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
+                                </div>
+                                <small class="form-control-feedback text-muted">&nbsp;</small> 
                             </div>
                         </div>
                         <!--/span-->
+                        <!-- progress bar -->
+                        
                     </div>
                 </form>
                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
@@ -156,48 +181,52 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive-md">
-                    <table id="tableRoutedDocument" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
+                    <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped" data-paging="true" data-paging-size="5">
                         <colgroup>
-                            <col width="20%">
+                            <col width="15%">
                             <col width="30%">
-                            <col width="30%">
+                            <col width="15%">
+                            <col width="15%">
                             <col width="20%">
+                            <col width="5%">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <th>Notes</th>
+                                <th>Remarks</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse( $outgoingLogs as $outgoing )
-                                <tr id="row-{{ $outgoing->id }}">
-                                    <td><a href="javascript:void(0)" target="_blank">{{ $outgoing->tracking_code }}</a></td>
+                            @forelse( $documentsLog as $log )
+                                <tr id="row-{{ $log->id }}">
+                                    <td><a href="javascript:void(0)" target="_blank">{{ $log->tracking_code }}</a></td>
                                     <td>
-                                        <h5 class="font-weight-bold">{{ $outgoing->documentCode->subject }}</h5>
-                                            <h5>{{ $outgoing->userEmployee->full_name }}</h5>
-                                            ({{ $outgoing->documentCode->other_document }})<br>
-                                            {{ $outgoing->documentCode->tracking_date }}
+                                        <h5 class="font-weight-bold">{{ $log->documentCode->subject }}</h5>
+                                            <h5>{{ $log->userEmployee->full_name }}</h5>
+                                            ({{ $log->documentCode->other_document }})<br>
+                                            {{ $log->documentCode->tracking_date }}
                                     </td>
-                                    <td>{{ $outgoing->notes }}</td>
+                                    <td>{{ $log->notes }}</td>
+                                    <td>{{ $log->remarks }}</td>
                                     <td>
-                                        <h5 class="font-weight-bold">{{ $outgoing->action }}</h5>
+                                        <h5 class="font-weight-bold">{{ $log->action }}</h5>
                                         <ul class="p-l-20 m-b-0">
-                                            @if ( !is_null( $outgoing->recipients ) )
-                                                @foreach( $outgoing->recipients as $recipient)
+                                            @if ( !is_null( $log->recipients ) )
+                                                @foreach( $log->recipients as $recipient)
                                                     <li>{{ $recipient['name'] }}</li>
                                                 @endforeach
                                             @else
                                                 <li>All</li>
                                             @endif
                                         </ul>
-                                        {{ $outgoing->date_action }}
+                                        {{ $log->date_action }}
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $outgoing->id }}" title="Cancel"><i class="ti-close"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td>
                                 </tr>
                             @empty
@@ -242,12 +271,12 @@
 
         $('form#submitCode').on('submit', function(e) {
             e.preventDefault();
-            var routing = $('#routingType').val(),
+            var routing = $('input[name=routingType]:checked').val(),
                 form    = $(this);
 
             if ( routing == "Receive" ) {
                 var action  = "{{ route('doctracker.incoming.search') }}";
-                alert(action);
+
                 $.ajax({
                     method : 'GET',
                     url    : action,
@@ -299,10 +328,10 @@
                     }
                 });
 
-            } else if ( routing == "Forward" ) {
+            } else if ( routing == "Release" ) {
 
                 var action  = "{{ route('doctracker.outgoing.search') }}";
-                alert(action);
+                
                 $.ajax({
                     method : 'GET',
                     url    : action,

@@ -131,9 +131,16 @@ class DocumentTrackerController extends Controller
      */
     public function myDocuments()
     {
+        $documentsCreated    = DocumentTracker::where('user_id', Auth::user()->id)->get();
+        $documentsReceived   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Receive")
+                                                    ->latest()->get();
+        $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Forward")
+                                                    ->latest()->get();
         $myDocuments = DocumentTracker::myDocuments()->get();
         
-        return view('doctracker.my-documents', compact('myDocuments'));
+        return view('doctracker.my-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'myDocuments'));
     }
 
     /**
@@ -161,10 +168,16 @@ class DocumentTrackerController extends Controller
      */
     public function routingDocuments()
     {
-        $incomingDocuments = [];
-        $outgoingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id)->where('action', 'Forward')->latest()->get();
-        
-        return view('doctracker.route-documents', compact('incomingDocuments', 'outgoingLogs'));
+        $documentsCreated    = DocumentTracker::where('user_id', Auth::user()->id)->get();
+        $documentsReceived   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Receive")
+                                                    ->latest()->get();
+        $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Forward")
+                                                    ->latest()->get();
+        $documentsLog = DocumentTrackingLogs::where('user_id', Auth::user()->id)->latest()->get();
+
+        return view('doctracker.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
     }
 
     /**
@@ -207,13 +220,13 @@ class DocumentTrackerController extends Controller
                                         ->first();
         if ( $document )
         {
-            $logger                = new DocumentTrackingLogs;
-            $logger->code          = $document->code;
-            $logger->tracking_code = $document->tracking_code;
-            $logger->user_id       = Auth::user()->id;
-            $logger->action        = "Receive";
-            $logger->notes         = $old_log->notes;
-            $logger->remarks       = $request->remarks;
+            $log                = new DocumentTrackingLogs;
+            $log->code          = $document->code;
+            $log->tracking_code = $document->tracking_code;
+            $log->user_id       = Auth::user()->id;
+            $log->action        = "Receive";
+            $log->notes         = $old_log->notes;
+            $log->remarks       = $request->remarks;
             
             if ( $logger->save() )
             {
@@ -226,10 +239,10 @@ class DocumentTrackerController extends Controller
                     'document_type'     => $document->other_document,
                     'created_by'        => $document->userEmployee->full_name,
                     'date_created'      => $document->tracking_date,
-                    'note'              => $logger->notes ?: '',
-                    'remarks'           => $logger->remarks ?: '',
-                    'action'            => $logger->action,
-                    'date_action'       => $logger->date_action,
+                    'note'              => $log->notes ?: '',
+                    'remarks'           => $log->remarks ?: '',
+                    'action'            => $log->action,
+                    'date_action'       => $log->date_action,
                 ];
             }
         }
@@ -245,7 +258,6 @@ class DocumentTrackerController extends Controller
         $offices  = Office::all();
         $users    = User::employee()->notSelf()->get();
         $userSelf = User::employee()->get();
-        //$myDocument = DocumentTracker::where('tracking_code', $code)->first();
         
         $myDocument = DocumentTracker::with([
                             'trackLogs' => function ($query) {
