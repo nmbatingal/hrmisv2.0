@@ -133,7 +133,8 @@
                                         <div class="input-group p-0">
                                             <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
                                             <div class="input-group-append">
-                                                <button class="btn btn-success" style="width: 100px;" type="submit">Go </button>
+                                                <button class="btn btn-success" style="width: 100px;" type="submit">
+                                                    <i class="icon-cursor"></i>&nbsp;Go</button>
                                             </div>
                                         </div>
                                         <div id="upload-progress" class="progress m-t-0">
