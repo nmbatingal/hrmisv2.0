@@ -50,7 +50,14 @@
     <div class="col-lg-12">
         <div class="card ">
             <div class="card-body">
-                <div class="alert alert-info"><i class="mdi mdi-information p-r-10"></i> Please fill out the fields below completely before submitting the form. </div>
+                <div class="alert alert-info">
+                    <i class="mdi mdi-information p-r-10"></i> Please fill out the fields below completely before submitting the form. 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                </div>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) must be filled-out.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                </div>
 
                 <form id="formCreate" action="{{ route('doctracker.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
@@ -61,14 +68,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Subject</label>
+                                    <label class="control-label text-right col-md-2">Subject <span class="text-primary">*</span></label>
                                     <div class="col-md-10">
                                         <input type="text" class="form-control" name="subject" placeholder="enter subject" required autofocus>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Document Type</label>
+                                    <label class="control-label text-right col-md-2">Document Type <span class="text-primary">*</span></label>
                                     <div class="col-md-4">
                                         <select class="select2 form-control custom-select" name="docType" required>
                                             <option value="">-- Select document type --</option>
@@ -86,7 +93,7 @@
 
                                 </div>
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Document Date</label>
+                                    <label class="control-label text-right col-md-2">Document Date <span class="text-primary">*</span></label>
                                     <div class="col-md-4">
                                         <input type="text" class="form-control mdate" name="documentDate" placeholder="Select date document created" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
@@ -94,16 +101,16 @@
 
                                 </div>
                                 <div class="form-group row m-b-20">
-                                    <label class="control-label text-right col-md-2">Keywords</label>
+                                    <label class="control-label text-right col-md-2">Keywords <span class="text-primary">*</span></label>
                                     <div class="col-md-10">
                                         <input id="keywords" type="text" class="" data-role="tagsinput" name="keywords" placeholder="add keywords" required>
                                         <br><small class="form-control-feedback">Separate keywords using enter or comma key.</small> 
                                     </div>
                                 </div>
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Document Details</label>
+                                    <label class="control-label text-right col-md-2">Document Details <span class="text-primary">*</span></label>
                                     <div class="col-md-10">
-                                        <textarea class="form-control" name="details" rows="1"></textarea>
+                                        <textarea class="form-control" name="details" rows="3" required></textarea>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
@@ -168,7 +175,7 @@
                                 </div>
 
                                 <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Route Mode</label>
+                                    <label class="control-label text-right col-md-2">Route Mode <span class="text-primary">*</span></label>
                                     <div class="col-md-10">
                                         <select class="form-control custom-select" name="routeMode">
                                             <option value="all">All Employee</option>
@@ -244,7 +251,7 @@
             } else {
 
                 $('div#sendRoute').css('display', 'block');
-                $.post( "{{ route('doctracker.recipientlist') }}", { office_id: $id, _token:token})
+                $.post( "{{ route('doctracker.recipientslist') }}", { office_id: $id, _token:token})
                     .done( function( data ) {
                         $("select#recipient").attr('disabled', false);
                         $("select#recipient").html('');

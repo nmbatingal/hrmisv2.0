@@ -45,7 +45,7 @@
                             <div class="card-body">
                                 <h2 class="card-title">OPTIMA</h2>
                                 <p class="card-text">Optical Tracking Information Management System</p>
-                                <a href="#" class="btn btn-info"><i class="ti-help-alt"></i> About the app</a>
+                                <a href="{{ route('doctracker.about') }}" class="btn btn-info"><i class="ti-help-alt"></i> About the app</a>
                             </div>
                         </div>    
                     </div>

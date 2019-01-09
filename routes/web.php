@@ -32,24 +32,22 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/doctracker/about', 'DocumentTracker\DocumentTrackerController@about')->name('doctracker.about');
 	Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
 	Route::get('/doctracker/logs', 'DocumentTracker\DocumentTrackerController@logs')->name('doctracker.logs');
-	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@search')->name('doctracker.search');
+	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@searchJS')->name('doctracker.search');
+	Route::get('/doctracker/routing', 'DocumentTracker\DocumentTrackerController@routingDocuments')->name('doctracker.routing');
 
 	Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.create.tracker');
-	Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showDocument')->name('doctracker.showDocument');
+	Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('doctracker.showDocument');
 	Route::get('/doctracker/mydocuments/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
-	Route::get('/doctracker/incoming', 'DocumentTracker\DocumentTrackerController@incomingDocuments')->name('doctracker.incoming');
-	// Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showIncoming')->name('doctracker.incoming.show');
-	Route::get('/doctracker/incoming/search', 'DocumentTracker\DocumentTrackerController@receiveIncomingDocument')->name('doctracker.incoming.receive');
+	// Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showRoutedDocument')->name('doctracker.show.routed');
+	Route::get('/doctracker/incoming/search', 'DocumentTracker\DocumentTrackerController@searchIncomingDocument')->name('doctracker.incoming.search');
 	Route::post('/doctracker/incoming/store', 'DocumentTracker\DocumentTrackerController@storeIncomingDocument')->name('doctracker.incoming.store');
 
-	Route::get('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@outgoingDocuments')->name('doctracker.outgoing');
-	Route::post('/doctracker/outgoing', 'DocumentTracker\DocumentTrackerController@searchOutgoing')->name('doctracker.outgoing.search');
-	Route::post('/doctracker/outgoing/store', 'DocumentTracker\DocumentTrackerController@storeOutgoing')->name('doctracker.outgoing.store');
+	Route::get('/doctracker/outgoing/search', 'DocumentTracker\DocumentTrackerController@searchOutgoingDocument')->name('doctracker.outgoing.search');
+	Route::post('/doctracker/outgoing/store', 'DocumentTracker\DocumentTrackerController@storeOutgoingDocument')->name('doctracker.outgoing.store');
 
-
-	Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@recipientList')->name('doctracker.recipientlist');
+	Route::post('/doctracker/create/recipients', 'DocumentTracker\DocumentTrackerController@recipientsList')->name('doctracker.recipientsList');
 	Route::resource('/doctracker/trackinglog', 'DocumentTracker\DocumentTrackingLogsController', [ 'as' => 'doctracker']);
 	Route::resource('/doctracker', 'DocumentTracker\DocumentTrackerController');
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //

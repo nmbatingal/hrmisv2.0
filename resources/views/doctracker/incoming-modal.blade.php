@@ -2,7 +2,6 @@
     @csrf
     <div class="row">
         <div class="col-md-12">
-            <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Tracking Code</label>
                 <div class="col-md-3">
@@ -28,7 +27,7 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Details</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" rows="6" readonly>{{ $tracker['details'] }}</textarea>
+                    <textarea class="form-control" rows="3" readonly>{{ $tracker['details'] }}</textarea>
                     <small class="form-control-feedback">&nbsp;</small> 
                 </div>
             </div>
@@ -96,9 +95,9 @@
                     var row = appendTableRowReceived(data);
 
                     $('tr.footable-empty').remove();
-                    $('table#document-tracker-received tbody').prepend(row);
+                    $('table#tableRoutedDocument tbody').prepend(row);
 
-                    $('#document-tracker-received').trigger('footable_initialize');
+                    $('#tableRoutedDocument').trigger('footable_initialize');
                     form.trigger("reset");
 
                     swal({

@@ -59,7 +59,7 @@
                 </div>
 
                 <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" action="{{ route('doctracker.incoming.receive') }}" class="form-horizontal" method="GET">
+                <form id="submitCode" action="{{ route('doctracker.incoming.search') }}" class="form-horizontal" method="GET">
                     <div class="row m-t-40">
                         <div class="col-md-12">
                             <div class="form-group m-b-0">
