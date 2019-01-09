@@ -3,14 +3,20 @@
     <input type="hidden" name="tracker_id" value="{{ $tracker['id'] }}">
     <div class="row">
         <div class="col-md-12">
-            <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Tracking Code</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" value="{{ $tracker['tracking_code'] }}" readonly>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="code" value="{{ $tracker['tracking_code'] }}" readonly>
+                    <small class="form-control-feedback">&nbsp;</small> 
+                </div>
+
+                <label class="control-label text-right col-md-3">Type</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" value="{{ $tracker['other_document'] }}" readonly>
                     <small class="form-control-feedback">&nbsp;</small> 
                 </div>
             </div>
+
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Subject</label>
                 <div class="col-md-10">
@@ -18,10 +24,11 @@
                     <small class="form-control-feedback">&nbsp;</small> 
                 </div>
             </div>
+
             <div class="form-group row m-b-0">
-                <label class="control-label text-right col-md-2">Type</label>
+                <label class="control-label text-right col-md-2">Details</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" value="{{ $tracker['other_document'] }}" readonly>
+                    <textarea class="form-control" rows="3" readonly>{{ $tracker['details'] }}</textarea>
                     <small class="form-control-feedback">&nbsp;</small> 
                 </div>
             </div>
@@ -123,7 +130,7 @@
         } else {
 
             $('div#sendRoute').css('display', 'block');
-            $.post( "{{ route('doctracker.recipientlist') }}", { office_id: $id, _token:token})
+            $.post( "{{ route('doctracker.recipientsList') }}", { office_id: $id, _token:token})
                 .done( function( data ) {
                     $("select#recipient").attr('disabled', false);
                     $("select#recipient").html('');
@@ -146,16 +153,16 @@
                 var row = prependTableRowReceived(data);
 
                 $('tr.footable-empty').remove();
-                $('table#documentTableOutgoing tbody').prepend(row);
+                $('table#tableRoutedDocument tbody').prepend(row);
 
-                $('#documentTableOutgoing').trigger('footable_initialize');
+                $('#tableRoutedDocument').trigger('footable_initialize');
                 form.trigger("reset");
                 // ----------------------------------------------------------- //
 
                 // increment tracker cards
                 var sum = 1;
-                sum += +$('#count-outgoing').text();
-                $('#count-outgoing').text(sum);
+                sum += +$('#count-release').text();
+                $('#count-release').text(sum);
 
                 // clear form fields
                 $('input[name=code]').val('');
@@ -190,6 +197,7 @@
                                 item.date_created + 
                         '</td>' +
                         '<td>' + item.note + '</td>' +
+                        '<td>' + item.remarks + '</td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.action + '</h5>' +
                             item.date_action +  

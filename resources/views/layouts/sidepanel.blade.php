@@ -30,8 +30,7 @@
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
-                    <li><a href="{{ route('doctracker.incoming') }}">Incoming Documents</a></li>
-                    <li><a href="{{ route('doctracker.outgoing') }}">Outgoing Documents</a></li>
+                    <li><a href="{{ route('doctracker.routing') }}">Route Documents</a></li>
                     <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
                     <li><a href="{{ route('doctracker.about') }}">About</a></li>
                 </ul>

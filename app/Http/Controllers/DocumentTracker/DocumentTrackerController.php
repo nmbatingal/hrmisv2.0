@@ -29,7 +29,7 @@ class DocumentTrackerController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display the about page of the OPTIMA system.
      *
      * @return \Illuminate\Http\Response
      */
@@ -55,7 +55,7 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function searchJS(Request $request)
     {
         $logDetail = array();
         $log_id    = $request->code;
@@ -116,10 +116,11 @@ class DocumentTrackerController extends Controller
         if($request->ajax())
         {
             $view = view('doctracker.logs', compact('documents'));
-            return response()->json(['tracker' => $tracker, 'results' => $logDetail, 'result' => count($documents), 'code' => $code, 'view' => $view]);
-
-        } else {
-            return view('doctracker.logs', compact('documents'));
+            return response()->json([
+                'tracker' => $tracker, 
+                'results' => $logDetail, 
+                'result' => count($documents), 
+                'code' => $code, 'view' => $view ]);
         }
     }
 
@@ -130,9 +131,16 @@ class DocumentTrackerController extends Controller
      */
     public function myDocuments()
     {
+        $documentsCreated    = DocumentTracker::where('user_id', Auth::user()->id)->get();
+        $documentsReceived   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Receive")
+                                                    ->latest()->get();
+        $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Forward")
+                                                    ->latest()->get();
         $myDocuments = DocumentTracker::myDocuments()->get();
         
-        return view('doctracker.my-documents', compact('myDocuments'));
+        return view('doctracker.my-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'myDocuments'));
     }
 
     /**
@@ -140,7 +148,7 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showDocument($code = null)
+    public function showMyDocument($code = null)
     {
         $myDocument = DocumentTracker::with([
                             'trackLogs' => function ($query) {
@@ -154,14 +162,22 @@ class DocumentTrackerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the list of all routed documents.
      *
      * @return \Illuminate\Http\Response
      */
-    public function incomingDocuments()
+    public function routingDocuments()
     {
-        $incomingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id)->where('action', 'Receive')->latest()->get();
-        return view('doctracker.incoming', compact('incomingLogs'));
+        $documentsCreated    = DocumentTracker::where('user_id', Auth::user()->id)->get();
+        $documentsReceived   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Receive")
+                                                    ->latest()->get();
+        $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
+                                                    ->where('action', "Forward")
+                                                    ->latest()->get();
+        $documentsLog = DocumentTrackingLogs::where('user_id', Auth::user()->id)->latest()->get();
+
+        return view('doctracker.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
     }
 
     /**
@@ -169,7 +185,7 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function receiveIncomingDocument(Request $request)
+    public function searchIncomingDocument(Request $request)
     {   
         $code     = $request->code;
         $tracker  = DocumentTracker::where('code', $code)
@@ -204,13 +220,13 @@ class DocumentTrackerController extends Controller
                                         ->first();
         if ( $document )
         {
-            $logger                = new DocumentTrackingLogs;
-            $logger->code          = $document->code;
-            $logger->tracking_code = $document->tracking_code;
-            $logger->user_id       = Auth::user()->id;
-            $logger->action        = "Receive";
-            $logger->notes         = $old_log->notes;
-            $logger->remarks       = $request->remarks;
+            $log                = new DocumentTrackingLogs;
+            $log->code          = $document->code;
+            $log->tracking_code = $document->tracking_code;
+            $log->user_id       = Auth::user()->id;
+            $log->action        = "Receive";
+            $log->notes         = $old_log->notes;
+            $log->remarks       = $request->remarks;
             
             if ( $logger->save() )
             {
@@ -223,10 +239,10 @@ class DocumentTrackerController extends Controller
                     'document_type'     => $document->other_document,
                     'created_by'        => $document->userEmployee->full_name,
                     'date_created'      => $document->tracking_date,
-                    'note'              => $logger->notes ?: '',
-                    'remarks'           => $logger->remarks ?: '',
-                    'action'            => $logger->action,
-                    'date_action'       => $logger->date_action,
+                    'note'              => $log->notes ?: '',
+                    'remarks'           => $log->remarks ?: '',
+                    'action'            => $log->action,
+                    'date_action'       => $log->date_action,
                 ];
             }
         }
@@ -237,12 +253,11 @@ class DocumentTrackerController extends Controller
         }
     }
 
-    public function showIncoming($code = null)
+    public function showRoutedDocument($code = null)
     {
         $offices  = Office::all();
         $users    = User::employee()->notSelf()->get();
         $userSelf = User::employee()->get();
-        //$myDocument = DocumentTracker::where('tracking_code', $code)->first();
         
         $myDocument = DocumentTracker::with([
                             'trackLogs' => function ($query) {
@@ -260,20 +275,7 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function outgoingDocuments()
-    {
-        $incomingDocuments = [];
-        $outgoingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id)->where('action', 'Forward')->latest()->get();
-        
-        return view('doctracker.outgoing', compact('incomingDocuments', 'outgoingLogs'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function searchOutgoing(Request $request)
+    public function searchOutgoingDocument(Request $request)
     {
         $code    = $request->code;
         $tracker = DocumentTracker::where('code', $code)
@@ -289,7 +291,7 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function storeOutgoing(Request $request)
+    public function storeOutgoingDocument(Request $request)
     {
         $tracker = DocumentTracker::find($request->tracker_id);
         $mode = $request->routeMode;
@@ -529,7 +531,7 @@ class DocumentTrackerController extends Controller
     }
 
     /*** JS ***/
-    public function recipientList(Request $request)
+    public function recipientsList(Request $request)
     {   
         $id = $request->office_id;
         $data = null;

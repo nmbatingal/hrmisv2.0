@@ -43,15 +43,43 @@
                 <h3 class="card-title">My Documents</h3>
                 <p class="card-text">List of created documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to track.</p>
 
+                <!-- INFO CARDS -->
                 <div class="row">
+                    <!-- Document Created -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #00c292;">
+                                <div class="p-10 bg-success">
+                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $documentsCreated->count() }}</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents Created</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Document Received -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
                                 <div class="p-10 bg-cyan">
-                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
+                                    <h3 class="text-white box m-b-0"><i class="ti-import"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span class="">{{ $myDocuments->count() }}</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents Created</h6>
+                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $documentsReceived->count() }}</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents Received</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Document Released -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #03a9f3;">
+                                <div class="p-10 bg-info">
+                                    <h3 class="text-white box m-b-0"><i class="icon-cursor"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $documentsReleased->count() }}</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents Released</h6>
                                 </div>
                             </div>
                         </div>
