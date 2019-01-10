@@ -228,7 +228,7 @@ class DocumentTrackerController extends Controller
             $log->notes         = $old_log->notes;
             $log->remarks       = $request->remarks;
             
-            if ( $logger->save() )
+            if ( $log->save() )
             {
                 LogActivity::addToLog('received an incoming document.'); // log
 
