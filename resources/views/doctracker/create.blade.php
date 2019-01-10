@@ -55,7 +55,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
                 </div>
                 <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) must be filled-out.
+                    <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) are required.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
                 </div>
 
