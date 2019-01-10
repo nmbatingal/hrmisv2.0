@@ -4,32 +4,29 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group row m-b-0">
-                <label class="control-label text-right col-md-2">Tracking Code</label>
+                <label class="control-label text-right col-md-2">Tracking Code: </label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" name="code" value="{{ $tracker['tracking_code'] }}" readonly>
-                    <small class="form-control-feedback">&nbsp;</small> 
+                    <input type="hidden" class="form-control" name="code" value="{{ $tracker['tracking_code'] }}" readonly>
+                    <p>{{ $tracker['tracking_code'] }}</p>
                 </div>
 
-                <label class="control-label text-right col-md-3">Type</label>
+                <label class="control-label text-right col-md-3">Type: </label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" value="{{ $tracker['other_document'] }}" readonly>
-                    <small class="form-control-feedback">&nbsp;</small> 
+                    <p>{{ $tracker['other_document'] }}"</p>
                 </div>
             </div>
 
             <div class="form-group row m-b-0">
-                <label class="control-label text-right col-md-2">Subject</label>
+                <label class="control-label text-right col-md-2">Subject: </label>
                 <div class="col-md-10">
-                    <textarea class="form-control" rows="3" readonly>{{ $tracker['subject'] }}</textarea>
-                    <small class="form-control-feedback">&nbsp;</small> 
+                    <p>{{ $tracker['subject'] }}</p>
                 </div>
             </div>
 
             <div class="form-group row m-b-0">
-                <label class="control-label text-right col-md-2">Details</label>
+                <label class="control-label text-right col-md-2">Details: </label>
                 <div class="col-md-10">
-                    <textarea class="form-control" rows="3" readonly>{{ $tracker['details'] }}</textarea>
-                    <small class="form-control-feedback">&nbsp;</small> 
+                    <p>{{ $tracker['details'] }}</p>
                 </div>
             </div>
 
@@ -74,8 +71,7 @@
             </div>
         </div>
     </div>
-
-    <hr>
+    
     <div class="form-actions">
         <div class="row">
             <div class="col-md-6">
@@ -84,7 +80,7 @@
             <div class="col-md-6">
                 <div class="float-right">
                     <button type="submit" class="btn btn-md btn-success">Submit</button>
-                    <button type="button" class="btn btn-md btn-inverse" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-md btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

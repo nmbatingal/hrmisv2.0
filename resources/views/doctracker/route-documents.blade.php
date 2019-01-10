@@ -249,7 +249,6 @@
                                         {{ $log->date_action }}
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Edit"><i class="ti-pencil"></i></button>
                                         <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td>
                                 </tr>
