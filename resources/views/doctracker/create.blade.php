@@ -251,7 +251,7 @@
             } else {
 
                 $('div#sendRoute').css('display', 'block');
-                $.post( "{{ route('doctracker.recipientslist') }}", { office_id: $id, _token:token})
+                $.post( "{{ route('doctracker.recipientsList') }}", { office_id: $id, _token:token})
                     .done( function( data ) {
                         $("select#recipient").attr('disabled', false);
                         $("select#recipient").html('');
