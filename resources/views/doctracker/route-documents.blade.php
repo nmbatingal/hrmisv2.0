@@ -5,7 +5,7 @@
 @endsection
 
 @section('styles')
-<link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
@@ -125,7 +125,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <span class="text-warning">* Select from receiving/releasing of document</span>
+                                            <span class="text-danger">* Select from receiving/releasing of document</span>
                                         </div>
                                     </div>
 
@@ -151,7 +151,6 @@
                         <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                     </div>
                 </div>
-                
 
                 <!-- modal incoming content -->
                 <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
@@ -188,11 +187,24 @@
                 <!-- /.modal -->
             </div>
         </div>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive-md">
-                    <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped" data-paging="true" data-paging-size="5">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-horizontal">
+                            <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive m-t-20">
+                    <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped">
                         <colgroup>
                             <col width="15%">
                             <col width="30%">
@@ -211,7 +223,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="table-sm">
                             @forelse( $documentsLog as $log )
                                 <tr id="row-{{ $log->id }}">
                                     <td><a href="javascript:void(0)" target="_blank">{{ $log->tracking_code }}</a></td>
@@ -237,6 +249,7 @@
                                         {{ $log->date_action }}
                                     </td>
                                     <td class="text-center">
+                                        <button type="button" class="btn btn-info btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Edit"><i class="ti-pencil"></i></button>
                                         <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td>
                                 </tr>
@@ -245,8 +258,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                <a href="{{ route('doctracker.logs') }}" class="btn btn-outline-danger"> View tracking logs >>> </a>
             </div>
         </div>
     </div>
@@ -258,23 +269,29 @@
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
-<script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
+<!-- This is data table -->
+<script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
 <script>
     $(document).ready(function() { 
 
+        // DataTable for Tracker
+        var trackerTable = $('#tableRoutedDocument').DataTable({
+            columnDefs: [{ 
+                orderable: false, 
+                targets: [2,3,4,5] 
+            }],
+            order: [
+                [0, 'desc']
+            ],
+            dom: '<"top">rt<"bottom"l<"float-right"i>p><"clear">'
+        });
+
+        // Custom Input Search for Table
+        $('#searchTracker').keyup(function(){
+            trackerTable.search($(this).val()).draw() ;
+        })
+
         $(".select2").select2();
-
-        $('[data-page-size]').on('click', function(e){
-            e.preventDefault();
-            var newSize = $(this).data('pageSize');
-            FooTable.get('#documentTableOutgoing').pageSize(newSize);
-        });
-
-        $('#documentTableOutgoing').footable({
-            filtering: {
-                enabled: false
-            }
-        });
 
         $('#modal-outgoing').on('hidden.bs.modal', function () {
             $("#upload-progress .progress-bar").css("width", 0);
