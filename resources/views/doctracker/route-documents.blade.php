@@ -10,6 +10,17 @@
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
+@section('navbutton')
+<!-- Help -->
+<!-- ============================================================== -->
+<li class="nav-item"> 
+    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+</li>
+<!-- ============================================================== -->
+<!-- Help -->
+<!-- ============================================================== -->
+@endsection
+
 @section('content')
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
@@ -27,7 +38,6 @@
     </div>
     <div class="col-md-6 text-right">
         <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
-        <a href="{{ route('doctracker.about') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="mdi mdi-help"></i></a>
     </div>
 </div>
 <!-- ============================================================== -->

@@ -4,6 +4,17 @@
 -OPTIMA | Logs
 @endsection
 
+@section('navbutton')
+<!-- Help -->
+<!-- ============================================================== -->
+<li class="nav-item"> 
+    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+</li>
+<!-- ============================================================== -->
+<!-- Help -->
+<!-- ============================================================== -->
+@endsection
+
 @section('styles')
 <link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
@@ -26,7 +37,6 @@
     </div>
     <div class="col-md-6 text-right">
         <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
-        <a href="{{ route('doctracker.about') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="mdi mdi-help"></i></a>
     </div>
 </div>
 <!-- ============================================================== -->

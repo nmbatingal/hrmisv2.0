@@ -7,6 +7,17 @@
 @section('styles')
 @endsection
 
+@section('navbutton')
+<!-- Help -->
+<!-- ============================================================== -->
+<li class="nav-item"> 
+    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+</li>
+<!-- ============================================================== -->
+<!-- Help -->
+<!-- ============================================================== -->
+@endsection
+
 @section('content')
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->

@@ -25,10 +25,10 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav mr-auto">
                 <li class="d-none d-md-block d-lg-block">
-                    <a href="javascript:void(0)" class="p-l-20">
+                    <a href="{{ route('home') }}" class="p-l-20">
                         <!--This is logo text-->
                         <!-- <img src="{{ asset('assets/images/logo-light-text.png') }}" alt="home" class="light-logo" alt="home" /> -->
-                        <h3 class="text-white p-l-20 m-0">DOST13</h3>
+                        <h3 class="text-white p-l-20 m-0">DOST Caraga</h3>
                     </a>
                 </li>
             </ul>
@@ -40,7 +40,7 @@
                 <!-- Message -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Messages"> <i class="ti-email"></i>
                         <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox">
@@ -65,7 +65,7 @@
                 <!-- Notification -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-bell"></i>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications"> <i class="ti-bell"></i>
                         <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox">
@@ -86,6 +86,8 @@
                 <!-- ============================================================== -->
                 <!-- End Notification -->
                 <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                @yield('navbutton')
                 <!-- ============================================================== -->
                 <!-- User Profile -->
                 <!-- ============================================================== -->
@@ -116,7 +118,15 @@
                 <!-- ============================================================== -->
                 <!-- End User Profile -->
                 <!-- ============================================================== -->
-                <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)"><i class="ti-arrow-right ti-arrow-left"></i></a></li>
+                <!-- ============================================================== -->
+                <!-- Chat Bubble -->
+                <!-- ============================================================== -->
+                <li class="nav-item right-side-toggle"> 
+                    <a class="nav-link  waves-effect waves-light" href="javascript:void(0)" title="More options"><i class="ti-arrow-right ti-arrow-left"></i></a>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Chat Bubble -->
+                <!-- ============================================================== -->
             </ul>
         </div>
     </nav>

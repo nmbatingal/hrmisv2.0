@@ -6,7 +6,7 @@
             <a href="{{ route('home') }}"><i class="ti-home"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
-                <h3 class="menu-title">Home</h3>
+                <h3 class="menu-title">OPTIMA</h3>
                 <!-- <div class="searchable-menu">
                     <form role="search" class="menu-search">
                         <input type="text" placeholder="Search..." class="form-control">
@@ -26,7 +26,7 @@
             <a href="javascript:void(0);"><i class="mdi mdi-qrcode-scan"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
-                <h3 class="menu-title">OPTIMA System</h3>
+                <h3 class="menu-title">OPTIMA</h3>
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
@@ -90,4 +90,7 @@
         </li>
         <!-- /.Home -->
     </ul>
+    <div>
+        aaaasdasdasda
+    </div>
 </div>
