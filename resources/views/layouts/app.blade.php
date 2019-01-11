@@ -19,8 +19,23 @@
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/css/pages/progressbar-page.css') }}" rel="stylesheet">
     @yield('styles')
+    <style>
+        .topbar .top-navbar .navbar-header {
+            background: rgba(0, 0, 0, 0);
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            color: #212529;
+            left: 0px;
+            padding: 17px 15px;
+            right: 0;
+            border-top: none;
+            background: none;
+        }
+    </style>
 </head>
-<body class="fixed-layout skin-megna-dark">
+<body class="fixed-layout skin-default">
     <div id="app">
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
@@ -82,7 +97,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © {{ date("Y") }} DOST13 by <a href="http://caraga.dost.gov.ph/" target="_blank">ICT DOST-Caraga</a>.
+                © {{ date("Y") }} DOST Caraga MyApp by <a href="http://caraga.dost.gov.ph/" target="_blank">ICT DOST-Caraga</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

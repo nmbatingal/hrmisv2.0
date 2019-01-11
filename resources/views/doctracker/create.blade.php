@@ -21,6 +21,17 @@
 </style>
 @endsection
 
+@section('navbutton')
+<!-- Help -->
+<!-- ============================================================== -->
+<li class="nav-item"> 
+    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+</li>
+<!-- ============================================================== -->
+<!-- Help -->
+<!-- ============================================================== -->
+@endsection
+
 @section('content')
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
@@ -35,9 +46,6 @@
             <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">OPTIMA</a></li>
             <li class="breadcrumb-item active">Create New Tracker</li>
         </ol>
-    </div>
-    <div class="col-md-6 text-right">
-        <a href="{{ route('doctracker.about') }}" class="btn btn-circle btn-info float-right" title="Help"><i class="mdi mdi-help"></i></a>
     </div>
 </div>
 <!-- ============================================================== -->

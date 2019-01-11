@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home.app')
 
 @section('styles')
 @endsection
@@ -28,30 +28,34 @@
 
 <div class="row">
     <!-- Column -->
-    <div class="col-lg-3">
+    <div class="offset-md-2 col-md-8">
         <div class="card">
-            <img class="card-img-top" src="{{ asset('img/optima.jpg') }}" alt="Card image cap">
-            <div class="card-header">
-                <h4 class="card-title m-0">OPTIMA <a href="{{ route('doctracker.dashboard') }}" class="btn btn-sm btn-info"><i class="icon-login"></i> Open</a></h4>
-            </div>
             <div class="card-body">
-                <p class="card-text">Optical Tracking Information Management System</p>
-            </div>
-        </div>
-    </div>
-    
-    @hasrole('System Administrator')
-        <div class="col-lg-3">
-            <div class="card">
-                <img class="card-img-top" src="{{ asset('img/morale-survey.jpg') }}" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">Morale Survey <a href="{{ route('moralesurvey.dashboard') }}" class="btn btn-sm btn-info"><i class="icon-login"></i> Open</a></h4>
-                    <p class="card-text">Rate office performance.</p>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <img class="card-img-top" src="{{ asset('img/optima.jpg') }}" alt="Card image cap">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title">OPTIMA</h2>
+                                <h5 class="card-text">Optical Tracking Information Management System</h5>
+                                <p class="m-t-30 card-text">OPTIMA or Optical Tracking Information Management System is a web-based application that stores and manages transmitted documents attached with an auto-generated barcode for easier tracking of the processed documents.</p>
+                                <a href="{{ route('doctracker.dashboard') }}" class="btn btn-info"><i class="icon-login"></i> Open Application</a>
+                                <a href="{{ asset('storage/manuals/optima.pdf') }}" class="btn btn-link" target="_blank">Download user manual</a>
+                            </div>
+                        </div>    
+                    </div>
+
                 </div>
             </div>
-        </div>
-    @endhasrole
-
+        </div>    
+    </div>
 </div>
 @endsection
 

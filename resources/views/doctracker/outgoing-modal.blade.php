@@ -71,7 +71,8 @@
             </div>
         </div>
     </div>
-    
+
+    <hr>
     <div class="form-actions">
         <div class="row">
             <div class="col-md-6">

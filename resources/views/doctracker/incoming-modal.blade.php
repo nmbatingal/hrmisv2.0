@@ -33,7 +33,21 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Remarks</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" name="remarks" rows="3"></textarea>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                        <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck3">
+                        <label class="custom-control-label" for="customCheck3">Check this custom checkbox</label>
+                    </div>
+                    Others
+                    <textarea class="form-control" name="remarks" rows="3" required></textarea>
                     <small class="form-control-feedback">Include remarks regarding on the routed document.</small> 
                 </div>
             </div>
