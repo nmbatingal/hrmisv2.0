@@ -34,7 +34,7 @@
             </ul>
             <div class="navbar-nav mr-auto">
                 <form class="form-horizontal">
-                    <!-- <input type="text" class="form-control" style="width: 500px;" placeholder="Search & enter"> -->
+                    <input type="text" class="form-control" style="width: 500px;" placeholder="Search & enter">
                 </form>
             </div>
             <!-- ============================================================== -->

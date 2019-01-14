@@ -74,17 +74,19 @@
                 <label class="control-label text-right col-md-2">Remarks</label>
                 <div class="col-md-10">
 
-                    <div class="custom-control custom-checkbox">
-                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck1" value="For signature.">
-                        <label class="custom-control-label" for="customCheck1">For signature. </label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance.">
-                        <label class="custom-control-label" for="customCheck2">For action/compliance. </label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck3" value="For information.">
-                        <label class="custom-control-label" for="customCheck3">For information. </label>
+                    <div class="form-group options">
+                        <div class="custom-control custom-checkbox">
+                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck1" value="For signature." required>
+                            <label class="custom-control-label" for="customCheck1">For signature. </label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance." required>
+                            <label class="custom-control-label" for="customCheck2">For action/compliance. </label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck3" value="For information." required>
+                            <label class="custom-control-label" for="customCheck3">For information. </label>
+                        </div>
                     </div>
 
                     <br/>Notes
@@ -247,4 +249,18 @@
                     '</tr>');
         return row;
     }
+</script>
+
+<script>
+    $(function(){
+        var requiredCheckboxes = $('.options :checkbox[required]');
+        
+        requiredCheckboxes.change(function(){
+            if(requiredCheckboxes.is(':checked')) {
+                requiredCheckboxes.removeAttr('required');
+            } else {
+                requiredCheckboxes.attr('required', 'required');
+            }
+        });
+    });
 </script>
