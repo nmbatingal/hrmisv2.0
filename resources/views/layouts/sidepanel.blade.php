@@ -15,6 +15,7 @@
                 <h3 class="menu-title">OPTIMA</h3>
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
+                    <li><a href="javascript:void(0);">Search</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
                     <li><a href="{{ route('doctracker.routing') }}">Route Documents</a></li>
                     <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
