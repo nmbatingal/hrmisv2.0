@@ -691,6 +691,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
 <!-- end - This is for export functionality only -->
 
 <script>
@@ -768,22 +769,17 @@
 </script>
 <script>
     $('#example23').DataTable({
-        dom: '<"btn-group"B>frtip',
+        dom: 'Bfrt<"bottom"l<"float-right"i>p>',
         buttons: [
+            'excel',
+            'csv',
+            'print',
             {
-                extend: 'collection',
-                text: 'Export',
-                className: 'btn btn-primary dropdown-toggle',
-                buttons: [
-                    'excel',
-                    'csv',
-                    'pdf',
-                    'print'
-                ]
+                extend: 'colvis',
+                className: 'btn btn-info'
             }
         ]
     });
-    $('.dt-button-collection').addClass('dropdown-menu');
-    $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('dropdown-item');
+    $('.buttons-csv, .buttons-print, .buttons-excel, .buttons-colvis').addClass('btn btn-primary mr-1');
 </script>
 @endsection
