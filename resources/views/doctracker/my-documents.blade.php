@@ -94,6 +94,19 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Document Released -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #e46a76;">
+                                <div class="p-10 bg-danger">
+                                    <h3 class="text-white box m-b-0"><i class="icon-doc"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-danger"><span id="count-release">-</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="table-responsive-md">
@@ -150,6 +163,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('scripts')

@@ -75,16 +75,16 @@
                 <div class="col-md-10">
 
                     <div class="custom-control custom-checkbox">
-                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck1" value="For signature. ">
+                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck1" value="For signature.">
                         <label class="custom-control-label" for="customCheck1">For signature. </label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck2">
-                        <label class="custom-control-label" for="customCheck2" value="For action/compliance. ">For action/compliance. </label>
+                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance.">
+                        <label class="custom-control-label" for="customCheck2">For action/compliance. </label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck3">
-                        <label class="custom-control-label" for="customCheck3" value="For information. ">For information. </label>
+                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck3" value="For information.">
+                        <label class="custom-control-label" for="customCheck3">For information. </label>
                     </div>
 
                     <br/>Notes
@@ -169,27 +169,46 @@
             data   : form.serialize(),
             success: function(data) {
 
-                // prepend to table if data
-                var row = prependTableRowReceived(data);
-
-                $('tr.footable-empty').remove();
-                $('table#tableRoutedDocument tbody').prepend(row);
-
-                $('#tableRoutedDocument').trigger('footable_initialize');
-                form.trigger("reset");
-                // ----------------------------------------------------------- //
-
-                // increment tracker cards
-                var sum = 1;
-                sum += +$('#count-release').text();
-                $('#count-release').text(sum);
-
                 // clear form fields
                 $('input[name=code]').val('');
-                $("#upload-progress .progress-bar").css("width", + 0);
-                // close modal
-                $('#modal-outgoing').modal('toggle');
-                $("#codeInput").select();
+
+                if ( data.result )
+                {
+                    // increment tracker cards
+                    var sum = 1;
+                    sum += +$('#count-release').text();
+                    $('#count-release').text(sum);
+                    $("#upload-progress .progress-bar").css("width", 0);
+                    
+                    // prepend to table if data
+                    var row = prependTableRowReceived(data);
+
+                    $('tr.footable-empty').remove();
+                    $('table#tableRoutedDocument tbody').prepend(row);
+
+                    $('#tableRoutedDocument').trigger('footable_initialize');
+                    form.trigger("reset");
+
+                    swal({
+                        title: "Success!",
+                        text:  "Document successfully released.",
+                        type: "success"
+                    }).then( function() {
+                        $("#upload-progress .progress-bar").css("width", 0);
+                        // close modal
+                        $('#modal-outgoing').modal('toggle');
+                        $("#codeInput").select();
+                    });
+                } else {
+                    swal({
+                        title: "Error!",
+                        text:  "Tracking code undefined.",
+                        type: "error"
+                    }).then( function() {
+                        $("#upload-progress .progress-bar").css("width", 0);
+                        $("#codeInput").select();
+                    });
+                }
             },
             error  : function(xhr, err) {
                 swal({

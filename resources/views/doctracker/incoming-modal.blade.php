@@ -87,15 +87,18 @@
                 return xhr;
             },
             success: function(data) {
-                
+
+                // clear form fields
                 $('input[name=code]').val('');
 
                 if ( data.result ) 
                 {
+                    // increment tracker cards
                     var sum = 1;
                     sum += +$('#count-receive').text();
                     $('#count-receive').text(sum);
 
+                    // prepend to table if data
                     var row = appendTableRowReceived(data);
 
                     $('tr.footable-empty').remove();
@@ -121,7 +124,6 @@
                         type: "error"
                     }).then( function() {
                         $("#upload-progress .progress-bar").css("width", 0);
-                        // clear form fields
                         $("#codeInput").select();
                     });
                 }

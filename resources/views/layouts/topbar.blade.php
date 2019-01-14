@@ -23,7 +23,7 @@
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav p-r-20 m-r-40">
                 <li class="d-none d-md-block d-lg-block">
                     <a href="{{ route('home') }}" class="p-l-20">
                         <!--This is logo text-->
@@ -33,7 +33,9 @@
                 </li>
             </ul>
             <div class="navbar-nav mr-auto">
-                aaa
+                <form class="form-horizontal">
+                    <input type="text" class="form-control" style="width: 500px;" placeholder="Search & enter">
+                </form>
             </div>
             <!-- ============================================================== -->
             <!-- User profile and search -->
