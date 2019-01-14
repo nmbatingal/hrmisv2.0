@@ -116,17 +116,28 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-body">
-
+            <div class="card-body p-b-0">
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="form-horizontal">
-                            <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
-                        </form>
+                        <div class="panel">
+                            <form class="form-horizontal">
+                                <div class="form-group m-b-0">
+                                    <div class="input-group p-0">
+                                        <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-info" type="submit">
+                                                <i class="ti-search"></i>&nbsp;</button>
+                                        </div>
+                                    </div>
+                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
-                <div class="table-responsive m-t-20">
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
                     <table id="tableMyDocuments" class="table table-hover table-bordered table-striped">
                         <thead>
                                 <th>Tracking Code</th>
