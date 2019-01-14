@@ -5,7 +5,7 @@
 @endsection
 
 @section('styles')
-<link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 @endsection
 
 @section('navbutton')
@@ -108,11 +108,27 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Card table -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
 
-                <div class="table-responsive-md">
-                    <table id="demo-foo-pagination" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-horizontal">
+                            <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive m-t-20">
+                    <table id="tableMyDocuments" class="table table-hover table-bordered table-striped">
                         <thead>
-                            <tr class="footable-filtering">
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <th>Document type</th>
@@ -157,33 +173,34 @@
                         </tbody>
                     </table>
                 </div>
-
-                <a href="{{ route('doctracker.logs') }}" class="btn btn-outline-danger"> View tracking logs >>> </a>
             </div>
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('scripts')
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
-<script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
+<!-- This is data table -->
+<script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
 <script>
     $(document).ready(function() { 
+        // DataTable for Tracker
+        var trackerTable = $('#tableMyDocuments').DataTable({
+            columnDefs: [{ 
+                orderable: true 
+            }],
+            order: [
+                [0, 'desc']
+            ],
+            dom: '<"top"l<"float-right"i>>rt<"bottom"p><"clear">'
+        });
 
-        //
-        $('[data-page-size]').on('click', function(e){
-            e.preventDefault();
-            var newSize = $(this).data('pageSize');
-            FooTable.get('#demo-foo-pagination').pageSize(newSize);
-        });
-        $('#demo-foo-pagination').footable({
-            filtering: {
-                enabled: true
-            }
-        });
+        // Custom Input Search for Table
+        $('#searchTracker').keyup(function(){
+            trackerTable.search($(this).val()).draw() ;
+        })
     });
 
 </script>
