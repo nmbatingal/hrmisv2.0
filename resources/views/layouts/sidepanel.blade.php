@@ -4,20 +4,6 @@
         <!-- .Dashboard -->
         <li class="{{ Request::is('home') ? 'selected' : '' }}">
             <a href="{{ route('home') }}"><i class="ti-home"></i></a>
-            <div class="sidebarmenu">
-                <!-- Left navbar-header -->
-                <h3 class="menu-title">OPTIMA</h3>
-                <!-- <div class="searchable-menu">
-                    <form role="search" class="menu-search">
-                        <input type="text" placeholder="Search..." class="form-control">
-                        <a href=""><i class="fa fa-search"></i></a>
-                    </form>
-                </div> -->
-                <ul class="sidebar-menu">
-                    <li><a href="{{ route('home') }}">Home </a></li>
-                </ul>
-                <!-- Left navbar-header end -->
-            </div>
         </li>
         <!-- /.Home -->
 
