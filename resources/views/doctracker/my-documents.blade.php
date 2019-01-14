@@ -4,10 +4,6 @@
 -OPTIMA | My Documents
 @endsection
 
-@section('styles')
-<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
-@endsection
-
 @section('navbutton')
 <!-- Help -->
 <!-- ============================================================== -->
@@ -17,6 +13,10 @@
 <!-- ============================================================== -->
 <!-- Help -->
 <!-- ============================================================== -->
+@endsection
+
+@section('styles')
+<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')

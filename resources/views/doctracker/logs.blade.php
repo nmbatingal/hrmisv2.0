@@ -50,6 +50,24 @@
     <!-- Column -->
     <div class="col-md-12">
         <div class="card">
+            <div class="card-header text-white bg-dark">
+                <h4>Log Details
+                    <div class="card-actions">
+                        <a class="text-white" data-action="collapse"><i class="ti-minus"></i></a>
+                    </div>
+                </h4>
+            </div>
+            <div class="card-body collapse show">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Column -->
+    <div class="col-md-12">
+        <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Tracking Logs</h3>
                 <p class="card-text">Search for a document using tracking code.</p>
