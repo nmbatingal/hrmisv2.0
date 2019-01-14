@@ -35,20 +35,13 @@
                 <div class="col-md-10">
 
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                        <input checked name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck1" value="Received. Thank you. ">
+                        <label class="custom-control-label" for="customCheck1">Received. Thank you. </label>
                     </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                        <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                        <label class="custom-control-label" for="customCheck3">Check this custom checkbox</label>
-                    </div>
-                    Others
-                    <textarea class="form-control" name="remarks" rows="3" required></textarea>
-                    <small class="form-control-feedback">Include remarks regarding on the routed document.</small> 
+
+                    <br/>Notes
+                    <textarea class="form-control" name="notes" rows="3"></textarea>
+                    <small class="form-control-feedback">Include notes on the routed document. </small> 
                 </div>
             </div>
         </div>

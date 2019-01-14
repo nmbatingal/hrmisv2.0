@@ -1,3 +1,11 @@
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background: #fb9678;
+        color: #fff;
+        border-color: #fb9678;
+    }
+</style>
+
 <form id="submitModal" action="{{ route('doctracker.outgoing.store') }}" class="form-horizontal" method="POST">
     @csrf
     <input type="hidden" name="tracker_id" value="{{ $tracker['id'] }}">
@@ -63,10 +71,25 @@
                 </div>
             </div>
             <div class="form-group row m-b-0">
-                <label class="control-label text-right col-md-2">Note</label>
+                <label class="control-label text-right col-md-2">Remarks</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" name="note" rows="3"></textarea>
-                    <small class="form-control-feedback">Additional notes on routing the document.</small> 
+
+                    <div class="custom-control custom-checkbox">
+                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck1" value="For signature. ">
+                        <label class="custom-control-label" for="customCheck1">For signature. </label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck2">
+                        <label class="custom-control-label" for="customCheck2" value="For action/compliance. ">For action/compliance. </label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck3">
+                        <label class="custom-control-label" for="customCheck3" value="For information. ">For information. </label>
+                    </div>
+
+                    <br/>Notes
+                    <textarea class="form-control" name="notes" rows="3"></textarea>
+                    <small class="form-control-feedback">Include notes on the routed document. </small> 
                 </div>
             </div>
         </div>

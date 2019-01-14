@@ -225,26 +225,28 @@ class DocumentTrackerController extends Controller
             $log->tracking_code = $document->tracking_code;
             $log->user_id       = Auth::user()->id;
             $log->action        = "Receive";
-            $log->notes         = $old_log->notes;
-            $log->remarks       = $request->remarks;
-            
-            if ( $log->save() )
-            {
-                LogActivity::addToLog('received an incoming document.'); // log
-
-                $data = [
-                    'result'            => true,
-                    'tracking_code'     => $document->tracking_code,
-                    'subject'           => $document->subject,
-                    'document_type'     => $document->other_document,
-                    'created_by'        => $document->userEmployee->full_name,
-                    'date_created'      => $document->tracking_date,
-                    'note'              => $log->notes ?: '',
-                    'remarks'           => $log->remarks ?: '',
-                    'action'            => $log->action,
-                    'date_action'       => $log->date_action,
-                ];
+            $log->notes         = $request->notes;
+            // checked remarks
+            foreach($request->remarks as $remark){
+                $remarksText += $remark;
             }
+            $log->remarks       = $remarksText;
+            $log->save();
+
+            LogActivity::addToLog('received an incoming document.'); // log
+
+            $data = [
+                'result'            => true,
+                'tracking_code'     => $document->tracking_code,
+                'subject'           => $document->subject,
+                'document_type'     => $document->other_document,
+                'created_by'        => $document->userEmployee->full_name,
+                'date_created'      => $document->tracking_date,
+                'note'              => $log->notes ?: '',
+                'remarks'           => $log->remarks ?: '',
+                'action'            => $log->action,
+                'date_action'       => $log->date_action,
+            ];
         }
 
         if($request->ajax())
@@ -330,7 +332,11 @@ class DocumentTrackerController extends Controller
         $log->action         = $request->action;
         $log->route_mode     = $mode;
         $log->recipients     = $recipients;
-        $log->notes          = $request->note;
+        $log->notes          = $request->notes;
+        // checked remarks
+        foreach($request->remarks as $remark){
+            $remarksText += $remark;
+        }
         $log->save();
 
         LogActivity::addToLog('forwarded an outgoing document.'); // log
