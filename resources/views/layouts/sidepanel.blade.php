@@ -3,13 +3,13 @@
         <div class="togglediv"><a href="javascript:void(0)" id="togglebtn"><i class="ti-menu"></i></a></div>
         <!-- .Dashboard -->
         <li class="{{ Request::is('home') ? 'selected' : '' }}">
-            <a href="{{ route('home') }}"><i class="ti-home"></i></a>
+            <a href="{{ route('home') }}" title="Home"><i class="ti-home"></i></a>
         </li>
         <!-- /.Home -->
 
         <!-- DOCUMENT TRACKER -->
         <li class="{{ Request::is('doctracker/*') ? 'selected' : '' }}">
-            <a href="javascript:void(0);"><i class="mdi mdi-qrcode-scan"></i></a>
+            <a href="javascript:void(0);" title="OPTIMA"><i class="mdi mdi-qrcode-scan"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
                 <h3 class="menu-title">OPTIMA</h3>
@@ -57,7 +57,7 @@
 
         <!-- .SYSTEM SETTINGS -->
         <li class="{{ Request::is('setting') ? 'selected' : '' }}">
-            <a href="javascript:void(0)"><i class="ti-settings"></i></a>
+            <a href="javascript:void(0)" title="Settings"><i class="ti-settings"></i></a>
             <div class="sidebarmenu">
                 <!-- Left navbar-header -->
                 <h3 class="menu-title">System Setting</h3>

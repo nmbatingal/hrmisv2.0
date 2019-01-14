@@ -259,7 +259,7 @@
                                         {{ $log->date_action }}
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
+                                        <!-- <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button> -->
                                     </td>
                                 </tr>
                             @empty
@@ -289,9 +289,6 @@
                 orderable: false, 
                 targets: [2,3,4,5] 
             }],
-            order: [
-                [0, 'desc']
-            ],
             dom: '<"top">rt<"bottom"l<"float-right"i>p><"clear">'
         });
 
