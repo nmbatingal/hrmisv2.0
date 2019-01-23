@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //check if exception is an instance of ModelNotFoundException.
+        // if ($e instanceof ModelNotFoundException) {
+        //     // ajax 404 json feedback
+        //     if ($request->ajax()) {
+        //         return response()->json(['error' => 'Not Found'], 404);
+        //     }
+
+        //     // normal 404 view page feedback
+        //     return response()->view('errors.404', [], 404);
+        // } else
+        if ($e instanceof QueryException ) {
+            // ajax 404 json feedback
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Not Found'], 500);
+            }
+
+            // normal 404 view page feedback
+            return view('errors.404', [], 500);
+        }
+
         return parent::render($request, $exception);
     }
 }
