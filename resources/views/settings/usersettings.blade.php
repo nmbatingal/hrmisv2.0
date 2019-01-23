@@ -45,7 +45,8 @@
                 </div>
                 <center class="m-t-30"> 
                     <img src="{{ asset($user->userProfilPic) }}" class="img-circle" width="150" />
-                    <h4 class="card-title m-t-10">{{ $user->fullName }}</h4>
+                    <h3 class="card-title m-t-10">{{ $user->fullName }}</h3>
+                    <h5 class="card-title m-t-10">&#64;{{ $user->username }}</h5>
                     <h6 class="card-subtitle">{{ $user->position }}</h6>
                     <h6 class="card-subtitle">{{ $user->office->division_name }}</h6>
                 </center>
