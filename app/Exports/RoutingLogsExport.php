@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Models\DocumentTracker\DocumentTrackingLogs;
-// use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Contracts\View\View;
 // use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -12,11 +12,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
 // class UsersExport implements FromQuery, Responsable
-class UsersExport implements FromView, ShouldQueue
+class RoutingLogsExport implements FromView, ShouldQueue, Responsable
 {
 	use Exportable;
 
-	private $fileName = 'users.xlsx';
+	private $fileName = 'routinglogs.xlsx';
 
 	public function __construct(int $id)
     {
