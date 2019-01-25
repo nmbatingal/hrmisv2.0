@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\User;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
 // use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Contracts\View\View;
@@ -38,7 +37,6 @@ class UsersExport implements FromView, ShouldQueue
         $documentsLog = DocumentTrackingLogs::where('user_id', $this->user_id)->latest()->get();
 
         return view('doctracker.exports.routeddocuments', [
-            'users' 		=> User::all(),
             'documentsLog'  => $documentsLog
         ]);
     }
