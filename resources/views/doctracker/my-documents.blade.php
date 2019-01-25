@@ -4,10 +4,6 @@
 -OPTIMA | My Documents
 @endsection
 
-@section('styles')
-<link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
-@endsection
-
 @section('navbutton')
 <!-- Help -->
 <!-- ============================================================== -->
@@ -17,6 +13,10 @@
 <!-- ============================================================== -->
 <!-- Help -->
 <!-- ============================================================== -->
+@endsection
+
+@section('styles')
+<link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -94,12 +94,52 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Document Released -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="d-flex flex-row" style="border: 1px solid #e46a76;">
+                                <div class="p-10 bg-danger">
+                                    <h3 class="text-white box m-b-0"><i class="icon-doc"></i></h3></div>
+                                <div class="align-self-center m-l-20">
+                                    <h3 class="m-b-0 text-danger"><span id="count-release">-</span></h3>
+                                    <h6 class="text-muted m-b-0">Documents</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="table-responsive-md">
-                    <table id="demo-foo-pagination" class="table table-hover table-striped" data-paging="true" data-paging-size="5">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Card table -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body p-b-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <form class="form-horizontal">
+                                <div class="form-group m-b-0">
+                                    <div class="input-group p-0">
+                                        <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-info" type="submit">
+                                                <i class="ti-search"></i>&nbsp;</button>
+                                        </div>
+                                    </div>
+                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    <table id="tableMyDocuments" class="table table-hover table-bordered table-striped">
                         <thead>
-                            <tr class="footable-filtering">
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <th>Document type</th>
@@ -144,8 +184,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                <a href="{{ route('doctracker.logs') }}" class="btn btn-outline-danger"> View tracking logs >>> </a>
             </div>
         </div>
     </div>
@@ -155,21 +193,25 @@
 @section('scripts')
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
-<script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
+<!-- This is data table -->
+<script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
 <script>
     $(document).ready(function() { 
+        // DataTable for Tracker
+        var trackerTable = $('#tableMyDocuments').DataTable({
+            columnDefs: [{ 
+                orderable: true 
+            }],
+            order: [
+                [0, 'desc']
+            ],
+            dom: '<"top"l<"float-right"i>>rt<"bottom"p><"clear">'
+        });
 
-        //
-        $('[data-page-size]').on('click', function(e){
-            e.preventDefault();
-            var newSize = $(this).data('pageSize');
-            FooTable.get('#demo-foo-pagination').pageSize(newSize);
-        });
-        $('#demo-foo-pagination').footable({
-            filtering: {
-                enabled: true
-            }
-        });
+        // Custom Input Search for Table
+        $('#searchTracker').keyup(function(){
+            trackerTable.search($(this).val()).draw() ;
+        })
     });
 
 </script>

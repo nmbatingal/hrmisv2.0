@@ -14,6 +14,9 @@ use App\Models\DocumentTracker\DocumentTrackingLogs;
 use App\Models\DocumentTracker\DocumentTrackerAttachment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+/***** EXCEL *****/
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentTrackerController extends Controller
 {
@@ -47,7 +50,8 @@ class DocumentTrackerController extends Controller
     public function logs()
     {
         $documents = [];
-        return view('doctracker.logs', compact('documents'));
+        $trackingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id )->latest()->get();
+        return view('doctracker.logs', compact('documents', 'trackingLogs'));
     }
 
     /**
@@ -180,6 +184,13 @@ class DocumentTrackerController extends Controller
         return view('doctracker.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
     }
 
+    public function exportRoutedDocuments() 
+    {
+        $id = Auth::user()->id;
+        return (new UsersExport($id))->download('users.xlsx');
+        // return new UsersExport;
+    }
+
     /**
      * Display the specified resource.
      *
@@ -227,8 +238,9 @@ class DocumentTrackerController extends Controller
             $log->action        = "Receive";
             $log->notes         = $request->notes;
             // checked remarks
+            $remarksText = "";
             foreach($request->remarks as $remark){
-                $remarksText += $remark;
+                $remarksText .= $remark;
             }
             $log->remarks       = $remarksText;
             $log->save();
@@ -288,21 +300,16 @@ class DocumentTrackerController extends Controller
         return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function storeOutgoingDocument(Request $request)
     {
         $tracker = DocumentTracker::find($request->tracker_id);
         $mode = $request->routeMode;
         $recipients = null;
 
+        // check for recipients formatting
         if ( $mode == "all" ) {
 
             $employees = User::employee()->notSelf()->get();
-
         } elseif ( $mode == "group" ) {
 
             $office_id  = $request->recipients;
@@ -312,7 +319,6 @@ class DocumentTrackerController extends Controller
             foreach ($offices as $office) {
                 $recipients[] = [ 'id' => $office->id , 'name' => $office->division_name ];
             }
-
         } elseif ( $mode == "individual" ) {
 
             $id            = $request->recipients;
@@ -321,38 +327,44 @@ class DocumentTrackerController extends Controller
             foreach ($employees as $employee) {
                 $recipients[] = [ 'id' => $employee->id , 'name' => $employee->full_name ];
             }
-
         }
 
         // ----------------- CREATE NEW LOG -------------------- //
-        $log                 = new DocumentTrackingLogs;
-        $log->code           = $tracker->code;
-        $log->tracking_code  = $tracker->tracking_code;
-        $log->user_id        = Auth::user()->id;
-        $log->action         = $request->action;
-        $log->route_mode     = $mode;
-        $log->recipients     = $recipients;
-        $log->notes          = $request->notes;
-        // checked remarks
-        foreach($request->remarks as $remark){
-            $remarksText += $remark;
+        if ( $tracker )
+        {
+            $log                 = new DocumentTrackingLogs;
+            $log->code           = $tracker->code;
+            $log->tracking_code  = $tracker->tracking_code;
+            $log->user_id        = Auth::user()->id;
+            $log->action         = $request->action;
+            $log->route_mode     = $mode;
+            $log->recipients     = $recipients;
+            $log->notes          = $request->notes;
+            // checked remarks
+            $remarksText = "";
+            foreach($request->remarks as $remark){
+                $remarksText .= $remark ." ";
+            }
+            $log->remarks        = $remarksText;
+            $log->save();
+
+            LogActivity::addToLog('forwarded an outgoing document.'); // log
+            // ----------------- END CREATE NEW LOG --------------- //
+
+            $data = [
+                'result'            => true,
+                'id'                => $log->id,
+                'tracking_code'     => $tracker->tracking_code,
+                'subject'           => $tracker->subject,
+                'document_type'     => $tracker->other_document,
+                'created_by'        => $log->userEmployee->full_name,
+                'date_created'      => $tracker->tracking_date,
+                'note'              => $log->notes ?: '',
+                'remarks'           => $log->remarks ?: '',
+                'action'            => $log->action,
+                'date_action'       => $log->dateAction,
+            ];
         }
-        $log->save();
-
-        LogActivity::addToLog('forwarded an outgoing document.'); // log
-        // ----------------- END CREATE NEW LOG --------------- //
-
-        $data = [
-            'id'                => $log->id,
-            'tracking_code'     => $tracker->tracking_code,
-            'subject'           => $tracker->subject,
-            'document_type'     => $tracker->other_document,
-            'created_by'        => $log->userEmployee->full_name,
-            'date_created'      => $tracker->tracking_date,
-            'note'              => $log->notes ?: '',
-            'action'            => $log->action,
-            'date_action'       => $log->dateAction,
-        ];
 
         if($request->ajax())
         {

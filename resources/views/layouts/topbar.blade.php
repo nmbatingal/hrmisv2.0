@@ -23,7 +23,7 @@
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav p-r-20 m-r-40">
                 <li class="d-none d-md-block d-lg-block">
                     <a href="{{ route('home') }}" class="p-l-20">
                         <!--This is logo text-->
@@ -33,7 +33,9 @@
                 </li>
             </ul>
             <div class="navbar-nav mr-auto">
-                aaa
+                <form class="form-horizontal">
+                    <input type="text" class="form-control" style="width: 500px;" placeholder="Search & enter">
+                </form>
             </div>
             <!-- ============================================================== -->
             <!-- User profile and search -->
@@ -97,10 +99,12 @@
                 <li class="nav-item dropdown u-pro">
                     @guest
                     @else
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" alt="user" class=""> <span class="hidden-md-down">{{ Auth::user()->firstname }} &nbsp;<i class="fa fa-angle-down"></i></span> </a>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" alt="user" class=""> </a>
                     @endguest
                     
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a href="javascript:void(0)" class="dropdown-item"><b>&#64;{{ Auth::user()->username }}</b></a>
+                        <div class="dropdown-divider"></div>
                         <!-- Profile Setting -->
                         <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
                         <!-- User Activity Log -->

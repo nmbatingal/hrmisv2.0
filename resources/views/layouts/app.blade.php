@@ -24,7 +24,7 @@
             background: rgba(0, 0, 0, 0);
         }
         .footer {
-            position: absolute;
+            /*position: absolute;*/
             bottom: 0;
             color: #212529;
             left: 0px;

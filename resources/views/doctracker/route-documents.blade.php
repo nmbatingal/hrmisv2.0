@@ -113,7 +113,8 @@
 
                 <div class="card border-info m-t-30 m-b-0">
                     <div class="card-header bg-dark">
-                        <h4 class="m-b-0 text-white">Receive/Release Document</h4></div>
+                        <h4 class="m-b-0 text-white">Receive/Release Document</h4>
+                    </div>
                     <div class="card-body p-b-0" style="border: 1px solid #000000;">
                         <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                         <form id="submitCode" class="form-horizontal">
@@ -143,8 +144,8 @@
                                         <div class="input-group p-0">
                                             <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
                                             <div class="input-group-append">
-                                                <button class="btn btn-success" style="width: 100px;" type="submit">
-                                                    <i class="icon-cursor"></i>&nbsp;Go</button>
+                                                <button class="btn btn-success" type="submit">
+                                                    <i class="icon-cursor"></i>&nbsp;</button>
                                             </div>
                                         </div>
                                         <div id="upload-progress" class="progress m-t-0">
@@ -203,17 +204,28 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-body">
-
+            <div class="card-body p-b-0">
                 <div class="row">
                     <div class="col-md-12">
-                        <form class="form-horizontal">
-                            <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
-                        </form>
+                        <div class="panel">
+                            <form class="form-horizontal">
+                                <div class="form-group m-b-0">
+                                    <div class="input-group p-0">
+                                        <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-info" type="submit">
+                                                <i class="ti-search"></i>&nbsp;</button>
+                                        </div>
+                                    </div>
+                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
-                <div class="table-responsive m-t-20">
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
                     <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped">
                         <colgroup>
                             <col width="15%">
@@ -259,7 +271,7 @@
                                         {{ $log->date_action }}
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
+                                        <!-- <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button> -->
                                     </td>
                                 </tr>
                             @empty
@@ -280,6 +292,7 @@
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <!-- This is data table -->
 <script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 <script>
     $(document).ready(function() { 
 
@@ -289,10 +302,16 @@
                 orderable: false, 
                 targets: [2,3,4,5] 
             }],
-            order: [
-                [0, 'desc']
-            ],
-            dom: '<"top">rt<"bottom"l<"float-right"i>p><"clear">'
+            dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
+            buttons: [
+                {
+                    text: 'Export Log',
+                    className: 'btn btn-primary',
+                    action: function ( e, dt, node, config ) {
+                        window.open("{{ route('doctracker.export.routing') }}");
+                    }
+                }
+            ]
         });
 
         // Custom Input Search for Table
