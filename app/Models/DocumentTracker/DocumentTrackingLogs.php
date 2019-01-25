@@ -41,12 +41,12 @@ class DocumentTrackingLogs extends Model
 
     public function documentCode()
     {
-        return $this->belongsTo(DocumentTracker::class, 'code', 'code');
+        return $this->belongsTo(DocumentTracker::class, 'code', 'code')->withTrashed();
     }
 
     public function documentTracker()
     {
-        return $this->belongsTo(DocumentTracker::class, 'tracking_code', 'tracking_code');
+        return $this->belongsTo(DocumentTracker::class, 'tracking_code', 'tracking_code')->withTrashed();
     }
 
     public function userEmployee()

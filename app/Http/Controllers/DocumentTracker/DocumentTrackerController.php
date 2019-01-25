@@ -182,6 +182,7 @@ class DocumentTrackerController extends Controller
         $documentsLog = DocumentTrackingLogs::where('user_id', Auth::user()->id)->latest()->get();
 
         return view('doctracker.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
+        // return dd($documentsLog);
     }
 
     public function exportRoutedDocuments() 
