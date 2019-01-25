@@ -545,7 +545,14 @@ class DocumentTrackerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $log = DocumentTracker::destroy($id);
+            $msg = '';
+        } catch (Exception $e) {
+            $msg = 'Caught exception: '. $e->getMessage() ."\n";
+        }
+
+        return response()->json([ 'id'=>$id, 'result'=>$log, 'msg' => $msg ]); 
     }
 
     /*** JS ***/

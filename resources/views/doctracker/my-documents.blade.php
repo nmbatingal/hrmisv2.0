@@ -144,6 +144,7 @@
                                 <th>Subject</th>
                                 <th>Document type</th>
                                 <th>Tracking status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -155,14 +156,19 @@
                                         </h5>
                                     </td>
                                     <td>
-                                        <h5 class="font-weight-bold">{{ $document->subject }}</h5>
-                                        {{ $document->tracking_date }} 
+                                        <h5 class="font-weight-bold">
+                                            {{ $document->subject }}
+                                            <br><small>{{ $document->tracking_date }}</small>
+                                        </h5>
                                     </td>
                                     <td>
                                         {{ $document->other_document }}
                                     </td>
                                     <td>
-                                        <h5 class="font-weight-bold">{!! $document->action !!}</h5>
+                                        <h5 class="font-weight-bold">
+                                            {!! $document->action !!}
+                                            <br><small>{!! $document->lastTracked() !!}</small>
+                                        </h5>
                                         @if ( $document->action == "Forward")
                                             <ul class="p-l-20 m-b-0">
                                                 @if ( !is_null( $document->recipients ) )
@@ -176,7 +182,9 @@
                                         @else
                                             <strong>{{ $document->userEmployee->full_name }}</strong><br>
                                         @endif
-                                        {!! $document->lastTracked() !!}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $document->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td>
                                 </tr>
                             @empty
@@ -213,6 +221,55 @@
             trackerTable.search($(this).val()).draw() ;
         })
     });
+</script>
+<script>
+    $(document).on("click", ".btnCancelEvent", function () {
+        var btn = $(this),
+            id  = btn.data("id"),
+            token  = $('input[name=_token]').val(),
+            $url = "{{ route('doctracker.destroy ', '') }}" + "/" + id;
 
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to undo this action!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!"
+        }).then((data) => {
+
+            if (data.value) {
+                $.ajax({
+                    url: $url,
+                    type: 'POST',
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                    success: function (data) {
+
+                        var $row = 'tr#row-' + data.id;
+                        // decrement tracker cards
+                        var total = 1;
+                        total -= +$('#count-outgoing').text();
+                        $('#count-outgoing').text(total);
+
+
+                        $($row).remove();
+                        $('#documentTableOutgoing').trigger('footable_initialize');
+
+                        Swal(
+                          'Deleted!',
+                          'Action successfully deleted.',
+                          'success'
+                        );
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        swal("Error deleting!", "Please try again", "error");
+                    }
+                });
+            }
+        }); 
+    });
 </script>
 @endsection
