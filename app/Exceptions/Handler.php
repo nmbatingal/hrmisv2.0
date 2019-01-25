@@ -58,15 +58,15 @@ class Handler extends ExceptionHandler
         //     // normal 404 view page feedback
         //     return response()->view('errors.404', [], 404);
         // } else
-        if ($e instanceof QueryException ) {
-            // ajax 404 json feedback
-            if ($request->ajax()) {
-                return response()->json(['error' => 'Not Found'], 500);
-            }
+        // if ($e instanceof QueryException ) {
+        //     // ajax 404 json feedback
+        //     if ($request->ajax()) {
+        //         return response()->json(['error' => 'Not Found'], 500);
+        //     }
 
-            // normal 404 view page feedback
-            return view('errors.404', [], 500);
-        }
+        //     // normal 404 view page feedback
+        //     return view('errors.404', [], 500);
+        // }
 
         return parent::render($request, $exception);
     }

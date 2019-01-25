@@ -51,7 +51,7 @@
                 <label class="control-label text-right col-md-2">Route Mode</label>
                 <div class="col-md-10">
                     <select class="form-control custom-select" name="routeMode">
-                        <option value="all">All Employee</option>
+                        <option value="all">All burikaton</option>
                         <option value="group">Group</option>
                         <option value="individual">Individual</option>
                     </select>
