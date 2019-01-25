@@ -47,7 +47,8 @@ class DocumentTrackerController extends Controller
     public function logs()
     {
         $documents = [];
-        return view('doctracker.logs', compact('documents'));
+        $trackingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id )->latest()->get();
+        return view('doctracker.logs', compact('documents', 'trackingLogs'));
     }
 
     /**
