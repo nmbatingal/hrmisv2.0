@@ -149,7 +149,7 @@
                         </thead>
                         <tbody>
                             @forelse( $myDocuments as $document )
-                                <tr>
+                                <tr id="row-{{$document->id}}">
                                     <td>
                                         <h5>
                                             <a href="{{ route('doctracker.showDocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
@@ -227,7 +227,7 @@
         var btn = $(this),
             id  = btn.data("id"),
             token  = $('input[name=_token]').val(),
-            $url = "{{ route('doctracker.destroy ', '') }}" + "/" + id;
+            $url = "{{ route('doctracker.destroy', '') }}" + "/" + id;
 
         swal({
             title: "Are you sure?",
