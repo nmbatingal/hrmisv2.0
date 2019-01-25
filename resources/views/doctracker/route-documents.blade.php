@@ -250,15 +250,20 @@
                                 <tr id="row-{{ $log->id }}">
                                     <td><a href="javascript:void(0)" target="_blank">{{ $log->tracking_code }}</a></td>
                                     <td>
-                                        <h5 class="font-weight-bold">{{ $log->documentCode->subject }}</h5>
-                                            <h5>{{ $log->userEmployee->full_name }}</h5>
-                                            ({{ $log->documentCode->other_document }})<br>
-                                            {{ $log->documentCode->tracking_date }}
+                                        <h5 class="font-weight-bold">
+                                            {{ $log->documentCode->subject }}
+                                            <br><small>({{ $log->documentCode->other_document }})</small>
+                                        </h5>
+                                            <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
+                                            <small>{{ $log->documentCode->tracking_date }}</small>
                                     </td>
                                     <td>{{ $log->notes }}</td>
                                     <td>{{ $log->remarks }}</td>
                                     <td>
-                                        <h5 class="font-weight-bold">{{ $log->action }}</h5>
+                                        <h5 class="font-weight-bold">
+                                            {{ $log->action }}
+                                            <br><small>{{ $log->date_action }}</small>
+                                        </h5>
                                         <ul class="p-l-20 m-b-0">
                                             @if ( !is_null( $log->recipients ) )
                                                 @foreach( $log->recipients as $recipient)
@@ -268,7 +273,6 @@
                                                 <li>All</li>
                                             @endif
                                         </ul>
-                                        {{ $log->date_action }}
                                     </td>
                                     <td class="text-center">
                                         <!-- <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button> -->
