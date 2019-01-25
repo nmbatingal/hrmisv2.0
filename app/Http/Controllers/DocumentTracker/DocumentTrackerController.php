@@ -14,6 +14,9 @@ use App\Models\DocumentTracker\DocumentTrackingLogs;
 use App\Models\DocumentTracker\DocumentTrackerAttachment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+/***** EXCEL *****/
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentTrackerController extends Controller
 {
@@ -179,6 +182,13 @@ class DocumentTrackerController extends Controller
         $documentsLog = DocumentTrackingLogs::where('user_id', Auth::user()->id)->latest()->get();
 
         return view('doctracker.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
+    }
+
+    public function exportRoutedDocuments() 
+    {
+        $id = Auth::user()->id;
+        return (new UsersExport($id))->download('users.xlsx');
+        // return new UsersExport;
     }
 
     /**

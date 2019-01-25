@@ -305,10 +305,10 @@
             dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
             buttons: [
                 {
-                    text: 'Logs',
+                    text: 'Export Log',
                     className: 'btn btn-primary',
                     action: function ( e, dt, node, config ) {
-                        window.open("{{ route('doctracker.logs') }}", "_blank");
+                        window.open("{{ route('doctracker.export.routing') }}");
                     }
                 }
             ]

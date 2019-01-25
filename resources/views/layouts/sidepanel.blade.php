@@ -18,7 +18,7 @@
                     <li><a href="{{ route('doctracker.routing') }}">Route Documents</a></li>
                     <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
                     <li><a href="javascript:void(0);">Search</a></li>
-                    <li><a href="{{ route('doctracker.logs') }}">Logs</a></li>
+                    <!-- <li><a href="{{ route('doctracker.logs') }}">Logs</a></li> -->
                     <li><a href="{{ route('doctracker.about') }}">About</a></li>
                 </ul>
                 <!-- Left navbar-header end -->
