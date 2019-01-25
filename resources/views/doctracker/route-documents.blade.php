@@ -292,6 +292,7 @@
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <!-- This is data table -->
 <script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 <script>
     $(document).ready(function() { 
 
@@ -301,7 +302,16 @@
                 orderable: false, 
                 targets: [2,3,4,5] 
             }],
-            dom: '<"top"l<"float-right"i>>rt<"bottom"p><"clear">'
+            dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
+            buttons: [
+                {
+                    text: 'Logs',
+                    className: 'btn btn-primary',
+                    action: function ( e, dt, node, config ) {
+                        window.open("{{ route('doctracker.logs') }}", "_blank");
+                    }
+                }
+            ]
         });
 
         // Custom Input Search for Table
