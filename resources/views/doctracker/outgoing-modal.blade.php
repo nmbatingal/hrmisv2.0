@@ -26,14 +26,14 @@
 
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Subject: </label>
-                <div class="col-md-10">
+                <div class="col-md-8">
                     <p>{{ $tracker['subject'] }}</p>
                 </div>
             </div>
 
             <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Details: </label>
-                <div class="col-md-10">
+                <div class="col-md-8">
                     <p>{{ $tracker['details'] }}</p>
                 </div>
             </div>
