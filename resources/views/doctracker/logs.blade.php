@@ -44,7 +44,6 @@
     <table id="table-logs" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <!-- <th>Name</th> -->
                 <th>Status</th>
                 <th></th>
                 <th>Notes</th>
@@ -55,7 +54,6 @@
         <tbody>
             @forelse ( $documents as $log )
                 <tr>
-                    <!-- <td>{{ $log->userEmployee->fullName }}</td> -->
                     <td>{{ $log->action }}</td>
                     <td>{{ $log->userEmployee->fullName }}</td>
                     <td>{{ $log->notes }}</td>
