@@ -275,8 +275,13 @@
                                             <small>{{ $log->documentCode->tracking_date }}</small>
                                     </td>
                                     <td>{{ $log->notes }}</td>
-                                    <td data-id="log-{{ $log->id }}">
-                                            {{ $log->remarks }}
+                                    <td>
+                                        @if ( empty($log->remarks) )
+                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="btn btn-link text-info linkRemarks"><small><i class="fa fa-plus"></i> add remarks</small></a>
+                                        @else
+                                            
+                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="btn btn-link linkRemarks"><span class="text-mute">{{ $log->remarks }}</span></a>
+                                        @endif
                                     </td>
                                     <td>
                                         <h5 class="font-weight-bold">
