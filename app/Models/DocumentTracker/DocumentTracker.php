@@ -21,7 +21,6 @@ class DocumentTracker extends Model
     protected $connection = "mysql2";
     protected $table = "document_trackers";
     protected $casts = [
-        'keywords'        => 'array',
         'isRouteComplete' => 'boolean',
         'isDocCancelled'  => 'boolean',
     ];
@@ -100,6 +99,16 @@ class DocumentTracker extends Model
                                                 ORDER BY created_at DESC
                                                 LIMIT 1)'));
                             });
+    }
+
+    /**
+     * Explode keyword attributes to array.
+     *  
+     **/
+    public function getKeyWordsAttribute()
+    {
+        $keywords = explode(',', $this->attribute['keywords']);
+        return $keywords;
     }
 
     public function getDateOfDocumentAttribute()
