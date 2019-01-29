@@ -66,11 +66,13 @@ class DocumentTrackerController extends Controller
         $log_id    = $request->code;
         $tracker  = DocumentTracker::where('code', 'LIKE', '%'.$log_id)
                                         ->orWhere('tracking_code', 'LIKE', '%'. $log_id)
+                                        ->withTrashed()
                                         ->first();
 
         $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$log_id)
                                             ->orWhere('tracking_code', 'LIKE', '%'. $log_id)
-                                            ->latest()->get();
+                                            ->latest()
+                                            ->get();
 
         if($request->ajax())
         {

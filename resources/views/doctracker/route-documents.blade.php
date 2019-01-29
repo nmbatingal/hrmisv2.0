@@ -323,6 +323,7 @@
                 orderable: false, 
                 targets: [2,3,4,5] 
             }],
+            order: [[ 0, "desc" ]],
             dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
             buttons: [
                 {
