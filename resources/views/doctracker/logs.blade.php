@@ -31,7 +31,7 @@
             <div class="form-group row m-b-0">
                 <label class="control-label text-right font-weight-bold col-md-2">Keywords: </label>
                 <div class="col-md-9">
-                    @foreach( $tracker->keyWords) as $keyword)
+                    @foreach( $tracker->keywordList as $keyword )
                         <span class="badge badge-info">{{ $keyword }}</span>
                     @endforeach
                 </div>
@@ -70,21 +70,22 @@
 
 <script>
     var tableLog = $('#table-logs').DataTable({
-            columnDefs: [{ 
-                orderable: false, 
-                targets: [0,1,2,3] 
-            }],
-            order: [[ 4, "desc" ]],
-            dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
-            buttons: [
-                {
-                    text: 'Export Log',
-                    className: 'btn btn-primary',
-                    action: function ( e, dt, node, config ) {
-                        window.open("{{ route('doctracker.export.routingcode', $tracker->tracking_code) }}");
-                    }
+        fixedHeader: true,
+        columnDefs: [{ 
+            orderable: false, 
+            targets: [0,1,2,3] 
+        }],
+        order: [[ 4, "desc" ]],
+        dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
+        buttons: [
+            {
+                text: 'Export Log',
+                className: 'btn btn-primary',
+                action: function ( e, dt, node, config ) {
+                    window.open("{{ route('doctracker.export.routingcode', $tracker->tracking_code) }}");
                 }
-            ]
-        });
+            }
+        ]
+    });
 
 </script>

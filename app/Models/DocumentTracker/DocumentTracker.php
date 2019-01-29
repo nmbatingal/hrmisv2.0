@@ -105,9 +105,9 @@ class DocumentTracker extends Model
      * Explode keyword attributes to array.
      *  
      **/
-    public function getKeyWordsAttribute()
-    {
-        $keywords = explode(',', $this->attribute['keywords']);
+    public function getKeywordListAttribute()
+    {   
+        $keywords = explode(",", $this->keywords);
         return $keywords;
     }
 
