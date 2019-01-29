@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 /***** EXCEL *****/
 use App\Exports\RoutingLogsExport;
+use App\Exports\TrackingCodeLogsExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentTrackerController extends Controller
@@ -63,68 +64,20 @@ class DocumentTrackerController extends Controller
     {
         $logDetail = array();
         $log_id    = $request->code;
-        $code      = $request->code;
+        $tracker  = DocumentTracker::where('code', 'LIKE', '%'.$log_id)
+                                        ->orWhere('tracking_code', 'LIKE', '%'. $log_id)
+                                        ->first();
+
         $documents = DocumentTrackingLogs::where('code', 'LIKE', '%'.$log_id)
                                             ->orWhere('tracking_code', 'LIKE', '%'. $log_id)
                                             ->latest()->get();
-        $recipients = "";
 
-        foreach ($documents as $i => $value) {
-
-            if ( $value->action == "Forward" ) {
-
-                $li = "";
-
-                if ( !is_null( $value->recipients ) )
-                {
-                    foreach ( $value->recipients as $recipient ) {
-                        $li .= "<i class='ti-arrow-right'></i> ". $recipient['name'] ."<br/>";
-                    }
-                } else {
-                    $li = "<i class='ti-arrow-right'></i>All";
-                }
-
-                $recipients = $li;
-
-            } else {
-                $recipients = "<strong>". $value->userEmployee->full_name ."</strong><br>";
-            }
-
-
-            $code             = $value->tracking_code;
-
-            $tracker          = [
-                'tracking_code'   => $value->tracking_code,
-                'date_created'    => $value->documentCode->tracking_date,
-                'created_by'      => $value->userEmployee->full_name,
-                'document_type'   => $value->documentCode->other_document,
-                'subject'         => $value->documentCode->subject,
-                'details'         => $value->documentCode->details,
-                'keywords'        => $value->documentCode->keywords,
-            ];
-
-            $logDetail[$i]    = [
-                'tracking_code'   => $value->tracking_code,
-                'created_by'      => $value->userEmployee->full_name,
-                'action'          => $value->action,
-                'document_type'   => $value->documentCode->other_document,
-                'recipients'      => $recipients,
-                'date_created'    => $value->documentCode->tracking_date,
-                'notes'           => $value->notes ?: '',
-                'remarks'         => $value->remarks ?: '',
-                'date_time'       => $value->date_action,
-                'deleted'         => $value->deleted_at ? true : false,
-            ];
-        }
-     
         if($request->ajax())
         {
-            $view = view('doctracker.logs', compact('documents'));
+            $view = view('doctracker.logs', compact('tracker', 'documents'))->render();
             return response()->json([
-                'tracker' => $tracker, 
-                'results' => $logDetail, 
-                'result' => count($documents), 
-                'code' => $code, 'view' => $view ]);
+                'html'    => $view,
+            ]);
         }
     }
 
@@ -189,6 +142,12 @@ class DocumentTrackerController extends Controller
     {
         $id = Auth::user()->id;
         return new RoutingLogsExport($id);
+        // return new UsersExport;
+    }
+
+    public function exportRoutedCodeDocuments($code) 
+    {
+        return new TrackingCodeLogsExport($code);
         // return new UsersExport;
     }
 

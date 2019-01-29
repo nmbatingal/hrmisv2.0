@@ -196,6 +196,23 @@
                     <!-- /.modal-dialog -->
                 </div>
                 <!-- /.modal -->
+
+                <!-- modal tracker logs content -->
+                <div id="modalLogs" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modalLogsTitle">Log Details</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div id="modalBodyLogs" class="modal-body">
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
             </div>
         </div>
     </div>
@@ -248,7 +265,7 @@
                         <tbody class="table-sm">
                             @forelse( $documentsLog as $log )
                                 <tr id="row-{{ $log->id }}">
-                                    <td><a href="javascript:void(0)" target="_blank">{{ $log->tracking_code }}</a></td>
+                                    <td><a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $log->tracking_code }}</a></td>
                                     <td>
                                         <h5 class="font-weight-bold">
                                             {{ $log->documentCode->subject }}
@@ -327,6 +344,71 @@
 
         $('#modal-outgoing').on('hidden.bs.modal', function () {
             $("#upload-progress .progress-bar").css("width", 0);
+        });
+
+        // SHOW TRACKING LOGS OF A DOCUMENT
+        $('a.show-code').on('click', function() {
+            var tracking_code = $(this).attr("id"),
+                url = "{{ route('doctracker.search') }}";
+
+            $.ajax({
+                method : 'GET',
+                url    : url,
+                data   : {code: tracking_code},
+                success: function(data) {
+
+                    // console.log(data);
+
+                    //if ( data.success ) {
+
+                        // $('#modalLogsTitle').html( tracking_code + ' Log Details');
+                        $('#modalBodyLogs').html(data.html);
+                        $('#modalLogs').modal('show');
+
+                    // } else {
+                    //     swal({
+                    //         title: "Error!",
+                    //         text:  "Tracking code undefined.",
+                    //         type: "error"
+                    //     }).then( function() {
+                    //         // $("#upload-progress .progress-bar").css("width", 0);
+                    //         // $("#codeInput").select();
+                    //     });
+                    // }
+
+                    // $('#results-bar').css('display', 'block'); 
+                    // $('table#search-tracker tbody tr').remove();  
+
+                    // $('#code-result').html(data.result);
+                    // $('#tracker-code').html(data.code);
+
+                    // if ( data.result > 0 )
+                    // {
+                    //     $('input[name=tracking_code]').val(data.tracker.tracking_code);
+                    //     $('input[name=date_created]').val(data.tracker.date_created);
+                    //     $('input[name=created_by]').val(data.tracker.created_by);
+                    //     $('input[name=document_type]').val(data.tracker.document_type);
+                    //     $('input[name=subject]').val(data.tracker.subject);
+                    //     $('input[name=details]').val(data.tracker.details);
+
+                    //     $.each(data.results, function(index, item){
+                    //         var row = appendTableRowSearch(item);
+                    //         $('table#search-tracker tbody').append(row);
+                    //     });
+
+                    //     $('#search-tracker').trigger('footable_initialize');
+                    // } else {
+                    //     $('table#search-tracker tbody').append('<tr class="footable-empty"><td colspan="4">No results</td></tr>');
+                    // }
+                },
+                error  : function(xhr, err) {
+                    swal({
+                        title: "Error!",
+                        text:  "Could not retrieve the data.",
+                        type: "error"
+                    })
+                }
+            });
         });
 
         $('form#submitCode').on('submit', function(e) {
