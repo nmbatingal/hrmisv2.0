@@ -12,15 +12,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
 // class UsersExport implements FromQuery, Responsable
-class RoutingLogsExport implements FromView, ShouldQueue, Responsable
+class TrackingCodeLogsExport implements FromView, ShouldQueue, Responsable
 {
 	use Exportable;
 
 	private $fileName = 'routinglogs.xlsx';
 
-	public function __construct(int $id)
+	public function __construct(string $code)
     {
-        $this->user_id = $id;
+        $this->code = $code;
     }
 
     /**
@@ -33,10 +33,11 @@ class RoutingLogsExport implements FromView, ShouldQueue, Responsable
 
     public function view(): View
     {
-        $documentsLog = DocumentTrackingLogs::where('user_id', $this->user_id)->latest()->get();
+        $documentsLog = DocumentTrackingLogs::where('tracking_code', $this->code)->latest()->get();
 
         return view('doctracker.exports.routeddocuments', [
             'documentsLog'  => $documentsLog
         ]);
     }
 }
+

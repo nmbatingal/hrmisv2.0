@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@searchJS')->name('doctracker.search');
 	Route::get('/doctracker/routing', 'DocumentTracker\DocumentTrackerController@routingDocuments')->name('doctracker.routing');
 	Route::get('/doctracker/routing/export', 'DocumentTracker\DocumentTrackerController@exportRoutedDocuments')->name('doctracker.export.routing');
+	Route::get('/doctracker/routing/export/{code}', 'DocumentTracker\DocumentTrackerController@exportRoutedCodeDocuments')->name('doctracker.export.routingcode');
 
 	Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 	Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.create.tracker');
