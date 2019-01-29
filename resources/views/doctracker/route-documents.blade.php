@@ -275,7 +275,9 @@
                                             <small>{{ $log->documentCode->tracking_date }}</small>
                                     </td>
                                     <td>{{ $log->notes }}</td>
-                                    <td>{{ $log->remarks }}</td>
+                                    <td data-id="log-{{ $log->id }}">
+                                            {{ $log->remarks }}
+                                    </td>
                                     <td>
                                         <h5 class="font-weight-bold">
                                             {{ $log->action }}
