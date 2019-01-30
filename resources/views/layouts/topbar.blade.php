@@ -33,9 +33,9 @@
                 </li>
             </ul>
             <div class="navbar-nav mr-auto">
-                <form class="form-horizontal">
+                <!-- <form class="form-horizontal">
                     <input type="text" class="form-control" style="width: 500px;" placeholder="Search & enter">
-                </form>
+                </form> -->
             </div>
             <!-- ============================================================== -->
             <!-- User profile and search -->

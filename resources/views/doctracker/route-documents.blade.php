@@ -8,6 +8,11 @@
 <link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    #tableRoutedDocument tbody td:nth-child(1) {  
+        vertical-align: middle;
+    }
+</style>
 @endsection
 
 @section('navbutton')
@@ -111,52 +116,33 @@
                     </div>
                 </div>
 
-                <div class="card border-info m-t-30 m-b-0">
-                    <div class="card-header bg-dark">
+                <div class="card border-info m-t-10 m-b-0">
+                    <!-- <div class="card-header bg-dark">
                         <h4 class="m-b-0 text-white">Receive/Release Document</h4>
-                    </div>
+                    </div> -->
                     <div class="card-body p-b-0" style="border: 1px solid #000000;">
                         <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                         <form id="submitCode" class="form-horizontal">
                             {{ csrf_field() }}
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="row m-b-20">
-                                        <div class="col-md-3 col-xs-12">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="radioReceive" name="routingType" value="Receive" required class="custom-control-input">
-                                                <label class="custom-control-label" for="radioReceive">Receive Document</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-xs-12">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="radioRelease" name="routingType" value="Release" required class="custom-control-input">
-                                                <label class="custom-control-label" for="radioRelease">Release Document</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span class="text-danger">* Select from receiving/releasing of document</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group m-b-0">
-                                        <div class="input-group p-0">
-                                            <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-success" type="submit">
-                                                    <i class="icon-cursor"></i>&nbsp;</button>
-                                            </div>
-                                        </div>
-                                        <div id="upload-progress" class="progress m-t-0">
-                                            <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
-                                        </div>
-                                        <small class="form-control-feedback text-muted">&nbsp;</small> 
-                                    </div>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <select name="routingType" class="form-control custom-select" style="width: 100%;" required>
+                                        <option value="">-- Select Type --</option>
+                                        <option value="Receive">Receive Document</option>
+                                        <option value="Release">Release Document</option>
+                                    </select>
+                                    <small class="form-control-feedback text-muted">*Receive/Release Document.</small> 
                                 </div>
-                                <!--/span-->
-                                <!-- progress bar -->
-                                
+                                <div class="col-md-9 p-0">
+                                    <div class="input-group">
+                                        <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-success" type="submit">
+                                                <i class="icon-cursor"></i>&nbsp;</button>
+                                        </div>
+                                    </div>
+                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                </div>
                             </div>
                         </form>
                         <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
@@ -246,26 +232,24 @@
                     <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped">
                         <colgroup>
                             <col width="15%">
-                            <col width="30%">
-                            <col width="15%">
-                            <col width="15%">
+                            <col width="40%">
                             <col width="20%">
-                            <col width="5%">
+                            <col width="25%">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
-                                <th>Notes</th>
-                                <th>Remarks</th>
+                                <!-- <th>Notes</th> -->
                                 <th>Status</th>
-                                <th></th>
+                                <th>Remarks</th>
+                                <!-- <th></th> -->
                             </tr>
                         </thead>
                         <tbody class="table-sm">
                             @forelse( $documentsLog as $log )
                                 <tr id="row-{{ $log->id }}">
-                                    <td><a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $log->tracking_code }}</a></td>
+                                    <td class="text-center"><a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $log->tracking_code }}</a></td>
                                     <td>
                                         <h5 class="font-weight-bold">
                                             {{ $log->documentCode->subject }}
@@ -274,15 +258,7 @@
                                             <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
                                             <small>{{ $log->documentCode->tracking_date }}</small>
                                     </td>
-                                    <td>{{ $log->notes }}</td>
-                                    <td>
-                                        @if ( empty($log->remarks) )
-                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="btn btn-link text-info linkRemarks"><small><i class="fa fa-plus"></i> add remarks</small></a>
-                                        @else
-                                            
-                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="btn btn-link linkRemarks"><span class="text-mute">{{ $log->remarks }}</span></a>
-                                        @endif
-                                    </td>
+                                    <!-- <td>{{ $log->notes }}</td> -->
                                     <td>
                                         <h5 class="font-weight-bold">
                                             {{ $log->action }}
@@ -298,9 +274,19 @@
                                             @endif
                                         </ul>
                                     </td>
-                                    <td class="text-center">
-                                        <!-- <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button> -->
+                                    <td>
+                                        @if ( empty($log->remarks) )
+                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="btn btn-xs btn-info linkRemarks"><small><i class="fa fa-plus"></i></small></a>
+                                        @else
+                                            
+                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="linkRemarks">
+                                                {{ $log->remarks }}
+                                            </a>
+                                        @endif
                                     </td>
+                                    <!-- <td class="text-center">
+                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
+                                    </td> -->
                                 </tr>
                             @empty
                             @endforelse
@@ -326,11 +312,9 @@
 
         // DataTable for Tracker
         var trackerTable = $('#tableRoutedDocument').DataTable({
-            columnDefs: [{ 
-                orderable: false, 
-                targets: [2,3,4,5] 
-            }],
-            order: [[ 0, "desc" ]],
+            ordering: false,
+            fixedHeader: true,
+            // order: [[ 0, "desc" ]],
             dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
             buttons: [
                 {
@@ -350,12 +334,8 @@
 
         $(".select2").select2();
 
-        $('#modal-outgoing').on('hidden.bs.modal', function () {
-            $("#upload-progress .progress-bar").css("width", 0);
-        });
-
         // SHOW TRACKING LOGS OF A DOCUMENT
-        $('a.show-code').on('click', function() {
+        $("#tableRoutedDocument").on("click", ".show-code", function() {
             var tracking_code = $(this).attr("id"),
                 url = "{{ route('doctracker.search') }}";
 
@@ -364,50 +344,8 @@
                 url    : url,
                 data   : {code: tracking_code},
                 success: function(data) {
-
-                    // console.log(data);
-
-                    //if ( data.success ) {
-
-                        // $('#modalLogsTitle').html( tracking_code + ' Log Details');
-                        $('#modalBodyLogs').html(data.html);
-                        $('#modalLogs').modal('show');
-
-                    // } else {
-                    //     swal({
-                    //         title: "Error!",
-                    //         text:  "Tracking code undefined.",
-                    //         type: "error"
-                    //     }).then( function() {
-                    //         // $("#upload-progress .progress-bar").css("width", 0);
-                    //         // $("#codeInput").select();
-                    //     });
-                    // }
-
-                    // $('#results-bar').css('display', 'block'); 
-                    // $('table#search-tracker tbody tr').remove();  
-
-                    // $('#code-result').html(data.result);
-                    // $('#tracker-code').html(data.code);
-
-                    // if ( data.result > 0 )
-                    // {
-                    //     $('input[name=tracking_code]').val(data.tracker.tracking_code);
-                    //     $('input[name=date_created]').val(data.tracker.date_created);
-                    //     $('input[name=created_by]').val(data.tracker.created_by);
-                    //     $('input[name=document_type]').val(data.tracker.document_type);
-                    //     $('input[name=subject]').val(data.tracker.subject);
-                    //     $('input[name=details]').val(data.tracker.details);
-
-                    //     $.each(data.results, function(index, item){
-                    //         var row = appendTableRowSearch(item);
-                    //         $('table#search-tracker tbody').append(row);
-                    //     });
-
-                    //     $('#search-tracker').trigger('footable_initialize');
-                    // } else {
-                    //     $('table#search-tracker tbody').append('<tr class="footable-empty"><td colspan="4">No results</td></tr>');
-                    // }
+                    $('#modalBodyLogs').html(data.html);
+                    $('#modalLogs').modal('show');
                 },
                 error  : function(xhr, err) {
                     swal({
@@ -421,7 +359,8 @@
 
         $('form#submitCode').on('submit', function(e) {
             e.preventDefault();
-            var routing = $('input[name=routingType]:checked').val(),
+            // var routing = $('input[name=routingType]:checked').val(),
+            var routing = $('input[name=routingType]').val(),
                 form    = $(this);
 
             if ( routing == "Receive" ) {
@@ -442,8 +381,8 @@
                                 if (event.lengthComputable) {
                                     percent = Math.ceil(position / total * 100);
                                 }
-                                //update progressbar
-                                $("#upload-progress .progress-bar").css("width", + percent +"%");
+                                // update progressbar
+                                // $("#upload-progress .progress-bar").css("width", + percent +"%");
                             }, true);
                         }
                         return xhr;
@@ -461,7 +400,7 @@
                                 text:  "Tracking code undefined.",
                                 type: "error"
                             }).then( function() {
-                                $("#upload-progress .progress-bar").css("width", 0);
+                                // $("#upload-progress .progress-bar").css("width", 0);
                                 $("#codeInput").select();
                             });
                         }
@@ -472,7 +411,7 @@
                             text:  "Could not retrieve the data.",
                             type: "error"
                         }).then( function() {
-                            $("#upload-progress .progress-bar").css("width", 0);
+                            // $("#upload-progress .progress-bar").css("width", 0);
                             $("#codeInput").select();
                         });
                     }
@@ -498,7 +437,7 @@
                                     percent = Math.ceil(position / total * 100);
                                 }
                                 //update progressbar
-                                $("#upload-progress .progress-bar").css("width", + percent +"%");
+                                // $("#upload-progress .progress-bar").css("width", + percent +"%");
                             }, true);
                         }
                         return xhr;
@@ -514,7 +453,7 @@
                                 text:  "Tracking code undefined.",
                                 type: "error"
                             }).then( function() {
-                               $("#upload-progress .progress-bar").css("width", 0);
+                               // $("#upload-progress .progress-bar").css("width", 0);
                                $("#codeInput").select();
                             });
                         }
@@ -525,7 +464,7 @@
                             text:  "Could not retrieve the data.",
                             type: "error"
                         }).then( function() {
-                           $("#upload-progress .progress-bar").css("width", 0);
+                           // $("#upload-progress .progress-bar").css("width", 0);
                            $("#codeInput").select();
                         });
                     }
