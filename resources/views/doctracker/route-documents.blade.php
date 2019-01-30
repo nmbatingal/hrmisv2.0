@@ -10,7 +10,7 @@
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <style type="text/css">
     #tableRoutedDocument tbody td:nth-child(1) {  
-        vertical-align: middle;
+        vertical-align: top;
     }
 </style>
 @endsection
@@ -127,18 +127,18 @@
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <select name="routingType" class="form-control custom-select" style="width: 100%;" required>
-                                        <option value="">-- Select Type --</option>
+                                        <option value="">-- Select Action --</option>
                                         <option value="Receive">Receive Document</option>
                                         <option value="Release">Release Document</option>
                                     </select>
-                                    <small class="form-control-feedback text-muted">*Receive/Release Document.</small> 
+                                    <small class="form-control-feedback text-muted">*Select Receive/Release Document</small> 
                                 </div>
                                 <div class="col-md-9 p-0">
                                     <div class="input-group">
-                                        <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code to receive" required autofocus>
+                                        <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code here" required autofocus>
                                         <div class="input-group-append">
                                             <button class="btn btn-success" type="submit">
-                                                <i class="icon-cursor"></i>&nbsp;</button>
+                                                <!-- <i class="icon-cursor"></i> --> Submit</button>
                                         </div>
                                     </div>
                                     <small class="form-control-feedback text-muted">&nbsp;</small> 
@@ -199,6 +199,23 @@
                     <!-- /.modal-dialog -->
                 </div>
                 <!-- /.modal -->
+
+                <!-- MODAL TRACKER REMARKS CONTENT -->
+                <div id="modalRemarks" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modalRemarksTitle">Remarks</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div id="modalBodyRemarks" class="modal-body">
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
             </div>
         </div>
     </div>
@@ -217,7 +234,7 @@
                                         <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
                                         <div class="input-group-append">
                                             <button class="btn btn-info" type="submit">
-                                                <i class="ti-search"></i>&nbsp;</button>
+                                                <!-- <i class="ti-search"></i> --> Search</button>
                                         </div>
                                     </div>
                                     <small class="form-control-feedback text-muted">&nbsp;</small> 
@@ -276,7 +293,7 @@
                                     </td>
                                     <td>
                                         @if ( empty($log->remarks) )
-                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="btn btn-xs btn-info linkRemarks"><small><i class="fa fa-plus"></i></small></a>
+                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="text-info linkRemarks"><small><i class="icon-note"></i></small></a>
                                         @else
                                             
                                             <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="linkRemarks">
@@ -334,7 +351,7 @@
 
         $(".select2").select2();
 
-        // SHOW TRACKING LOGS OF A DOCUMENT
+        // SHOW MODAL TRACKING LOGS OF A DOCUMENT
         $("#tableRoutedDocument").on("click", ".show-code", function() {
             var tracking_code = $(this).attr("id"),
                 url = "{{ route('doctracker.search') }}";
@@ -357,10 +374,17 @@
             });
         });
 
+        // SHOW MODAL OF TRACKER REMARKS
+        $("#tableRoutedDocument").on("click", ".linkRemarks", function() {
+            var tracking_code = $(this).data("id");
+
+            $('#modalRemarks').modal('show');
+        });
+
         $('form#submitCode').on('submit', function(e) {
             e.preventDefault();
             // var routing = $('input[name=routingType]:checked').val(),
-            var routing = $('input[name=routingType]').val(),
+            var routing = $('select[name=routingType]').val(),
                 form    = $(this);
 
             if ( routing == "Receive" ) {

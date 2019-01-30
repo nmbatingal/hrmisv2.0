@@ -75,7 +75,8 @@
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <div class="float-right">
-                                            <a href="{{ route('print.barcode', $myDocument->tracking_code) }}" target="_blank" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+                                            <a id="btnPrintBarcode" href="javascript:void(0);" onclick="printCode()" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+
                                             <!-- <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a> -->
                                         </div>
                                     </div>
@@ -253,7 +254,12 @@
                 enabled: false
             }
         });
-    });
 
+</script>
+<script>
+    function printCode(link) {
+        var url = "{{ route('print.barcode', $myDocument->tracking_code) }}";
+        window.open(url, "Print Barcode", "width=800,height=600");
+    }
 </script>
 @endsection

@@ -128,9 +128,11 @@ class DocumentTrackerController extends Controller
     public function routingDocuments()
     {
         $documentsCreated    = DocumentTracker::where('user_id', Auth::user()->id)->get();
+        
         $documentsReceived   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
                                                     ->where('action', "Receive")
                                                     ->latest()->get();
+
         $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
                                                     ->where('action', "Forward")
                                                     ->latest()->get();
