@@ -260,6 +260,7 @@
                                 <!-- <th>Notes</th> -->
                                 <th>Status</th>
                                 <th>Remarks</th>
+                                <th>Keywords</th>
                                 <!-- <th></th> -->
                             </tr>
                         </thead>
@@ -301,6 +302,9 @@
                                             </a>
                                         @endif
                                     </td>
+                                    <td>
+                                        {{ $log->documentCode->keywords }}
+                                    </td>
                                     <!-- <td class="text-center">
                                         <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td> -->
@@ -331,6 +335,13 @@
         var trackerTable = $('#tableRoutedDocument').DataTable({
             ordering: false,
             fixedHeader: true,
+            columnDefs: [
+                {
+                    "targets": [ 4 ],
+                    "visible": false,
+                    "searchable": true
+                },
+            ],
             // order: [[ 0, "desc" ]],
             dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
             buttons: [
