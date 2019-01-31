@@ -117,9 +117,9 @@
                 </div>
 
                 <div class="card border-info m-t-10 m-b-0">
-                    <!-- <div class="card-header bg-dark">
-                        <h4 class="m-b-0 text-white">Receive/Release Document</h4>
-                    </div> -->
+                    <div class="card-header bg-dark">
+                        <h4 class="m-b-0 text-white">Receive and Release Document</h4>
+                    </div>
                     <div class="card-body p-b-0" style="border: 1px solid #000000;">
                         <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                         <form id="submitCode" class="form-horizontal">
@@ -131,7 +131,7 @@
                                         <option value="Receive">Receive Document</option>
                                         <option value="Release">Release Document</option>
                                     </select>
-                                    <small class="form-control-feedback text-muted">*Select Receive/Release Document</small> 
+                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
                                 </div>
                                 <div class="col-md-9 p-0">
                                     <div class="input-group">
