@@ -131,7 +131,7 @@
                                         <option value="Receive">Receive Document</option>
                                         <option value="Release">Release Document</option>
                                     </select>
-                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                    <small class="form-control-feedback text-muted">*Select Receive/Release Document</small> 
                                 </div>
                                 <div class="col-md-9 p-0">
                                     <div class="input-group">
