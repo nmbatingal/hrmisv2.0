@@ -40,7 +40,7 @@
     </div>
 </form>
 
-<div class="table-responsive">
+<div class="table-responsive m-t-20">
     <table id="table-logs" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>

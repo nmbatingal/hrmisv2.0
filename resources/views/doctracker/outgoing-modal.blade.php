@@ -237,15 +237,15 @@
                                 '(' + item.document_type + ')<br>' +
                                 item.date_created + 
                         '</td>' +
-                        '<td>' + item.note + '</td>' +
-                        '<td>' + item.remarks + '</td>' +
+                        // '<td>' + item.note + '</td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.action + '</h5>' +
                             item.date_action +  
                         '</td>' +
-                        '<td class="text-center">' +
+                        '<td>' + item.remarks + '</td>' +
+                        /* '<td class="text-center">' +
                             '<button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="'+ item.id +'" title="Cancel"><i class="ti-close"></i></button>' +
-                        '</td>' +
+                        '</td>' + */
                     '</tr>');
         return row;
     }
