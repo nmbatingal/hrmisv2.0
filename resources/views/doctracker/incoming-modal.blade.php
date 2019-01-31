@@ -146,7 +146,7 @@
     // row to be added
     function appendTableRowReceived (item) {
         var row = $('<tr>' +
-                        '<td><a href="#" target="_blank">' + item.tracking_code + '</a></td>' +
+                        '<td class="text-center"><a href="#" target="_blank">' + item.tracking_code + '</a></td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
                                 '<h5>' + item.created_by + '</h5>' +  
@@ -159,6 +159,7 @@
                             item.date_action +  
                         '</td>' +
                         '<td>' + item.remarks +  '</td>' +
+                        // '<td>' + item.keywords +  '</td>' +
                         /* '<td class="text-center">' +
                             '<button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="'+ item.id +'" title="Cancel"><i class="ti-close"></i></button>' +
                         '</td>' + */

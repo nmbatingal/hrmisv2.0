@@ -185,7 +185,7 @@ class DocumentTrackerController extends Controller
         $code     = $request->code;
         $data     = array();
 
-        $document = DocumentTracker::where('code', $code)
+        $tracker = DocumentTracker::where('code', $code)
                                         ->orWhere('tracking_code', $code)
                                         ->first();
 
@@ -193,11 +193,11 @@ class DocumentTrackerController extends Controller
                                         ->orWhere('tracking_code', $code)
                                         ->latest()
                                         ->first();
-        if ( $document )
+        if ( $tracker )
         {
             $log                = new DocumentTrackingLogs;
-            $log->code          = $document->code;
-            $log->tracking_code = $document->tracking_code;
+            $log->code          = $tracker->code;
+            $log->tracking_code = $tracker->tracking_code;
             $log->user_id       = Auth::user()->id;
             $log->action        = "Receive";
             $log->notes         = $request->notes;
@@ -213,13 +213,14 @@ class DocumentTrackerController extends Controller
 
             $data = [
                 'result'            => true,
-                'tracking_code'     => $document->tracking_code,
-                'subject'           => $document->subject,
-                'document_type'     => $document->other_document,
-                'created_by'        => $document->userEmployee->full_name,
-                'date_created'      => $document->tracking_date,
+                'tracking_code'     => $tracker->tracking_code,
+                'subject'           => $tracker->subject,
+                'document_type'     => $tracker->other_document,
+                'created_by'        => $tracker->userEmployee->full_name,
+                'date_created'      => $tracker->tracking_date,
                 'note'              => $log->notes ?: '',
                 'remarks'           => $log->remarks ?: '',
+                'keywords'          => $tracker->keywords,
                 'action'            => $log->action,
                 'date_action'       => $log->date_action,
             ];
@@ -325,6 +326,7 @@ class DocumentTrackerController extends Controller
                 'date_created'      => $tracker->tracking_date,
                 'note'              => $log->notes ?: '',
                 'remarks'           => $log->remarks ?: '',
+                'keywords'          => $tracker->keywords,
                 'action'            => $log->action,
                 'date_action'       => $log->dateAction,
             ];
