@@ -15,7 +15,7 @@
                 <h3 class="menu-title">OPTIMA</h3>
                 <ul class="sidebar-menu">
                     <li><a href="{{ route('optima.dashboard') }}">Dashboard</a></li>
-                    <li><a href="{{ route('optima.routing') }}">Route Documents</a></li>
+                    <li><a href="{{ route('optima.route-documents') }}">Route Documents</a></li>
                     <li><a href="{{ route('optima.mydocuments') }}">My Documents</a></li>
                     <li><a href="javascript:void(0);">Search</a></li>
                     <!-- <li><a href="{{ route('doctracker.logs') }}">Logs</a></li> -->
@@ -25,36 +25,6 @@
             </div>
         </li>
         <!-- END DOCUMENT TRACKER -->
-
-        @hasrole('System Administrator')
-        <!-- MORALE SURVEY  -->
-        <li class="{{ Request::is('moralesurvey/*') ? 'selected' : '' }}">
-            <a href="javascript:void(0);"><i class="ti-bar-chart"></i></a>
-            <div class="sidebarmenu">
-                <!-- Left navbar-header -->
-                <h3 class="menu-title">Morale Survey</h3>
-                <ul class="sidebar-menu">
-                    <li><a href="{{ route('moralesurvey.dashboard') }}">Dashboard</a></li>
-                    <li class="menu {{ Request::is('hr/applicants/*') ? 'active' : '' }}">
-                        <a href="javascript:void(0)" 
-                           class="{{ Request::is('moralesurvey/setting/*') ? 'active' : '' }}
-                           ">Survey Settings <i class="fa fa-angle-left float-right"></i></a>
-                        <!-- .Second level -->
-                        <ul class="sub-menu"
-                            {{ Request::is('moralesurvey/setting/*') ? 'style=display:block;' : '' }}
-                            >
-                            <li><a href="{{ route('question.index') }}">Questions</a></li>
-                            <li><a href="{{ route('semester.index') }}">Semester</a></li>
-                        </ul>
-                        <!-- /.Second level -->
-                    </li>
-                    <li><a href="{{ route('survey.index') }}">Survey Form</a></li>
-                </ul>
-                <!-- Left navbar-header end -->
-            </div>
-        </li>
-        <!-- END MORALE SURVEY  -->
-        @endhasrole
 
         <!-- .SYSTEM SETTINGS -->
         <li class="{{ Request::is('setting') ? 'selected' : '' }}">

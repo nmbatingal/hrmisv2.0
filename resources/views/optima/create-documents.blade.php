@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.optima.app')
 
 @section('title')
--OPTIMA | Create New Tracker
+Create new tracker
 @endsection
 
 @section('styles')
@@ -25,7 +25,7 @@
 <!-- Help -->
 <!-- ============================================================== -->
 <li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
 </li>
 <!-- ============================================================== -->
 <!-- Help -->
@@ -43,7 +43,7 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.index') }}">OPTIMA</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">OPTIMA</a></li>
             <li class="breadcrumb-item active">Create New Tracker</li>
         </ol>
     </div>
@@ -320,15 +320,31 @@
                     if (data.result) {
 
                         $('#spinner').css('display', 'none');
-                        swal({
-                            title: "Success!",
-                            text:  "Document tracker successfully saved. Tracking Code " + data.tracker,
-                            type: "success"
-                        }).then( function() {
-                            window.location = data.url;
-                        });
+
+                        var url = "{{ route('print.barcode', ':var') }}";
+                            url = url.replace(':var', data.tracker);
+
+                        var dialog = Swal.fire({
+                                        text:  "Document tracker successfully saved. Tracking Code " + data.tracker,
+                                        type: "success",
+                                        showConfirmButton: true,
+                                        showCancelButton: true,
+                                        onOpen: function(swal) {
+
+                                            var swalCancel = $(swal).find('.swal2-cancel');
+
+                                            swalCancel.removeClass('swal2-styled')
+                                                        .addClass('btn btn-lg btn-danger')
+                                                        .html('<i class="ti-printer"></i> Print Code');
+
+                                            swalCancel.off().click(function(e) {
+                                                window.open(url, "Print Barcode", "width=800,height=600");
+                                            });
+                                      }
+                                });
+
                     } else {
-                        swal({
+                        Swal.fire({
                             title: "Error!",
                             text:  "Data unsuccessfully saved.",
                             type: "error"
@@ -338,7 +354,7 @@
                     }
                 },
                 error  : function(xhr, err) {
-                    swal({
+                    Swal.fire({
                         title: "Error!",
                         text:  "Could not process data.",
                         type: "error"

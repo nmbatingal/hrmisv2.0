@@ -11,7 +11,7 @@
 <!-- Help -->
 <!-- ============================================================== -->
 <li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
 </li>
 <!-- ============================================================== -->
 <!-- Help -->
@@ -29,7 +29,7 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">OPTIMA</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.dashboard') }}">OPTIMA</a></li>
             <li class="breadcrumb-item active">About</li>
         </ol>
     </div>

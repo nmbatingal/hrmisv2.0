@@ -1,14 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.optima.app')
 
 @section('title')
--OPTIMA | My Documents
+My Documents
 @endsection
 
 @section('navbutton')
 <!-- Help -->
 <!-- ============================================================== -->
 <li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
 </li>
 <!-- ============================================================== -->
 <!-- Help -->
@@ -30,12 +30,12 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">OPTIMA</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.dashboard') }}">OPTIMA</a></li>
             <li class="breadcrumb-item active">My Documents</li>
         </ol>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+        <a href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
     </div>
 </div>
 <!-- ============================================================== -->
@@ -51,7 +51,7 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">My Documents</h3>
-                <p class="card-text">List of created documents with tracking codes. Search a document using tracking code or <a href="{{ route('doctracker.create') }}">create a new document</a> to track.</p>
+                <p class="card-text">List of created documents with tracking codes. Search a document using tracking code or <a href="{{ route('optima.my-documents.create') }}">create a new document</a> to track.</p>
 
                 <!-- INFO CARDS -->
                 <div class="row">
@@ -108,6 +108,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- END INFO CARDS -->
             </div>
         </div>
     </div>
@@ -152,7 +153,7 @@
                                 <tr id="row-{{$document->id}}">
                                     <td>
                                         <h5>
-                                            <a href="{{ route('doctracker.showDocument', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
+                                            <a href="{{ route('optima.my-documents.show', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
                                         </h5>
                                     </td>
                                     <td>
@@ -227,9 +228,9 @@
         var btn = $(this),
             id  = btn.data("id"),
             token  = $('input[name=_token]').val(),
-            $url = "{{ route('doctracker.destroy', '') }}" + "/" + id;
+            $url = "{{ route('optima.my-documents.destroy', '') }}" + "/" + id;
 
-        swal({
+        Swal.fire({
             title: "Are you sure?",
             text: "You will not be able to undo this action!",
             type: "warning",
@@ -258,14 +259,14 @@
                         $($row).remove();
                         $('#documentTableOutgoing').trigger('footable_initialize');
 
-                        Swal(
+                        Swal.fire(
                           'Deleted!',
                           'Action successfully deleted.',
                           'success'
                         );
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        swal("Error deleting!", "Please try again", "error");
+                        Swal.fire("Error deleting!", "Please try again", "error");
                     }
                 });
             }

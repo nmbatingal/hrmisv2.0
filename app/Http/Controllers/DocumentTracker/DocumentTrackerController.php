@@ -28,8 +28,19 @@ class DocumentTrackerController extends Controller
      */
     public function index()
     {
+        // $documents = [];
+        // return view('optima.index');
+        return redirect()->route('optima.dashboard');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboard()
+    {
         $documents = [];
-        return view('doctracker.dashboard');
+        return view('optima.dashboard');
     }
 
     /**
@@ -39,7 +50,7 @@ class DocumentTrackerController extends Controller
      */
     public function about()
     {
-        return view('doctracker.about');
+        return view('optima.about');
     }
 
 
@@ -52,7 +63,7 @@ class DocumentTrackerController extends Controller
     {
         $documents = [];
         $trackingLogs = DocumentTrackingLogs::where('user_id', Auth::user()->id )->latest()->get();
-        return view('doctracker.logs', compact('documents', 'trackingLogs'));
+        return view('optima.logs', compact('documents', 'trackingLogs'));
     }
 
     /**
@@ -76,9 +87,11 @@ class DocumentTrackerController extends Controller
 
         if($request->ajax())
         {
-            $view = view('doctracker.logs', compact('tracker', 'documents'))->render();
+            $view = view('optima.logs', compact('tracker', 'documents'))->render();
             return response()->json([
-                'html'    => $view,
+                'html'     => $view,
+                'title'    => $tracker->tracking_code,
+                'docutype' => $tracker->other_document,
             ]);
         }
     }
@@ -99,7 +112,7 @@ class DocumentTrackerController extends Controller
                                                     ->latest()->get();
         $myDocuments = DocumentTracker::myDocuments()->get();
         
-        return view('doctracker.my-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'myDocuments'));
+        return view('optima.my-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'myDocuments'));
     }
 
     /**
@@ -116,7 +129,7 @@ class DocumentTrackerController extends Controller
                         ])->where('tracking_code', $code)->first();
         
         // return $myDocument->trackLogs[0]['action'];
-        return view('doctracker.show-document', compact('myDocument'));
+        return view('optima.show-document', compact('myDocument'));
         // return $myDocument;
     }
 
@@ -138,7 +151,7 @@ class DocumentTrackerController extends Controller
                                                     ->latest()->get();
         $documentsLog = DocumentTrackingLogs::where('user_id', Auth::user()->id)->latest()->get();
 
-        return view('doctracker.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
+        return view('optima.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
         // return dd($documentsLog);
     }
 
@@ -169,8 +182,13 @@ class DocumentTrackerController extends Controller
 
         if($request->ajax())
         {
-            $view = view('doctracker.incoming-modal', compact('tracker'))->render();
-            return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
+            $view = view('optima.incoming-modal', compact('tracker'))->render();
+            return response()->json([
+                'success'   => !is_null($tracker), 
+                'html'      => $view,
+                'tracker'   => $tracker->tracking_code,
+                'docutype'  => $tracker->other_document
+            ]);
         }
     }
 
@@ -244,7 +262,7 @@ class DocumentTrackerController extends Controller
                             }
                         ])->where('tracking_code', $code)->first();
         
-        // return view('doctracker.incoming-show', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
+        // return view('optima.incoming-show', compact('myDocument', 'trackLogs', 'offices', 'users', 'userSelf'));
 
         // return $myDocument->trackLogs;
     }
@@ -261,8 +279,13 @@ class DocumentTrackerController extends Controller
                                         ->orWhere('tracking_code', $code)
                                         ->first();
         
-        $view = view('doctracker.outgoing-modal', compact('tracker'))->render();
-        return response()->json(['success'=> !is_null($tracker), 'html' => $view]);
+        $view = view('optima.outgoing-modal', compact('tracker'))->render();
+        return response()->json([
+            'success'   => !is_null($tracker), 
+            'html'      => $view,
+            'tracker'   => $tracker->tracking_code,
+            'docutype'  => $tracker->other_document,
+        ]);
     }
 
     public function storeOutgoingDocument(Request $request)
@@ -349,7 +372,7 @@ class DocumentTrackerController extends Controller
         $users    = User::employee()->notSelf()->get();
         $userSelf = User::employee()->get();
         $docTypes = DocumentTypes::all();
-        return view('doctracker.create', compact('docTypes', 'offices', 'users', 'userSelf'));
+        return view('optima.create-documents', compact('docTypes', 'offices', 'users', 'userSelf'));
     }
 
     /**

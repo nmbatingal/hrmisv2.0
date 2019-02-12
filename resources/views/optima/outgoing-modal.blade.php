@@ -12,19 +12,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group row m-b-0">
-                <label class="control-label text-right col-md-2">Tracking Code: </label>
-                <div class="col-md-3">
-                    <input type="hidden" class="form-control" name="code" value="{{ $tracker['tracking_code'] }}" readonly>
-                    <p>{{ $tracker['tracking_code'] }}</p>
-                </div>
-
-                <label class="control-label text-right col-md-3">Type: </label>
-                <div class="col-md-4">
-                    <p>{{ $tracker['other_document'] }}"</p>
-                </div>
-            </div>
-
-            <div class="form-group row m-b-0">
                 <label class="control-label text-right col-md-2">Subject: </label>
                 <div class="col-md-8">
                     <p>{{ $tracker['subject'] }}</p>
@@ -122,15 +109,15 @@
         var buttons = $('<div>')
             .append(
                 $('<button class="btn btn-secondary btn-md">Complete Routing</button>').on('click', function() {
-                    swal.close();
+                    Swal.fire.close();
                 })
             ).append(
                 $('<button class="btn btn-secondary btn-md">Cancel Routing</button>').on('click', function() {
-                    swal.close();
+                    Swal.fire.close();
                 })
             );
         
-        swal({
+        Swal.fire({
             title: "Continue...",
             html: buttons,
             type: "warning",
@@ -191,7 +178,7 @@
                     $('#tableRoutedDocument').trigger('footable_initialize');
                     form.trigger("reset");
 
-                    swal({
+                    Swal.fire({
                         title: "Success!",
                         text:  "Document successfully released.",
                         type: "success"
@@ -202,7 +189,7 @@
                         $("#codeInput").select();
                     });
                 } else {
-                    swal({
+                    Swal.fire({
                         title: "Error!",
                         text:  "Tracking code undefined.",
                         type: "error"
@@ -213,7 +200,7 @@
                 }
             },
             error  : function(xhr, err) {
-                swal({
+                Swal.fire({
                     title: "Error!",
                     text:  "Could not retrieve the data.",
                     type: "error"
@@ -233,9 +220,8 @@
                         '<td class="text-center"><a href="#" target="_blank">' + item.tracking_code + '</a></td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
-                                '<h5>' + item.created_by + '</h5>' +  
-                                '(' + item.document_type + ')<br>' +
-                                item.date_created + 
+                            '<small>'+ item.document_type +' &#9679; '+ item.date_created +'</small><br>' +
+                                '<h5>' + item.created_by + '</h5>' +
                         '</td>' +
                         // '<td>' + item.note + '</td>' +
                         '<td>' + 

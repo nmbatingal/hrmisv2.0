@@ -118,7 +118,8 @@ class DocumentTracker extends Model
 
     public function getTrackingDateAttribute()
     {
-        return Carbon::parse($this->created_at)->toDayDateTimeString();
+        // return Carbon::parse($this->created_at)->toDayDateTimeString();
+        return Carbon::parse($this->created_at)->format('M-d-o h:ia');
     }
 
     public function getBarcodeLogoAttribute()

@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.optima.app')
 
 @section('title')
--OPTIMA | Dashboard
+Dashboard
 @endsection
 
 @section('styles')
@@ -11,7 +11,7 @@
 <!-- Help -->
 <!-- ============================================================== -->
 <li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
 </li>
 <!-- ============================================================== -->
 <!-- Help -->
@@ -28,7 +28,7 @@
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
             <li class="breadcrumb-item active">OPTIMA</li>
         </ol>
     </div>

@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.optima.app')
 
 @section('title')
--OPTIMA | Route Documents
+Route Documents
 @endsection
 
 @section('styles')
@@ -19,7 +19,7 @@
 <!-- Help -->
 <!-- ============================================================== -->
 <li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
 </li>
 <!-- ============================================================== -->
 <!-- Help -->
@@ -36,13 +36,12 @@
     </div>
     <div class="col-md-6">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">OPTIMA</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
             <li class="breadcrumb-item active">Route Documents</li>
         </ol>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+        <a href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
     </div>
 </div>
 <!-- ============================================================== -->
@@ -55,167 +54,124 @@
 <div class="row">
     <!-- Column -->
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">Route Documents</h3>
-                <p class="card-text">Receive and release routed documents using tracker code.</p>
+        <div class="card border-info m-t-10 m-b-10">
+            <div class="card-header bg-dark">
+                <h4 class="m-b-0 text-white">Receive and Release Document</h4>
+            </div>
+            <div class="card-body p-b-0" style="border: 1px solid #000000;">
+                <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+                <form id="submitCode" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <select name="routingType" class="form-control custom-select" style="width: 100%;" required>
+                                <option value="">-- Select Action --</option>
+                                <option value="Receive">Receive Document</option>
+                                <option value="Release">Release Document</option>
+                            </select>
+                            <small class="form-control-feedback text-muted">*Select Receive/Release Document</small> 
+                        </div>
+                        <div class="col-md-9 p-0">
+                            <div class="input-group">
+                                <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code here" required autofocus>
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" type="submit">
+                                        <!-- <i class="icon-cursor"></i> --> Submit</button>
+                                </div>
+                            </div>
+                            <small class="form-control-feedback text-muted">&nbsp;</small> 
+                        </div>
+                    </div>
+                </form>
+                <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+            </div>
+        </div>
 
-                <!-- INFO CARDS -->
-                <div class="row">
-                    <!-- Document Created -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #00c292;">
-                                <div class="p-10 bg-success">
-                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span id="count-created">{{ $documentsCreated->count() }}</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents Created</h6>
-                                </div>
+        <!-- MODAL INCOMING CONTENT -->
+        <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <h4 class="modal-title" id="modalOutgoing">Receive Incoming Document</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div> -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="modal-title font-weight-bold" id="modalIncomingTitle">Receive Incoming Document</h4>
+                                <span id="modalIncomingDocutype">aaaa</span>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Document Received -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
-                                <div class="p-10 bg-cyan">
-                                    <h3 class="text-white box m-b-0"><i class="ti-import"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-cyan"><span id="count-receive">{{ $documentsReceived->count() }}</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents Received</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Document Released -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #03a9f3;">
-                                <div class="p-10 bg-info">
-                                    <h3 class="text-white box m-b-0"><i class="icon-cursor"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-info"><span id="count-release">{{ $documentsReleased->count() }}</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents Released</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Document Released -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #e46a76;">
-                                <div class="p-10 bg-danger">
-                                    <h3 class="text-white box m-b-0"><i class="icon-doc"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-danger"><span id="count-release">-</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card border-info m-t-10 m-b-0">
-                    <div class="card-header bg-dark">
-                        <h4 class="m-b-0 text-white">Receive and Release Document</h4>
-                    </div>
-                    <div class="card-body p-b-0" style="border: 1px solid #000000;">
-                        <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                        <form id="submitCode" class="form-horizontal">
-                            {{ csrf_field() }}
-                            <div class="form-group row">
-                                <div class="col-md-3">
-                                    <select name="routingType" class="form-control custom-select" style="width: 100%;" required>
-                                        <option value="">-- Select Action --</option>
-                                        <option value="Receive">Receive Document</option>
-                                        <option value="Release">Release Document</option>
-                                    </select>
-                                    <small class="form-control-feedback text-muted">*Select Receive/Release Document</small> 
-                                </div>
-                                <div class="col-md-9 p-0">
-                                    <div class="input-group">
-                                        <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code here" required autofocus>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-success" type="submit">
-                                                <!-- <i class="icon-cursor"></i> --> Submit</button>
-                                        </div>
-                                    </div>
-                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
-                                </div>
-                            </div>
-                        </form>
-                        <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                    </div>
-                </div>
-
-                <!-- modal incoming content -->
-                <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="modalOutgoing">Receive Incoming Document</h4>
+                            <div class="col-md-3">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
-                            <div id="incoming-modal-body" class="modal-body">
-                            </div>
                         </div>
-                        <!-- /.modal-content -->
+                        <div id="incoming-modal-body"></div>
                     </div>
-                    <!-- /.modal-dialog -->
                 </div>
-                <!-- /.modal -->
+            </div>
+        </div>
 
-                <!-- modal outgoing content -->
-                <div id="modal-outgoing" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="modalOutgoing">Release Outgoing Document</h4>
+        <!-- MODAL OUTGOING CONTENT -->
+        <div id="modal-outgoing" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="modal-title font-weight-bold" id="modalOutgoingTitle">Release Outgoing Document</h4>
+                                <span id="modalOutgoingDocuType">aaaa</span>
+                            </div>
+                            <div class="col-md-3">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
-                            <div id="outgoing-modal-body" class="modal-body">
-                            </div>
                         </div>
-                        <!-- /.modal-content -->
+                        <div id="outgoing-modal-body" class="modal-body"></div>
                     </div>
-                    <!-- /.modal-dialog -->
                 </div>
-                <!-- /.modal -->
+            </div>
+        </div>
 
-                <!-- modal tracker logs content -->
-                <div id="modalLogs" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="modalLogsTitle">Log Details</h4>
+        <!-- MODAL TRACKER LOGS CONTENT -->
+        <div id="modalLogs" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="modal-title font-weight-bold" id="modalLogsTitle">Log Details</h4>
+                                <span id="modalLogsDocuType">aaaa</span>
+                            </div>
+                            <div class="col-md-3">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
-                            <div id="modalBodyLogs" class="modal-body">
-                            </div>
                         </div>
-                        <!-- /.modal-content -->
+                        <div id="modalBodyLogs"></div>
                     </div>
-                    <!-- /.modal-dialog -->
                 </div>
-                <!-- /.modal -->
+            </div>
+        </div>
 
-                <!-- MODAL TRACKER REMARKS CONTENT -->
-                <div id="modalRemarks" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="modalRemarksTitle">Remarks</h4>
+        <!-- MODAL TRACKER REMARKS CONTENT -->
+        <div id="modalRemarks" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <h4 class="modal-title" id="modalRemarksTitle">Remarks</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div> -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="modal-title font-weight-bold" id="modalRemarksTitle">Remarks</h4>
+                                <span id="modalRemarksDocuType">aaaa</span>
+                            </div>
+                            <div class="col-md-3">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
-                            <div id="modalBodyRemarks" class="modal-body">
-                            </div>
                         </div>
-                        <!-- /.modal-content -->
+                        <div id="modalBodyRemarks"></div>
                     </div>
-                    <!-- /.modal-dialog -->
                 </div>
-                <!-- /.modal -->
             </div>
         </div>
     </div>
@@ -223,27 +179,29 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
+        <div class="card m-b-0">
             <div class="card-body p-b-0">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel">
-                            <form class="form-horizontal">
-                                <div class="form-group m-b-0">
-                                    <div class="input-group p-0">
-                                        <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-info" type="submit">
-                                                <!-- <i class="ti-search"></i> --> Search</button>
-                                        </div>
+                <h5 class="card-title"><a class="get-code" data-toggle="collapse" href="#tt1" aria-expanded="true"><i class="ti-search" title="Get Code" data-toggle="tooltip"></i> Search Tracker</a></h5>
+                <div class="collapse m-t-15" id="tt1" aria-expanded="true"> 
+                    <div class="panel">
+                        <form class="form-horizontal">
+                            <div class="form-group m-b-0">
+                                <div class="input-group p-0">
+                                    <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-info" type="submit">
+                                            <!-- <i class="ti-search"></i> --> Search</button>
                                     </div>
-                                    <small class="form-control-feedback text-muted">&nbsp;</small> 
                                 </div>
-                            </form>
-                        </div>
+                                <small class="form-control-feedback text-muted">&nbsp;</small> 
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="card">
             <div class="card-body p-t-0">
                 <div class="table-responsive">
                     <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped">
@@ -271,10 +229,10 @@
                                     <td>
                                         <h5 class="font-weight-bold">
                                             {{ $log->documentCode->subject }}
-                                            <br><small>({{ $log->documentCode->other_document }})</small>
+                                            <br>
+                                            <small>{{ $log->documentCode->other_document }} &#9679; {{ $log->documentCode->tracking_date }}</small>
                                         </h5>
                                             <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
-                                            <small>{{ $log->documentCode->tracking_date }}</small>
                                     </td>
                                     <!-- <td>{{ $log->notes }}</td> -->
                                     <td>
@@ -349,7 +307,7 @@
                     text: 'Export Log',
                     className: 'btn btn-primary',
                     action: function ( e, dt, node, config ) {
-                        window.open("{{ route('doctracker.export.routing') }}");
+                        window.open("{{ route('optima.route-documents.export') }}");
                     }
                 }
             ]
@@ -373,10 +331,12 @@
                 data   : {code: tracking_code},
                 success: function(data) {
                     $('#modalBodyLogs').html(data.html);
+                    $('#modalLogs').find('#modalLogsTitle').html(data.title);
+                    $('#modalLogs').find('#modalLogsDocuType').html(data.docutype);
                     $('#modalLogs').modal('show');
                 },
                 error  : function(xhr, err) {
-                    swal({
+                    Swal.fire({
                         title: "Error!",
                         text:  "Could not retrieve the data.",
                         type: "error"
@@ -399,7 +359,7 @@
                 form    = $(this);
 
             if ( routing == "Receive" ) {
-                var action  = "{{ route('doctracker.incoming.search') }}";
+                var action  = "{{ route('optima.incoming.search') }}";
 
                 $.ajax({
                     method : 'GET',
@@ -427,10 +387,12 @@
                         if ( data.success ) {
 
                             $('#incoming-modal-body').html(data.html);
+                            $('#modal-incoming').find('#modalIncomingTitle').html( 'Receive Document '+ data.tracker);
+                            $('#modal-incoming').find('#modalIncomingReceive').html( data.docutype );
                             $('#modal-incoming').modal('show');
 
                         } else {
-                            swal({
+                            Swal.fire({
                                 title: "Error!",
                                 text:  "Tracking code undefined.",
                                 type: "error"
@@ -441,7 +403,7 @@
                         }
                     },
                     error  : function(xhr, err) {
-                        swal({
+                        Swal.fire({
                             title: "Error!",
                             text:  "Could not retrieve the data.",
                             type: "error"
@@ -454,7 +416,7 @@
 
             } else if ( routing == "Release" ) {
 
-                var action  = "{{ route('doctracker.outgoing.search') }}";
+                var action  = "{{ route('optima.outgoing.search') }}";
                 
                 $.ajax({
                     method : 'GET',
@@ -481,9 +443,11 @@
                         if (data.success)
                         {
                             $('#outgoing-modal-body').html(data.html);
+                            $('#modal-outgoing').find('#modalOutgoingTitle').html( 'Release Document '+ data.tracker);
+                            $('#modal-outgoing').find('#modalOutgoingDocuType').html( data.docutype );
                             $('#modal-outgoing').modal('show');
                         } else {
-                            swal({
+                            Swal.fire({
                                 title: "Error!",
                                 text:  "Tracking code undefined.",
                                 type: "error"
@@ -494,7 +458,7 @@
                         }
                     },
                     error  : function(xhr, err) {
-                        swal({
+                        Swal.fire({
                             title: "Error!",
                             text:  "Could not retrieve the data.",
                             type: "error"
@@ -515,9 +479,11 @@
         var btn = $(this),
             id  = btn.data("id"),
             token  = $('input[name=_token]').val(),
-            $url = "{{ route('doctracker.trackinglog.destroy', '') }}" + "/" + id;
+            $url = "{{ route('doctracker.trackinglog.destroy', ':var') }}";
 
-        swal({
+            $url = $url.replace(':var', id);
+
+        Swal.fire({
             title: "Are you sure?",
             text: "You will not be able to undo this action!",
             type: "warning",
@@ -546,14 +512,14 @@
                         $($row).remove();
                         $('#documentTableOutgoing').trigger('footable_initialize');
 
-                        Swal(
+                        Swal.fire(
                           'Deleted!',
                           'Action successfully deleted.',
                           'success'
                         );
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        swal("Error deleting!", "Please try again", "error");
+                        Swal.fire("Error deleting!", "Please try again", "error");
                     }
                 });
             }

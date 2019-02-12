@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.optima.app')
 
 @section('title')
--OPTIMA | My Documents
+My Documents
 @endsection
 
 @section('styles')
@@ -12,7 +12,7 @@
 <!-- Help -->
 <!-- ============================================================== -->
 <li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('doctracker.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
 </li>
 <!-- ============================================================== -->
 <!-- Help -->
@@ -30,7 +30,7 @@
     <div class="col-md-6">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.dashboard') }}">OPTIMA</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.dashboard') }}">OPTIMA</a></li>
             <li class="breadcrumb-item"><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
             <li class="breadcrumb-item active">{{ $myDocument->tracking_code }}</li>
         </ol>
@@ -76,6 +76,7 @@
                                     <div class="col-md-12">
                                         <div class="float-right">
                                             <a id="btnPrintBarcode" href="javascript:void(0);" onclick="printCode()" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+                                            <button id="close_account" type="button" class="btn btn-info">swal</button>
 
                                             <!-- <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a> -->
                                         </div>
@@ -255,6 +256,32 @@
             }
         });
 
+        $("#close_account").on("click", function(e) {
+            e.preventDefault();
+
+            var id  = "{{ $myDocument->tracking_code }}",
+                url = "{{ route('print.barcode', ':var') }}";
+
+            url = url.replace(':var', id);
+            var dialog = Swal.fire({
+                              title: "Are you sure?",
+                              type: "success",
+                              showConfirmButton: true,
+                              showCancelButton: true,
+                              onOpen: function(swal) {
+
+                                    var swalCancel = $(swal).find('.swal2-cancel');
+
+                                    swalCancel.removeClass('swal2-styled')
+                                                .addClass('btn btn-lg btn-danger')
+                                                .html('<i class="ti-printer"></i> Print Code');
+                                    swalCancel.off().click(function(e) {
+                                        window.open(url, "Print Barcode", "width=800,height=600");
+                                    });
+                              }
+                        });
+        });
+    });
 </script>
 <script>
     function printCode(link) {

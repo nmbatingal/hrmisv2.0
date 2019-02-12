@@ -107,7 +107,7 @@
                     $('#tableRoutedDocument').trigger('footable_initialize');
                     form.trigger("reset");
 
-                    swal({
+                    Swal.fire({
                         title: "Success!",
                         text:  "Document successfully received.",
                         type: "success"
@@ -118,7 +118,7 @@
                         $("#codeInput").select();
                     });
                 } else {
-                    swal({
+                    Swal.fire({
                         title: "Error!",
                         text:  "Tracking code undefined.",
                         type: "error"
@@ -129,7 +129,7 @@
                 }
             },
             error  : function(xhr, err) {
-                swal({
+                Swal.fire({
                     title: "Error!",
                     text:  "Could not retrieve the data.",
                     type: "error"
@@ -149,8 +149,7 @@
                         '<td class="text-center"><a href="#" target="_blank">' + item.tracking_code + '</a></td>' +
                         '<td>' + 
                             '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
-                                '<h5>' + item.created_by + '</h5>' +  
-                                '(' + item.document_type + ')<br>' +
+                                '<small>'+ item.document_type +' &#9679; '+ item.date_created +'</small><br>' +
                                 item.date_created + 
                         '</td>' +
                         // '<td>' + item.note + '</td>' +

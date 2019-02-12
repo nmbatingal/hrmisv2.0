@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
-    <title>{{ config('app.name', 'Laravel') }}@yield('title')</title>
+    <title>@yield('title') - Optima</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--alerts CSS -->
@@ -43,7 +43,7 @@
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">DOST13</p>
+                <p class="loader__label">OPTIMA</p>
             </div>
         </div>
         <!-- ============================================================== -->
@@ -53,7 +53,7 @@
             <!-- ============================================================== -->
             <!-- Topbar header - style you can find in pages.scss -->
             <!-- ============================================================== -->
-            @include('layouts.topbar')
+            @include('layouts.optima.topbar')
             <!-- ============================================================== -->
             <!-- End Topbar header -->
             <!-- ============================================================== -->
@@ -61,7 +61,7 @@
             <!-- Left Sidebar - style you can find in sidebar.scss  -->
             <!-- ============================================================== -->
             @auth
-                @include('layouts.sidepanel')
+                @include('layouts.optima.sidepanel')
             @endauth
             <!-- ============================================================== -->
             <!-- End Left Sidebar - style you can find in sidebar.scss  -->
@@ -80,7 +80,7 @@
                     <!-- ============================================================== -->
                     <!-- .right-sidebar -->
                     @auth
-                        @include('layouts.rightsidebar')
+                        @include('layouts.optima.rightsidebar')
                     @endauth
                     <!-- ============================================================== -->
                     <!-- End Right sidebar -->

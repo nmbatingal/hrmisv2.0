@@ -61,7 +61,10 @@ class DocumentTrackingLogs extends Model
 
     public function getDateActionAttribute()
     {
-        return Carbon::parse($this->created_at)->toDayDateTimeString();
+        // return Carbon::parse($this->created_at)->toDayDateTimeString();
+        // return Carbon::parse($this->created_at)->toFormattedDateString() . ' ' . Carbon::parse($this->created_at)->toTimeString();
+        return Carbon::parse($this->created_at)->format('M-d-o h:ia');
+        // return date_format($this->created_at, 'M-d-o h:ia');
     }
 
     public function getDiffForHumansAttribute()

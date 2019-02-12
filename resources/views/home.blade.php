@@ -46,7 +46,7 @@
                                 <h2 class="card-title">OPTIMA</h2>
                                 <h5 class="card-text">Optical Tracking Information Management System</h5>
                                 <p class="m-t-30 card-text">OPTIMA or Optical Tracking Information Management System is a web-based application that stores and manages transmitted documents attached with an auto-generated barcode for easier tracking of the processed documents.</p>
-                                <a href="{{ route('doctracker.dashboard') }}" class="btn btn-info"><i class="icon-login"></i> Open Application</a>
+                                <a href="{{ route('optima.dashboard') }}" class="btn btn-info"><i class="icon-login"></i> Open Application</a>
                                 <a href="{{ asset('storage/manuals/optima.pdf') }}" class="btn btn-link" target="_blank">Download user manual</a>
                             </div>
                         </div>    
