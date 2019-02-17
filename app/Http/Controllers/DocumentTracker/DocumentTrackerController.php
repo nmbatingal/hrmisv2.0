@@ -129,7 +129,7 @@ class DocumentTrackerController extends Controller
                         ])->where('tracking_code', $code)->first();
         
         // return $myDocument->trackLogs[0]['action'];
-        return view('optima.show-document', compact('myDocument'));
+        // return view('optima.show-document', compact('myDocument'));
         // return $myDocument;
     }
 
@@ -218,19 +218,20 @@ class DocumentTrackerController extends Controller
             $log->tracking_code = $tracker->tracking_code;
             $log->user_id       = Auth::user()->id;
             $log->action        = "Receive";
-            $log->notes         = $request->notes;
+            // $log->notes         = $request->notes;
             // checked remarks
-            $remarksText = "";
-            foreach($request->remarks as $remark){
+            // $remarksText = "";
+            /*foreach($request->remarks as $remark){
                 $remarksText .= $remark;
-            }
-            $log->remarks       = $remarksText;
+            }*/
+            // $log->remarks       = $remarksText;
             $log->save();
 
             LogActivity::addToLog('received an incoming document.'); // log
 
             $data = [
                 'result'            => true,
+                'track_id'          => $log->id,
                 'tracking_code'     => $tracker->tracking_code,
                 'subject'           => $tracker->subject,
                 'document_type'     => $tracker->other_document,
@@ -325,23 +326,23 @@ class DocumentTrackerController extends Controller
             $log->tracking_code  = $tracker->tracking_code;
             $log->user_id        = Auth::user()->id;
             $log->action         = $request->action;
-            $log->route_mode     = $mode;
-            $log->recipients     = $recipients;
-            $log->notes          = $request->notes;
+            $log->route_mode     = "Forward";
+            // $log->recipients     = $recipients;
+            // $log->notes          = $request->notes;
             // checked remarks
-            $remarksText = "";
-            foreach($request->remarks as $remark){
-                $remarksText .= $remark ." ";
-            }
-            $log->remarks        = $remarksText;
+            // $remarksText = "";
+            // foreach($request->remarks as $remark){
+            //     $remarksText .= $remark ." ";
+            // }
+            // $log->remarks        = $remarksText;
             $log->save();
 
-            LogActivity::addToLog('forwarded an outgoing document.'); // log
+            // LogActivity::addToLog('forwarded an outgoing document.'); // log
             // ----------------- END CREATE NEW LOG --------------- //
 
             $data = [
                 'result'            => true,
-                'id'                => $log->id,
+                'tracking_id'       => $log->id,
                 'tracking_code'     => $tracker->tracking_code,
                 'subject'           => $tracker->subject,
                 'document_type'     => $tracker->other_document,
@@ -372,6 +373,7 @@ class DocumentTrackerController extends Controller
         $users    = User::employee()->notSelf()->get();
         $userSelf = User::employee()->get();
         $docTypes = DocumentTypes::all();
+
         return view('optima.create-documents', compact('docTypes', 'offices', 'users', 'userSelf'));
     }
 

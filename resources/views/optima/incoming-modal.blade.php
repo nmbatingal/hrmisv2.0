@@ -1,4 +1,4 @@
-<form id="submitModal" class="form-horizontal" action="{{ route('doctracker.incoming.store') }}" method="POST">
+<form id="submitModal" class="form-horizontal" action="{{ route('optima.incoming.store') }}" method="POST">
     @csrf
     <div class="row">
         <div class="col-md-12">

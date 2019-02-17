@@ -9,9 +9,9 @@
                 <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo" />
+                    <img src="{{ asset('img/optima-icon.png') }}" alt="homepage" class="dark-logo" />
                     <!-- Light Logo icon -->
-                    <img src="{{ asset('assets/images/logo-light-icon.png') }}" alt="homepage" class="light-logo" />
+                    <img src="{{ asset('img/optima-icon.png') }}" alt="homepage" class="light-logo" />
                 </b>
                 <!--End Logo icon -->
             </a>
@@ -92,7 +92,6 @@
                 <!-- End Notification -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
-                @yield('navbutton')
                 <!-- ============================================================== -->
                 <!-- User Profile -->
                 <!-- ============================================================== -->

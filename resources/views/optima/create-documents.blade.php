@@ -6,7 +6,8 @@ Create new tracker
 
 @section('styles')
 <link href="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
+<!-- <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" /> -->
+<link rel="stylesheet" href="{{ asset('js/node_modules/materialize-tags/dist/css/materialize-tags.min.css') }}">
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <style type="text/css">
     .bootstrap-tagsinput {
@@ -56,29 +57,77 @@ Create new tracker
 <!-- ============================================================== -->
 <div class="row">
     <div class="col-lg-12">
-        <div class="card ">
-            <div class="card-body">
-                <div class="alert alert-info">
-                    <i class="mdi mdi-information p-r-10"></i> Please fill out the fields below completely before submitting the form. 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                </div>
-                <div class="alert alert-warning">
-                    <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) are required.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                </div>
+        <div class="alert alert-info">
+            <i class="mdi mdi-information p-r-10"></i> Please fill out the fields below completely before submitting the form. 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+        </div>
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) are required.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+        </div>
 
-                <form id="formCreate" action="{{ route('doctracker.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+        <div class="card border-dark">
+            <div class="card-header bg-dark">
+                <h4 class="m-b-0 text-white">Document Information</h4>
+            </div>
+            <div class="card-body">
+                <form class="form-material">
+                    <div class="form-body">
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <input type="text" name="subject" class="form-control form-control-line" placeholder="Subject *" required autofocus>
+                            </div> 
+                            <div class="col-md-2" style="display: none;">
+                                <input type="text" name="documentDate" class="form-control form-control-line mdate" placeholder="Document Date *" required>
+                                <span class="help-block text-muted"><small>Document Date *</small></span>
+                            </div> 
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <input type="text" id="keywords" name="keywords" data-role="materialtags" class="form-control form-control-line" placeholder="add keyword" required>
+                                <span class="help-block text-muted"><small>Separate keywords using enter key.</small></span>
+                            </div> 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="example-email">Email <span class="help"> e.g. "example@gmail.com"</span></label>
+                            <input type="email" id="example-email2" name="example-email" class="form-control" placeholder="Email"> </div>
+                        <div class="form-group">
+                            <label>Placeholder</label>
+                            <input type="text" class="form-control" placeholder="placeholder"> </div>
+                        <div class="form-group">
+                            <label>Text area</label>
+                            <textarea class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Input Select</label>
+                            <select class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Helping text</label>
+                            <input type="text" class="form-control form-control-line"> <span class="help-block text-muted"><small>A block of help text that breaks onto a new line and may extend beyond one line.</small></span>
+                        </div>
+                    </div>
+                </form>
+
+                <form id="formCreate" action="{{ route('optima.my-documents.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
                         <!-- PERSONAL INFORMATION ROW -->
-                        <h3 class="m-t-20 box-title">Document Info</h3>
+                        <h3 class="box-title">Document Info</h3>
                         <hr class="m-t-0 m-b-40">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Subject <span class="text-primary">*</span></label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control" name="subject" placeholder="enter subject" required autofocus>
+                                        <input type="text" class="form-control"  placeholder="enter subject" required autofocus>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
                                 </div>
@@ -103,7 +152,7 @@ Create new tracker
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Document Date <span class="text-primary">*</span></label>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control mdate" name="documentDate" placeholder="Select date document created" required>
+                                        <input type="text" class="form-control mdate" placeholder="Select date document created" required>
                                         <small class="form-control-feedback">&nbsp;</small> 
                                     </div>
 
@@ -111,7 +160,7 @@ Create new tracker
                                 <div class="form-group row m-b-20">
                                     <label class="control-label text-right col-md-2">Keywords <span class="text-primary">*</span></label>
                                     <div class="col-md-10">
-                                        <input id="keywords" type="text" class="" data-role="tagsinput" name="keywords" placeholder="add keywords" required>
+                                        <input type="text" class="" data-role="tagsinput" placeholder="add keywords" required>
                                         <br><small class="form-control-feedback">Separate keywords using enter or comma key.</small> 
                                     </div>
                                 </div>
@@ -241,10 +290,14 @@ Create new tracker
 @section('scripts')
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
-<script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+<!-- <script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script> -->
+<script src="{{ asset('js/node_modules/materialize-tags/dist/js/materialize-tags.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $('.mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+        $('input[name=documentDate]').bootstrapMaterialDatePicker('setDate', moment());
 
         $("select[name=routeMode]").change(function(){
             
@@ -259,7 +312,7 @@ Create new tracker
             } else {
 
                 $('div#sendRoute').css('display', 'block');
-                $.post( "{{ route('doctracker.recipientsList') }}", { office_id: $id, _token:token})
+                $.post( "{{ route('optima.recipients') }}", { office_id: $id, _token:token})
                     .done( function( data ) {
                         $("select#recipient").attr('disabled', false);
                         $("select#recipient").html('');
@@ -283,8 +336,6 @@ Create new tracker
                 $("input[name=otherDocument]").val($document);
             }
         });
-
-        $('.mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
 
         // sweetalert
         $('form#formCreate').on('submit', function(e) {
@@ -371,9 +422,8 @@ Create new tracker
 <script>
     $(function () {
 
-        $('input#keywords').tagsinput({
-            confirmKeys: [186]
-        });
+        // $('input#keywords').tagsinput({ confirmKeys: [186] });
+        $("input#keywords").materialtags();
 
         $(".select2").select2({
             'width': '100%'

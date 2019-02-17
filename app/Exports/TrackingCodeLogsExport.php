@@ -35,7 +35,7 @@ class TrackingCodeLogsExport implements FromView, ShouldQueue, Responsable
     {
         $documentsLog = DocumentTrackingLogs::where('tracking_code', $this->code)->latest()->get();
 
-        return view('doctracker.exports.routeddocuments', [
+        return view('optima.exports.routeddocuments', [
             'documentsLog'  => $documentsLog
         ]);
     }

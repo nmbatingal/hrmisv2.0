@@ -15,4 +15,5 @@ let mix = require('laravel-mix');
 //   .sass('resources/assets/sass/app.scss', 'public/css');
 
 mix.copyDirectory('node_modules/jquery', 'public/js/node_modules/jquery')
-	.copyDirectory('node_modules/sweetalert2', 'public/js/node_modules/sweetalert2');
+	.copyDirectory('node_modules/sweetalert2', 'public/js/node_modules/sweetalert2')
+	.copyDirectory('node_modules/materialize-tags', 'public/js/node_modules/materialize-tags');

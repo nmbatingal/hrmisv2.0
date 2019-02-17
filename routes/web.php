@@ -17,6 +17,7 @@ Route::get('/', function () { return redirect()->route('login'); })->name('home'
 Route::get('user/activation/{token}', 'Auth\LoginController@activateUser')->name('user.activate');
 
 Auth::routes();
+
 Route::group(['middleware' => 'auth'], function() {
 
 	Route::get('/home', 'HomeController@index')->name('home');
@@ -36,8 +37,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 	// Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 	// Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.create.tracker');
-	// Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('doctracker.showDocument');
-	// Route::get('/doctracker/mydocuments/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
+	Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('doctracker.showDocument');
+	Route::get('/doctracker/mydocuments/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
 	// Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showRoutedDocument')->name('doctracker.show.routed');
 	// Route::get('/doctracker/incoming/search', 'DocumentTracker\DocumentTrackerController@searchIncomingDocument')->name('doctracker.incoming.search');
@@ -61,12 +62,15 @@ Route::group(['middleware' => 'auth'], function() {
 
 	// ----------- START MORALE SURVEY SYSTEM ------------- //
 	Route::get('/moralesurvey/dashboard', 'MoraleSurvey\MoraleSurveyController@dashboard')->name('moralesurvey.dashboard');
+
 	// Survey Controller
 	Route::get('/moralesurvey/survey/{uuid}', 'MoraleSurvey\SurveyController@survey')->name('survey.takesurvey');
 	Route::resource('/moralesurvey/survey', 'MoraleSurvey\SurveyController');
-	// Question Controller
+	
+    // Question Controller
 	Route::resource('/moralesurvey/setting/question', 'MoraleSurvey\QuestionController');
-	// Semester Controller
+	
+    // Semester Controller
 	Route::resource('/moralesurvey/setting/semester', 'MoraleSurvey\SemesterController');
 	Route::resource('/moralesurvey', 'MoraleSurvey\MoraleSurveyController');
 	// ----------- END MORALE SURVEY SYSTEM --------------- //
@@ -86,25 +90,28 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
 	Route::get('route-documents/export/{code}', 'DocumentTracker\DocumentTrackerController@exportRoutedCodeDocuments')->name('route-documents.export.code');
 
     // INCOMING
-    Route::get('route-documents/incoming/search', 'DocumentTracker\DocumentTrackerController@searchIncomingDocument')->name('incoming.search');
+    // Route::get('route-documents/incoming/search', 'DocumentTracker\DocumentTrackerController@searchIncomingDocument')->name('incoming.search');
     Route::post('route-documents/incoming/store', 'DocumentTracker\DocumentTrackerController@storeIncomingDocument')->name('incoming.store');
 
     // OUTGOING
-    Route::get('route-documents/outgoing/search', 'DocumentTracker\DocumentTrackerController@searchOutgoingDocument')->name('outgoing.search');
+    // Route::get('route-documents/outgoing/search', 'DocumentTracker\DocumentTrackerController@searchOutgoingDocument')->name('outgoing.search');
     Route::post('route-documents/outgoing/store', 'DocumentTracker\DocumentTrackerController@storeOutgoingDocument')->name('outgoing.store');
 
 	// DOCUMENT CREATION MODULE
 	Route::get('my-documents', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('mydocuments');
 	// Route::get('my-documents/create', 'DocumentTracker\DocumentTrackerController@create')->name('create.tracker');
-	Route::get('my-documents/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('showDocument');
-	Route::get('my-documents/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
+	// Route::get('my-documents/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('showDocument');
+	// Route::get('my-documents/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
+
+    // DOCTRACKER RECIPIENT LIST
+    Route::post('recipients', 'DocumentTracker\DocumentTrackerController@recipientsList')->name('recipients');
 
 	// OPTIMA DOCTRACKER RESOURCES
 	Route::resource('/my-documents', 'DocumentTracker\DocumentTrackerController', [
-        'names' => [
+        /*'names' => [
             'create'    => 'my-documents.create',
             'show'      => 'my-documents.show',
-        ]
+        ]*/
     ])->except(['index']);
 
 

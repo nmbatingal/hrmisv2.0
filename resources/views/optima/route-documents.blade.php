@@ -41,7 +41,7 @@ Route Documents
         </ol>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+        <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
     </div>
 </div>
 <!-- ============================================================== -->
@@ -51,152 +51,174 @@ Route Documents
 <!-- Over Visitor, Our income , slaes different and  sales prediction -->
 <!-- ============================================================== -->
 <div class="m-t-40"></div>
-<div class="row">
-    <!-- Column -->
-    <div class="col-md-12">
-        <div class="card border-info m-t-10 m-b-10">
-            <div class="card-header bg-dark">
-                <h4 class="m-b-0 text-white">Receive and Release Document</h4>
-            </div>
-            <div class="card-body p-b-0" style="border: 1px solid #000000;">
-                <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-                <form id="submitCode" class="form-horizontal">
-                    {{ csrf_field() }}
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <select name="routingType" class="form-control custom-select" style="width: 100%;" required>
-                                <option value="">-- Select Action --</option>
-                                <option value="Receive">Receive Document</option>
-                                <option value="Release">Release Document</option>
-                            </select>
-                            <small class="form-control-feedback text-muted">*Select Receive/Release Document</small> 
-                        </div>
-                        <div class="col-md-9 p-0">
-                            <div class="input-group">
-                                <input id="codeInput" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code here" required autofocus>
-                                <div class="input-group-append">
-                                    <button class="btn btn-success" type="submit">
-                                        <!-- <i class="icon-cursor"></i> --> Submit</button>
-                                </div>
-                            </div>
-                            <small class="form-control-feedback text-muted">&nbsp;</small> 
-                        </div>
-                    </div>
-                </form>
-                <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
-            </div>
-        </div>
 
-        <!-- MODAL INCOMING CONTENT -->
-        <div id="modal-incoming" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- <div class="modal-header">
-                        <h4 class="modal-title" id="modalOutgoing">Receive Incoming Document</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div> -->
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h4 class="modal-title font-weight-bold" id="modalIncomingTitle">Receive Incoming Document</h4>
-                                <span id="modalIncomingDocutype">aaaa</span>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                        </div>
-                        <div id="incoming-modal-body"></div>
-                    </div>
+<!-- MODALS -->
+<div>
+    <!-- RECEIVE MODAL -->
+    <div id="receiveModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="vcenter">Receive Document</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-            </div>
-        </div>
-
-        <!-- MODAL OUTGOING CONTENT -->
-        <div id="modal-outgoing" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalOutgoing" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-9">
-                                <h4 class="modal-title font-weight-bold" id="modalOutgoingTitle">Release Outgoing Document</h4>
-                                <span id="modalOutgoingDocuType">aaaa</span>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <div class="col-md-12">
+                                <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+                                <form id="submitReceive" class="form-horizontal" method="POST">
+                                    {{ csrf_field() }}
+                                    <div class="form-group row">
+                                        <div class="col-md-12 p-0">
+                                            <div class="input-group">
+                                                <input id="codeInputReceive" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code here" required autofocus>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="submit">Receive</button>
+                                                </div>
+                                            </div>
+                                            <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                        </div>
+                                    </div>
+                                    <div id="submitReceiveSpinner" class="text-center" style="display: none;">
+                                        <div class="spinner-border" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <div id="submitReceiveAlert" class="alert" style="display: none;"></div>
+                                </form>
+                                <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                             </div>
                         </div>
-                        <div id="outgoing-modal-body" class="modal-body"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL TRACKER LOGS CONTENT -->
-        <div id="modalLogs" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h4 class="modal-title font-weight-bold" id="modalLogsTitle">Log Details</h4>
-                                <span id="modalLogsDocuType">aaaa</span>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                        </div>
-                        <div id="modalBodyLogs"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL TRACKER REMARKS CONTENT -->
-        <div id="modalRemarks" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- <div class="modal-header">
-                        <h4 class="modal-title" id="modalRemarksTitle">Remarks</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div> -->
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h4 class="modal-title font-weight-bold" id="modalRemarksTitle">Remarks</h4>
-                                <span id="modalRemarksDocuType">aaaa</span>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                        </div>
-                        <div id="modalBodyRemarks"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- END RECEIVE MODAL -->
+
+    <!-- RELEASE MODAL -->
+    <div id="releaseModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="vcenter">Release Document</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+                                <form id="submitRelease" class="form-horizontal" method="POST">
+                                    {{ csrf_field() }}
+                                    <div class="form-group row">
+                                        <div class="col-md-12 p-0">
+                                            <div class="input-group">
+                                                <input id="codeInputRelease" type="text" class="form-control" name="code" onClick="this.setSelectionRange(0, this.value.length)" placeholder="Enter tracking code here" required autofocus>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="submit">Release</button>
+                                                </div>
+                                            </div>
+                                            <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                        </div>
+                                    </div>
+                                    <div id="submitReleaseSpinner" class="text-center" style="display: none;">
+                                        <div class="spinner-border" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <div id="submitReleaseAlert" class="alert" style="display: none;"></div>
+                                </form>
+                                <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END RELEASE MODAL -->
+
+    <!-- MODAL TRACKER LOGS CONTENT -->
+    <div id="modalLogs" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h4 class="modal-title font-weight-bold" id="modalLogsTitle">Log Details</h4>
+                            <span id="modalLogsDocuType">aaaa</span>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                    </div>
+                    <div id="modalBodyLogs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END ODAL TRACKER LOGS CONTENT -->
+
+    <!-- MODAL TRACKER REMARKS CONTENT -->
+    <div id="modalRemarks" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h4 class="modal-title" id="modalRemarksTitle">Remarks</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div> -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h4 class="modal-title font-weight-bold" id="modalRemarksTitle">Remarks</h4>
+                            <span id="modalRemarksDocuType">aaaa</span>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                    </div>
+                    <div id="modalBodyRemarks"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL TRACKER LOGS CONTENT -->
 </div>
+<!-- MODALS -->
 
 <div class="row">
     <div class="col-md-12">
         <div class="card m-b-0">
-            <div class="card-body p-b-0">
-                <h5 class="card-title"><a class="get-code" data-toggle="collapse" href="#tt1" aria-expanded="true"><i class="ti-search" title="Get Code" data-toggle="tooltip"></i> Search Tracker</a></h5>
-                <div class="collapse m-t-15" id="tt1" aria-expanded="true"> 
-                    <div class="panel">
-                        <form class="form-horizontal">
-                            <div class="form-group m-b-0">
-                                <div class="input-group p-0">
-                                    <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-info" type="submit">
-                                            <!-- <i class="ti-search"></i> --> Search</button>
-                                    </div>
-                                </div>
-                                <small class="form-control-feedback text-muted">&nbsp;</small> 
-                            </div>
-                        </form>
+            <div class="card-header bg-dark">
+                <h4 class="m-b-0 text-white">
+                    Receive and Release Document
+                </h4>
+            </div>
+            <div class="card-body p-b-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="btnReceive" class="btn btn-primary" data-toggle="modal" data-target="#receiveModal">Receive Document</button>
+                        <button id="btnRelease" class="btn btn-primary" data-toggle="modal" data-target="#releaseModal">Release Document</button>
+
+                        <!-- SEARCH TOGGLE -->
+                        <a class="get-code float-right" data-toggle="collapse" href="#tt1" aria-expanded="true"><i class="ti-search" title="Get Code" data-toggle="tooltip"></i> Search Tracker</a>
+                        <!-- END SEARCH TOGGLE -->
                     </div>
+                </div>
+                <div class="collapse m-t-15" id="tt1" aria-expanded="true">
+                    <form class="form-horizontal">
+                        <div class="form-group m-b-0">
+                            <div class="input-group p-0">
+                                <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-info" type="submit">Search</button>
+                                </div>
+                            </div>
+                            <small class="form-control-feedback text-muted">&nbsp;</small> 
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -254,7 +276,6 @@ Route Documents
                                         @if ( empty($log->remarks) )
                                             <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="text-info linkRemarks"><small><i class="icon-note"></i></small></a>
                                         @else
-                                            
                                             <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="linkRemarks">
                                                 {{ $log->remarks }}
                                             </a>
@@ -352,134 +373,209 @@ Route Documents
             $('#modalRemarks').modal('show');
         });
 
-        $('form#submitCode').on('submit', function(e) {
+        // MODAL RECEIVE INPUT FOCUS
+        $('#receiveModal').on('shown.bs.modal', function() {
+            $('#codeInputReceive').focus();
+        });
+
+        // FORM RECEIVE SHOW MODAL
+        $('form#submitReceive').on('submit', function(e) {
             e.preventDefault();
             // var routing = $('input[name=routingType]:checked').val(),
-            var routing = $('select[name=routingType]').val(),
-                form    = $(this);
+            var form    = $(this),
+                action  = "{{ route('optima.incoming.store') }}";
 
-            if ( routing == "Receive" ) {
-                var action  = "{{ route('optima.incoming.search') }}";
-
-                $.ajax({
-                    method : 'GET',
-                    url    : action,
-                    data   : form.serialize(),
-                    xhr: function() {
-                        //upload Progress
-                        var xhr = $.ajaxSettings.xhr();
-                        if (xhr.upload) {
-                            xhr.upload.addEventListener('progress', function(event) {
-                                var percent = 0;
-                                var position = event.loaded || event.position;
-                                var total = event.total;
-                                if (event.lengthComputable) {
-                                    percent = Math.ceil(position / total * 100);
-                                }
-                                // update progressbar
-                                // $("#upload-progress .progress-bar").css("width", + percent +"%");
-                            }, true);
-                        }
-                        return xhr;
-                    },
-                    success: function(data) {
-
-                        if ( data.success ) {
-
-                            $('#incoming-modal-body').html(data.html);
-                            $('#modal-incoming').find('#modalIncomingTitle').html( 'Receive Document '+ data.tracker);
-                            $('#modal-incoming').find('#modalIncomingReceive').html( data.docutype );
-                            $('#modal-incoming').modal('show');
-
-                        } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text:  "Tracking code undefined.",
-                                type: "error"
-                            }).then( function() {
-                                // $("#upload-progress .progress-bar").css("width", 0);
-                                $("#codeInput").select();
-                            });
-                        }
-                    },
-                    error  : function(xhr, err) {
-                        Swal.fire({
-                            title: "Error!",
-                            text:  "Could not retrieve the data.",
-                            type: "error"
-                        }).then( function() {
-                            // $("#upload-progress .progress-bar").css("width", 0);
-                            $("#codeInput").select();
-                        });
+            $.ajax({
+                method : 'POST',
+                url    : action,
+                data   : form.serialize(),
+                xhr: function() {
+                    //upload Progress
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener('progress', function(event) {
+                            var percent = 0;
+                            var position = event.loaded || event.position;
+                            var total = event.total;
+                            if (event.lengthComputable) {
+                                percent = Math.ceil(position / total * 100);
+                            }
+                            // update progressbar
+                            // $("#upload-progress .progress-bar").css("width", + percent +"%");
+                            $('#submitReceiveAlert').css('display', 'none');
+                            $('#submitReceiveSpinner').css('display','block');
+                        }, true);
                     }
-                });
+                    return xhr;
+                },
+                success: function(data) {
 
-            } else if ( routing == "Release" ) {
+                    if ( data.result ) {
 
-                var action  = "{{ route('optima.outgoing.search') }}";
-                
-                $.ajax({
-                    method : 'GET',
-                    url    : action,
-                    data   : form.serialize(),
-                    xhr: function() {
-                        //upload Progress
-                        var xhr = $.ajaxSettings.xhr();
-                        if (xhr.upload) {
-                            xhr.upload.addEventListener('progress', function(event) {
-                                var percent = 0;
-                                var position = event.loaded || event.position;
-                                var total = event.total;
-                                if (event.lengthComputable) {
-                                    percent = Math.ceil(position / total * 100);
-                                }
-                                //update progressbar
-                                // $("#upload-progress .progress-bar").css("width", + percent +"%");
-                            }, true);
-                        }
-                        return xhr;
-                    },
-                    success: function(data) {
-                        if (data.success)
-                        {
-                            $('#outgoing-modal-body').html(data.html);
-                            $('#modal-outgoing').find('#modalOutgoingTitle').html( 'Release Document '+ data.tracker);
-                            $('#modal-outgoing').find('#modalOutgoingDocuType').html( data.docutype );
-                            $('#modal-outgoing').modal('show');
-                        } else {
-                            Swal.fire({
-                                title: "Error!",
-                                text:  "Tracking code undefined.",
-                                type: "error"
-                            }).then( function() {
-                               // $("#upload-progress .progress-bar").css("width", 0);
-                               $("#codeInput").select();
-                            });
-                        }
-                    },
-                    error  : function(xhr, err) {
-                        Swal.fire({
-                            title: "Error!",
-                            text:  "Could not retrieve the data.",
-                            type: "error"
-                        }).then( function() {
-                           // $("#upload-progress .progress-bar").css("width", 0);
-                           $("#codeInput").select();
-                        });
+                        var row = appendTableRowReceived(data);
+
+                        $('tr.footable-empty').remove();
+                        $('table#tableRoutedDocument tbody').prepend(row);
+                        form.trigger("reset");
+
+                        // ALERT
+                        $('input#codeInputReceive').select();
+                        $('#submitReceiveSpinner').css('display','none');
+                        $('#submitReceiveAlert')
+                            .removeClass('alert-danger')
+                            .addClass('alert-success')
+                            .css('display','block')
+                            .html( '<b>'+ data.tracking_code +'</b> tracker successfully received.');
+                        // HIDE ALERT
+                        setTimeout(function() {
+                            $('#submitReceiveAlert').css('display', 'none');;
+                        }, 5000);
+
+                    } else {
+
+                        // ALERT
+                        $('#submitReceiveSpinner').css('display','none');
+                        $('input#codeInputReceive').select();
+                        $('#submitReceiveAlert')
+                            .removeClass('alert-success')
+                            .addClass('alert-danger')
+                            .css('display','block').html( 'Tracking code undefined.');
+                        setTimeout(function() {
+                            $('#submitReceiveAlert').css('display', 'none');;
+                        }, 5000);
                     }
-                });
-            }
+                },
+                error  : function(xhr, err) {
+                    Swal.fire({
+                        title: "Error!",
+                        text:  "Could not retrieve the data.",
+                        type: "error"
+                    }).then( function() {
+                        $('input#codeInputReceive').select();
+                    });
+                }
+            });
+            return false;
+        });
 
+        // MODAL RELEASE INPUT FOCUS
+        $('#releaseModal').on('shown.bs.modal', function() {
+            $('#codeInputRelease').focus();
+        });
+
+        // FORM RELEASE SHOW MODAL
+        $('form#submitRelease').on('submit', function(e) {
+            e.preventDefault();
+            var form    = $(this),
+                action  = "{{ route('optima.outgoing.store') }}";
+
+            $.ajax({
+                method : 'POST',
+                url    : action,
+                data   : form.serialize(),
+                xhr: function() {
+                    //upload Progress
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener('progress', function(event) {
+                            var percent = 0;
+                            var position = event.loaded || event.position;
+                            var total = event.total;
+                            if (event.lengthComputable) {
+                                percent = Math.ceil(position / total * 100);
+                            }
+                            // update progressbar
+                            // $("#upload-progress .progress-bar").css("width", + percent +"%");
+                            $('#submitReleaseAlert').css('display', 'none');
+                            $('#submitReleaseSpinner').css('display','block');
+                        }, true);
+                    }
+                    return xhr;
+                },
+                success: function(data) {
+
+                    if ( data.result ) {
+
+                        var row = appendTableRowReceived(data);
+
+                        $('tr.footable-empty').remove();
+                        $('table#tableRoutedDocument tbody').prepend(row);
+                        form.trigger("reset");
+
+                        // ALERT
+                        $('input#codeInputReceive').select();
+                        $('#submitReleaseSpinner').css('display','none');
+                        $('#submitReleaseAlert')
+                            .removeClass('alert-danger')
+                            .addClass('alert-success')
+                            .css('display','block')
+                            .html( '<b>'+ data.tracking_code +'</b> tracker successfully released.');
+                        // HIDE ALERT
+                        setTimeout(function() {
+                            $('#submitReceiveAlert').css('display', 'none');;
+                        }, 5000);
+
+                    } else {
+
+                        // ALERT
+                        $('#submitReleaseSpinner').css('display','none');
+                        $('input#codeInputRelease').select();
+                        $('#submitReleaseAlert')
+                            .removeClass('alert-success')
+                            .addClass('alert-danger')
+                            .css('display','block').html( 'Tracking code undefined.');
+                        setTimeout(function() {
+                            $('#submitReceiveAlert').css('display', 'none');;
+                        }, 5000);
+                    }
+                },
+                error  : function(xhr, err) {
+                    Swal.fire({
+                        title: "Error!",
+                        text:  "Could not retrieve the data.",
+                        type: "error"
+                    }).then( function() {
+                        $('input#codeInputRelease').select();
+                    });
+                }
+            });
             return false;
         });
     });
+
 </script>
 <script>
-    $(document).on("click", ".btnCancelEvent", function () {
+    // row to be added
+    function appendTableRowReceived (item) {
+
+        var remarks;
+        if (item.remarks === '')
+        {
+            remarks = '<a data-id="log-'+item.track_id+'" href="javascript:void(0);" class="text-info linkRemarks"><small><i class="icon-note"></i></small></a>';
+        } else {
+            remarks = '<a data-id="log-'+item.track_id+'" href="javascript:void(0);" class="linkRemarks">'+item.remarks+'</a>';
+        }
+
+        var row = $('<tr>' +
+                        '<td class="text-center"><a href="javascript:void(0)" target="_blank">' + item.tracking_code + '</a></td>' +
+                        '<td>' + 
+                            '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
+                                '<small>'+ item.document_type +' &#9679; '+ item.date_created +'</small><br>' +
+                                item.date_created + 
+                        '</td>' +
+                        '<td>' + 
+                            '<h5 class="font-weight-bold">' + item.action + '</h5>' +
+                            item.date_action +  
+                        '</td>' +
+                        '<td>' + remarks +  '</td>' +
+                    '</tr>');
+        return row;
+    }
+    /*$(document).on("click", ".btnCancelEvent", function () {
         var btn = $(this),
             id  = btn.data("id"),
             token  = $('input[name=_token]').val(),
-            $url = "{{ route('doctracker.trackinglog.destroy', ':var') }}";
+            $url = " route('optima.trackinglog.destroy', ':var') }}";
 
             $url = $url.replace(':var', id);
 
@@ -524,6 +620,6 @@ Route Documents
                 });
             }
         }); 
-    });
+    });*/
 </script>
 @endsection
