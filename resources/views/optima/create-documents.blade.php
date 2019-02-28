@@ -81,6 +81,7 @@ Create new tracker
                         <div class="col-md-12">
 
                             <!-- DOCUMENT FIELD -->
+                            <!-- DOCUMENT FIELD -->
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
