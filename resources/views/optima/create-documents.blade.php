@@ -7,11 +7,16 @@ Create new tracker
 @section('styles')
 <link href="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
 <!-- <link href="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" /> -->
-<link rel="stylesheet" href="{{ asset('js/node_modules/materialize-tags/dist/css/materialize-tags.min.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('js/node_modules/materialize-tags/dist/css/materialize-tags.min.css') }}"> -->
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('js/jQuery-tagEditor/jquery.tag-editor.css') }}" rel="stylesheet" type="text/css" />
+<!-- <link href="{{ asset('js/node_modules/jquery-tags-input/dist/jquery.tagsinput.min.css') }}" rel="stylesheet" type="text/css" /> -->
 <style type="text/css">
-    .bootstrap-tagsinput {
+    /*.bootstrap-tagsinput {
         width: 100% !important;
+        box-shadow: none;
+        min-height: 38px;
+        border: 1px solid #e9ecef;
     }
 
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
@@ -19,18 +24,24 @@ Create new tracker
         color: #fff;
         border-color: #fb9678;
     }
-</style>
-@endsection
 
-@section('navbutton')
-<!-- Help -->
-<!-- ============================================================== -->
-<li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
-</li>
-<!-- ============================================================== -->
-<!-- Help -->
-<!-- ============================================================== -->
+    .select2-container--default .select2-selection--single {
+        min-height: 38px;
+        border: 1px solid #e9ecef;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 38px;
+    }*/
+
+    .form-control-line .form-group .form-control {
+        padding: 0 10px;
+    }
+
+    .form-control-line .form-control:focus {
+        border-bottom: none;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -38,155 +49,66 @@ Create new tracker
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
 <div class="row page-titles">
-    <div class="col-md-12">
-        <h4 class="text-white">Create New Tracker</h4>
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor font-weight-bold">Create New Tracker</h4>
     </div>
-    <div class="col-md-6">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">OPTIMA</a></li>
-            <li class="breadcrumb-item active">Create New Tracker</li>
-        </ol>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('optima.my-documents') }}">My Documents</a></li>
+                <li class="breadcrumb-item active">Create New Tracker</li>
+            </ol>
+        </div>
     </div>
 </div>
-<!-- ============================================================== -->
-<!-- End Bread crumb and right sidebar toggle -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Over Visitor, Our income , slaes different and  sales prediction -->
-<!-- ============================================================== -->
+
 <div class="row">
     <div class="col-lg-12">
-        <div class="alert alert-info">
-            <i class="mdi mdi-information p-r-10"></i> Please fill out the fields below completely before submitting the form. 
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-        </div>
-        <div class="alert alert-warning">
-            <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) are required.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-        </div>
+        <!-- <div class="card-header bg-dark">
+            <h4 class="m-b-0 text-white">Document Information</h4>
+        </div> -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Document Routing Information</h4>
+                    <h6 class="card-subtitle">Please fill out the fields below completely before submitting the form. </h6>
+                    <hr>
+                    <!-- <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) are required.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                    </div> -->
+                    <div class="row p-40 p-b-0">
+                        <div class="col-md-12">
 
-        <div class="card border-dark">
-            <div class="card-header bg-dark">
-                <h4 class="m-b-0 text-white">Document Information</h4>
-            </div>
-            <div class="card-body">
-                <form class="form-material">
-                    <div class="form-body">
-                        <div class="row form-group">
-                            <div class="col-md-12">
-                                <input type="text" name="subject" class="form-control form-control-line" placeholder="Subject *" required autofocus>
-                            </div> 
-                            <div class="col-md-2" style="display: none;">
-                                <input type="text" name="documentDate" class="form-control form-control-line mdate" placeholder="Document Date *" required>
-                                <span class="help-block text-muted"><small>Document Date *</small></span>
-                            </div> 
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-12">
-                                <input type="text" id="keywords" name="keywords" data-role="materialtags" class="form-control form-control-line" placeholder="add keyword" required>
-                                <span class="help-block text-muted"><small>Separate keywords using enter key.</small></span>
-                            </div> 
-                        </div>
-
-                        <div class="form-group">
-                            <label for="example-email">Email <span class="help"> e.g. "example@gmail.com"</span></label>
-                            <input type="email" id="example-email2" name="example-email" class="form-control" placeholder="Email"> </div>
-                        <div class="form-group">
-                            <label>Placeholder</label>
-                            <input type="text" class="form-control" placeholder="placeholder"> </div>
-                        <div class="form-group">
-                            <label>Text area</label>
-                            <textarea class="form-control" rows="5"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Input Select</label>
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Helping text</label>
-                            <input type="text" class="form-control form-control-line"> <span class="help-block text-muted"><small>A block of help text that breaks onto a new line and may extend beyond one line.</small></span>
-                        </div>
-                    </div>
-                </form>
-
-                <form id="formCreate" action="{{ route('optima.my-documents.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-body">
-                        <!-- PERSONAL INFORMATION ROW -->
-                        <h3 class="box-title">Document Info</h3>
-                        <hr class="m-t-0 m-b-40">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Subject <span class="text-primary">*</span></label>
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control"  placeholder="enter subject" required autofocus>
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-                                </div>
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Document Type <span class="text-primary">*</span></label>
-                                    <div class="col-md-4">
+                            <!-- DOCUMENT FIELD -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <select class="select2 form-control custom-select" name="docType" required>
-                                            <option value="">-- Select document type --</option>
+                                            <option value="">Document Type</option>
                                             @forelse( $docTypes as $doctype )
                                                 <option value="{{ $doctype->id }}">{{ $doctype->document_name }}</option>
                                             @empty
                                             @endforelse
                                         </select>
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-                                    <div id="specifyDocument" class="col-md-6" style="display: none;">
-                                        <input type="text" class="form-control" name="otherDocument" placeholder="Please specify" required>
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-
-                                </div>
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Document Date <span class="text-primary">*</span></label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control mdate" placeholder="Select date document created" required>
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-
-                                </div>
-                                <div class="form-group row m-b-20">
-                                    <label class="control-label text-right col-md-2">Keywords <span class="text-primary">*</span></label>
-                                    <div class="col-md-10">
-                                        <input type="text" class="" data-role="tagsinput" placeholder="add keywords" required>
-                                        <br><small class="form-control-feedback">Separate keywords using enter or comma key.</small> 
                                     </div>
                                 </div>
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Document Details <span class="text-primary">*</span></label>
-                                    <div class="col-md-10">
-                                        <textarea class="form-control" name="details" rows="3" required></textarea>
-                                        <small class="form-control-feedback">&nbsp;</small> 
+                                <div id="specifyDocument" class="col-md-5" style="display: none;">
+                                    <div class="form-group">
+                                        <input id="otherDocument" type="text" class="form-control" name="otherDocument" placeholder="Please specify document type" required>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
-                                    <label class="control-label text-right col-md-2">Attachments</label>
-                                    <div class="col-md-10">
-                                        <input type="file" class="form-control" name="attachments[]" accept=".pdf" multiple>
-                                        <small class="form-control-feedback">Select pdf files only. </small> 
-                                    </div>
-                                </div> -->
                             </div>
-                        </div>
 
-                        <!-- OTHER INFORMATION -->
-                        <h3 class="m-t-40 box-title">Routing Details</h3>
-                        <hr class="m-t-0 m-b-40">
-                        <!--/row-->
-                        <div class="row">
-                            <div class="col-md-12">
+                            <!-- <div class="form-group row">
+                                <label class="control-label text-right col-md-2">Attachments</label>
+                                <div class="col-md-10">
+                                    <input type="file" class="form-control" name="attachments[]" accept=".pdf" multiple>
+                                    <small class="form-control-feedback">Select pdf files only. </small> 
+                                </div>
+                            </div> -->
+                            
+                            <div id="routingInformation" style="display: none;">
                                 <div class="form-group row m-b-0">
                                     <label class="control-label text-right col-md-2">Routed by</label>
                                     <div class="col-md-4">
@@ -254,28 +176,89 @@ Create new tracker
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Note</label>
-                                    <div class="col-md-10">
-                                        <textarea class="form-control" name="note" rows="1"></textarea>
-                                        <small class="form-control-feedback">Additional notes on routing the document.</small> 
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <hr class="m-t-30 m-b-0">
-                    <!-- progress bar -->
-                    <div id="upload-progress" class="progress m-t-0 m-b-20">
-                        <div class="progress-bar bg-success wow animated progress-animated" style="width: 0%; height:3px;" role="progressbar"></div>
                     </div>
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="float-right">
                                     <button id="submit-btn" type="submit" class="btn btn-lg btn-success"><i id="spinner" style="display: none;" class="fas fa-spinner fa-spin"></i> Submit</button>
-                                    <button type="button" class="btn btn-lg btn-inverse">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="card border-dark">
+            <div class="card-header bg-dark">
+                <h4 class="m-b-0 text-white">Document Routing Form</h4>
+            </div>
+            <div class="card-body p-10">
+                <!-- ALERT NOTIF -->
+                <div class="alert alert-info alert-rounded"> 
+                    <i class="mdi mdi-information-outline"></i> Please fill out the fields below completely before submitting the form.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                </div>
+
+                <!-- FORM -->
+                <form id="formCreate" action="{{ route('optima.my-documents.store') }}" method="POST" class="form-control-line" 
+                      enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group row m-b-10" style="display: none;">
+                        <div class="col-md-12 p-0">
+                            <input type="text" name="documentDate" class="form-control mdate" placeholder="Document Date *">
+                            <!-- <span class="help-block p-l-10 text-muted">
+                                <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
+                            </span> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group row m-b-10">
+                        <div class="col-md-12 p-0">
+                            <textarea class="form-control autosize" name="subject" rows="1" placeholder="Subject" required autofocus></textarea>
+                            <!-- <span class="help-block p-l-10 text-muted">
+                                <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
+                            </span> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group row m-b-10">
+                        <div class="col-md-12 p-0 form-control">
+                            <input type="text" class="form-control form-control-line keywords" name="keywords" placeholder="add keywords" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group options">
+                        <div class="custom-control custom-checkbox">
+                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck4" value="For signature." required>
+                            <label class="custom-control-label" for="customCheck4">For signature. </label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance." required>
+                            <label class="custom-control-label" for="customCheck2">For action/compliance. </label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck3" value="For information." required>
+                            <label class="custom-control-label" for="customCheck3">For information. </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row m-b-10">
+                        <div class="col-md-12 p-0">
+                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Enter notes here..."></textarea>
+                            <!-- <span class="help-block p-l-10 text-muted">
+                                <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
+                            </span> -->
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="float-right">
+                                    <button id="submit-btn" type="submit" class="btn btn-lg btn-success"><i id="spinner" style="display: none;" class="fas fa-spinner fa-spin"></i> Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -291,12 +274,35 @@ Create new tracker
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 <!-- <script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script> -->
-<script src="{{ asset('js/node_modules/materialize-tags/dist/js/materialize-tags.min.js') }}"></script>
+<script src="{{ asset('js/node_modules/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('js/node_modules/autosize/dist/autosize.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/jQuery-tagEditor/jquery.caret.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/jQuery-tagEditor/jquery.tag-editor.min.js') }}" type="text/javascript"></script>
+<!-- <script src="{{ asset('js/node_modules/jquery-tags-input/dist/jquery.tagsinput.min.js') }}" type="text/javascript"></script> -->
 <script type="text/javascript">
     $(document).ready(function() {
 
-        $('.mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+        // $("#keywords").tagsInput();
+        $(".keywords").tagEditor({
+            delimiter: ',;', /* space and semicolon */
+            placeholder: 'Add keywords...',
+            forceLowercase: true,
+            removeDuplicates: true
+        });
+
+        $('.tag-editor').css({'border': 'none'});
+
+        var formCreate = $('form#formCreate').show();
+
+        $('.mdate').bootstrapMaterialDatePicker({ 
+            weekStart: 0, 
+            time: false,
+            format: 'MMMM DD, YYYY'
+        });
+
+        autosize($('textarea.autosize'));
+
         $('input[name=documentDate]').bootstrapMaterialDatePicker('setDate', moment());
 
         $("select[name=routeMode]").change(function(){
@@ -324,12 +330,13 @@ Create new tracker
         $("select[name=docType]").change(function(){
             
             var $document = $("select[name=docType] option:selected").text();
-            console.log($document);
+            // console.log($document);
 
             if ( $document == 'Others')
             {
                 $('div#specifyDocument').css('display', 'block');
-                $("input[name=otherDocument]").val('');
+                // $('input#otherDocument').focus().select();
+                $("input#otherDocument").val('');
 
             } else {
                 $('div#specifyDocument').css('display', 'none');
@@ -337,8 +344,59 @@ Create new tracker
             }
         });
 
+
+
         // sweetalert
-        $('form#formCreate').on('submit', function(e) {
+        // formCreate.validate({
+        //     rules: {
+        //         subject         : "required",
+        //         documentDate    : "required",
+        //         docType         : "required",
+        //         keywords        : "required",
+        //         /*"attachment[]" : {
+        //             required  : true
+        //         }*/
+        //     },
+        //     /*messages : {
+        //         "attachment[]" : {
+        //            required : "Please upload atleast 1 document",
+        //            //extension: "Only document file is allowed!"
+        //         }
+        //     },*/
+        //     highlight: function (element, errorClass, validClass) {
+        //         // $(input).parents('.form-group').addClass('has-danger');
+        //         // $(input).parent('.form-group').addClass(error);
+        //         $( element ).parents( ".form-group" ).addClass( "has-danger" ).removeClass( "has-success" );
+        //         // $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+        //     },
+        //     unhighlight: function (element, errorClass, validClass) {
+        //         $( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-danger" );
+        //         // $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+        //         // $(input).parents('.form-group').removeClass('has-danger');
+        //         // $(input).parents('.form-group').removeClass(error);
+        //     },
+        //     errorElement: "small",
+        //     errorPlacement: function (error, element) {
+        //         // $(element).parents('.form-group').append(error);
+        //         error.addClass( "form-control-feedback p-l-10" );
+        //         // element.addClass( "form-control-danger" );
+        //         element.parents( ".form-group" ).addClass( "has-danger" );
+        //         element.addClass('form-control-danger').parent('div').append(error);
+
+        //         // Add the span element, if doesn't exists, and apply the icon classes to it.
+        //         // if ( !element.next( "span" )[ 0 ] ) {
+        //         //     $( "<span class='icon-close form-control-feedback'></span>" ).insertAfter( element );
+        //         // }
+        //     },
+        //     success: function ( label, element ) {
+        //         // Add the span element, if doesn't exists, and apply the icon classes to it.
+        //         // if ( !$(element).next( "span" )[ 0 ] ) {
+        //         //     $( "<span class='icon-check form-control-feedback'></span>" ).insertAfter( $(element) );
+        //         // }
+        //     },
+        // });
+
+        /*formCreate.on('submit', function(e) {
 
             e.preventDefault();
             var form = $(this); 
@@ -416,17 +474,27 @@ Create new tracker
             });
 
             return false;
-        });
+        });*/
     });
 </script>
 <script>
     $(function () {
 
         // $('input#keywords').tagsinput({ confirmKeys: [186] });
-        $("input#keywords").materialtags();
+        // $("input#keywords").materialtags();
 
         $(".select2").select2({
             'width': '100%'
+        });
+
+        var requiredCheckboxes = $('.options :checkbox[required]');
+        
+        requiredCheckboxes.change(function(){
+            if(requiredCheckboxes.is(':checked')) {
+                requiredCheckboxes.removeAttr('required');
+            } else {
+                requiredCheckboxes.attr('required', 'required');
+            }
         });
     });
 </script>

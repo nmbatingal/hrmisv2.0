@@ -6,13 +6,12 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="{{ route('home') }}">
                 <!-- Logo icon -->
-                <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
                     <img src="{{ asset('img/optima-icon.png') }}" alt="homepage" class="dark-logo" />
                     <!-- Light Logo icon -->
                     <img src="{{ asset('img/optima-icon.png') }}" alt="homepage" class="light-logo" />
-                </b>
+                    <span class="text-white p-l-20 m-0">OPTIMA</span>
                 <!--End Logo icon -->
             </a>
         </div>
@@ -23,20 +22,17 @@
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
-            <ul class="navbar-nav p-r-20 m-r-40">
-                <li class="d-none d-md-block d-lg-block">
-                    <a href="{{ route('home') }}" class="p-l-20">
-                        <!--This is logo text-->
-                        <!-- <img src="{{ asset('assets/images/logo-light-text.png') }}" alt="home" class="light-logo" alt="home" /> -->
-                        <h3 class="text-white p-l-20 m-0">OPTIMA</h3>
-                    </a>
+            <ul class="navbar-nav mr-auto">
+                <!-- This is  -->
+                <li class="nav-item"> 
+                    <a class="nav-link nav-toggler d-block d-md-none waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> 
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link sidebartoggler d-none d-lg-block d-md-block waves-effect waves-dark" href="javascript:void(0)">
+                        <i class="icon-menu"></i>
+                    </a> 
                 </li>
             </ul>
-            <div class="navbar-nav mr-auto">
-                <!-- <form class="form-horizontal">
-                    <input type="text" class="form-control" style="width: 500px;" placeholder="Search & enter">
-                </form> -->
-            </div>
             <!-- ============================================================== -->
             <!-- User profile and search -->
             <!-- ============================================================== -->

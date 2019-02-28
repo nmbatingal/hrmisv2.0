@@ -15,42 +15,24 @@ Route Documents
 </style>
 @endsection
 
-@section('navbutton')
-<!-- Help -->
-<!-- ============================================================== -->
-<li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
-</li>
-<!-- ============================================================== -->
-<!-- Help -->
-<!-- ============================================================== -->
-@endsection
-
 @section('content')
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
 <div class="row page-titles">
-    <div class="col-md-12">
-        <h4 class="text-white">Routing Documents</h4>
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor font-weight-bold">Route Documents</h4>
     </div>
-    <div class="col-md-6">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
-            <li class="breadcrumb-item active">Route Documents</li>
-        </ol>
-    </div>
-    <div class="col-md-6 text-right">
-        <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
+                <li class="breadcrumb-item active">Route Documents</li>
+            </ol>
+            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
+        </div>
     </div>
 </div>
-<!-- ============================================================== -->
-<!-- End Bread crumb and right sidebar toggle -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Over Visitor, Our income , slaes different and  sales prediction -->
-<!-- ============================================================== -->
-<div class="m-t-40"></div>
 
 <!-- MODALS -->
 <div>

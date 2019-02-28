@@ -16,8 +16,8 @@
     <!-- toast CSS -->
     <link href="{{ asset('assets/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('dist/css/pages/progressbar-page.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist_material/css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist_material/css/pages/progressbar-page.css') }}" rel="stylesheet">
     @yield('styles')
     <style>
         .topbar .top-navbar .navbar-header {
@@ -116,18 +116,18 @@
     <script src="{{ asset('assets/node_modules/popper/popper.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="{{ asset('dist/js/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ asset('dist_material/js/perfect-scrollbar.jquery.min.js') }}"></script>
     <!--Wave Effects -->
-    <script src="{{ asset('dist/js/waves.js') }}"></script>
+    <script src="{{ asset('dist_material/js/waves.js') }}"></script>
     <!--stickey kit -->
     <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
     <!--Menu sidebar -->
-    <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('dist_material/js/sidebarmenu.js') }}"></script>
     <!-- Sweet-Alert  -->
     <script src="{{ asset('js/node_modules/sweetalert2/dist/sweetalert2.min.js') }}"></script>
     <!--Custom JavaScript -->
-    <script src="{{ asset('dist/js/custom.min.js') }}"></script>
+    <script src="{{ asset('dist_material/js/custom.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
     @yield('scripts')
 </body>

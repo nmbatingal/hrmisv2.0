@@ -1,53 +1,49 @@
-<div class="side-mini-panel">
-    <ul class="mini-nav">
-        <div class="togglediv"><a href="javascript:void(0)" id="togglebtn"><i class="ti-menu"></i></a></div>
-        <!-- .Dashboard -->
-        <!-- <li class="{{ Request::is('home') ? 'selected' : '' }}">
-            <a href="{{ route('home') }}" title="Home"><i class="ti-home"></i></a>
-        </li> -->
-        <!-- /.Home -->
-
-        <!-- DOCUMENT TRACKER -->
-        <li class="{{ Request::is('doctracker/*') ? 'selected' : '' }}">
-            <a href="javascript:void(0);" title="OPTIMA"><i class="mdi mdi-qrcode-scan"></i></a>
-            <div class="sidebarmenu">
-                <!-- Left navbar-header -->
-                <h3 class="menu-title">OPTIMA</h3>
-                <ul class="sidebar-menu">
-                    <li><a href="{{ route('optima.dashboard') }}">Dashboard</a></li>
-                    <li><a href="{{ route('optima.route-documents') }}">Route Documents</a></li>
-                    <li><a href="{{ route('optima.mydocuments') }}">My Documents</a></li>
-                    <li><a href="javascript:void(0);">Search</a></li>
-                    <!-- <li><a href="{{ route('doctracker.logs') }}">Logs</a></li> -->
-                    <li><a href="{{ route('optima.about') }}">About</a></li>
-                </ul>
-                <!-- Left navbar-header end -->
-            </div>
-        </li>
-        <!-- END DOCUMENT TRACKER -->
-
-        <!-- .SYSTEM SETTINGS -->
-        <li class="{{ Request::is('setting') ? 'selected' : '' }}">
-            <a href="javascript:void(0)" title="Settings"><i class="ti-settings"></i></a>
-            <div class="sidebarmenu">
-                <!-- Left navbar-header -->
-                <h3 class="menu-title">System Setting</h3>
-                <!-- <div class="searchable-menu">
-                    <form role="search" class="menu-search">
-                        <input type="text" placeholder="Search..." class="form-control">
-                        <a href=""><i class="fa fa-search"></i></a>
-                    </form>
-                </div> -->
-                <ul class="sidebar-menu">
-                    <li><a href="{{ route('all.setting.index') }}">All Settings </a></li>
-                    <li><a href="{{ route('user.setting.index') }}">Profile Setting </a></li>
-                </ul>
-                <!-- Left navbar-header end -->
-            </div>
-        </li>
-        <!-- /.Home -->
-    </ul>
-    <div>
-        aaaasdasdasda
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li> 
+                    <a class="waves-effect waves-dark" href="{{ route('optima.dashboard') }}" aria-expanded="false">
+                        <i class="icon-speedometer"></i><span class="hide-menu">Dashboard</span>
+                    </a>
+                </li>
+                <li> 
+                    <a class="waves-effect waves-dark" href="{{ route('optima.route-documents') }}" aria-expanded="false">
+                        <i class="icon-speedometer"></i><span class="hide-menu">Route Documents</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('optima/my-documents/*') ? 'active' : '' }}"> 
+                    <a class="waves-effect waves-dark" href="{{ route('optima.my-documents') }}" aria-expanded="false">
+                        <i class="icon-speedometer"></i><span class="hide-menu">My Documents</span>
+                    </a>
+                </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">Apps</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="app-calendar.html">Calendar</a></li>
+                        <li><a href="app-chat.html">Chat app</a></li>
+                        <li><a href="app-ticket.html">Support Ticket</a></li>
+                        <li><a href="app-contact.html">Contact / Employee</a></li>
+                        <li><a href="app-contact2.html">Contact Grid</a></li>
+                        <li><a href="app-contact-detail.html">Contact Detail</a></li>
+                    </ul>
+                </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-email"></i><span class="hide-menu">Inbox</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="app-email.html">Mailbox</a></li>
+                        <li><a href="app-email-detail.html">Mailbox Detail</a></li>
+                        <li><a href="app-compose.html">Compose Mail</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
     </div>
-</div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

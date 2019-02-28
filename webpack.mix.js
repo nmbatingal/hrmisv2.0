@@ -16,4 +16,6 @@ let mix = require('laravel-mix');
 
 mix.copyDirectory('node_modules/jquery', 'public/js/node_modules/jquery')
 	.copyDirectory('node_modules/sweetalert2', 'public/js/node_modules/sweetalert2')
-	.copyDirectory('node_modules/materialize-tags', 'public/js/node_modules/materialize-tags');
+	.copyDirectory('node_modules/autosize', 'public/js/node_modules/autosize')
+	.copyDirectory('node_modules/jquery-tags-input', 'public/js/node_modules/jquery-tags-input')
+	.copyDirectory('node_modules/jquery-validation', 'public/js/node_modules/jquery-validation');
