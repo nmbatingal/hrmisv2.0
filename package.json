@@ -20,6 +20,7 @@
         "vue": "^2.5.22"
     },
     "dependencies": {
+        "@material/chips": "^0.44.1",
         "autosize": "^4.0.2",
         "bootstrap-tagsinput": "^0.7.1",
         "datatables.net-fixedheader": "^3.1.5",

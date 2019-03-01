@@ -304,7 +304,7 @@ Route Documents
                 },
             ],
             // order: [[ 0, "desc" ]],
-            dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
+            // dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
             buttons: [
                 {
                     text: 'Export Log',

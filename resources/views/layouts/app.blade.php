@@ -110,8 +110,10 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- <script src="{{ asset('assets/node_modules/jquery/jquery-3.2.1.min.js') }}"></script> -->
-    <script src="{{ asset('js/node_modules/jquery/dist/jquery.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/node_modules/jquery/dist/jquery.min.js') }}"></script> -->
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ asset('assets/node_modules/popper/popper.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
