@@ -6,6 +6,7 @@ use Auth;
 use App\Office;
 use Carbon\Carbon;
 use App\VerifyUser;
+use App\Models\Settings\UserGroups;
 use App\Notifications\MailResetPasswordNotification;
 use App\Models\MoraleSurvey\MorssSurvey;
 use Spatie\Permission\Traits\HasRoles;
@@ -77,6 +78,22 @@ class User extends Authenticatable
         $this->notify(new MailResetPasswordNotification($token));
     }
 
+    // USER FIELDS MUTATOR
+    public function setFirstnameAttribute($value)
+    {
+        $this->attributes['firstname'] = ucwords($value);
+    }
+
+    public function setLastnameAttribute($value)
+    {
+        $this->attributes['lastname'] = ucwords($value);
+    }
+
+    public function setMiddlenameAttribute($value)
+    {
+        $this->attributes['middlename'] = ucwords($value);
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->firstname} {$this->lastname}";
@@ -103,6 +120,11 @@ class User extends Authenticatable
     public function office()
     {
         return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(UserGroups::class, 'user_id', 'id');
     }
 
     public function scopeNotSelf($query)

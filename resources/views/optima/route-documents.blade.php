@@ -12,6 +12,10 @@ Route Documents
     #tableRoutedDocument tbody td:nth-child(1) {  
         vertical-align: top;
     }
+
+    .btn-hidden {
+        display: none;
+    }
 </style>
 @endsection
 
@@ -21,7 +25,7 @@ Route Documents
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor font-weight-bold">Route Documents</h4>
+        <h4 class="text-themecolor">Route Documents</h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
@@ -29,7 +33,7 @@ Route Documents
                 <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
                 <li class="breadcrumb-item active">Route Documents</li>
             </ol>
-            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
+            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
         </div>
     </div>
 </div>
@@ -129,8 +133,8 @@ Route Documents
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-9">
-                            <h4 class="modal-title font-weight-bold" id="modalLogsTitle">Log Details</h4>
-                            <span id="modalLogsDocuType">aaaa</span>
+                            <h4 class="modal-title font-bold" id="modalLogsTitle">Log Details</h4>
+                            <h5 id="modalLogsDocuType">aaaa</h5>
                         </div>
                         <div class="col-md-3">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -154,8 +158,8 @@ Route Documents
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-9">
-                            <h4 class="modal-title font-weight-bold" id="modalRemarksTitle">Remarks</h4>
-                            <span id="modalRemarksDocuType">aaaa</span>
+                            <h4 class="modal-title font-weight-bold" id="modalRemarksTitle">Notes</h4>
+                            <span id="modalRemarksDocuType"></span>
                         </div>
                         <div class="col-md-3">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -170,19 +174,67 @@ Route Documents
 </div>
 <!-- MODALS -->
 
+<div class="card-group">
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body text-center p-b-0">
+            <h4 class="text-center">Documents Created</h4>
+        </div>
+        <div class="box b-t text-center p-t-0">
+            <h3 class="font-medium m-b-0 text-success">
+                <i class="icon-docs"></i> <span id="count-created">{{ $documentsCreated->count() }}</span>
+            </h3>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body text-center p-b-0">
+            <h4 class="text-center">Documents Received</h4>
+        </div>
+        <div class="box b-t text-center p-t-0">
+            <h3 class="font-medium m-b-0 text-info">
+                <i class="ti-import"></i> <span id="count-receive">{{ $documentsReceived->count() }}</span>
+            </h3>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body text-center p-b-0">
+            <h4 class="text-center">Documents Released</h4>
+        </div>
+        <div class="box b-t text-center p-t-0">
+            <h3 class="font-medium m-b-0 text-primary">
+                <i class="ti-export"></i> <span id="count-release">{{ $documentsReleased->count() }}</span>
+            </h3>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card m-b-0">
             <div class="card-header bg-dark">
                 <h4 class="m-b-0 text-white">
                     Receive and Release Document
+                    <div class="btn-group float-right">
+                        <button type="button" class="btn waves-effect waves-light btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a id="drpdown-export-log" class="dropdown-item" href="javascript:void(0)">Export Log</a>
+                        </div>
+                    </div>  
                 </h4>
             </div>
             <div class="card-body p-b-10">
                 <div class="row">
                     <div class="col-md-12">
-                        <button id="btnReceive" class="btn btn-primary" data-toggle="modal" data-target="#receiveModal">Receive Document</button>
-                        <button id="btnRelease" class="btn btn-primary" data-toggle="modal" data-target="#releaseModal">Release Document</button>
+                        <button id="btnReceive" class="btn waves-effect waves-light btn-primary" data-toggle="tooltip" data-placement="bottom" title="Receive Document (alt + 3)">
+                            <span data-toggle="modal" data-target="#receiveModal">Receive Document</span>
+                        </button>
+                        <button id="btnRelease" class="btn waves-effect waves-light btn-primary" data-toggle="tooltip" data-placement="bottom" title="Release Document (alt + 4)">
+                            <span data-toggle="modal" data-target="#releaseModal">Release Document</span>
+                        </button>
 
                         <!-- SEARCH TOGGLE -->
                         <a class="get-code float-right" data-toggle="collapse" href="#tt1" aria-expanded="true"><i class="ti-search" title="Get Code" data-toggle="tooltip"></i> Search Tracker</a>
@@ -195,7 +247,7 @@ Route Documents
                             <div class="input-group p-0">
                                 <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
                                 <div class="input-group-append">
-                                    <button class="btn btn-info" type="submit">Search</button>
+                                    <button class="btn btn-info" type="button">Search</button>
                                 </div>
                             </div>
                             <small class="form-control-feedback text-muted">&nbsp;</small> 
@@ -221,7 +273,7 @@ Route Documents
                                 <th>Subject</th>
                                 <!-- <th>Notes</th> -->
                                 <th>Status</th>
-                                <th>Remarks</th>
+                                <th>Note</th>
                                 <th>Keywords</th>
                                 <!-- <th></th> -->
                             </tr>
@@ -229,21 +281,25 @@ Route Documents
                         <tbody class="table-sm">
                             @forelse( $documentsLog as $log )
                                 <tr id="row-{{ $log->id }}">
-                                    <td class="text-center"><a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $log->tracking_code }}</a></td>
+                                    <td class="text-center">
+                                        <h4><a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $log->tracking_code }}</a></h4>
+                                    </td>
                                     <td>
-                                        <h5 class="font-weight-bold">
-                                            {{ $log->documentCode->subject }}
-                                            <br>
-                                            <small>{{ $log->documentCode->other_document }} &#9679; {{ $log->documentCode->tracking_date }}</small>
+                                        <h5 class="font-bold m-b-0">
+                                            {{ $log->documentCode->subject }} 
+                                            <small><span class="badge badge-info">{{ $log->documentCode->other_document }}</span></small>
                                         </h5>
                                             <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
+                                            <small>{{ $log->documentCode->tracking_date }}</small>
                                     </td>
                                     <!-- <td>{{ $log->notes }}</td> -->
                                     <td>
-                                        <h5 class="font-weight-bold">
+                                        <h5 class="font-bold m-b-0">
                                             {{ $log->action }}
-                                            <br><small>{{ $log->date_action }}</small>
                                         </h5>
+                                        <small>{{ $log->date_action }}</small>
+                                        @if ( $log->action == "Receive")
+                                        @else
                                         <ul class="p-l-20 m-b-0">
                                             @if ( !is_null( $log->recipients ) )
                                                 @foreach( $log->recipients as $recipient)
@@ -253,18 +309,21 @@ Route Documents
                                                 <li>All</li>
                                             @endif
                                         </ul>
-                                    </td>
-                                    <td>
-                                        @if ( empty($log->remarks) )
-                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="text-info linkRemarks"><small><i class="icon-note"></i></small></a>
-                                        @else
-                                            <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="linkRemarks">
-                                                {{ $log->remarks }}
-                                            </a>
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $log->documentCode->keywords }}
+                                        <a data-id="log-{{ $log->id }}" href="javascript:void(0);" class="text-primary linkRemarks">
+                                            {!! $log->forSignature ? 'For signature.&nbsp;' : '' !!}
+                                            {!! $log->forCompliance ? 'For Compliance.&nbsp;' : '' !!}
+                                            {!! $log->forInformation ? 'For Information.&nbsp;' : '' !!}
+                                            {{ $log->notes ?: '' }}
+                                            &nbsp;<small><i class="icon-note"></i></small>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @foreach( $log->documentCode->documentKeywords as $keyword )
+                                            {{ $keyword->keywords }} &nbsp;
+                                        @endforeach
                                     </td>
                                     <!-- <td class="text-center">
                                         <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
@@ -282,7 +341,7 @@ Route Documents
 @endsection
 
 @section('scripts')
-<script src="{{ asset('assets/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ asset('js/jquery.hotkeys.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
@@ -304,16 +363,20 @@ Route Documents
                 },
             ],
             // order: [[ 0, "desc" ]],
-            // dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
+            dom: '<"top"l<"float-right"i>>rt<"bottom"<"float-left"B><p>><"clear">',
             buttons: [
                 {
                     text: 'Export Log',
-                    className: 'btn btn-primary',
+                    className: 'btn btn-primary btn-hidden btn-export-log',
                     action: function ( e, dt, node, config ) {
                         window.open("{{ route('optima.route-documents.export') }}");
                     }
                 }
             ]
+        });
+
+        $('#drpdown-export-log').on('click', function() {
+            $('.btn-export-log').click();
         });
 
         // Custom Input Search for Table
@@ -326,7 +389,7 @@ Route Documents
         // SHOW MODAL TRACKING LOGS OF A DOCUMENT
         $("#tableRoutedDocument").on("click", ".show-code", function() {
             var tracking_code = $(this).attr("id"),
-                url = "{{ route('doctracker.search') }}";
+                url = "{{ route('optima.route-documents.search') }}";
 
             $.ajax({
                 method : 'GET',
@@ -334,8 +397,8 @@ Route Documents
                 data   : {code: tracking_code},
                 success: function(data) {
                     $('#modalBodyLogs').html(data.html);
-                    $('#modalLogs').find('#modalLogsTitle').html(data.title);
-                    $('#modalLogs').find('#modalLogsDocuType').html(data.docutype);
+                    $('#modalLogs').find('#modalLogsTitle').html(data.title + ' <span class="badge badge-info">' + data.docutype + '</span>');
+                    $('#modalLogs').find('#modalLogsDocuType').html(data.subject);
                     $('#modalLogs').modal('show');
                 },
                 error  : function(xhr, err) {
@@ -415,16 +478,41 @@ Route Documents
 
                     } else {
 
-                        // ALERT
-                        $('#submitReceiveSpinner').css('display','none');
-                        $('input#codeInputReceive').select();
-                        $('#submitReceiveAlert')
-                            .removeClass('alert-success')
-                            .addClass('alert-danger')
-                            .css('display','block').html( 'Tracking code undefined.');
-                        setTimeout(function() {
-                            $('#submitReceiveAlert').css('display', 'none');;
-                        }, 5000);
+                        if ( data.status == "Receive")
+                        {
+                            // ALERT
+                            $('#submitReceiveSpinner').css('display','none');
+                            $('input#codeInputReceive').select();
+                            $('#submitReceiveAlert')
+                                .removeClass('alert-success')
+                                .addClass('alert-danger')
+                                .css('display','block').html( data.tracking_code + data.msg );
+                            setTimeout(function() {
+                                $('#submitReceiveAlert').css('display', 'none');;
+                            }, 5000);
+
+                        } else if ( data.status == "Not Recipient" ) {
+
+                            var dialog = Swal.fire({
+                                        text:  data.tracking_code + data.msg,
+                                        type: "warning",
+                                        showConfirmButton: true,
+                                        showCancelButton: true,
+                                        allowOutsideClick: false
+                                });
+
+                        } else {
+                            // ALERT
+                            $('#submitReceiveSpinner').css('display','none');
+                            $('input#codeInputReceive').select();
+                            $('#submitReceiveAlert')
+                                .removeClass('alert-success')
+                                .addClass('alert-danger')
+                                .css('display','block').html("Tracking code undefined.");
+                            setTimeout(function() {
+                                $('#submitReceiveAlert').css('display', 'none');;
+                            }, 5000);
+                        }
                     }
                 },
                 error  : function(xhr, err) {
@@ -524,7 +612,33 @@ Route Documents
             return false;
         });
     });
+</script>
+<script>
 
+    $(document).on('keydown input click', function (key) {
+
+        // console.log(key.which);
+
+        if ( key.altKey && key.which == 51 ) {
+            // alt + 3
+            // $("#btnReceive").click();
+            $('#receiveModal').modal('show');
+            $('.modal').not($('#receiveModal')).each(function () {
+                $(this).modal('hide');
+            });
+
+        } else if ( key.altKey && key.which == 52 ) {
+            // alt + 4
+            // $("#btnRelease").click();
+            $('#releaseModal').modal('show');
+            $('.modal').not($('#releaseModal')).each(function () {
+                $(this).modal('hide');
+            });
+        } /*else if ( key.ctrlKey && key.altKey && key.which == 78 ) {
+            // alt + 4
+            $("#btnCreateNewTracker").click();
+        }*/
+    });
 </script>
 <script>
     // row to be added

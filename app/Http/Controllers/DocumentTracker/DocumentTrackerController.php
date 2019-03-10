@@ -8,7 +8,9 @@ use App\Office;
 use App\CodeTable;
 use Carbon\Carbon;
 use App\Helpers\LogActivity;
+use App\Models\Settings\OfficeGroups;
 use App\Models\DocumentTracker\DocumentTypes;
+use App\Models\DocumentTracker\DocumentKeyword;
 use App\Models\DocumentTracker\DocumentTracker;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
 use App\Models\DocumentTracker\DocumentTrackerAttachment;
@@ -91,6 +93,7 @@ class DocumentTrackerController extends Controller
             return response()->json([
                 'html'     => $view,
                 'title'    => $tracker->tracking_code,
+                'subject'  => $tracker->subject,
                 'docutype' => $tracker->other_document,
             ]);
         }
@@ -129,7 +132,7 @@ class DocumentTrackerController extends Controller
                         ])->where('tracking_code', $code)->first();
         
         // return $myDocument->trackLogs[0]['action'];
-        // return view('optima.show-document', compact('myDocument'));
+        return view('optima.show-document', compact('myDocument'));
         // return $myDocument;
     }
 
@@ -149,7 +152,7 @@ class DocumentTrackerController extends Controller
         $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
                                                     ->where('action', "Forward")
                                                     ->latest()->get();
-        $documentsLog = DocumentTrackingLogs::where('user_id', Auth::user()->id)->latest()->get();
+        $documentsLog = DocumentTrackingLogs::with('documentCode.documentKeywords')->where('user_id', Auth::user()->id)->latest()->get();
 
         return view('optima.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
         // return dd($documentsLog);
@@ -213,41 +216,69 @@ class DocumentTrackerController extends Controller
                                         ->first();
         if ( $tracker )
         {
-            $log                = new DocumentTrackingLogs;
-            $log->code          = $tracker->code;
-            $log->tracking_code = $tracker->tracking_code;
-            $log->user_id       = Auth::user()->id;
-            $log->action        = "Receive";
-            // $log->notes         = $request->notes;
-            // checked remarks
-            // $remarksText = "";
-            /*foreach($request->remarks as $remark){
-                $remarksText .= $remark;
-            }*/
-            // $log->remarks       = $remarksText;
-            $log->save();
+            if ( $old_log->action != "Receive" )
+            {
+                $isRecipient = false;
 
-            LogActivity::addToLog('received an incoming document.'); // log
+                foreach ( $old_log->recipients as $recipient ) {
+                    if ( $recipient['id'] == Auth::user()->id ) {
+                        $isRecipient = true;
+                    }
+                }
 
-            $data = [
-                'result'            => true,
-                'track_id'          => $log->id,
-                'tracking_code'     => $tracker->tracking_code,
-                'subject'           => $tracker->subject,
-                'document_type'     => $tracker->other_document,
-                'created_by'        => $tracker->userEmployee->full_name,
-                'date_created'      => $tracker->tracking_date,
-                'note'              => $log->notes ?: '',
-                'remarks'           => $log->remarks ?: '',
-                'keywords'          => $tracker->keywords,
-                'action'            => $log->action,
-                'date_action'       => $log->date_action,
-            ];
-        }
+                if ( $isRecipient )
+                {
+                    $log                = new DocumentTrackingLogs;
+                    $log->code          = $tracker->code;
+                    $log->tracking_code = $tracker->tracking_code;
+                    $log->user_id       = Auth::user()->id;
+                    $log->action        = "Receive";
+                    // $log->notes         = $request->notes;
+                    // checked remarks
+                    // $remarksText = "";
+                    /*foreach($request->remarks as $remark){
+                        $remarksText .= $remark;
+                    }*/
+                    // $log->remarks       = $remarksText;
+                    $log->save();
 
-        if($request->ajax())
-        {
-            return response()->json($data);
+                    // LogActivity::addToLog('received an incoming document.'); // log
+
+                    $data = [
+                        'result'            => true,
+                        'track_id'          => $log->id,
+                        'tracking_code'     => $tracker->tracking_code,
+                        'subject'           => $tracker->subject,
+                        'document_type'     => $tracker->other_document,
+                        'created_by'        => $tracker->userEmployee->full_name,
+                        'date_created'      => $tracker->tracking_date,
+                        'note'              => $log->notes ?: '',
+                        'remarks'           => $log->remarks ?: '',
+                        'keywords'          => $tracker->keywords,
+                        'action'            => $log->action,
+                        'date_action'       => $log->date_action
+                    ];
+                } else {
+                    $data = [
+                        'result'            => false,
+                        'tracking_code'     => $tracker->tracking_code,
+                        'status'            => "Not Recipient",
+                        'msg'               => " is not forwarded to you. Receive anyway?"
+                    ];
+                }
+            } else {
+                $data = [
+                    'result'            => false,
+                    'tracking_code'     => $tracker->tracking_code,
+                    'status'            => "Receive",
+                    'msg'               => " has already been received. Release the document first before receiving to proceed."
+                ];
+            }
+
+            if($request->ajax())
+            {
+                return response()->json($data);
+            }
         }
     }
 
@@ -372,7 +403,7 @@ class DocumentTrackerController extends Controller
         $offices  = Office::all();
         $users    = User::employee()->notSelf()->get();
         $userSelf = User::employee()->get();
-        $docTypes = DocumentTypes::all();
+        $docTypes = DocumentTypes::orderBy('document_name', 'ASC')->get();
 
         return view('optima.create-documents', compact('docTypes', 'offices', 'users', 'userSelf'));
     }
@@ -387,74 +418,73 @@ class DocumentTrackerController extends Controller
     {
         $result = false;
 
+        // Active User Routing Model
+        $userFrom = Auth::user();
+
         // ------------ CREATE TRACKING CODE -------------------- //
-        $office          = Office::find($request->routeDiv)->div_acronym;
+        $office          = $userFrom->office->div_acronym;
         $seriesCode      = CodeTable::first()->doc_code;
         $year            = Carbon::now()->format('y');
         $code            = $year.'-'.$seriesCode;
-        $fullDate        = Carbon::now()->toDateString();
         $tracking_code   = $office.'-'.$code;
         // ------------ END CREATE TRACKING CODE --------------- //
 
-        $document                = new DocumentTracker;
-        $document->code          = $code;
-        $document->tracking_code = $tracking_code;
-        $document->user_id       = $request->routedBy;
-        $document->route_mode    = $request->routeMode;
-        $document->doc_type_id   = $request->docType;
+        // ------------ SAVE ROUTE INFORMATION --------------- //
+        $document                 = new DocumentTracker;
+        $document->code           = $code;
+        $document->tracking_code  = $tracking_code;
+        $document->user_id        = $userFrom->id;
+        $document->doc_type_id    = $request->docType;
         $document->other_document = $request->otherDocument;
-        $document->document_date = $request->documentDate;
-        $document->subject       = $request->subject;
-        $document->details       = $request->details;
-        $document->keywords      = $request->keywords;
+        $document->document_date  = $request->documentDate;
+        $document->subject        = $request->subject;
 
         if ( $document->save() ) {
 
-            LogActivity::addToLog('created a document with tracking code.'); // log
-
+            // LogActivity::addToLog('created a document with tracking code.'); // log
             $result = true;
+
+            // --------------- SAVE ALL KEYWORDS ------------------- //
+            $keywords = explode(',', $request->keywords);
+            foreach ($keywords as $keyword) {
+                $keywordTable = DocumentKeyword::firstOrCreate([ 'document_id' => $document->id, 'keywords' => $keyword ]);
+            }
+            // --------------- END SAVE ALL KEYWORDS ------------------- //
+
             // --------------- UPDATE CODE TABLE ------------------- //
-            $updateCode           = CodeTable::where('doc_code', $seriesCode)->first();
-            $updateCode->doc_code = sprintf("%05s", $seriesCode + 1);
-            $updateCode->save();
+            $updateCode = CodeTable::where('doc_code', $seriesCode)->update([ 'doc_code' => sprintf("%05s", $seriesCode + 1) ]);
             // --------------- END UPDATE CODE TABLE --------------- //
 
             // --------------- FETCH ALL ACTIVE RECIPIENTS --------- //
-            $mode = $request->routeMode;
-            $recipients = null;
-
-            if ( $mode == "all" ) {
-
-                $employees = User::employee()->notSelf()->get();
-
-            } elseif ( $mode == "group" ) {
-
-                $office_id  = $request->recipients;
-                $employees  = User::employee()->notSelf()->whereIn('office_id', $office_id)->get();
-                $offices    = Office::whereIn('id', $office_id)->get();
-                
-                foreach ($offices as $office) {
-                    $recipients[] = [ 'id' => $office->id , 'name' => $office->division_name ];
-                }
-
-            } elseif ( $mode == "individual" ) {
-
-                $id            = $request->recipients;
-                $employees     = User::employee()->notSelf()->whereIn('id', $id)->get();
-
-                foreach ($employees as $employee) {
-                    $recipients[] = [ 'id' => $employee->id , 'name' => $employee->full_name ];
-                }
-
+            $id         = $request->recipients;
+            $indexes    = [];
+            $recipients = [];
+            foreach ($id as $recipient) {
+                $indexes[] = explode(',', $recipient);
             }
+            foreach ($indexes as $index) {
+                if ( $index[1] == 'group' )
+                {
+                    $type = OfficeGroups::where('id', '=', $index[0])->first();
+                    $name = $type->acronym;
+                } elseif ( $index[1] == 'individual' ) {
+                    $type = User::where('id', '=', $index[0])->first();
+                    $name = $type->full_name;
+                }
+                $recipients[] = [ 'id' => $type->id , 'type' => $index[1], 'name' => $name ];
+            }
+            // --------------- END FETCH ALL ACTIVE RECIPIENTS --------- //
 
             // ----------------- CREATE NEW LOG -------------------- //
+
             $log                 = new DocumentTrackingLogs;
             $log->code           = $document->code;
             $log->tracking_code  = $document->tracking_code;
-            $log->user_id        = $document->user_id;
-            $log->action         = $request->action;
-            $log->route_mode     = $mode;
+            $log->user_id        = $userFrom->id;
+            $log->action         = "Forward";
+            $log->forSignature   = $request->has('forSignature') ?: false;
+            $log->forCompliance  = $request->has('forCompliance') ?: false;
+            $log->forInformation = $request->has('forInformation') ?: false;
             $log->recipients     = $recipients;
             $log->notes          = $request->note;
             $log->save();
@@ -463,9 +493,14 @@ class DocumentTrackerController extends Controller
         }
 
         if ( $request->ajax() ) {
-            return response()->json(['result' => $result, 'url' => route('doctracker.showDocument', $document->tracking_code), 'tracker' => $document->tracking_code ]);
+            return response()->json([
+                'result' => $result, 
+                'url' => route('optima.route-documents', $document->tracking_code), 
+                'tracker' => $document->tracking_code 
+            ]);
+
         } else {
-            return redirect()->route('doctracker.showDocument', $document->tracking_code);
+            return redirect()->route('optima.route-documents', $document->tracking_code);
         }
 
 
@@ -547,22 +582,19 @@ class DocumentTrackerController extends Controller
     }
 
     /*** JS ***/
+    public function searchKeywords(Request $request)
+    {   
+        $term = $request->term;
+        $terms = DocumentKeyword::groupBy('keywords')->where('keywords', 'LIKE', '%'.$term.'%')->get()->pluck('keywords');
+
+        return response()->json($terms);
+    }
+
     public function recipientsList(Request $request)
     {   
-        $id = $request->office_id;
-        $data = null;
-
-        if ( $id == 'individual')
-        {
-            $employees = User::employee()->notSelf()->get();
-            $data      = view('list.recipient-list', compact('employees'))->render();
-
-        } else if ( $id == 'group' ) {
-
-            $offices   = Office::all();
-            $data      = view('list.office-list', compact('offices'))->render();
-
-        }
+        $employees = User::employee()->notSelf()->get();
+        $groups    = OfficeGroups::all();
+        $data      = view('list.recipient-list', compact('employees', 'groups'))->render();
 
         if ( $request->ajax() )
         {

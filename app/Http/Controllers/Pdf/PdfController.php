@@ -12,7 +12,7 @@ class PdfController extends Controller
     public function printBarcode(Request $request, $code)
     {
         $tracker = DocumentTracker::where('tracking_code', $code)->first();
-        $view    = view('doctracker.pdf.barcode', compact('tracker'));
+        $view    = view('optima.pdf.barcode', compact('tracker'));
         $pdf     = PDF::loadHtml($view);
 
         // return $pdf->download($tracker->tracking_code.'.pdf');

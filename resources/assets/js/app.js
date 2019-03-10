@@ -20,8 +20,3 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app'
 });
-
-
-import {MDCChipSet} from '@material/chips';
-const chipSetEl = document.querySelector('.mdc-chip-set');
-const chipSet = new MDCChipSet(chipSetEl);

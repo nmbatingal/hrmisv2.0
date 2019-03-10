@@ -33,13 +33,39 @@ Create new tracker
     .select2-container--default .select2-selection--single .select2-selection__rendered {
         line-height: 38px;
     }*/
+    .form-control-line .form-control {
+        border-bottom: none;
+    }
+
 
     .form-control-line .form-group .form-control {
         padding: 0 10px;
     }
 
     .form-control-line .form-control:focus {
+        /*border-bottom: 1px solid #e9ecef;*/
         border-bottom: none;
+    }
+
+    .tag-editor {
+        border: none;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border: none;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        border: none;
+    }
+
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border: none;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        color: black;
+        margin-top: none;
     }
 </style>
 @endsection
@@ -50,7 +76,7 @@ Create new tracker
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor font-weight-bold">Create New Tracker</h4>
+        <h4 class="text-themecolor">Create New Tracker</h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
@@ -65,132 +91,6 @@ Create new tracker
 
 <div class="row">
     <div class="col-lg-12">
-        <!-- <div class="card-header bg-dark">
-            <h4 class="m-b-0 text-white">Document Information</h4>
-        </div> -->
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Document Routing Information</h4>
-                    <h6 class="card-subtitle">Please fill out the fields below completely before submitting the form. </h6>
-                    <hr>
-                    <!-- <div class="alert alert-warning">
-                        <i class="fas fa-exclamation-triangle p-r-10"></i> Fields with asterisk (*) are required.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
-                    </div> -->
-                    <div class="row p-40 p-b-0">
-                        <div class="col-md-12">
-
-                            <!-- DOCUMENT FIELD -->
-                            <!-- DOCUMENT FIELD -->
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <select class="select2 form-control custom-select" name="docType" required>
-                                            <option value="">Document Type</option>
-                                            @forelse( $docTypes as $doctype )
-                                                <option value="{{ $doctype->id }}">{{ $doctype->document_name }}</option>
-                                            @empty
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="specifyDocument" class="col-md-5" style="display: none;">
-                                    <div class="form-group">
-                                        <input id="otherDocument" type="text" class="form-control" name="otherDocument" placeholder="Please specify document type" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- <div class="form-group row">
-                                <label class="control-label text-right col-md-2">Attachments</label>
-                                <div class="col-md-10">
-                                    <input type="file" class="form-control" name="attachments[]" accept=".pdf" multiple>
-                                    <small class="form-control-feedback">Select pdf files only. </small> 
-                                </div>
-                            </div> -->
-                            
-                            <div id="routingInformation" style="display: none;">
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Routed by</label>
-                                    <div class="col-md-4">
-                                        <select class="form-control custom-select" name="routedBy" disabled>
-                                            @forelse( $userSelf as $user )
-                                                @if ( $user->id == Auth::user()->id )
-                                                    <option value="{{ $user->id }}" selected>{{ $user->full_name }}</option>
-                                                @else
-                                                    <option value="{{ $user->id }}">{{ $user->full_name }}</option>
-                                                @endif
-                                            @empty
-                                            @endforelse
-                                        </select>
-                                        <input type="hidden" name="routedBy" value="{{ Auth::user()->id }}">
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-
-                                    <label class="control-label text-right col-md-2">Routing Division</label>
-                                    <div class="col-md-4">
-                                        <select class="form-control custom-select" name="routeDiv" disabled>
-                                            <option value="">-- Select office --</option>
-                                            @forelse( $offices as $office )
-                                                @if ( $office->id == Auth::user()->office_id )
-                                                    <option value="{{ $office->id }}" selected>{{ $office->division_name }}</option>
-                                                @else
-                                                    <option value="{{ $office->id }}">{{ $office->division_name }}</option>
-                                                @endif
-                                            @empty
-                                            @endforelse
-                                        </select>
-                                        <input type="hidden" name="routeDiv" value="{{ Auth::user()->office_id }}">
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-                                </div>
-
-                                <!-- SHOW DIV ON ACTION CHANGE TO FORWARDED -->
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Action</label>
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" name="action" value="Forward" readonly>
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-                                </div>
-
-                                <div class="form-group row m-b-0">
-                                    <label class="control-label text-right col-md-2">Route Mode <span class="text-primary">*</span></label>
-                                    <div class="col-md-10">
-                                        <select class="form-control custom-select" name="routeMode">
-                                            <option value="all">All Employee</option>
-                                            <option value="group">Group</option>
-                                            <option value="individual">Individual</option>
-                                        </select>
-                                        <small class="form-control-feedback">&nbsp;</small> 
-                                    </div>
-                                </div>
-
-                                <div id="sendRoute" style="display: none;">
-                                    <div class="form-group row m-b-0">
-                                        <label class="control-label text-right col-md-2">Route to</label>
-                                        <div class="col-md-10">
-                                            <select id="recipient" class="select2 form-control select2-multiple" name="recipients[]" multiple="multiple">
-                                                <option value="">Select employee</option>
-                                            </select>
-                                            <small class="form-control-feedback">&nbsp;</small> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="float-right">
-                                    <button id="submit-btn" type="submit" class="btn btn-lg btn-success"><i id="spinner" style="display: none;" class="fas fa-spinner fa-spin"></i> Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         <div class="card border-dark">
             <div class="card-header bg-dark">
@@ -216,39 +116,74 @@ Create new tracker
                         </div>
                     </div>
 
-                    <div class="form-group row m-b-10">
+                    <div class="form-group row m-b-20">
                         <div class="col-md-12 p-0">
                             <textarea class="form-control autosize" name="subject" rows="1" placeholder="Subject" required autofocus></textarea>
                             <!-- <span class="help-block p-l-10 text-muted">
                                 <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
                             </span> -->
                         </div>
+                        <div class="col-md-12 p-0">
+                            <hr class="m-0">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12 p-0">
+                            <input type="text" name="keywords" class="form-control keywords" required>
+                        </div>
+                        <div class="col-md-12 p-l-0 p-t-10 p-r-0">
+                            <hr class="m-0">
+                        </div>
                     </div>
 
                     <div class="form-group row m-b-10">
-                        <div class="col-md-12 p-0 form-control">
-                            <input type="text" class="form-control form-control-line keywords" name="keywords" placeholder="add keywords" required>
+                        <div class="col-md-6">
+                            <select id="documentType" class="form-control" name="docType" required>
+                                <option></option>
+                                @forelse( $docTypes as $doctype )
+                                    <option value="{{ $doctype->id }}">{{ $doctype->document_name }}</option>
+                                @empty
+                                @endforelse
+                            </select>
+                        </div>
+                        <div id="specifyDocument" class="col-md-6 p-0" style="display: none;">
+                            <input id="otherDocument" type="text" class="form-control" name="otherDocument" placeholder="Please specify document type" required>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <hr class="m-0">
+                        </div>
+                    </div>
+
+                    <div class="form-group row m-b-20">
+                        <div class="col-md-12 p-10">
+                            <select id="recipient" class="select2 form-control select2-multiple" name="recipients[]" multiple="multiple"
+                                    required>
+                            </select>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <hr class="m-0">
                         </div>
                     </div>
 
                     <div class="form-group options">
                         <div class="custom-control custom-checkbox">
-                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck4" value="For signature." required>
-                            <label class="custom-control-label" for="customCheck4">For signature. </label>
+                            <input name="forSignature" type="checkbox" class="custom-control-input" id="customCheck4" value="For signature." required>
+                            <label class="custom-control-label" for="customCheck4">For signature </label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance." required>
-                            <label class="custom-control-label" for="customCheck2">For action/compliance. </label>
+                            <input name="forCompliance" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance." required>
+                            <label class="custom-control-label" for="customCheck2">For action/compliance </label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input name="remarks[]" type="checkbox" class="custom-control-input" id="customCheck3" value="For information." required>
-                            <label class="custom-control-label" for="customCheck3">For information. </label>
+                            <input name="forInformation" type="checkbox" class="custom-control-input" id="customCheck3" value="For information." required>
+                            <label class="custom-control-label" for="customCheck3">For information </label>
                         </div>
                     </div>
 
                     <div class="form-group row m-b-10">
                         <div class="col-md-12 p-0">
-                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Enter notes here..."></textarea>
+                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes"></textarea>
                             <!-- <span class="help-block p-l-10 text-muted">
                                 <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
                             </span> -->
@@ -259,7 +194,13 @@ Create new tracker
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="float-right">
-                                    <button id="submit-btn" type="submit" class="btn btn-lg btn-success"><i id="spinner" style="display: none;" class="fas fa-spinner fa-spin"></i> Submit</button>
+                                    <button id="btnSubmit" type="submit"  class="btn btn-md btn-success">
+                                      <span class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
+                                      Submit
+                                    </button>
+                                    <button id="btnPrint" type="button"  class="btn btn-md btn-danger" style="display: none;">
+                                      Print code
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -284,49 +225,24 @@ Create new tracker
 <script type="text/javascript">
     $(document).ready(function() {
 
-        // $("#keywords").tagsInput();
-        $(".keywords").tagEditor({
-            delimiter: ',;', /* space and semicolon */
-            placeholder: 'Add keywords...',
-            forceLowercase: true,
-            removeDuplicates: true
-        });
-
-        $('.tag-editor').css({'border': 'none'});
-
         var formCreate = $('form#formCreate').show();
 
         $('.mdate').bootstrapMaterialDatePicker({ 
             weekStart: 0, 
             time: false,
-            format: 'MMMM DD, YYYY'
+            // format: 'MMMM DD, YYYY'
         });
 
         autosize($('textarea.autosize'));
 
         $('input[name=documentDate]').bootstrapMaterialDatePicker('setDate', moment());
 
-        $("select[name=routeMode]").change(function(){
-            
-            var $id = $(this).val();
-            var token = $("input[name=_token]").val();
-
-            if ( $id == 'all')
-            {
-                $('div#sendRoute').css('display', 'none');
-                $("select#recipient").html('');
-
-            } else {
-
-                $('div#sendRoute').css('display', 'block');
-                $.post( "{{ route('optima.recipients') }}", { office_id: $id, _token:token})
-                    .done( function( data ) {
-                        $("select#recipient").attr('disabled', false);
-                        $("select#recipient").html('');
-                        $("select#recipient").html(data.options);
-                    });
-            }
-        });
+        // return list of registered recipients
+        var token = $("input[name=_token]").val();
+        $.post( "{{ route('optima.recipients') }}", { _token: token })
+            .done( function( data ) {
+                $("select#recipient").html(data.options);
+            });
 
         $("select[name=docType]").change(function(){
             
@@ -397,13 +313,10 @@ Create new tracker
         //     },
         // });
 
-        /*formCreate.on('submit', function(e) {
+        formCreate.on('submit', function(e) {
 
             e.preventDefault();
             var form = $(this); 
-
-            $('#spinner').css('display', 'inline-block');
-            $('#submit-btn').attr('disabled', 'disabled');
 
             $.ajax({
                 method : 'POST',
@@ -420,8 +333,13 @@ Create new tracker
                             if (event.lengthComputable) {
                                 percent = Math.ceil(position / total * 100);
                             }
-                            //update progressbar
-                            $("#upload-progress .progress-bar").css("width", + percent +"%");
+                            // update progressbar
+                            // $("#upload-progress .progress-bar").css("width", + percent +"%");
+                            // console.log(percent);
+
+                            $('#btnSubmit .spinner-border').css('display', 'inline-block');
+                            $('#btnSubmit').attr('disabled', 'disabled');
+
                         }, true);
                     }
                     return xhr;
@@ -429,16 +347,19 @@ Create new tracker
                 success: function(data) {
                     if (data.result) {
 
-                        $('#spinner').css('display', 'none');
-
-                        var url = "{{ route('print.barcode', ':var') }}";
+                        var url = "{{ route('optima.print.barcode', ':var') }}";
                             url = url.replace(':var', data.tracker);
+
+                        $('.spinner-border').css('display', 'none');
+                        $('#btnSubmit').css('display', 'none');
+                        $('#btnPrint').css('display', 'block');
 
                         var dialog = Swal.fire({
                                         text:  "Document tracker successfully saved. Tracking Code " + data.tracker,
                                         type: "success",
                                         showConfirmButton: true,
                                         showCancelButton: true,
+                                        allowOutsideClick: false,
                                         onOpen: function(swal) {
 
                                             var swalCancel = $(swal).find('.swal2-cancel');
@@ -454,16 +375,24 @@ Create new tracker
                                 });
 
                     } else {
+
+                        $('.spinner-border').css('display', 'none');
+                        $('#btnSubmit').attr('disabled', false);
+
                         Swal.fire({
                             title: "Error!",
                             text:  "Data unsuccessfully saved.",
                             type: "error"
                         }).then( function() {
-                           $("#upload-progress .progress-bar").css("width", 0);
+                           // $("#upload-progress .progress-bar").css("width", 0);
                         });
                     }
                 },
                 error  : function(xhr, err) {
+
+                    $('.spinner-border').css('display', 'none');
+                    $('#btnSubmit').attr('disabled', false);
+
                     Swal.fire({
                         title: "Error!",
                         text:  "Could not process data.",
@@ -475,7 +404,7 @@ Create new tracker
             });
 
             return false;
-        });*/
+        });
     });
 </script>
 <script>
@@ -484,9 +413,48 @@ Create new tracker
         // $('input#keywords').tagsinput({ confirmKeys: [186] });
         // $("input#keywords").materialtags();
 
-        $(".select2").select2({
-            'width': '100%'
+
+        $(".keywords").tagEditor({
+            autocomplete: {
+                delay: 0, // show suggestions immediately
+                position: { collision: 'flip' }, 
+                source: "{{ route('optima.keywords') }}"
+            },
+            delimiter: ',', /* space and semicolon */
+            placeholder: 'Add keywords',
+            forceLowercase: true
         });
+
+        $("#documentType").select2({
+            width: '100%',
+            placeholder: "Select document type",
+            allowClear: true
+        });
+
+        $("#recipient").select2({
+            width: '100%',
+            placeholder: "Select recipients",
+            allowClear: true,
+            templateSelection: formatState
+        });
+
+        function formatState (state) {
+            var option = state,
+                img    = $( option.element ).data('img');
+
+
+            if (!state.id) {
+                return state.text;
+            }
+
+            var imgUrl = "{{ asset('/') }}";
+            var $recipient = $(
+                '<span><img src="' + imgUrl + img + '" class="img-circle" width="30" /> ' + option.text + '</span>'
+            );
+
+            return $recipient;
+        };
+
 
         var requiredCheckboxes = $('.options :checkbox[required]');
         

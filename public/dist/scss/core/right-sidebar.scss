@@ -1,21 +1,12 @@
- /*******************
+/*******************
  Right side toggle
 *******************/
-
-.rmv-right-panel .right-sidebar {
-    display: none;
-} 
-
-.rmv-right-panel .page-wrapper {
-    margin-right: 0; 
-} 
-
-.right-sidebar { 
+.right-sidebar {
     position: fixed;
-    right: 0;
-    width: 240px; 
-    z-index: 10;
-    padding-top: 67px;
+    right: -240px;
+    width: 240px;
+    display: none;
+    z-index: 1100;
     background: $white;
     top: 0px;
     padding-bottom: 20px;
@@ -23,33 +14,38 @@
     box-shadow: 5px 1px 40px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     .rpanel-title {
-        font-size: 14px;
-        background: $light;
-        margin: 0;
-        padding: 12px 20px;
+        display: block;
+        padding: 22px 20px;
+        color: $white;
         text-transform: uppercase;
-        font-weight: 500;
+        font-size: 15px;
+        background: $themecolor;
+        span {
+            float: right;
+            cursor: pointer;
+            font-size: 11px;
+            &:hover {
+                color: $white;
+            }
+        }
     }
     .r-panel-body {
         padding: 20px;
         ul {
-            margin: 10px 0;
+            margin: 0px;
             padding: 0px;
             li {
                 list-style: none;
                 padding: 5px 0;
-                border: 0;
             }
         }
-        .daydrop {
-            border: 0;
-            background: 0 0;
-            padding: 0;
-            font-size: 12px;
-            font-weight: 500; 
-            text-transform: uppercase;
-        }
     }
+}
+
+.shw-rside {
+    right: 0px;
+    width: 240px;
+    display: block;
 }
 
 

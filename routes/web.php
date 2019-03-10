@@ -32,13 +32,13 @@ Route::group(['middleware' => 'auth'], function() {
 	// ----------- DOCUMENT TRACKER SYSTEM ------------- //
 	// Route::get('/doctracker/about', 'DocumentTracker\DocumentTrackerController@about')->name('optima.about');
 	// Route::get('/doctracker/dashboard', 'DocumentTracker\DocumentTrackerController@index')->name('doctracker.dashboard');
-	Route::get('/doctracker/logs', 'DocumentTracker\DocumentTrackerController@logs')->name('doctracker.logs');
-	Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@searchJS')->name('doctracker.search');
+	// Route::get('/doctracker/logs', 'DocumentTracker\DocumentTrackerController@logs')->name('doctracker.logs');
+	// Route::get('/doctracker/logs/search', 'DocumentTracker\DocumentTrackerController@searchJS')->name('doctracker.search');
 
 	// Route::get('/doctracker/mydocuments', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('doctracker.mydocuments');
 	// Route::get('/doctracker/mydocuments/create', 'DocumentTracker\DocumentTrackerController@create')->name('doctracker.create.tracker');
-	Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('doctracker.showDocument');
-	Route::get('/doctracker/mydocuments/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
+	// Route::get('/doctracker/mydocuments/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('doctracker.showDocument');
+	// Route::get('/doctracker/mydocuments/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
 	// Route::get('/doctracker/incoming/{code?}', 'DocumentTracker\DocumentTrackerController@showRoutedDocument')->name('doctracker.show.routed');
 	// Route::get('/doctracker/incoming/search', 'DocumentTracker\DocumentTrackerController@searchIncomingDocument')->name('doctracker.incoming.search');
@@ -86,8 +86,12 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
 
 	// DOCUMENT ROUTING MODULE
 	Route::get('route-documents', 'DocumentTracker\DocumentTrackerController@routingDocuments')->name('route-documents');
+	Route::get('route-documents/search', 'DocumentTracker\DocumentTrackerController@searchJS')->name('route-documents.search');
 	Route::get('route-documents/export', 'DocumentTracker\DocumentTrackerController@exportRoutedDocuments')->name('route-documents.export');
 	Route::get('route-documents/export/{code}', 'DocumentTracker\DocumentTrackerController@exportRoutedCodeDocuments')->name('route-documents.export.code');
+
+	// DOCUMENT LOGS
+	// Route::get('logs', 'DocumentTracker\DocumentTrackerController@logs')->name('logs');
 
     // INCOMING
     // Route::get('route-documents/incoming/search', 'DocumentTracker\DocumentTrackerController@searchIncomingDocument')->name('incoming.search');
@@ -101,9 +105,10 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
 	Route::get('my-documents', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('my-documents');
 	// Route::get('my-documents/create', 'DocumentTracker\DocumentTrackerController@create')->name('create.tracker');
 	// Route::get('my-documents/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('showDocument');
-	// Route::get('my-documents/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
+	Route::get('my-documents/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
     // DOCTRACKER RECIPIENT LIST
+    Route::get('keywords', 'DocumentTracker\DocumentTrackerController@searchKeywords')->name('keywords');
     Route::post('recipients', 'DocumentTracker\DocumentTrackerController@recipientsList')->name('recipients');
 
 	// OPTIMA DOCTRACKER RESOURCES

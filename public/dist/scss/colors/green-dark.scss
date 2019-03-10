@@ -12,33 +12,25 @@
         background: $themecolor;
     }
     //Sidebar
-    .side-mini-panel {
-        ul.mini-nav {
-            > li {
-                &:hover > a, &.selected > a {
-                    border-left: 3px solid $themecolor;
-                }
-                &.selected > a {
+    .sidebar-nav {
+        ul li a {
+            &.active,
+            &:hover {
+                color: $themecolor;
+                i {
                     color: $themecolor;
                 }
             }
         }
-    }
-    .togglediv #togglebtn i:hover,
-    .togglediv #togglebtn i:focus {
-        color: $themecolor;
-    }
-    .sidebar-menu {
-        a {
-            &.active {
+        > ul > li {
+            &.active > a {
                 color: $themecolor;
-            } 
-        }
-        > li > a {
-            &:hover {
-                color: $themecolor;
+                border-left: 3px solid $themecolor;
+                i {
+                    color: $themecolor;
+                }
             }
-        } 
+        }
     }
     
     //Bread-crumb
@@ -47,7 +39,9 @@
     }
     
     // Sidebar dark
-    
+    .topbar .top-navbar .navbar-header{
+        background: $sidebar;
+    }
     .topbar{
         .top-navbar .navbar-header .navbar-brand .dark-logo {
             display: none;
@@ -57,34 +51,19 @@
             color: rgba(255, 255, 255, 0.8);
         }
     }    
-    
-    .side-mini-panel {
-        background: $sidebar-alt;
-        ul.mini-nav {
-            > li {
-                > a {
-                    border-top: 1px solid $black;
-                }
-                &.selected > a {
-                    background: $sidebar;
-                }
-                .sidebarmenu {
-                    background: $sidebar;
-                }
+    .left-sidebar {
+        background: $sidebar;
+        .user-pro-body{
+            a.link{
+                color:$sidebar-text;
             }
         }
     }
-    .menu-title,
-    .togglediv #togglebtn i {
-        color: $white;
-    }
-    .menu-search {
-        .form-control {
-            background: $sidebar;
-            border: 1px solid $black;
-            &:focus {
-                border-color: $black;
-            } 
+    @media (min-width: 768px){
+        &.mini-sidebar .sidebar-nav #sidebarnav > li > ul, &.mini-sidebar .sidebar-nav #sidebarnav > li:hover > a{
+            background: $sidebar-alt;
         }
+        
     }
+    
 }

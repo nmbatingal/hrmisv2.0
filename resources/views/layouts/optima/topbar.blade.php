@@ -3,7 +3,7 @@
         <!-- ============================================================== -->
         <!-- Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-header">
+        <div class="navbar-header p-l-20">
             <a class="navbar-brand" href="{{ route('home') }}">
                 <!-- Logo icon -->
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -11,7 +11,7 @@
                     <img src="{{ asset('img/optima-icon.png') }}" alt="homepage" class="dark-logo" />
                     <!-- Light Logo icon -->
                     <img src="{{ asset('img/optima-icon.png') }}" alt="homepage" class="light-logo" />
-                    <span class="text-white p-l-20 m-0">OPTIMA</span>
+                    <span class="p-l-20 m-0 font-bold text-center" style="color: #000000;">O P T I M A</span>
                 <!--End Logo icon -->
             </a>
         </div>
@@ -89,12 +89,23 @@
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
+                <!-- mega menu -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-layout-grid2"></i></a>
+                    <div class="dropdown-menu">
+                        
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End mega menu -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
                 <!-- User Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown u-pro">
                     @guest
                     @else
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" alt="user" class=""> </a>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-user"></i><!--  &#64;<small>{{ Auth::user()->username }} --></small></a>
                     @endguest
                     
                     <div class="dropdown-menu dropdown-menu-right">
@@ -123,9 +134,9 @@
                 <!-- ============================================================== -->
                 <!-- Chat Bubble -->
                 <!-- ============================================================== -->
-                <li class="nav-item right-side-toggle"> 
+                <!-- <li class="nav-item right-side-toggle"> 
                     <a class="nav-link  waves-effect waves-light" href="javascript:void(0)" title="More options"><i class="ti-arrow-right ti-arrow-left"></i></a>
-                </li>
+                </li> -->
                 <!-- ============================================================== -->
                 <!-- End Chat Bubble -->
                 <!-- ============================================================== -->

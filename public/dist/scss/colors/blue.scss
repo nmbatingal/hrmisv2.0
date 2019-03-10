@@ -4,45 +4,29 @@
     $themecolor: #03a9f3;
     $themecolor-alt: #26c6da;
     // Topbar
-    
-    .topbar{
+    .topbar {
         background: $themecolor;
-        .top-navbar .navbar-header .navbar-brand .dark-logo {
-            display: none;
-        }
-        .top-navbar .navbar-header .navbar-brand .light-logo {
-            display: inline-block;
-            color: rgba(255, 255, 255, 0.8);
-        }
-    }  
+    }
     //Sidebar
-    .side-mini-panel {
-        ul.mini-nav {
-            > li {
-                &:hover > a, &.selected > a {
-                    border-left: 3px solid $themecolor;
-                }
-                &.selected > a {
+    .sidebar-nav {
+        ul li a {
+            &.active,
+            &:hover {
+                color: $themecolor;
+                i {
                     color: $themecolor;
                 }
             }
         }
-    }
-    .togglediv #togglebtn i:hover,
-    .togglediv #togglebtn i:focus {
-        color: $themecolor;
-    }
-    .sidebar-menu {
-        a {
-            &.active {
+        > ul > li {
+            &.active > a {
                 color: $themecolor;
-            } 
-        }
-        > li > a {
-            &:hover {
-                color: $themecolor;
+                border-left: 3px solid $themecolor;
+                i {
+                    color: $themecolor;
+                }
             }
-        } 
+        }
     }
     
     //Bread-crumb

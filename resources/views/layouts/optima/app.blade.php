@@ -12,17 +12,34 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--alerts CSS -->
+    <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('js/node_modules/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
     <!-- toast CSS -->
     <link href="{{ asset('assets/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{ asset('dist_material/css/style.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('dist_material/css/pages/progressbar-page.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/css/pages/progressbar-page.css') }}" rel="stylesheet">
     @yield('styles')
     <style>
-        .topbar .top-navbar .navbar-header {
+        /*.topbar .top-navbar .navbar-header {
             background: rgba(0, 0, 0, 0);
+        }*/
+
+        @media (min-width: 768px) {
+            .user-profile .user-pro-body img {
+                width: 50px;
+            }
+            .mini-sidebar .user-profile .user-pro-body img {
+                width: 50px;
+            }
         }
+
+        @media (min-width: 1200px) {
+            .user-profile .user-pro-body img {
+                width: 100px;
+            }
+        }
+
         .footer {
             /*position: absolute;*/
             bottom: 0;
@@ -112,6 +129,7 @@
     <!-- ============================================================== -->
     <!-- <script src="{{ asset('assets/node_modules/jquery/jquery-3.2.1.min.js') }}"></script> -->
     <script src="{{ asset('js/node_modules/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}" type="text/javascript"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ asset('assets/node_modules/popper/popper.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>

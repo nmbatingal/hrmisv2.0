@@ -157,14 +157,14 @@ Horizontal Timeline page
 ******************/
 .cd-horizontal-timeline .events a {
   padding-bottom: 6px;
-  color: #fb9678; }
+  color: #03a9f3; }
 
 .cd-horizontal-timeline .filling-line,
 .cd-horizontal-timeline .events a.selected::after {
-  background: #fb9678; }
+  background: #03a9f3; }
 
 .cd-horizontal-timeline .events a.selected::after {
-  border-color: #fb9678; }
+  border-color: #03a9f3; }
 
 .cd-horizontal-timeline .m-t-40 {
   margin-top: 40px !important; }

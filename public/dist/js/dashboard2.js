@@ -1,88 +1,26 @@
-$(function () {
+/*
+Template Name: Admin Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: js
+*/
+$(function() {
     "use strict";
-    jQuery("#visitfromworld").vectorMap({
-            map: "world_mill_en"
-            , backgroundColor: "#fff"
-            , borderColor: "#000"
-            , borderOpacity: .9
-            , borderWidth: 1
-            , zoomOnScroll: !1
-            , color: "#ddd"
-            , regionStyle: {
-                initial: {
-                    fill: "#fff"
-                    , "stroke-width": 1
-                    , stroke: "#a6b7bf"
-                }
-            }
-            , markerStyle: {
-                initial: {
-                    r: 5
-                    , fill: "#26c6da"
-                    , "fill-opacity": 1
-                    , stroke: "#fff"
-                    , "stroke-width": 1
-                    , "stroke-opacity": 1
-                }
-            }
-            , enableZoom: !0
-            , hoverColor: "#79e580"
-            , markers: [{
-                latLng: [21, 78]
-                , name: "India : 9347"
-                , style: {
-                    fill: "#24d2b5"
-                }
-        }, {
-                latLng: [-33, 151]
-                , name: "Australia : 250"
-                , style: {
-                    fill: "#ff9040"
-                }
-        }, {
-                latLng: [36.77, -119.41]
-                , name: "USA : 250"
-                , style: {
-                    fill: "#20aee3"
-                }
-        }, {
-                latLng: [55.37, -3.41]
-                , name: "UK   : 250"
-                , style: {
-                    fill: "#6772e5"
-                }
-        }, {
-                latLng: [25.2, 55.27]
-                , name: "UAE : 250"
-                , style: {
-                    fill: "#24d2b5"
-                }
-        }]
-            , hoverOpacity: null
-            , normalizeFunction: "linear"
-            , scaleColors: ["#fff", "#ccc"]
-            , selectedColor: "#c9dfaf"
-            , selectedRegions: []
-            , showTooltip: !0
-            , onRegionClick: function (e, o, l) {
-                var t = 'You clicked "' + l + '" which has the code: ' + o.toUpperCase();
-                alert(t)
-            }
-        })
-        // Real Time chart
-    var data = []
-        , totalPoints = 100;
+    // ==============================================================
+    // Real Time chart
+    // ==============================================================
+    var data = [5, 10, 15, 20, 15, 30, 40],
+        totalPoints = 100;
 
     function getRandomData() {
         if (data.length > 0) data = data.slice(1);
         // Do a random walk
         while (data.length < totalPoints) {
-            var prev = data.length > 0 ? data[data.length - 1] : 50
-                , y = prev + Math.random() * 10 - 5;
+            var prev = data.length > 0 ? data[data.length - 1] : 10,
+                y = prev + Math.random() * 10 - 5;
             if (y < 0) {
                 y = 0;
-            }
-            else if (y > 100) {
+            } else if (y > 100) {
                 y = 100;
             }
             data.push(y);
@@ -95,45 +33,48 @@ $(function () {
         return res;
     }
     // Set up the control widget
-    var updateInterval = 20;
-    $("#updateInterval").val(updateInterval).change(function () {
+    var updateInterval = 1000;
+    $("#updateInterval").val(updateInterval).change(function() {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
             updateInterval = +v;
             if (updateInterval < 1) {
                 updateInterval = 1;
-            }
-            else if (updateInterval > 2000) {
-                updateInterval = 2000;
+            } else if (updateInterval > 3000) {
+                updateInterval = 3000;
             }
             $(this).val("" + updateInterval);
         }
     });
     var plot = $.plot("#placeholder", [getRandomData()], {
         series: {
-            shadowSize: 0 // Drawing is faster without shadows
-        }
-        , yaxis: {
-            min: 0
-            , max: 100
-        }
-        , xaxis: {
-            show: false
-        }
-        , colors: ["#01c0c8"]
-        , grid: {
-            color: "#AFAFAF"
-            , hoverable: true
-            , borderWidth: 0
-            , backgroundColor: '#FFF'
-        }
-        , tooltip: true
-        , resize: true
-        , tooltipOpts: {
-            content: "Y: %y"
-            , defaultTheme: false
+            shadowSize: 0, // Drawing is faster without shadows
+            lines: { fill: true, fillColor: '#fec107' },
+        },
+        yaxis: {
+            min: 0,
+            max: 100,
+            show: true
+        },
+        xaxis: {
+            show: true
+        },
+        colors: ["#fec107"],
+        grid: {
+            color: "#fff",
+            hoverable: true,
+            borderWidth: 0,
+            backgroundColor: 'transparent'
+        },
+        tooltip: true,
+        tooltipOpts: {
+            content: "Stock: %x",
+            defaultTheme: false
         }
     });
+    window.onresize = function(event) {
+        $.plot($("#placeholder"), [getRandomData()]);
+    }
 
     function update() {
         plot.setData([getRandomData()]);
@@ -142,49 +83,189 @@ $(function () {
         setTimeout(update, updateInterval);
     }
     update();
-    
-    $("body").trigger("resize");
-    //This is for the perfect scroll
-    
-    $('.slimscrollcountry').perfectScrollbar(); 
+    // ============================================================== 
+    // Our Visitor
+    // ============================================================== 
+
+    var chart = c3.generate({
+        bindto: '#visitor',
+        data: {
+            columns: [
+                ['Desktop', 60],
+                ['Tablet', 12],
+                ['Mobile', 28],
+
+            ],
+
+            type: 'donut',
+            onclick: function(d, i) { console.log("onclick", d, i); },
+            onmouseover: function(d, i) { console.log("onmouseover", d, i); },
+            onmouseout: function(d, i) { console.log("onmouseout", d, i); }
+        },
+        donut: {
+            label: {
+                show: false
+            },
+            title: "Visits",
+            width: 35,
+
+        },
+
+        legend: {
+            hide: true
+            //or hide: 'data1'
+            //or hide: ['data1', 'data2']
+        },
+        color: {
+            pattern: ['#40c4ff', '#2961ff', '#ff821c', '#7e74fb']
+        }
+    });
+    // ============================================================== 
+    // Our Visitor
+    // ============================================================== 
+    var sparklineLogin = function() {
+        $('#ravenue').sparkline([6, 10, 9, 11, 9, 10, 12], {
+            type: 'bar',
+            height: '100',
+            barWidth: '4',
+            width: '100%',
+            resize: true,
+            barSpacing: '8',
+            barColor: '#fff'
+        });
+        $('#ravenue1').sparkline([16, 10, 16, 11, 8, 10, 12], {
+            type: 'bar',
+            height: '100',
+            barWidth: '4',
+            width: '100%',
+            resize: true,
+            barSpacing: '8',
+            barColor: '#fff'
+        });
+        $('#ravenue2').sparkline([16, 10, 16, 11, 8, 10, 12], {
+            type: 'bar',
+            height: '65',
+            barWidth: '4',
+            width: '100%',
+            resize: true,
+            barSpacing: '8',
+            barColor: '#fff'
+        });
+        $('#ravenue3').sparkline([16, 10, 16, 11, 8, 10, 12], {
+            type: 'bar',
+            height: '65',
+            barWidth: '4',
+            width: '100%',
+            resize: true,
+            barSpacing: '8',
+            barColor: '#fff'
+        });
+        $('#ravenue4').sparkline([16, 10, 16, 11, 8, 10, 12], {
+            type: 'bar',
+            height: '65',
+            barWidth: '4',
+            width: '100%',
+            resize: true,
+            barSpacing: '8',
+            barColor: '#fff'
+        });
+        $('#ravenue5').sparkline([16, 10, 16, 11, 8, 10, 12], {
+            type: 'bar',
+            height: '65',
+            barWidth: '4',
+            width: '100%',
+            resize: true,
+            barSpacing: '8',
+            barColor: '#fff'
+        });
+        $('#active-users').sparkline([6, 10, 9, 11, 9, 10, 12, 10, 9, 11, 9, 10, 12, 10, 9, 11, 9, 10, 12], {
+            type: 'bar',
+            height: '60',
+            barWidth: '4',
+            width: '100%',
+            resize: true,
+            barSpacing: '8',
+            barColor: '#2961ff'
+        });
+        $('#views').sparkline([6, 10, 9, 11, 9, 10, 12], {
+            type: 'line',
+            height: '65',
+            lineColor: 'transparent',
+            fillColor: 'rgba(255, 255, 255, 0.3)',
+            width: '100%',
+
+            resize: true,
+
+        });
+    };
+    var sparkResize;
+
+    $(window).resize(function(e) {
+        clearTimeout(sparkResize);
+        sparkResize = setTimeout(sparklineLogin, 500);
+    });
+    sparklineLogin();
 });
-//sparkline charts
-var sparklineLogin = function () {
-    $("#sparkline8").sparkline([2, 4, 4, 6, 8, 5, 6, 4, 8, 6, 6, 2], {
-        type: 'line'
-        , width: '100%'
-        , height: '50'
-        , lineColor: '#99d683'
-        , fillColor: '#99d683'
-        , maxSpotColor: '#99d683'
-        , highlightLineColor: 'rgba(0, 0, 0, 0.2)'
-        , highlightSpotColor: '#99d683'
+
+$(function() {
+    "use strict";
+    // ============================================================== 
+    // Newsletter
+    // ============================================================== 
+
+    var chart = new Chartist.Line('.campaign', {
+        labels: [1, 2, 3, 4, 5, 6, 7, 8],
+        series: [
+            [0, 5, 6, 8, 25, 9, 8, 24],
+            [0, 3, 1, 2, 8, 1, 5, 1]
+        ]
+    }, {
+        low: 0,
+        high: 28,
+
+        showArea: true,
+        fullWidth: true,
+        plugins: [
+            Chartist.plugins.tooltip()
+        ],
+        axisY: {
+            onlyInteger: true,
+            scaleMinSpace: 40,
+            offset: 20,
+            labelInterpolationFnc: function(value) {
+                return (value / 1) + 'k';
+            }
+        },
+
     });
-    $("#sparkline9").sparkline([0, 2, 8, 6, 8, 5, 6, 4, 8, 6, 6, 2], {
-        type: 'line'
-        , width: '100%'
-        , height: '50'
-        , lineColor: '#13dafe'
-        , fillColor: '#13dafe'
-        , minSpotColor: '#13dafe'
-        , maxSpotColor: '#13dafe'
-        , highlightLineColor: 'rgba(0, 0, 0, 0.2)'
-        , highlightSpotColor: '#13dafe'
+
+    // Offset x1 a tiny amount so that the straight stroke gets a bounding box
+    // Straight lines don't get a bounding box 
+    // Last remark on -> http://www.w3.org/TR/SVG11/coords.html#ObjectBoundingBox
+    chart.on('draw', function(ctx) {
+        if (ctx.type === 'area') {
+            ctx.element.attr({
+                x1: ctx.x1 + 0.001
+            });
+        }
     });
-    $("#sparkline10").sparkline([2, 4, 4, 6, 8, 5, 6, 4, 8, 6, 6, 2], {
-        type: 'line'
-        , width: '100%'
-        , height: '50'
-        , lineColor: '#ffdb4a'
-        , fillColor: '#ffdb4a'
-        , maxSpotColor: '#ffdb4a'
-        , highlightLineColor: 'rgba(0, 0, 0, 0.2)'
-        , highlightSpotColor: '#ffdb4a'
+
+    // Create the gradient definition on created event (always after chart re-render)
+    chart.on('created', function(ctx) {
+        var defs = ctx.svg.elem('defs');
+        defs.elem('linearGradient', {
+            id: 'gradient',
+            x1: 0,
+            y1: 1,
+            x2: 0,
+            y2: 0
+        }).elem('stop', {
+            offset: 0,
+            'stop-color': 'rgba(255, 255, 255, 1)'
+        }).parent().elem('stop', {
+            offset: 1,
+            'stop-color': 'rgba(64, 196, 255, 1)'
+        });
     });
-}
-var sparkResize;
-$(window).resize(function (e) {
-    clearTimeout(sparkResize);
-    sparkResize = setTimeout(sparklineLogin, 500);
+
 });
-sparklineLogin();

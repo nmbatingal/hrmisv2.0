@@ -1,6 +1,7 @@
 <?php
 
 use App\Office;
+use App\Models\Settings\OfficeGroups;
 use Illuminate\Database\Seeder;
 
 class OfficeTableSeeder extends Seeder
@@ -14,15 +15,14 @@ class OfficeTableSeeder extends Seeder
     {
         $offices = [
             [
-		        'division_name' => 'Office of the Regional Director', 
-        		'div_acronym'   => 'ORD',
-        		'div_head_id'   => ,
-        		'receiver_id'   => ,
+		        'group_name' => 'Office of the Regional Director', 
+        		'acronym'   => 'ORD',
             ],
         ];
 
-        foreach ($users as $user) {
-            $u = User::create($user);
+        foreach ($offices as $office) {
+            $office = Office::create($office);
+            $group  = OfficeGroups::create($office);
             // $u->roles()->sync($roles);
         }
     }
