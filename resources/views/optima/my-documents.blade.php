@@ -159,13 +159,11 @@ My Documents
                                         {{ $document->other_document }}
                                     </td>
                                     <td>
-                                        <h5 class="font-weight-bold">
-                                            {{ $document->trackLogs[0]->action }}
-                                            <!-- <br><small>{!! $document->lastTracked() !!}</small> -->
-                                            <br><small>{{ $document->trackLogs[0]->date_action }}</small>
-                                        </h5>
-
                                         @foreach ( $document->trackLogs as $log )
+                                            <h5 class="font-weight-bold">
+                                                {{ $log->action }}
+                                                <br><small>{{ $log->date_action }}</small>
+                                            </h5>
                                             @if ( $log->action == "Forward" )
                                                 @if ( !is_null($log->recipients) )
                                                     @foreach ( $log->recipients as $recipient )
