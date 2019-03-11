@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
-    <title>{{ config('app.name', 'Laravel') }} MyApp</title>
+    <title>@yield('title') MyApp</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--alerts CSS -->
@@ -24,9 +24,9 @@
             background: rgba(0, 0, 0, 0);
         }
 
-        .footer {
+        /*.footer {
             position: absolute;
-        }
+        }*/
 
         .right-sidebar {
             top: 67px;
