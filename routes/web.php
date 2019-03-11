@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
 	// DOCUMENT CREATION MODULE
 	Route::get('my-documents', 'DocumentTracker\DocumentTrackerController@myDocuments')->name('my-documents');
 	// Route::get('my-documents/create', 'DocumentTracker\DocumentTrackerController@create')->name('create.tracker');
-	Route::get('my-documents/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('showDocument');
+	// Route::get('my-documents/{code?}', 'DocumentTracker\DocumentTrackerController@showMyDocument')->name('showDocument');
 	Route::get('my-documents/{code}/print', 'Pdf\PdfController@printBarcode')->name('print.barcode');
 
     // DOCTRACKER RECIPIENT LIST
