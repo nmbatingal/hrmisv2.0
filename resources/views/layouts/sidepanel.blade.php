@@ -2,9 +2,9 @@
     <ul class="mini-nav">
         <div class="togglediv"><a href="javascript:void(0)" id="togglebtn"><i class="ti-menu"></i></a></div>
         <!-- .Dashboard -->
-        <li class="{{ Request::is('home') ? 'selected' : '' }}">
+        <!-- <li class="{{ Request::is('home') ? 'selected' : '' }}">
             <a href="{{ route('home') }}" title="Home"><i class="ti-home"></i></a>
-        </li>
+        </li> -->
         <!-- /.Home -->
 
         <!-- DOCUMENT TRACKER -->
@@ -14,12 +14,12 @@
                 <!-- Left navbar-header -->
                 <h3 class="menu-title">OPTIMA</h3>
                 <ul class="sidebar-menu">
-                    <li><a href="{{ route('doctracker.dashboard') }}">Dashboard</a></li>
-                    <li><a href="{{ route('doctracker.routing') }}">Route Documents</a></li>
-                    <li><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
+                    <li><a href="{{ route('optima.dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ route('optima.routing') }}">Route Documents</a></li>
+                    <li><a href="{{ route('optima.mydocuments') }}">My Documents</a></li>
                     <li><a href="javascript:void(0);">Search</a></li>
                     <!-- <li><a href="{{ route('doctracker.logs') }}">Logs</a></li> -->
-                    <li><a href="{{ route('doctracker.about') }}">About</a></li>
+                    <li><a href="{{ route('optima.about') }}">About</a></li>
                 </ul>
                 <!-- Left navbar-header end -->
             </div>

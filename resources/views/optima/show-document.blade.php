@@ -1,0 +1,292 @@
+@extends('layouts.optima.app')
+
+@section('title')
+My Documents
+@endsection
+
+@section('styles')
+<link href="{{ asset('dist/css/pages/footable-page.css') }}" rel="stylesheet">
+@endsection
+
+@section('navbutton')
+<!-- Help -->
+<!-- ============================================================== -->
+<li class="nav-item"> 
+    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
+</li>
+<!-- ============================================================== -->
+<!-- Help -->
+<!-- ============================================================== -->
+@endsection
+
+@section('content')
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="row page-titles">
+    <div class="col-md-12">
+        <h4 class="text-white">{{ $myDocument->tracking_code }}</h4>
+    </div>
+    <div class="col-md-6">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.dashboard') }}">OPTIMA</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.my-documents') }}">My Documents</a></li>
+            <li class="breadcrumb-item active">{{ $myDocument->tracking_code }}</li>
+        </ol>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Over Visitor, Our income , slaes different and  sales prediction -->
+<!-- ============================================================== -->
+<div class="m-t-40"></div>
+<div class="row">
+    <!-- Column -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-cyan">
+                <h4 class="m-b-0 text-white">Routing Details 
+                    <div class="card-actions">
+                        <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                    </div>
+                </h4>
+            </div>
+            <div class="card-body collapse show">
+                <h4 class="card-title"></h4>
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4 p-t-5">Code:</label>
+                                    <div class="col-md-8">
+                                        {!! $myDocument->barcodeLogo !!} 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <div class="float-right">
+                                            <a id="btnPrintBarcode" href="javascript:void(0);" onclick="printCode()" class="btn btn-outline-primary"><i class="ti-printer"></i> Print Code</a>
+                                            <button id="close_account" type="button" class="btn btn-info">swal</button>
+
+                                            <!-- <a href="javascript:void(0);" class="btn btn-outline-info"><i class="ti-pencil-alt"></i> Update Tracker</a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="m-t-0 m-b-40">
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4 p-t-5">Routed By:</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->full_name }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-3 p-t-5">Division:</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{ $myDocument->userEmployee->office->division_name }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2 p-t-5">Subject:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" value="{{ $myDocument->subject }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4 p-t-5">Document Type:</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" value="{{ $myDocument->other_document }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-3 p-t-5">Document Date:</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" value="{{ $myDocument->dateOfDocument }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2 p-t-5">Details:</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" rows="4" disabled>{{ $myDocument->details }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">Attachments:</label>
+                                    <div class="col-md-10">
+                                        <p class="form-control-static">
+                                            @forelse ( $myDocument->docAttachments as $file )
+                                                <a href="{{ asset($file->filepath) }}" target="_blank" class="text-underlined p-r-20">
+                                                    <i class="fas fa-file-pdf"></i> {{ $file->filename }}
+                                                </a><br>
+                                            @empty
+                                                <div class="alert alert-warning">no attachments available</div>
+                                            @endforelse
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-info">
+            <div class="card-header bg-cyan">
+                <h4 class="m-b-0 text-white">Tracking History
+                    <div class="card-actions">
+                        <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                    </div>
+                </h4>
+            </div>
+            <div class="card-body collapse show">
+                <h4 class="card-title">Tracking code: {{ $myDocument->tracking_code }}</h4>
+                <h6 class="card-subtitletitle">Order of log is from latest to oldest.</h6>
+                <div class="table-responsive-md m-t-20">
+                    <table id="demo-foo-pagination" class="table table-striped full-color-table full-dark-table hover-table" data-paging="true" data-paging-size="5">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="20%">
+                        </colgroup>
+                        <thead>
+                            <tr class="footable-filtering">
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Notes</th>
+                                <th>Date Tracked</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse( $myDocument->trackLogs as $log )
+                                <tr>
+                                    <td><h5>{{ $log->userEmployee->full_name }}</h5></td>
+                                    <td>
+                                        <h5 class="font-weight-bold">{!! $log->action !!}</h5>
+                                        @if ( $log->action == "Forward")
+                                            <ul class="p-l-20 m-b-0">
+                                                @if ( !is_null( $log->recipients ) )
+                                                    @foreach( $log->recipients as $recipient)
+                                                        <li>{{ $recipient['name'] }}</li>
+                                                    @endforeach
+                                                @else
+                                                    <li>All</li>
+                                                @endif
+                                            </ul>
+                                        @else
+                                            <strong>{{ $log->userEmployee->full_name }}</strong><br>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $log->notes }}
+                                    </td>
+                                    <td>
+                                        {{ $log->dateAction }}
+                                    </td>
+                                </tr>
+                            @empty
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<!-- Footable -->
+<script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
+<script src="{{ asset('assets/node_modules/footable/js/footable.min.js') }}"></script>
+<script>
+    $(document).ready(function() { 
+
+        //
+        $('[data-page-size]').on('click', function(e){
+            e.preventDefault();
+            var newSize = $(this).data('pageSize');
+            FooTable.get('#demo-foo-pagination').pageSize(newSize);
+        });
+        $('#demo-foo-pagination').footable({
+            filtering: {
+                enabled: false
+            }
+        });
+
+        $("#close_account").on("click", function(e) {
+            e.preventDefault();
+
+            var id  = "{{ $myDocument->tracking_code }}",
+                url = "{{ route('optima.print.barcode', ':var') }}";
+
+            url = url.replace(':var', id);
+            var dialog = Swal.fire({
+                              title: "Are you sure?",
+                              type: "success",
+                              showConfirmButton: true,
+                              showCancelButton: true,
+                              onOpen: function(swal) {
+
+                                    var swalCancel = $(swal).find('.swal2-cancel');
+
+                                    swalCancel.removeClass('swal2-styled')
+                                                .addClass('btn btn-lg btn-danger')
+                                                .html('<i class="ti-printer"></i> Print Code');
+                                    swalCancel.off().click(function(e) {
+                                        window.open(url, "Print Barcode", "width=800,height=600");
+                                    });
+                              }
+                        });
+        });
+    });
+</script>
+<script>
+    function printCode(link) {
+        var url = "{{ route('optima.print.barcode', $myDocument->tracking_code) }}";
+        window.open(url, "Print Barcode", "width=800,height=600");
+    }
+</script>
+@endsection

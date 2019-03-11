@@ -1,4 +1,4 @@
-<header class="topbar">
+<header class="topbar" style="background: none;">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
         <!-- ============================================================== -->
         <!-- Logo -->
@@ -7,7 +7,7 @@
             <a class="navbar-brand" href="{{ route('home') }}">
                 <!-- Logo icon -->
                 <b>
-                    <h3 class="text-white">DOST Caraga</h3> 
+                    <h3 style="color: #000000">DOST Caraga</h3> 
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
                     <!-- <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo" />
@@ -40,7 +40,7 @@
                 <!-- Message -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Messages"> <i class="ti-email"></i>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Messages" style="color: #000000"> <i class="ti-email"></i>
                         <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox">
@@ -65,7 +65,7 @@
                 <!-- Notification -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications"> <i class="ti-bell"></i>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications" style="color: #000000"> <i class="ti-bell"></i>
                         <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox">
@@ -121,9 +121,9 @@
                 <!-- ============================================================== -->
                 <!-- Chat Bubble -->
                 <!-- ============================================================== -->
-                <li class="nav-item right-side-toggle"> 
+                <!-- <li class="nav-item right-side-toggle"> 
                     <a class="nav-link  waves-effect waves-light" href="javascript:void(0)" title="More options"><i class="icon-options-vertical"></i></a>
-                </li>
+                </li> -->
                 <!-- ============================================================== -->
                 <!-- End Chat Bubble -->
                 <!-- ============================================================== -->

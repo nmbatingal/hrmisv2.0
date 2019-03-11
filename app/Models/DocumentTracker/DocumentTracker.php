@@ -8,6 +8,7 @@ use App\User;
 use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTypes;
+use App\Models\DocumentTracker\DocumentKeyword;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
 use App\Models\DocumentTracker\DocumentTrackerAttachment;
 use Illuminate\Database\Eloquent\Model;
@@ -69,6 +70,11 @@ class DocumentTracker extends Model
         return $this->hasMany(DocumentTrackingLogs::class, 'tracking_code', 'tracking_code');
     }
 
+    public function documentKeywords()
+    {
+        return $this->hasMany(DocumentKeyword::class, 'document_id', 'id');
+    }
+
     public function scopeLastTracked($query)
     {
         $log =  $this->trackLogs()->latest()->first();
@@ -118,7 +124,8 @@ class DocumentTracker extends Model
 
     public function getTrackingDateAttribute()
     {
-        return Carbon::parse($this->created_at)->toDayDateTimeString();
+        // return Carbon::parse($this->created_at)->toDayDateTimeString();
+        return Carbon::parse($this->created_at)->format('M-d-o h:ia');
     }
 
     public function getBarcodeLogoAttribute()

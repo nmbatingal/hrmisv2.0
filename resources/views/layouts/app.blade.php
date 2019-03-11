@@ -12,7 +12,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--alerts CSS -->
-    <link href="{{ asset('assets/node_modules/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('js/node_modules/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
     <!-- toast CSS -->
     <link href="{{ asset('assets/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
@@ -110,8 +110,10 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- <script src="{{ asset('assets/node_modules/jquery/jquery-3.2.1.min.js') }}"></script> -->
-    <script src="{{ asset('js/node_modules/jquery/dist/jquery.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/node_modules/jquery/dist/jquery.min.js') }}"></script> -->
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ asset('assets/node_modules/popper/popper.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -125,7 +127,7 @@
     <!--Menu sidebar -->
     <script src="{{ asset('dist/js/sidebarmenu.js') }}"></script>
     <!-- Sweet-Alert  -->
-    <script src="{{ asset('assets/node_modules/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/node_modules/sweetalert2/dist/sweetalert2.min.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('dist/js/custom.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
