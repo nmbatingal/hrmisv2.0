@@ -20,6 +20,10 @@
     <link href="{{ asset('homedist/css/pages/progressbar-page.css') }}" rel="stylesheet">
     @yield('styles')
     <style>
+        .page-titles {
+            background: none;
+        }
+
         .topbar .top-navbar .navbar-header {
             background: rgba(0, 0, 0, 0);
         }
