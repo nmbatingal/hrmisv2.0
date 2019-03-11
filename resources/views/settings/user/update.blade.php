@@ -22,7 +22,7 @@ Update Account Settings -
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor font-weight-bold">Dashboard</h4>
+        <h3 class="text-themecolor font-weight-bold"><a href="{{ URL::previous() }}"><i class="ti-arrow-circle-left"></i> Back</a></h3>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
