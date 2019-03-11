@@ -31,12 +31,12 @@ My Documents
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('optima.dashboard') }}">OPTIMA</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('doctracker.mydocuments') }}">My Documents</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('optima.my-documents') }}">My Documents</a></li>
             <li class="breadcrumb-item active">{{ $myDocument->tracking_code }}</li>
         </ol>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{ route('doctracker.create.tracker') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+        <a href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
     </div>
 </div>
 <!-- ============================================================== -->
@@ -260,7 +260,7 @@ My Documents
             e.preventDefault();
 
             var id  = "{{ $myDocument->tracking_code }}",
-                url = "{{ route('print.barcode', ':var') }}";
+                url = "{{ route('optima.print.barcode', ':var') }}";
 
             url = url.replace(':var', id);
             var dialog = Swal.fire({
@@ -285,7 +285,7 @@ My Documents
 </script>
 <script>
     function printCode(link) {
-        var url = "{{ route('print.barcode', $myDocument->tracking_code) }}";
+        var url = "{{ route('optima.print.barcode', $myDocument->tracking_code) }}";
         window.open(url, "Print Barcode", "width=800,height=600");
     }
 </script>

@@ -4,17 +4,6 @@
 My Documents
 @endsection
 
-@section('navbutton')
-<!-- Help -->
-<!-- ============================================================== -->
-<li class="nav-item"> 
-    <a class="nav-link  waves-effect waves-light" href="{{ route('optima.about') }}" title="Help"><i class="mdi mdi-help"></i></a>
-</li>
-<!-- ============================================================== -->
-<!-- Help -->
-<!-- ============================================================== -->
-@endsection
-
 @section('styles')
 <link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
 @endsection
@@ -24,99 +13,97 @@ My Documents
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
 <div class="row page-titles">
-    <div class="col-md-12">
-        <h4 class="text-white">My Documents</h4>
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor">My Documents</h4>
     </div>
-    <div class="col-md-6">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('optima.dashboard') }}">OPTIMA</a></li>
-            <li class="breadcrumb-item active">My Documents</li>
-        </ol>
-    </div>
-    <div class="col-md-6 text-right">
-        <a href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary">Create new tracker</a>&nbsp;
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
+                <li class="breadcrumb-item active">My Documents</li>
+            </ol>
+            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
+        </div>
     </div>
 </div>
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Over Visitor, Our income , slaes different and  sales prediction -->
-<!-- ============================================================== -->
-<div class="m-t-40"></div>
-<div class="row">
-    <!-- Column -->
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">My Documents</h3>
-                <p class="card-text">List of created documents with tracking codes. Search a document using tracking code or <a href="{{ route('optima.my-documents.create') }}">create a new document</a> to track.</p>
 
-                <!-- INFO CARDS -->
+<!-- MODAL TRACKER LOGS CONTENT -->
+<div id="modalLogs" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
                 <div class="row">
-                    <!-- Document Created -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #00c292;">
-                                <div class="p-10 bg-success">
-                                    <h3 class="text-white box m-b-0"><i class="icon-docs"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $documentsCreated->count() }}</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents Created</h6>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-9">
+                        <h4 class="modal-title font-bold" id="modalLogsTitle">Log Details</h4>
+                        <h5 id="modalLogsDocuType">aaaa</h5>
                     </div>
-                    <!-- Document Received -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #01c0c8;">
-                                <div class="p-10 bg-cyan">
-                                    <h3 class="text-white box m-b-0"><i class="ti-import"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $documentsReceived->count() }}</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents Received</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Document Released -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #03a9f3;">
-                                <div class="p-10 bg-info">
-                                    <h3 class="text-white box m-b-0"><i class="icon-cursor"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-success"><span id="count-outgoing">{{ $documentsReleased->count() }}</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents Released</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Document Released -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="d-flex flex-row" style="border: 1px solid #e46a76;">
-                                <div class="p-10 bg-danger">
-                                    <h3 class="text-white box m-b-0"><i class="icon-doc"></i></h3></div>
-                                <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-danger"><span id="count-release">-</span></h3>
-                                    <h6 class="text-muted m-b-0">Documents</h6>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-3">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                 </div>
-                <!-- END INFO CARDS -->
+                <div id="modalBodyLogs"></div>
             </div>
         </div>
     </div>
 </div>
+<!-- END ODAL TRACKER LOGS CONTENT -->
+
+<div class="card-group">
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body text-center p-b-0">
+            <h4 class="text-center">Documents Created</h4>
+        </div>
+        <div class="box b-t text-center p-t-0">
+            <h3 class="font-medium m-b-0 text-success">
+                <i class="icon-docs"></i> <span id="count-created">{{ $documentsCreated->count() }}</span>
+            </h3>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body text-center p-b-0">
+            <h4 class="text-center">Documents Received</h4>
+        </div>
+        <div class="box b-t text-center p-t-0">
+            <h3 class="font-medium m-b-0 text-info">
+                <i class="ti-import"></i> <span id="count-receive">{{ $documentsReceived->count() }}</span>
+            </h3>
+        </div>
+    </div>
+    <!-- Column -->
+    <div class="card">
+        <div class="card-body text-center p-b-0">
+            <h4 class="text-center">Documents Released</h4>
+        </div>
+        <div class="box b-t text-center p-t-0">
+            <h3 class="font-medium m-b-0 text-primary">
+                <i class="ti-export"></i> <span id="count-release">{{ $documentsReleased->count() }}</span>
+            </h3>
+        </div>
+    </div>
+</div>
+
 <!-- Card table -->
 <div class="row">
     <div class="col-md-12">
         <div class="card">
+            <div class="card-header bg-dark">
+                <h4 class="m-b-0 text-white">
+                    My Documents
+                    <div class="btn-group float-right">
+                        <button type="button" class="btn waves-effect waves-light btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-settings"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a id="drpdown-export-log" class="dropdown-item" href="javascript:void(0)">Export Log</a>
+                        </div>
+                    </div>  
+                </h4>
+            </div>
             <div class="card-body p-b-0">
                 <div class="row">
                     <div class="col-md-12">
@@ -124,7 +111,7 @@ My Documents
                             <form class="form-horizontal">
                                 <div class="form-group m-b-0">
                                     <div class="input-group p-0">
-                                        <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
+                                        <input id="searchTracker" type="text" class="form-control" placeholder="Search tracking code">
                                         <div class="input-group-append">
                                             <button class="btn btn-info" type="submit">
                                                 <i class="ti-search"></i>&nbsp;</button>
@@ -141,52 +128,70 @@ My Documents
                 <div class="table-responsive">
                     <table id="tableMyDocuments" class="table table-hover table-bordered table-striped">
                         <thead>
+                                <th></th>
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <th>Document type</th>
-                                <th>Tracking status</th>
-                                <th></th>
+                                <th>Status</th>
+                                <th>Note</th>
+                                <!-- <th></th> -->
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="table-sm">
                             @forelse( $myDocuments as $document )
                                 <tr id="row-{{$document->id}}">
-                                    <td>
-                                        <h5>
-                                            <a href="{{ route('optima.my-documents.show', $document->tracking_code)}}" target="_blank">{{ $document->tracking_code }}</a>
-                                        </h5>
+                                    <td class="text-right"></td>
+                                    <td class="text-center">
+                                        <h4>
+                                            <a id="{{ $document->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $document->tracking_code }}</a>
+                                        </h4>
                                     </td>
                                     <td>
                                         <h5 class="font-weight-bold">
                                             {{ $document->subject }}
                                             <br><small>{{ $document->tracking_date }}</small>
                                         </h5>
+                                        @foreach ( $document->documentKeywords as $keyword )
+                                            <span class="badge badge-info">{{ $keyword->keywords }}</span>&nbsp;
+                                        @endforeach
                                     </td>
                                     <td>
                                         {{ $document->other_document }}
                                     </td>
                                     <td>
                                         <h5 class="font-weight-bold">
-                                            {!! $document->action !!}
-                                            <br><small>{!! $document->lastTracked() !!}</small>
+                                            {{ $document->trackLogs[0]->action }}
+                                            <!-- <br><small>{!! $document->lastTracked() !!}</small> -->
+                                            <br><small>{{ $document->trackLogs[0]->date_action }}</small>
                                         </h5>
-                                        @if ( $document->action == "Forward")
-                                            <ul class="p-l-20 m-b-0">
-                                                @if ( !is_null( $document->recipients ) )
-                                                    @foreach( json_decode($document->recipients) as $recipient)
-                                                        <li>{{ $recipient->name }}</li>
+
+                                        @foreach ( $document->trackLogs as $log )
+                                            @if ( $log->action == "Forward" )
+                                                @if ( !is_null($log->recipients) )
+                                                    @foreach ( $log->recipients as $recipient )
+                                                        <li>{{ $recipient['name'] }}</li>
                                                     @endforeach
                                                 @else
                                                     <li>All</li>
                                                 @endif
-                                            </ul>
-                                        @else
-                                            <strong>{{ $document->userEmployee->full_name }}</strong><br>
-                                        @endif
+                                            @else
+                                                <strong>{{ $log->userEmployee->full_name }}</strong>
+                                            @endif
+                                            @break;
+                                        @endforeach
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $document->id }}" title="Cancel"><i class="ti-close"></i></button>
+                                        @foreach ( $document->trackLogs as $log )
+                                            {!! $log->forSignature ? 'For signature.&nbsp;' : '' !!}
+                                            {!! $log->forCompliance ? 'For Compliance.&nbsp;' : '' !!}
+                                            {!! $log->forInformation ? 'For Information.&nbsp;' : '' !!}
+                                            {{ $log->notes ?: '' }}
+                                            @break;
+                                        @endforeach
                                     </td>
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $document->id }}" title="Cancel"><i class="ti-close"></i></button>
+                                    </td> -->
                                 </tr>
                             @empty
                             @endforelse
@@ -204,23 +209,59 @@ My Documents
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <!-- This is data table -->
 <script src="{{ asset('assets/node_modules/datatables/datatables.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 <script>
     $(document).ready(function() { 
         // DataTable for Tracker
         var trackerTable = $('#tableMyDocuments').DataTable({
             columnDefs: [{ 
-                orderable: true 
+                orderable: true
             }],
+            columnDefs: [ {
+                searchable: false,
+                orderable: false,
+                targets: 0
+            } ],
             order: [
-                [0, 'desc']
+                [1, 'desc']
             ],
             dom: '<"top"l<"float-right"i>>rt<"bottom"p><"clear">'
         });
+
+        trackerTable.on( 'order.dt search.dt', function () {
+            trackerTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
 
         // Custom Input Search for Table
         $('#searchTracker').keyup(function(){
             trackerTable.search($(this).val()).draw() ;
         })
+
+        $("#tableMyDocuments").on("click", ".show-code", function() {
+            var tracking_code = $(this).attr("id"),
+                url = "{{ route('optima.route-documents.search') }}";
+
+            $.ajax({
+                method : 'GET',
+                url    : url,
+                data   : {code: tracking_code},
+                success: function(data) {
+                    $('#modalBodyLogs').html(data.html);
+                    $('#modalLogs').find('#modalLogsTitle').html(data.title + ' <span class="badge badge-info">' + data.docutype + '</span>');
+                    $('#modalLogs').find('#modalLogsDocuType').html(data.subject);
+                    $('#modalLogs').modal('show');
+                },
+                error  : function(xhr, err) {
+                    Swal.fire({
+                        title: "Error!",
+                        text:  "Could not retrieve the data.",
+                        type: "error"
+                    })
+                }
+            });
+        });
     });
 </script>
 <script>

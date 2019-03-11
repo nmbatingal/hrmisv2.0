@@ -63,8 +63,15 @@
                 action: function ( e, dt, node, config ) {
                     window.open("{{ route('optima.route-documents.export.code', $tracker->tracking_code) }}");
                 }
+            },
+            {
+                text: '<i class="ti-printer"></i> Print Code',
+                className: 'btn btn-danger btnDocOwner',
+                action: function ( e, dt, node, config ) {
+                    var url = "{{ route('optima.print.barcode', $tracker->tracking_code) }}";
+                    window.open(url, "Print Barcode", "width=800,height=600");
+                }
             }
         ]
     });
-
 </script>

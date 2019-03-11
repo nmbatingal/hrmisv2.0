@@ -16,6 +16,10 @@ Route Documents
     .btn-hidden {
         display: none;
     }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        color: black;
+    }
 </style>
 @endsection
 
@@ -106,15 +110,52 @@ Route Documents
                                                     <button class="btn btn-success" type="submit">Release</button>
                                                 </div>
                                             </div>
-                                            <small class="form-control-feedback text-muted">&nbsp;</small> 
+                                            <small class="form-control-feedback text-muted">
+                                                <!-- SEARCH TOGGLE -->
+                                                <a id="advanceRouteBtn" class="get-code m-t-20" data-toggle="collapse" href="#advanceRouting" aria-expanded="true">
+                                                    <i class="ti-settings"></i> Advance Routing Details</a>
+                                                <!-- END SEARCH TOGGLE -->
+                                            </small> 
                                         </div>
                                     </div>
+
                                     <div id="submitReleaseSpinner" class="text-center" style="display: none;">
                                         <div class="spinner-border" role="status">
                                             <span class="sr-only">Loading...</span>
                                         </div>
                                     </div>
                                     <div id="submitReleaseAlert" class="alert" style="display: none;"></div>
+
+                                    <div id="advanceRouting" class="collapse m-t-15" aria-expanded="true">
+                                        <div class="form-group row m-b-10">
+                                            <div class="col-md-12 p-0">
+                                                <select id="recipient" class="select2 form-control select2-multiple" name="recipients[]" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group options m-b-10">
+                                            <div class="custom-control custom-checkbox">
+                                                <input name="forSignature" type="checkbox" class="custom-control-input" id="customCheck4" value="For signature.">
+                                                <label class="custom-control-label" for="customCheck4">For signature </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input name="forCompliance" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance.">
+                                                <label class="custom-control-label" for="customCheck2">For action/compliance </label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input name="forInformation" type="checkbox" class="custom-control-input" id="customCheck3" value="For information.">
+                                                <label class="custom-control-label" for="customCheck3">For information </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row m-b-10">
+                                            <div class="col-md-12 p-0">
+                                                <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes"></textarea>
+                                                <!-- <span class="help-block p-l-10 text-muted">
+                                                    <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
+                                                </span> -->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                                 <!-- END OF FORM TO RECEIVE AND SUBMIT INCOMING DOCUMENTS WITH TRACKING CODE  -->
                             </div>
@@ -343,6 +384,7 @@ Route Documents
 @section('scripts')
 <script src="{{ asset('js/jquery.hotkeys.js') }}"></script>
 <script src="{{ asset('assets/node_modules/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/node_modules/autosize/dist/autosize.min.js') }}"></script>
 <!-- Footable -->
 <script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <!-- This is data table -->
@@ -350,6 +392,56 @@ Route Documents
 <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 <script>
     $(document).ready(function() { 
+
+        autosize($('textarea.autosize'));
+
+        // ADVANCE ROUTING DETAILS FOR DOCUMENT RELEASE
+        $('a#advanceRouteBtn').on('click', function(){
+            $(this).closest('.modal-dialog').addClass('modal-lg');
+        });
+
+        // return list of registered recipients
+        var token = $("input[name=_token]").val();
+        $.post( "{{ route('optima.recipients') }}", { _token: token })
+            .done( function( data ) {
+                $("select#recipient").html(data.options);
+            });
+
+        $("#recipient").select2({
+            width: '100%',
+            placeholder: "Select recipients",
+            allowClear: true,
+            templateSelection: formatState
+        });
+
+        function formatState (state) {
+            var option = state,
+                img    = $( option.element ).data('img');
+
+
+            if (!state.id) {
+                return state.text;
+            }
+
+            var imgUrl = "{{ asset('/') }}";
+            var $recipient = $(
+                '<span><img src="' + imgUrl + img + '" class="img-circle" width="30" /> ' + option.text + '</span>'
+            );
+
+            return $recipient;
+        };
+
+        var requiredCheckboxes = $('.options :checkbox[required]');
+        
+        requiredCheckboxes.change(function(){
+            if(requiredCheckboxes.is(':checked')) {
+                requiredCheckboxes.removeAttr('required');
+            } else {
+                requiredCheckboxes.attr('required', 'required');
+            }
+        });
+
+        // ---------------------------------------------------------------
 
         // DataTable for Tracker
         var trackerTable = $('#tableRoutedDocument').DataTable({
@@ -384,7 +476,7 @@ Route Documents
             trackerTable.search($(this).val()).draw() ;
         })
 
-        $(".select2").select2();
+        // $(".select2").select2();
 
         // SHOW MODAL TRACKING LOGS OF A DOCUMENT
         $("#tableRoutedDocument").on("click", ".show-code", function() {
@@ -420,6 +512,8 @@ Route Documents
 
         // MODAL RECEIVE INPUT FOCUS
         $('#receiveModal').on('shown.bs.modal', function() {
+            $('form#submitReceive').trigger("reset");
+            $('#submitReceiveSpinner').css('display', 'none');
             $('#codeInputReceive').focus();
         });
 
@@ -447,7 +541,7 @@ Route Documents
                             }
                             // update progressbar
                             // $("#upload-progress .progress-bar").css("width", + percent +"%");
-                            $('#submitReceiveAlert').css('display', 'none');
+                            // $('#submitReceiveAlert').css('display', 'none');
                             $('#submitReceiveSpinner').css('display','block');
                         }, true);
                     }
@@ -466,51 +560,43 @@ Route Documents
                         // ALERT
                         $('input#codeInputReceive').select();
                         $('#submitReceiveSpinner').css('display','none');
-                        $('#submitReceiveAlert')
-                            .removeClass('alert-danger')
-                            .addClass('alert-success')
-                            .css('display','block')
-                            .html( '<b>'+ data.tracking_code +'</b> tracker successfully received.');
+
+                        var divAlert = $('<div class="alert alert-success"><b>'+ data.tracking_code +'</b> tracker successfully received.<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button></div>');
+
+                        $('#submitReceiveSpinner').after(divAlert);
+
                         // HIDE ALERT
                         setTimeout(function() {
-                            $('#submitReceiveAlert').css('display', 'none');;
+                            divAlert.remove();
                         }, 5000);
 
                     } else {
 
-                        if ( data.status == "Receive")
+                        if ( data.status == "alreadyReceived")
                         {
                             // ALERT
                             $('#submitReceiveSpinner').css('display','none');
                             $('input#codeInputReceive').select();
-                            $('#submitReceiveAlert')
-                                .removeClass('alert-success')
-                                .addClass('alert-danger')
-                                .css('display','block').html( data.tracking_code + data.msg );
+
+                            var divAlert = $('<div class="alert alert-warning">'+ data.tracking_code + data.msg +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button></div>');
+
+                            $('#submitReceiveSpinner').after(divAlert);
+
                             setTimeout(function() {
-                                $('#submitReceiveAlert').css('display', 'none');;
+                                divAlert.remove();
                             }, 5000);
-
-                        } else if ( data.status == "Not Recipient" ) {
-
-                            var dialog = Swal.fire({
-                                        text:  data.tracking_code + data.msg,
-                                        type: "warning",
-                                        showConfirmButton: true,
-                                        showCancelButton: true,
-                                        allowOutsideClick: false
-                                });
 
                         } else {
                             // ALERT
                             $('#submitReceiveSpinner').css('display','none');
                             $('input#codeInputReceive').select();
-                            $('#submitReceiveAlert')
-                                .removeClass('alert-success')
-                                .addClass('alert-danger')
-                                .css('display','block').html("Tracking code undefined.");
+
+                            var divAlert = $('<div class="alert alert-danger">Tracking code undefined.</div>');
+
+                            $('#submitReceiveSpinner').after(divAlert);
+
                             setTimeout(function() {
-                                $('#submitReceiveAlert').css('display', 'none');;
+                                divAlert.remove();
                             }, 5000);
                         }
                     }
@@ -530,6 +616,9 @@ Route Documents
 
         // MODAL RELEASE INPUT FOCUS
         $('#releaseModal').on('shown.bs.modal', function() {
+            $('form#submitRelease').trigger("reset");
+            $('#recipient').val(null).trigger('change');
+            $('#submitReleaseSpinner').css('display', 'none');
             $('#codeInputRelease').focus();
         });
 
@@ -575,14 +664,15 @@ Route Documents
                         // ALERT
                         $('input#codeInputReceive').select();
                         $('#submitReleaseSpinner').css('display','none');
-                        $('#submitReleaseAlert')
-                            .removeClass('alert-danger')
-                            .addClass('alert-success')
-                            .css('display','block')
-                            .html( '<b>'+ data.tracking_code +'</b> tracker successfully released.');
+
+                        var divAlert = $('<div class="alert alert-success"><b>'+ data.tracking_code +'</b> tracker successfully released.<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button></div>');
+
+                        $('#submitReleaseSpinner').after(divAlert);
+                        $('#recipient').val(null).trigger('change');
+
                         // HIDE ALERT
                         setTimeout(function() {
-                            $('#submitReceiveAlert').css('display', 'none');;
+                            divAlert.remove();
                         }, 5000);
 
                     } else {
@@ -590,12 +680,14 @@ Route Documents
                         // ALERT
                         $('#submitReleaseSpinner').css('display','none');
                         $('input#codeInputRelease').select();
-                        $('#submitReleaseAlert')
-                            .removeClass('alert-success')
-                            .addClass('alert-danger')
-                            .css('display','block').html( 'Tracking code undefined.');
+
+                        var divAlert = $('<div class="alert alert-danger">Tracking code undefined.<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button></div>');
+
+                        $('#submitReleaseSpinner').after(divAlert);
+
+                        // HIDE ALERT
                         setTimeout(function() {
-                            $('#submitReceiveAlert').css('display', 'none');;
+                            divAlert.remove();
                         }, 5000);
                     }
                 },
@@ -614,7 +706,6 @@ Route Documents
     });
 </script>
 <script>
-
     $(document).on('keydown input click', function (key) {
 
         // console.log(key.which);
@@ -644,29 +735,30 @@ Route Documents
     // row to be added
     function appendTableRowReceived (item) {
 
-        var remarks;
-        if (item.remarks === '')
-        {
-            remarks = '<a data-id="log-'+item.track_id+'" href="javascript:void(0);" class="text-info linkRemarks"><small><i class="icon-note"></i></small></a>';
-        } else {
-            remarks = '<a data-id="log-'+item.track_id+'" href="javascript:void(0);" class="linkRemarks">'+item.remarks+'</a>';
-        }
-
         var row = $('<tr>' +
-                        '<td class="text-center"><a href="javascript:void(0)" target="_blank">' + item.tracking_code + '</a></td>' +
-                        '<td>' + 
-                            '<h5 class="font-weight-bold">' + item.subject + '</h5>' +
-                                '<small>'+ item.document_type +' &#9679; '+ item.date_created +'</small><br>' +
-                                item.date_created + 
+                        '<td class="text-center">' +
+                            '<h4><a id="'+item.tracking_code+'" href="javascript:void(0)" class="show-code">'+item.tracking_code+'</a></h4>' +
+                        '</td>'+
+                        '<td>'+
+                            '<h5 class="font-bold m-b-0">'+item.subject+
+                                '&nbsp;<small><span class="badge badge-info">'+item.document_type+'</span></small>' +
+                            '</h5>' +
+                            '<h5 class="m-b-0">'+item.created_by+'</h5>' +
+                            '<small>'+item.date_created+'</small>' +
                         '</td>' +
                         '<td>' + 
-                            '<h5 class="font-weight-bold">' + item.action + '</h5>' +
-                            item.date_action +  
+                            '<h5 class="font-bold m-b-0">'+item.action+'</h5>' +
+                            '<small>'+item.date_action+'</small>' +
                         '</td>' +
-                        '<td>' + remarks +  '</td>' +
+                        '<td>'+
+                            '<a data-id="log-'+item.tracking_id+'" href="javascript:void(0);" class="text-primary linkRemarks">'+
+                                item.note+'&nbsp;<small><i class="icon-note"></i></small>'+
+                            '</a>'+
+                        '</td>' +
                     '</tr>');
         return row;
     }
+
     /*$(document).on("click", ".btnCancelEvent", function () {
         var btn = $(this),
             id  = btn.data("id"),
