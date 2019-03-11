@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.home.app')
 
 @section('title')
- | Update Account Settings
+Update Account Settings -
 @endsection
 
 @section('styles')
@@ -21,22 +21,18 @@
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
 <div class="row page-titles">
-    <div class="col-md-12">
-        <h4 class="text-white">Update Account Settings</h4>
+    <div class="col-md-5 align-self-center">
+        <h4 class="text-themecolor font-weight-bold">Dashboard</h4>
     </div>
-    <div class="col-md-6">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('all.setting.index') }}">Settings</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('user.setting.index') }}">Profile Setting</a></li>
-            <li class="breadcrumb-item active">Update</li>
-        </ol>
+    <div class="col-md-7 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('user.setting.index') }}">Profile</a></li>
+                <li class="breadcrumb-item active">Update</li>
+            </ol>
+        </div>
     </div>
-    <!-- <div class="col-md-6 text-right">
-        <form class="app-search d-none d-md-block d-lg-block">
-            <input type="text" class="form-control" placeholder="Search &amp; enter">
-        </form>
-    </div> -->
 </div>
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
@@ -45,7 +41,7 @@
 <!-- Over Visitor, Our income , slaes different and  sales prediction -->
 <!-- ============================================================== -->
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <div class="card ">
             <div class="card-body">
                 <form id="formUpdate" action="{{ route('user.setting.update', $user->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
@@ -173,9 +169,7 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-8">
+    <div class="col-md-5">
         <div class="card ">
             <div class="card-body">
                 <form id="formUpdatePassword" action="{{ route('user.setting.update.password', $user->id) }}" method="POST" class="form-horizontal">
