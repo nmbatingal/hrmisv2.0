@@ -29,26 +29,35 @@
 <!-- ============================================================== -->
 <div class="m-t-40"></div>
 
-<div class="row el-element-overlay">
-    <div class="col-lg-3 col-md-6 col-sm-4">
+<div class="row">
+    <!-- Column -->
+    <div class="offset-md-2 col-md-8">
         <div class="card">
-            <div class="el-card-item">
-                <div class="el-card-avatar el-overlay-1"> 
-                    <img class="card-img-top" src="{{ asset('img/optima.jpg') }}" alt="Card image cap">
-                    <div class="el-overlay">
-                        <ul class="el-info">
-                            <li><a class="btn default btn-outline" href="{{ route('optima.route-documents') }}"><i class="icon-link"></i></a></li>
-                        </ul>
+            <div class="card-body p-0">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <img class="card-img-top" src="{{ asset('img/optima.jpg') }}" alt="Card image cap">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="el-card-content">
-                    <a href="{{ route('optima.route-documents') }}">
-                        <h2 class="box-title m-b-0">O P T I M A</h2> 
-                        <small>Optical Tracking of Information and Management System</small>
-                    </a>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title">OPTIMA</h2>
+                                <h5 class="card-text">Optical Tracking Information Management System</h5>
+                                <p class="m-t-30 card-text">OPTIMA or Optical Tracking Information Management System is a web-based application that stores and manages transmitted documents attached with an auto-generated barcode for easier tracking of the processed documents.</p>
+                                <a href="{{ route('optima.route-documents') }}" class="btn btn-info"><i class="icon-login"></i> Open Application</a>
+                                <a href="{{ asset('storage/manuals/optima.pdf') }}" class="btn btn-link" target="_blank">Download user manual</a>
+                            </div>
+                        </div>    
+                    </div>
+
                 </div>
             </div>
-        </div>
+        </div>    
     </div>
 </div>
 @endsection

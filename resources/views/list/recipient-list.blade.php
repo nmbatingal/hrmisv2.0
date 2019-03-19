@@ -1,3 +1,12 @@
+@forelse( $list['recipients'] as $recipient )
+
+<option value="{{ $recipient['id'] }},{{ $recipient['type'] }}" data-img="img/blank.png" selected>
+	{{ $recipient['name'] }}
+</option>
+
+@empty
+@endforelse
+
 <option value="00,all" data-img="img/blank.png">
 	All employee
 </option>
@@ -7,7 +16,6 @@
     </option>
 @empty
 @endforelse
-
 @forelse($groups as $group)
     <option value="{{ $group->id }},group" data-img="img/blank.png">
     	{{ $group->group_name }} ({{ $group->acronym }})

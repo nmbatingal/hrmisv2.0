@@ -32,6 +32,11 @@
                         <i class="icon-menu"></i>
                     </a> 
                 </li>
+                <li class="nav-item">
+                    <form action="{{ route('optima.search') }}" method="GET" class="app-search d-none d-md-block d-lg-block">
+                        <input type="text" class="form-control" name="q" placeholder="Search & enter" value="{{ request('q') }}">
+                    </form>
+                </li>
             </ul>
             <!-- ============================================================== -->
             <!-- User profile and search -->
@@ -105,28 +110,27 @@
                 <li class="nav-item dropdown u-pro">
                     @guest
                     @else
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-user"></i><!--  &#64;<small>{{ Auth::user()->username }} --></small></a>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" width="30" alt="user" class="img-circle"></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="javascript:void(0)" class="dropdown-item"><b>&#64;{{ Auth::user()->username }}</b></a>
+                            <div class="dropdown-divider"></div>
+                            <!-- Profile Setting -->
+                            <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
+                            <!-- User Activity Log -->
+                            <a href="{{ route('user.setting.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> Activity Log</a>
+                            <!-- text-->
+                            <div class="dropdown-divider"></div>
+                            <!-- text-->
+                            <a href="{{ route('logout') }}" class="dropdown-item text-danger" 
+                                onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-power-off"></i> Logout</a>
+                            <!-- text-->
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
                     @endguest
-                    
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="javascript:void(0)" class="dropdown-item"><b>&#64;{{ Auth::user()->username }}</b></a>
-                        <div class="dropdown-divider"></div>
-                        <!-- Profile Setting -->
-                        <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
-                        <!-- User Activity Log -->
-                        <a href="{{ route('user.setting.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> Activity Log</a>
-                        <!-- text-->
-                        <div class="dropdown-divider"></div>
-                        <!-- text-->
-                        <a href="{{ route('logout') }}" class="dropdown-item text-danger" 
-                            onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                    <i class="fa fa-power-off"></i> Logout</a>
-                        <!-- text-->
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
                 </li>
                 <!-- ============================================================== -->
                 <!-- End User Profile -->

@@ -48,6 +48,33 @@
 </div>
 
 <script>
+    $(document).on("click", "#btnCancelEvent", function (e) {
+
+        e.preventDefault();
+        
+        var btn    = $(this),
+            token  = "{{ csrf_token() }}";
+
+        $.ajax({
+            url: btn.attr('href'),
+            type: 'POST',
+            data: {
+                "id": btn.data('id'),
+                "_method": 'DELETE',
+                "_token": token,
+            },
+            success: function (data) {
+                
+                console.log(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire("Error deleting!", thrownError, "error");
+            }
+        });
+    });
+</script>
+
+<script>
     var tableLog = $('#table-logs').DataTable({
         fixedHeader: true,
         columnDefs: [{ 

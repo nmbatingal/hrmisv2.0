@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/optima-favicon.png') }}">
-    <title>@yield('title') - Optima</title>
+    <title>@yield('title') - OPTIMA</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--alerts CSS -->
@@ -19,6 +19,8 @@
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/css/pages/progressbar-page.css') }}" rel="stylesheet">
+    <!-- page css -->
+    <link href="{{ asset('dist/css/pages/other-pages.css') }}" rel="stylesheet">
     @yield('styles')
     <style>
         /*.topbar .top-navbar .navbar-header {
@@ -38,6 +40,10 @@
             .user-profile .user-pro-body img {
                 width: 100px;
             }
+        }
+
+        .app-search .form-control:focus {
+            width: 500px;
         }
 
         .footer {

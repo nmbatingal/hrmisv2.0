@@ -323,15 +323,28 @@ Route Documents
                             @forelse( $documentsLog as $log )
                                 <tr id="row-{{ $log->id }}">
                                     <td class="text-center">
-                                        <h4><a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $log->tracking_code }}</a></h4>
+                                        <h4>
+                                            <a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">
+                                                {{ $log->tracking_code }}
+                                                <!-- <span class="mytooltip tooltip-effect-4">
+                                                <span class="tooltip-item">Euclid</span> 
+                                                    <span class="tooltip-content clearfix">
+                                                        <span class="tooltip-text">
+                                                            Also known as Euclid of andria, was a Greek mathematician, often referred.
+                                                        </span> 
+                                                    </span>
+                                                </span> -->
+                                            </a>
+                                        </h4>
                                     </td>
                                     <td>
                                         <h5 class="font-bold m-b-0">
-                                            {{ $log->documentCode->subject }} 
-                                            <small><span class="badge badge-info">{{ $log->documentCode->other_document }}</span></small>
+                                            {{ $log->documentCode->subject }}
                                         </h5>
-                                            <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
-                                            <small>{{ $log->documentCode->tracking_date }}</small>
+
+                                        <h5 class="m-b-0"><span class="badge badge-info">{{ $log->documentCode->other_document }}</span></h5>
+                                        <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
+                                        <small>{{ $log->documentCode->tracking_date }}</small>
                                     </td>
                                     <!-- <td>{{ $log->notes }}</td> -->
                                     <td>

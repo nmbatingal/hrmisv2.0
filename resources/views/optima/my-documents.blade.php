@@ -134,7 +134,7 @@ My Documents
                                 <th>Document type</th>
                                 <th>Status</th>
                                 <th>Note</th>
-                                <!-- <th></th> -->
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-sm">
@@ -187,6 +187,12 @@ My Documents
                                             @break;
                                         @endforeach
                                     </td>
+                                    <td class="text-center" width="7%" style="vertical-align: middle;">
+                                        <a href="{{ route('optima.my-documents.edit',$document->id) }}" class="btn btn-md btn-outline-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-note"></i></a>
+                                        <a href="" class="btn btn-md btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-trash"></i></a>
+                                        <a href="" class="btn btn-md btn-outline-success" data-toggle="tooltip" data-placement="top" title="Routing Complete"><i class="icon-check"></i></a>
+                                        <a href="" class="btn btn-md btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Cancel Routing"><i class="icon-close"></i></a>
+                                    </td>
                                     <!-- <td>
                                         <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $document->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td> -->
@@ -218,7 +224,7 @@ My Documents
             columnDefs: [ {
                 searchable: false,
                 orderable: false,
-                targets: 0
+                targets: [0,6]
             } ],
             order: [
                 [1, 'desc']

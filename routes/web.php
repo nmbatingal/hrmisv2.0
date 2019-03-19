@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
     Route::get('/', 'DocumentTracker\DocumentTrackerController@index')->name('index');
 	Route::get('about', 'DocumentTracker\DocumentTrackerController@about')->name('about');
 	Route::get('dashboard', 'DocumentTracker\DocumentTrackerController@dashboard')->name('dashboard');
+	Route::get('search', 'DocumentTracker\DocumentTrackerController@search')->name('search');
     Route::get('about', 'DocumentTracker\DocumentTrackerController@about')->name('about');
 
 	// DOCUMENT ROUTING MODULE

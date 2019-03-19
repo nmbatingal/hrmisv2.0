@@ -39,6 +39,22 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function search(Request $request)
+    {
+        // $documents = [];
+        // return view('optima.index');
+
+        $keywords = DocumentKeyword::where('keywords', '=', $request->q)->get();
+
+        return $keywords;
+        // return view('optima.search');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function dashboard()
     {
         $documents = [];
@@ -480,7 +496,8 @@ class DocumentTrackerController extends Controller
         if ( $request->ajax() ) {
             return response()->json([
                 'result' => $result, 
-                'url' => route('optima.route-documents', $document->tracking_code), 
+                'id'     => $document->id,
+                'url'    => route('optima.route-documents', $document->tracking_code), 
                 'tracker' => $document->tracking_code 
             ]);
 
@@ -533,7 +550,13 @@ class DocumentTrackerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $offices  = Office::all();
+        $users    = User::employee()->notSelf()->get();
+        $userSelf = User::employee()->get();
+        $docTypes = DocumentTypes::orderBy('document_name', 'ASC')->get();
+        $editDoc  = DocumentTracker::find($id);
+
+        return view('optima.edit-document', compact('editDoc', 'docTypes', 'offices', 'users', 'userSelf'));
     }
 
     /**
@@ -556,14 +579,24 @@ class DocumentTrackerController extends Controller
      */
     public function destroy($id)
     {
+        $result = false;
         try {
-            $log = DocumentTracker::destroy($id);
+
+            // $log = DocumentTracker::where('tracking_code', '=', $my_document)->delete();
+            $log = DocumentTracker::find($id);
+            // $log->forceDelete();
+            $log->delete();
+
+
+            $result = true;
             $msg = '';
+
         } catch (Exception $e) {
             $msg = 'Caught exception: '. $e->getMessage() ."\n";
         }
 
-        return response()->json([ 'id'=>$id, 'result'=>$log, 'msg' => $msg ]); 
+        // return $my_document;
+        return response()->json([ 'id'=>$id, 'result'=>$result, 'msg' => $msg ]); 
     }
 
     /*** JS ***/
@@ -577,9 +610,10 @@ class DocumentTrackerController extends Controller
 
     public function recipientsList(Request $request)
     {   
+        $list      = $request->has('list') ? $request->list : '';
         $employees = User::employee()->notSelf()->get();
         $groups    = OfficeGroups::all();
-        $data      = view('list.recipient-list', compact('employees', 'groups'))->render();
+        $data      = view('list.recipient-list', compact('employees', 'groups', 'list'))->render();
 
         if ( $request->ajax() )
         {

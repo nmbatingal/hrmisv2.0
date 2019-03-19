@@ -1,7 +1,7 @@
 @extends('layouts.optima.app')
 
 @section('title')
-Create new tracker
+Edit tracker
 @endsection
 
 @section('styles')
@@ -76,14 +76,14 @@ Create new tracker
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Create New Tracker</h4>
+        <h4 class="text-themecolor">Edit Tracker {{ $editDoc->tracking_code }}</h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('optima.my-documents') }}">My Documents</a></li>
-                <li class="breadcrumb-item active">Create New Tracker</li>
+                <li class="breadcrumb-item active">Edit Tracker</li>
             </ol>
         </div>
     </div>
@@ -93,9 +93,6 @@ Create new tracker
     <div class="col-lg-12">
 
         <div class="card border-dark">
-            <div class="card-header bg-dark">
-                <h4 class="m-b-0 text-white">Document Routing Form</h4>
-            </div>
             <div class="card-body p-10">
                 <!-- ALERT NOTIF -->
                 <div class="alert alert-info alert-rounded"> 
@@ -104,7 +101,7 @@ Create new tracker
                 </div>
 
                 <!-- FORM -->
-                <form id="formCreate" action="{{ route('optima.my-documents.store') }}" method="POST" class="form-control-line" 
+                <form id="formCreate" action="{{ route('optima.my-documents.update', $editDoc->id) }}" method="POST" class="form-control-line" 
                       enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row m-b-10" style="display: none;">
@@ -118,7 +115,7 @@ Create new tracker
 
                     <div class="form-group row m-b-20">
                         <div class="col-md-12 p-0">
-                            <textarea class="form-control autosize" name="subject" rows="1" placeholder="Subject" required autofocus></textarea>
+                            <textarea class="form-control autosize" name="subject" rows="1" placeholder="Subject" required autofocus>{{ $editDoc->subject }}</textarea>
                             <!-- <span class="help-block p-l-10 text-muted">
                                 <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
                             </span> -->
@@ -148,7 +145,7 @@ Create new tracker
                             </select>
                         </div>
                         <div id="specifyDocument" class="col-md-6 p-0" style="display: none;">
-                            <input id="otherDocument" type="text" class="form-control" name="otherDocument" placeholder="Please specify document type" required>
+                            <input id="otherDocument" type="text" class="form-control" name="otherDocument" placeholder="Please specify document type" value="{{ $editDoc->other_document }}" required>
                         </div>
                         <div class="col-md-12 p-0">
                             <hr class="m-0">
@@ -183,7 +180,7 @@ Create new tracker
 
                     <div class="form-group row m-b-10">
                         <div class="col-md-12 p-0">
-                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes"></textarea>
+                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes">{{ $editDoc->notes }}</textarea>
                             <!-- <span class="help-block p-l-10 text-muted">
                                 <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
                             </span> -->
@@ -244,7 +241,7 @@ Create new tracker
 
         // return list of registered recipients
         var token = $("input[name=_token]").val();
-        $.post( "{{ route('optima.recipients') }}", { _token: token })
+        $.post( "{{ route('optima.recipients') }}", { _token: token, list: {!! $editDoc->trackLogs->first() !!} })
             .done( function( data ) {
                 $("select#recipient").html(data.options);
             });
@@ -265,58 +262,6 @@ Create new tracker
                 $("input[name=otherDocument]").val($document);
             }
         });
-
-
-
-        // sweetalert
-        // formCreate.validate({
-        //     rules: {
-        //         subject         : "required",
-        //         documentDate    : "required",
-        //         docType         : "required",
-        //         keywords        : "required",
-        //         /*"attachment[]" : {
-        //             required  : true
-        //         }*/
-        //     },
-        //     /*messages : {
-        //         "attachment[]" : {
-        //            required : "Please upload atleast 1 document",
-        //            //extension: "Only document file is allowed!"
-        //         }
-        //     },*/
-        //     highlight: function (element, errorClass, validClass) {
-        //         // $(input).parents('.form-group').addClass('has-danger');
-        //         // $(input).parent('.form-group').addClass(error);
-        //         $( element ).parents( ".form-group" ).addClass( "has-danger" ).removeClass( "has-success" );
-        //         // $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-        //     },
-        //     unhighlight: function (element, errorClass, validClass) {
-        //         $( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-danger" );
-        //         // $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-        //         // $(input).parents('.form-group').removeClass('has-danger');
-        //         // $(input).parents('.form-group').removeClass(error);
-        //     },
-        //     errorElement: "small",
-        //     errorPlacement: function (error, element) {
-        //         // $(element).parents('.form-group').append(error);
-        //         error.addClass( "form-control-feedback p-l-10" );
-        //         // element.addClass( "form-control-danger" );
-        //         element.parents( ".form-group" ).addClass( "has-danger" );
-        //         element.addClass('form-control-danger').parent('div').append(error);
-
-        //         // Add the span element, if doesn't exists, and apply the icon classes to it.
-        //         // if ( !element.next( "span" )[ 0 ] ) {
-        //         //     $( "<span class='icon-close form-control-feedback'></span>" ).insertAfter( element );
-        //         // }
-        //     },
-        //     success: function ( label, element ) {
-        //         // Add the span element, if doesn't exists, and apply the icon classes to it.
-        //         // if ( !$(element).next( "span" )[ 0 ] ) {
-        //         //     $( "<span class='icon-check form-control-feedback'></span>" ).insertAfter( $(element) );
-        //         // }
-        //     },
-        // });
 
         formCreate.on('submit', function(e) {
 
@@ -421,86 +366,61 @@ Create new tracker
     });
 </script>
 <script>
-    $(document).on("click", "#btnCancelEvent", function (e) {
-
-        e.preventDefault();
-        
-        var btn = $(this),
-            token  = $('input[name=_token]').val();
-
-        $.ajax({
-            url: btn.attr('href'),
-            type: 'POST',
-            data: {
-                "id": btn.data('id'),
-                "_method": 'DELETE',
-                "_token": token,
-            },
-            xhr: function() {
-                    //upload Progress
-                    var xhr = $.ajaxSettings.xhr();
-                    if (xhr.upload) {
-                        xhr.upload.addEventListener('progress', function(event) {
-                            var percent = 0;
-                            var position = event.loaded || event.position;
-                            var total = event.total;
-                            if (event.lengthComputable) {
-                                percent = Math.ceil(position / total * 100);
-                            }
-
-                            $('#btnCancelEvent .spinner-border').css('display', 'inline-block');
-
-                        }, true);
-                    }
-                    return xhr;
-                },
-            success: function (data) {
-
-                $('#btnSubmit').css('display', 'inline-block');
-                $('#btnCancelEvent').css('display', 'none');
-                $('#btnPrint').css('display', 'none');
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                Swal.fire("Error deleting!", thrownError, "error");
-            }
-        });
-    });
-</script>
-<script>
     $(function () {
 
-        // $('input#keywords').tagsinput({ confirmKeys: [186] });
-        // $("input#keywords").materialtags();
-
-
+        //------------ auto fill keyword field ----------------//
+        var editDocs = {!! $editDoc->documentKeywords !!},
+            tagsArray = [];
+        $.each (editDocs, function(index, value) {
+            tagsArray.push(value.keywords);
+        });
         $(".keywords").tagEditor({
             autocomplete: {
                 delay: 0, // show suggestions immediately
                 position: { collision: 'flip' }, 
                 source: "{{ route('optima.keywords') }}"
             },
+            initialTags: tagsArray,
             delimiter: ',', /* space and semicolon */
             placeholder: 'Add keywords',
             forceLowercase: true
         });
+        //------------ end auto fill keyword field ----------------//
 
+        //------------ auto select document type field ----------------//
         $("#documentType").select2({
             width: '100%',
             placeholder: "Select document type",
             allowClear: true
         });
+        $('#documentType').val('{{ $editDoc->doc_type_id }}'); // Select the option with a value of '1'
+        $('#documentType').trigger('change');
+        $('#otherDocument').val('{{ $editDoc->other_document }}')
+        //------------ end auto select document type field ----------------//
 
+        //------------ auto select recipients type field ----------------//
+        // var recipientList = {!! $editDoc->trackLogs->first() !!},
+        //     recipientArray = [];
+        // $.each (recipientList['recipients'], function(index, value) {
+        //     recipientArray.push(value.id+','+value.type);
+        // });
         $("#recipient").select2({
             width: '100%',
             placeholder: "Select recipients",
             allowClear: true,
             templateSelection: formatState
         });
+        // $('#recipient').val(['8,individual']);
+        // $('#recipient').trigger('change');
+
+        // var option = new Option(recipientArray);
+        // $("#recipient").append(option).trigger('change');
+        // console.log(recipientArray);
+        //------------ end auto select recipients type field ----------------//
 
         function formatState (state) {
             var option = state,
                 img    = $( option.element ).data('img');
-
 
             if (!state.id) {
                 return state.text;
