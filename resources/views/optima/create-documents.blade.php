@@ -242,12 +242,7 @@ Create new tracker
 
         $('input[name=documentDate]').bootstrapMaterialDatePicker('setDate', moment());
 
-        // return list of registered recipients
-        var token = $("input[name=_token]").val();
-        $.post( "{{ route('optima.recipients') }}", { _token: token })
-            .done( function( data ) {
-                $("select#recipient").html(data.options);
-            });
+        
 
         $("select[name=docType]").change(function(){
             
@@ -360,9 +355,13 @@ Create new tracker
                         urlCancel = urlCancel.replace(':var', data.id);
 
                         $('.spinner-border').css('display', 'none');
+                        
                         $('#btnSubmit').css('display', 'none');
+
                         $('#btnCancelEvent').attr('href', urlCancel)
+                                      .data('id', data.id)
                                       .css('display', 'inline-block');
+
                         $('#btnPrint').attr('href', url)
                                       .data('id', data.id)
                                       .css('display', 'inline-block');
@@ -490,30 +489,34 @@ Create new tracker
             allowClear: true
         });
 
+        var dataList = {!! json_encode($dataList) !!};
+
         $("#recipient").select2({
             width: '100%',
+            data: dataList,
             placeholder: "Select recipients",
             allowClear: true,
-            templateSelection: formatState
+            templateSelection: function (data, container) {
+                // Add custom attributes to the <option> tag for the selected option
+                // $(data.element).attr('data-img', data.img);
+
+                var imgUrl = "{{ asset('/') }}",
+                    $recipient = $(
+                        '<span><img src="' + imgUrl + data.img + '" class="img-circle" width="30" /> ' + data.text + '</span>'
+                    );
+                return $recipient;
+            }
+            // templateSelection: formatState
         });
 
-        function formatState (state) {
-            var option = state,
-                img    = $( option.element ).data('img');
-
-
-            if (!state.id) {
-                return state.text;
-            }
-
-            var imgUrl = "{{ asset('/') }}";
-            var $recipient = $(
-                '<span><img src="' + imgUrl + img + '" class="img-circle" width="30" /> ' + option.text + '</span>'
-            );
-
-            return $recipient;
-        };
-
+        $("#recipient").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+          
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
 
         var requiredCheckboxes = $('.options :checkbox[required]');
         

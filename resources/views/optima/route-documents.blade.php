@@ -20,6 +20,23 @@ Route Documents
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: black;
     }
+
+    .btnOptionHover {
+        opacity: 0.0;
+    }
+
+    .show-code:hover + .btnOptionHover, .btnOptionHover:hover {
+        opacity: 1.0;
+    }
+
+    .btnOptionHover:hover > .btn {
+        opacity: 0.1;
+    }
+
+    .btnOptionHover:hover > .btn:hover {
+        opacity: 1.0;
+    }
+}
 </style>
 @endsection
 
@@ -262,6 +279,8 @@ Route Documents
                             <i class="icon-settings"></i>
                         </button>
                         <div class="dropdown-menu">
+                            <a id="drpdown-table-refresh" class="dropdown-item" href="javascript:void(0)">Refresh</a>
+                            <div class="dropdown-divider"></div>
                             <a id="drpdown-export-log" class="dropdown-item" href="javascript:void(0)">Export Log</a>
                         </div>
                     </div>  
@@ -303,13 +322,15 @@ Route Documents
                 <div class="table-responsive">
                     <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped">
                         <colgroup>
+                            <col width="">
+                            <col width="15%">
+                            <col width="30%">
                             <col width="15%">
                             <col width="40%">
-                            <col width="20%">
-                            <col width="25%">
                         </colgroup>
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <!-- <th>Notes</th> -->
@@ -322,26 +343,23 @@ Route Documents
                         <tbody class="table-sm">
                             @forelse( $documentsLog as $log )
                                 <tr id="row-{{ $log->id }}">
+                                    <td class="text-right"></td>
                                     <td class="text-center">
                                         <h4>
-                                            <a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">
-                                                {{ $log->tracking_code }}
-                                                <!-- <span class="mytooltip tooltip-effect-4">
-                                                <span class="tooltip-item">Euclid</span> 
-                                                    <span class="tooltip-content clearfix">
-                                                        <span class="tooltip-text">
-                                                            Also known as Euclid of andria, was a Greek mathematician, often referred.
-                                                        </span> 
-                                                    </span>
-                                                </span> -->
-                                            </a>
+                                            <a id="{{ $log->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $log->tracking_code }}</a>
+                                            <div class="btnOptionHover p-t-20"> 
+                                                @if ( $log->documentCode->user_id == auth()->user()->id )
+                                                    <a href="{{ route('optima.my-documents.edit', $log->documentCode->id) }}" class="btn btn-sm btn-info btnOption" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-note"></i></a>
+                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger btnOption" data-toggle="tooltip" data-placement="top" title="Cancel Routing"><i class="icon-close"></i></a>
+                                                    <a href="javascript:void(0);" class="btn btn-sm btn-success btnOption" data-toggle="tooltip" data-placement="top" title="Routing Complete"><i class="icon-check"></i></a>
+                                                @endif
+                                            </div>
                                         </h4>
                                     </td>
                                     <td>
                                         <h5 class="font-bold m-b-0">
                                             {{ $log->documentCode->subject }}
                                         </h5>
-
                                         <h5 class="m-b-0"><span class="badge badge-info">{{ $log->documentCode->other_document }}</span></h5>
                                         <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
                                         <small>{{ $log->documentCode->tracking_date }}</small>
@@ -408,41 +426,32 @@ Route Documents
 
         autosize($('textarea.autosize'));
 
-        // ADVANCE ROUTING DETAILS FOR DOCUMENT RELEASE
-        $('a#advanceRouteBtn').on('click', function(){
-            $(this).closest('.modal-dialog').addClass('modal-lg');
-        });
-
-        // return list of registered recipients
-        var token = $("input[name=_token]").val();
-        $.post( "{{ route('optima.recipients') }}", { _token: token })
-            .done( function( data ) {
-                $("select#recipient").html(data.options);
-            });
-
+        var dataList = {!! json_encode($dataList) !!};
         $("#recipient").select2({
             width: '100%',
+            data: dataList,
             placeholder: "Select recipients",
             allowClear: true,
-            templateSelection: formatState
+            templateSelection: function (data, container) {
+                // Add custom attributes to the <option> tag for the selected option
+                // $(data.element).attr('data-img', data.img);
+
+                var imgUrl = "{{ asset('/') }}",
+                    $recipient = $(
+                        '<span><img src="' + imgUrl + data.img + '" class="img-circle" width="30" /> ' + data.text + '</span>'
+                    );
+                return $recipient;
+            }
         });
 
-        function formatState (state) {
-            var option = state,
-                img    = $( option.element ).data('img');
-
-
-            if (!state.id) {
-                return state.text;
-            }
-
-            var imgUrl = "{{ asset('/') }}";
-            var $recipient = $(
-                '<span><img src="' + imgUrl + img + '" class="img-circle" width="30" /> ' + option.text + '</span>'
-            );
-
-            return $recipient;
-        };
+        $("#recipient").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+          
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
 
         var requiredCheckboxes = $('.options :checkbox[required]');
         
@@ -462,7 +471,7 @@ Route Documents
             fixedHeader: true,
             columnDefs: [
                 {
-                    "targets": [ 4 ],
+                    "targets": [ 5 ],
                     "visible": false,
                     "searchable": true
                 },
@@ -479,6 +488,12 @@ Route Documents
                 }
             ]
         });
+
+        trackerTable.on( 'order.dt search.dt', function () {
+            trackerTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
 
         $('#drpdown-export-log').on('click', function() {
             $('.btn-export-log').click();
@@ -629,10 +644,17 @@ Route Documents
 
         // MODAL RELEASE INPUT FOCUS
         $('#releaseModal').on('shown.bs.modal', function() {
+            $('#releaseModal').find('.modal-dialog').removeClass('modal-lg').addClass('modal-md');
+            $('#advanceRouting').removeClass('show');
             $('form#submitRelease').trigger("reset");
             $('#recipient').val(null).trigger('change');
             $('#submitReleaseSpinner').css('display', 'none');
             $('#codeInputRelease').focus();
+        });
+
+        // ADVANCE ROUTING DETAILS FOR DOCUMENT RELEASE
+        $('a#advanceRouteBtn').on('click', function(){
+            $(this).closest('.modal-dialog').addClass('modal-lg');
         });
 
         // FORM RELEASE SHOW MODAL
@@ -753,9 +775,8 @@ Route Documents
                             '<h4><a id="'+item.tracking_code+'" href="javascript:void(0)" class="show-code">'+item.tracking_code+'</a></h4>' +
                         '</td>'+
                         '<td>'+
-                            '<h5 class="font-bold m-b-0">'+item.subject+
-                                '&nbsp;<small><span class="badge badge-info">'+item.document_type+'</span></small>' +
-                            '</h5>' +
+                            '<h5 class="font-bold m-b-0">'+item.subject+'</h5>' +
+                            '<h5 class="m-b-0"><small><span class="badge badge-info">'+item.document_type+'</span></small></h5>' +
                             '<h5 class="m-b-0">'+item.created_by+'</h5>' +
                             '<small>'+item.date_created+'</small>' +
                         '</td>' +

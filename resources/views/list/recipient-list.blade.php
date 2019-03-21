@@ -1,12 +1,3 @@
-@forelse( $list['recipients'] as $recipient )
-
-<option value="{{ $recipient['id'] }},{{ $recipient['type'] }}" data-img="img/blank.png" selected>
-	{{ $recipient['name'] }}
-</option>
-
-@empty
-@endforelse
-
 <option value="00,all" data-img="img/blank.png">
 	All employee
 </option>

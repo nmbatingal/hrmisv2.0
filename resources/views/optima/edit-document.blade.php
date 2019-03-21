@@ -12,27 +12,6 @@ Edit tracker
 <link href="{{ asset('js/jQuery-tagEditor/jquery.tag-editor.css') }}" rel="stylesheet" type="text/css" />
 <!-- <link href="{{ asset('js/node_modules/jquery-tags-input/dist/jquery.tagsinput.min.css') }}" rel="stylesheet" type="text/css" /> -->
 <style type="text/css">
-    /*.bootstrap-tagsinput {
-        width: 100% !important;
-        box-shadow: none;
-        min-height: 38px;
-        border: 1px solid #e9ecef;
-    }
-
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background: #fb9678;
-        color: #fff;
-        border-color: #fb9678;
-    }
-
-    .select2-container--default .select2-selection--single {
-        min-height: 38px;
-        border: 1px solid #e9ecef;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 38px;
-    }*/
     .form-control-line .form-control {
         border-bottom: none;
     }
@@ -103,7 +82,7 @@ Edit tracker
                 <!-- FORM -->
                 <form id="formCreate" action="{{ route('optima.my-documents.update', $editDoc->id) }}" method="POST" class="form-control-line" 
                       enctype="multipart/form-data">
-                    @csrf
+                    @csrf {{ method_field('PATCH') }}
                     <div class="form-group row m-b-10" style="display: none;">
                         <div class="col-md-12 p-0">
                             <input type="text" name="documentDate" class="form-control mdate" placeholder="Document Date *">
@@ -165,22 +144,25 @@ Edit tracker
 
                     <div class="form-group options">
                         <div class="custom-control custom-checkbox">
-                            <input name="forSignature" type="checkbox" class="custom-control-input" id="customCheck4" value="For signature." required>
+                            <input name="forSignature" type="checkbox" class="custom-control-input" id="customCheck4" value="For signature."
+                                   {{ $editDoc->trackLogs->first()->forSignature ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customCheck4">For signature </label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input name="forCompliance" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance." required>
+                            <input name="forCompliance" type="checkbox" class="custom-control-input" id="customCheck2" value="For action/compliance." 
+                                   {{ $editDoc->trackLogs->first()->forCompliance ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customCheck2">For action/compliance </label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input name="forInformation" type="checkbox" class="custom-control-input" id="customCheck3" value="For information." required>
+                            <input name="forInformation" type="checkbox" class="custom-control-input" id="customCheck3" value="For information."
+                                   {{ $editDoc->trackLogs->first()->forInformation ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customCheck3">For information </label>
                         </div>
                     </div>
 
                     <div class="form-group row m-b-10">
                         <div class="col-md-12 p-0">
-                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes">{{ $editDoc->notes }}</textarea>
+                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes">{{ $editDoc->trackLogs->first()->notes }}</textarea>
                             <!-- <span class="help-block p-l-10 text-muted">
                                 <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
                             </span> -->
@@ -195,14 +177,6 @@ Edit tracker
                                         <span class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
                                         Submit
                                     </button>
-                                    <a id="btnCancelEvent" href="" class="btn btn-danger" data-id="" style="display: none;">
-                                        <span class="spinner-border spinner-border-sm" style="display: none;" role="status" aria-hidden="true"></span>
-                                        Cancel Route </a>
-                                    <a id="btnPrint" href="" class="btn btn-secondary" style="display: none;"
-                                        onclick="event.preventDefault();
-                                                 window.open($(this).attr('href'), 'Print Barcode', 'width=800,height=600');">
-                                        <i class="icon-printer"></i> Print code
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -227,7 +201,7 @@ Edit tracker
 <script type="text/javascript">
     $(document).ready(function() {
 
-        var formCreate = $('form#formCreate').show();
+        // var formCreate = $('form#formCreate').show();
 
         $('.mdate').bootstrapMaterialDatePicker({ 
             weekStart: 0, 
@@ -238,13 +212,6 @@ Edit tracker
         autosize($('textarea.autosize'));
 
         $('input[name=documentDate]').bootstrapMaterialDatePicker('setDate', moment());
-
-        // return list of registered recipients
-        var token = $("input[name=_token]").val();
-        $.post( "{{ route('optima.recipients') }}", { _token: token, list: {!! $editDoc->trackLogs->first() !!} })
-            .done( function( data ) {
-                $("select#recipient").html(data.options);
-            });
 
         $("select[name=docType]").change(function(){
             
@@ -263,106 +230,106 @@ Edit tracker
             }
         });
 
-        formCreate.on('submit', function(e) {
+        // formCreate.on('submit', function(e) {
 
-            e.preventDefault();
-            var form = $(this); 
+        //     e.preventDefault();
+        //     var form = $(this); 
 
-            $.ajax({
-                method : 'POST',
-                url    : form.attr('action'),
-                data   : form.serialize(),
-                xhr: function() {
-                    //upload Progress
-                    var xhr = $.ajaxSettings.xhr();
-                    if (xhr.upload) {
-                        xhr.upload.addEventListener('progress', function(event) {
-                            var percent = 0;
-                            var position = event.loaded || event.position;
-                            var total = event.total;
-                            if (event.lengthComputable) {
-                                percent = Math.ceil(position / total * 100);
-                            }
-                            // update progressbar
-                            // $("#upload-progress .progress-bar").css("width", + percent +"%");
-                            // console.log(percent);
+        //     $.ajax({
+        //         method : 'POST',
+        //         url    : form.attr('action'),
+        //         data   : form.serialize(),
+        //         xhr: function() {
+        //             //upload Progress
+        //             var xhr = $.ajaxSettings.xhr();
+        //             if (xhr.upload) {
+        //                 xhr.upload.addEventListener('progress', function(event) {
+        //                     var percent = 0;
+        //                     var position = event.loaded || event.position;
+        //                     var total = event.total;
+        //                     if (event.lengthComputable) {
+        //                         percent = Math.ceil(position / total * 100);
+        //                     }
+        //                     // update progressbar
+        //                     // $("#upload-progress .progress-bar").css("width", + percent +"%");
+        //                     // console.log(percent);
 
-                            $('#btnSubmit .spinner-border').css('display', 'inline-block');
-                            // $('#btnSubmit').attr('disabled', 'disabled');
+        //                     $('#btnSubmit .spinner-border').css('display', 'inline-block');
+        //                     // $('#btnSubmit').attr('disabled', 'disabled');
 
-                        }, true);
-                    }
-                    return xhr;
-                },
-                success: function(data) {
-                    if (data.result) {
+        //                 }, true);
+        //             }
+        //             return xhr;
+        //         },
+        //         success: function(data) {
+        //             if (data.result) {
 
-                        var url = "{{ route('optima.print.barcode', ':var') }}",
-                            urlCancel = "{{ route('optima.my-documents.destroy', ':var') }}";
+        //                 var url = "{{ route('optima.print.barcode', ':var') }}",
+        //                     urlCancel = "{{ route('optima.my-documents.destroy', ':var') }}";
                         
-                        // CHANGE
-                        url = url.replace(':var', data.tracker);
-                        urlCancel = urlCancel.replace(':var', data.id);
+        //                 // CHANGE
+        //                 url = url.replace(':var', data.tracker);
+        //                 urlCancel = urlCancel.replace(':var', data.id);
 
-                        $('.spinner-border').css('display', 'none');
-                        $('#btnSubmit').css('display', 'none');
-                        $('#btnCancelEvent').attr('href', urlCancel)
-                                      .css('display', 'inline-block');
-                        $('#btnPrint').attr('href', url)
-                                      .data('id', data.id)
-                                      .css('display', 'inline-block');
+        //                 $('.spinner-border').css('display', 'none');
+        //                 $('#btnSubmit').css('display', 'none');
+        //                 $('#btnCancelEvent').attr('href', urlCancel)
+        //                               .css('display', 'inline-block');
+        //                 $('#btnPrint').attr('href', url)
+        //                               .data('id', data.id)
+        //                               .css('display', 'inline-block');
 
-                        var dialog = Swal.fire({
-                                        text:  "Document tracker successfully saved. Tracking Code " + data.tracker,
-                                        type: "success",
-                                        showConfirmButton: true,
-                                        showCancelButton: true,
-                                        allowOutsideClick: false,
-                                        onOpen: function(swal) {
+        //                 var dialog = Swal.fire({
+        //                                 text:  "Document tracker successfully saved. Tracking Code " + data.tracker,
+        //                                 type: "success",
+        //                                 showConfirmButton: true,
+        //                                 showCancelButton: true,
+        //                                 allowOutsideClick: false,
+        //                                 onOpen: function(swal) {
 
-                                            var swalCancel = $(swal).find('.swal2-cancel');
+        //                                     var swalCancel = $(swal).find('.swal2-cancel');
 
-                                            swalCancel.removeClass('swal2-styled')
-                                                        .addClass('btn btn-lg btn-danger')
-                                                        .html('<i class="ti-printer"></i> Print Code');
+        //                                     swalCancel.removeClass('swal2-styled')
+        //                                                 .addClass('btn btn-lg btn-danger')
+        //                                                 .html('<i class="ti-printer"></i> Print Code');
 
-                                            swalCancel.off().click(function(e) {
-                                                window.open(url, "Print Barcode", "width=800,height=600");
-                                            });
-                                      }
-                                });
+        //                                     swalCancel.off().click(function(e) {
+        //                                         window.open(url, "Print Barcode", "width=800,height=600");
+        //                                     });
+        //                               }
+        //                         });
 
-                    } else {
+        //             } else {
 
-                        $('.spinner-border').css('display', 'none');
-                        $('#btnSubmit').attr('disabled', false);
+        //                 $('.spinner-border').css('display', 'none');
+        //                 $('#btnSubmit').attr('disabled', false);
 
-                        Swal.fire({
-                            title: "Error!",
-                            text:  "Data unsuccessfully saved.",
-                            type: "error"
-                        }).then( function() {
-                           // $("#upload-progress .progress-bar").css("width", 0);
-                        });
-                    }
-                },
-                error  : function(xhr, err) {
+        //                 Swal.fire({
+        //                     title: "Error!",
+        //                     text:  "Data unsuccessfully saved.",
+        //                     type: "error"
+        //                 }).then( function() {
+        //                    // $("#upload-progress .progress-bar").css("width", 0);
+        //                 });
+        //             }
+        //         },
+        //         error  : function(xhr, err) {
 
-                    $('.spinner-border').css('display', 'none');
-                    $('#btnSubmit').attr('disabled', false);
+        //             $('.spinner-border').css('display', 'none');
+        //             $('#btnSubmit').attr('disabled', false);
 
-                    Swal.fire({
-                        title: "Error!",
-                        text:  "Could not process data.",
-                        type: "error"
-                    }).then( function() {
-                       $("#upload-progress .progress-bar").css("width", 0);
-                    });
-                }
-            });
+        //             Swal.fire({
+        //                 title: "Error!",
+        //                 text:  "Could not process data.",
+        //                 type: "error"
+        //             }).then( function() {
+        //                $("#upload-progress .progress-bar").css("width", 0);
+        //             });
+        //         }
+        //     });
 
-            return false;
-        });
+        //     return false;
+        // });
     });
 </script>
 <script>
@@ -399,40 +366,46 @@ Edit tracker
         //------------ end auto select document type field ----------------//
 
         //------------ auto select recipients type field ----------------//
-        // var recipientList = {!! $editDoc->trackLogs->first() !!},
-        //     recipientArray = [];
-        // $.each (recipientList['recipients'], function(index, value) {
-        //     recipientArray.push(value.id+','+value.type);
-        // });
+        var dataList = {!! json_encode($dataList) !!},
+            recipientList = {!! $editDoc->trackLogs->first() !!},
+            recipientArray = [];
+            
+        $.each (recipientList['recipients'], function(index, value) {
+            recipientArray.push(value.id+','+value.type);
+        });
+
         $("#recipient").select2({
             width: '100%',
+            data: dataList,
             placeholder: "Select recipients",
             allowClear: true,
-            templateSelection: formatState
+            templateSelection: function (data, container) {
+                // Add custom attributes to the <option> tag for the selected option
+                // $(data.element).attr('data-img', data.img);
+
+                var imgUrl = "{{ asset('/') }}",
+                    $recipient = $(
+                        '<span><img src="' + imgUrl + data.img + '" class="img-circle" width="30" /> ' + data.text + '</span>'
+                    );
+                return $recipient;
+            }
         });
-        // $('#recipient').val(['8,individual']);
-        // $('#recipient').trigger('change');
+        $('#recipient').val(recipientArray);
+        $('#recipient').trigger('change');
+
+        $("#recipient").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+          
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
 
         // var option = new Option(recipientArray);
         // $("#recipient").append(option).trigger('change');
         // console.log(recipientArray);
         //------------ end auto select recipients type field ----------------//
-
-        function formatState (state) {
-            var option = state,
-                img    = $( option.element ).data('img');
-
-            if (!state.id) {
-                return state.text;
-            }
-
-            var imgUrl = "{{ asset('/') }}";
-            var $recipient = $(
-                '<span><img src="' + imgUrl + img + '" class="img-circle" width="30" /> ' + option.text + '</span>'
-            );
-
-            return $recipient;
-        };
 
 
         var requiredCheckboxes = $('.options :checkbox[required]');

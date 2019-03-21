@@ -162,20 +162,19 @@ class DocumentTrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function routingDocuments()
+    public function routeDocuments()
     {
         $documentsCreated    = DocumentTracker::where('user_id', Auth::user()->id)->get();
-        
         $documentsReceived   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
                                                     ->where('action', "Receive")
                                                     ->latest()->get();
-
         $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
                                                     ->where('action', "Forward")
                                                     ->latest()->get();
         $documentsLog = DocumentTrackingLogs::with('documentCode.documentKeywords')->where('user_id', Auth::user()->id)->latest()->get();
+        $dataList    = $this->recipientsList();
 
-        return view('optima.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog'));
+        return view('optima.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog', 'dataList'));
         // return dd($documentsLog);
     }
 
@@ -250,7 +249,7 @@ class DocumentTrackerController extends Controller
 
                 $data = [
                     'result'            => true,
-                    'tracking_id'          => $log->id,
+                    'tracking_id'       => $log->id,
                     'tracking_code'     => $tracker->tracking_code,
                     'subject'           => $tracker->subject,
                     'document_type'     => $tracker->other_document,
@@ -390,8 +389,6 @@ class DocumentTrackerController extends Controller
         {
             return response()->json($data);
         }
-
-        // return response()->json($data);
     }
 
     /**
@@ -401,12 +398,11 @@ class DocumentTrackerController extends Controller
      */
     public function create()
     {
-        $offices  = Office::all();
-        $users    = User::employee()->notSelf()->get();
-        $userSelf = User::employee()->get();
-        $docTypes = DocumentTypes::orderBy('document_name', 'ASC')->get();
-
-        return view('optima.create-documents', compact('docTypes', 'offices', 'users', 'userSelf'));
+        $docTypes    = DocumentTypes::orderBy('document_name', 'ASC')->get();
+        $dataList    = $this->recipientsList();
+        
+        // return response()->json($data);
+        return view('optima.create-documents', compact('docTypes', 'dataList'));
     }
 
     /**
@@ -418,7 +414,6 @@ class DocumentTrackerController extends Controller
     public function store(Request $request)
     {
         $result = false;
-
         // Active User Routing Model
         $userFrom = Auth::user();
 
@@ -464,15 +459,19 @@ class DocumentTrackerController extends Controller
                 $indexes[] = explode(',', $recipient);
             }
             foreach ($indexes as $index) {
+
                 if ( $index[1] == 'group' )
                 {
                     $type = OfficeGroups::where('id', '=', $index[0])->first();
-                    $name = $type->acronym;
+                    $name = $type->group_name . ' ('.$type->acronym.')';
+                    $recipients[] = [ 'id' => $type->id , 'type' => $index[1], 'name' => $name ];
                 } elseif ( $index[1] == 'individual' ) {
                     $type = User::where('id', '=', $index[0])->first();
-                    $name = $type->full_name;
+                    $name = $type->full_name . '('.$type->office->div_acronym.')';
+                    $recipients[] = [ 'id' => $type->id , 'type' => $index[1], 'name' => $name ];
+                } else {
+                    $recipients[] = [ 'id' => '00' , 'type' => 'all', 'name' => 'All employee' ];
                 }
-                $recipients[] = [ 'id' => $type->id , 'type' => $index[1], 'name' => $name ];
             }
             // --------------- END FETCH ALL ACTIVE RECIPIENTS --------- //
 
@@ -550,13 +549,12 @@ class DocumentTrackerController extends Controller
      */
     public function edit($id)
     {
-        $offices  = Office::all();
-        $users    = User::employee()->notSelf()->get();
-        $userSelf = User::employee()->get();
-        $docTypes = DocumentTypes::orderBy('document_name', 'ASC')->get();
-        $editDoc  = DocumentTracker::find($id);
+        $editDoc    = DocumentTracker::find($id);
+        $docTypes   = DocumentTypes::orderBy('document_name', 'ASC')->get();
+        $dataList    = $this->recipientsList();
 
-        return view('optima.edit-document', compact('editDoc', 'docTypes', 'offices', 'users', 'userSelf'));
+        // return view('optima.edit-document', compact('editDoc', 'docTypes', 'offices', 'users', 'userSelf'));
+        return view('optima.edit-document', compact('editDoc', 'docTypes', 'dataList'));
     }
 
     /**
@@ -568,7 +566,60 @@ class DocumentTrackerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $tracker    = DocumentTracker::find($id);
+        $logTracker = $tracker->trackLogs->first();
+        $tracker->subject        = $request->subject;
+        $tracker->doc_type_id    = $request->docType;
+        $tracker->other_document = $request->otherDocument;
+
+        if ( $tracker->save() )
+        {
+            DocumentKeyword::where('document_id', '=', $id)->delete();
+
+            $keywords = explode(',', $request->keywords);
+            foreach ($keywords as $keyword) {
+                $keywordTable = DocumentKeyword::firstOrCreate([ 'document_id' => $tracker->id, 'keywords' => $keyword ]);
+            }
+
+            // --------------- FETCH ALL ACTIVE RECIPIENTS --------- //
+            $id         = $request->recipients;
+            $indexes    = [];
+            $recipients = [];
+            foreach ($id as $recipient) {
+                $indexes[] = explode(',', $recipient);
+            }
+            foreach ($indexes as $index) {
+
+                if ( $index[1] == 'group' )
+                {
+                    $type = OfficeGroups::where('id', '=', $index[0])->first();
+                    $name = $type->group_name . ' ('.$type->acronym.')';
+                    $recipients[] = [ 'id' => $type->id , 'type' => $index[1], 'name' => $name ];
+                } elseif ( $index[1] == 'individual' ) {
+                    $type = User::where('id', '=', $index[0])->first();
+                    $name = $type->full_name . '('.$type->office->div_acronym.')';
+                    $recipients[] = [ 'id' => $type->id , 'type' => $index[1], 'name' => $name ];
+                } else {
+                    $recipients[] = [ 'id' => '00' , 'type' => 'all', 'name' => 'All employee' ];
+                }
+            }
+            // --------------- END FETCH ALL ACTIVE RECIPIENTS --------- //
+
+            // ----------------- CREATE NEW LOG -------------------- //
+            // $log                 = $logTracker;
+            $log                 = DocumentTrackingLogs::find($logTracker->id);
+            $log->forSignature   = $request->has('forSignature') ?: false;
+            $log->forCompliance  = $request->has('forCompliance') ?: false;
+            $log->forInformation = $request->has('forInformation') ?: false;
+            $log->recipients     = $recipients;
+            $log->notes          = $request->note;
+            $log->save();
+            // ----------------- END CREATE NEW LOG --------------- //
+        }
+
+        // return $log;
+        return redirect()->route('optima.my-documents');
     }
 
     /**
@@ -581,11 +632,10 @@ class DocumentTrackerController extends Controller
     {
         $result = false;
         try {
-
             // $log = DocumentTracker::where('tracking_code', '=', $my_document)->delete();
             $log = DocumentTracker::find($id);
-            // $log->forceDelete();
-            $log->delete();
+            $log->forceDelete();
+            // $log->delete();
 
 
             $result = true;
@@ -608,16 +658,33 @@ class DocumentTrackerController extends Controller
         return response()->json($terms);
     }
 
-    public function recipientsList(Request $request)
+    public function recipientsList()
     {   
-        $list      = $request->has('list') ? $request->list : '';
-        $employees = User::employee()->notSelf()->get();
-        $groups    = OfficeGroups::all();
-        $data      = view('list.recipient-list', compact('employees', 'groups', 'list'))->render();
+        $employees   = User::employee()->notSelf()->get();
+        $groups      = OfficeGroups::all();
+        $dataList[]  = [
+                'id'    => '00,all',
+                'text'  => 'All employees',
+                'img'   => 'img/blank.png',
+            ];
 
-        if ( $request->ajax() )
-        {
-            return response()->json(['options' => $data]);
-        } 
+        foreach ($employees as $recipient) {
+            $dataList[] = [
+                'id'    => $recipient->id .',individual',
+                'text'  => $recipient->full_name . ' ('.$recipient->office->div_acronym.')',
+                'img'   => $recipient->user_image,
+            ];
+        }
+
+        foreach ($groups as $recipient) {
+            $dataList[] = [
+                'id'    => $recipient->id .',group',
+                'text'  => $recipient->group_name . ' ('.$recipient->acronym.')',
+                'img'   => 'img/blank.png',
+            ];
+        }
+
+
+        return $dataList;
     }
 }

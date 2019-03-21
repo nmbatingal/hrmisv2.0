@@ -22,11 +22,11 @@
                 <tr>
                     <td>{{ $log->userEmployee->fullName }}</td>
                     <td>{{ $log->action }}</td>
-                    <td>
+                    <td >
                         @if ( $log->action == "Forward" )
                             @if ( !is_null( $log->recipients ) )
                                 @foreach( $log->recipients as $recipient)
-                                    {{ $recipient['name'] }},&nbsp;
+                                    <li>{{ $recipient['name'] }}<br>
                                 @endforeach
                             @else
                                 All

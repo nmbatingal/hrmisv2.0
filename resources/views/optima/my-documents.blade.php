@@ -6,6 +6,23 @@ My Documents
 
 @section('styles')
 <link href="{{ asset('assets/node_modules/datatables/media/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+<style type="text/css">
+    .btnOptionHover {
+        opacity: 0.0;
+    }
+
+    .show-code:hover + .btnOptionHover, .btnOptionHover:hover {
+        opacity: 1.0;
+    }
+
+    .btnOptionHover:hover > .btn {
+        opacity: 0.1;
+    }
+
+    .btnOptionHover:hover > .btn:hover {
+        opacity: 1.0;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -99,6 +116,8 @@ My Documents
                             <i class="icon-settings"></i>
                         </button>
                         <div class="dropdown-menu">
+                            <a id="drpdown-table-refresh" class="dropdown-item" href="javascript:void(0)">Refresh Table</a>
+                            <div class="dropdown-divider"></div>
                             <a id="drpdown-export-log" class="dropdown-item" href="javascript:void(0)">Export Log</a>
                         </div>
                     </div>  
@@ -127,14 +146,22 @@ My Documents
             <div class="card-body p-t-0">
                 <div class="table-responsive">
                     <table id="tableMyDocuments" class="table table-hover table-bordered table-striped">
+                        <colgroup>
+                            <col width="">
+                            <col width="15%">
+                            <col width="25%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="30%">
+                        </colgroup>
                         <thead>
+                            <tr>
                                 <th></th>
                                 <th>Tracking Code</th>
                                 <th>Subject</th>
                                 <th>Document type</th>
                                 <th>Status</th>
                                 <th>Note</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-sm">
@@ -142,9 +169,16 @@ My Documents
                                 <tr id="row-{{$document->id}}">
                                     <td class="text-right"></td>
                                     <td class="text-center">
-                                        <h4>
+                                        <h4 class="m-b-0 show-code">
                                             <a id="{{ $document->tracking_code }}" href="javascript:void(0)" class="show-code">{{ $document->tracking_code }}</a>
                                         </h4>
+                                        <div class="btnOptionHover p-t-20">
+                                            <a href="{{ route('optima.my-documents.edit',$document->id) }}" class="btn btn-sm btn-info btnOption" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-note"></i></a>
+                                            @if ( $document->trackLogs[0]['user_id'] == auth()->user()->id )
+                                                <a href="" class="btn btn-sm btn-danger btnOption" data-toggle="tooltip" data-placement="top" title="Cancel Routing"><i class="icon-close"></i></a>
+                                                <a href="" class="btn btn-sm btn-success btnOption" data-toggle="tooltip" data-placement="top" title="Routing Complete"><i class="icon-check"></i></a>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td>
                                         <h5 class="font-weight-bold">
@@ -187,12 +221,6 @@ My Documents
                                             @break;
                                         @endforeach
                                     </td>
-                                    <td class="text-center" width="7%" style="vertical-align: middle;">
-                                        <a href="{{ route('optima.my-documents.edit',$document->id) }}" class="btn btn-md btn-outline-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-note"></i></a>
-                                        <a href="" class="btn btn-md btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="icon-trash"></i></a>
-                                        <a href="" class="btn btn-md btn-outline-success" data-toggle="tooltip" data-placement="top" title="Routing Complete"><i class="icon-check"></i></a>
-                                        <a href="" class="btn btn-md btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Cancel Routing"><i class="icon-close"></i></a>
-                                    </td>
                                     <!-- <td>
                                         <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $document->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td> -->
@@ -224,7 +252,7 @@ My Documents
             columnDefs: [ {
                 searchable: false,
                 orderable: false,
-                targets: [0,6]
+                targets: 0
             } ],
             order: [
                 [1, 'desc']
@@ -237,6 +265,10 @@ My Documents
                 cell.innerHTML = i+1;
             } );
         } ).draw();
+
+        $('#drpdown-table-refresh').on('click', function () {
+            trackerTable.draw();
+        });
 
         // Custom Input Search for Table
         $('#searchTracker').keyup(function(){

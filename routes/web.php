@@ -88,7 +88,7 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
     Route::get('about', 'DocumentTracker\DocumentTrackerController@about')->name('about');
 
 	// DOCUMENT ROUTING MODULE
-	Route::get('route-documents', 'DocumentTracker\DocumentTrackerController@routingDocuments')->name('route-documents');
+	Route::get('route-documents', 'DocumentTracker\DocumentTrackerController@routeDocuments')->name('route-documents');
 	Route::get('route-documents/search', 'DocumentTracker\DocumentTrackerController@searchJS')->name('route-documents.search');
 	Route::get('route-documents/export', 'DocumentTracker\DocumentTrackerController@exportRoutedDocuments')->name('route-documents.export');
 	Route::get('route-documents/export/{code}', 'DocumentTracker\DocumentTrackerController@exportRoutedCodeDocuments')->name('route-documents.export.code');
@@ -112,7 +112,7 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
 
     // DOCTRACKER RECIPIENT LIST
     Route::get('keywords', 'DocumentTracker\DocumentTrackerController@searchKeywords')->name('keywords');
-    Route::post('recipients', 'DocumentTracker\DocumentTrackerController@recipientsList')->name('recipients');
+    Route::get('recipients', 'DocumentTracker\DocumentTrackerController@recipientsList')->name('recipients');
 
 	// OPTIMA DOCTRACKER RESOURCES
 	Route::resource('/my-documents', 'DocumentTracker\DocumentTrackerController', [
