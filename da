@@ -1,0 +1,1093 @@
+[33mcommit 9dd0d36e577e2432b80cc2af0f5d69fe382ab974[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 28d00ab cb180fe
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Mar 11 09:35:23 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit cb180fe621ed9f61a423abb15933a8535e429f54[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Mar 11 17:34:29 2019 +0800
+
+    update
+
+[33mcommit 67fa03a9fe47f24526084f9a362e093e769038f8[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Mar 11 17:20:39 2019 +0800
+
+    updated composer files
+
+[33mcommit 80de0395fc85c7ec30c14025dcf4051bd0ead06b[m[33m ([m[1;31morigin/update5.7[m[33m, [m[1;32mupdate5.7[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Mar 11 17:07:34 2019 +0800
+
+    updated my documents with furnished forms and design
+
+[33mcommit e31b10df0a287d0527d842e5600971653e844db8[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Mar 10 22:44:28 2019 +0800
+
+    updated form routes and create barcodes
+
+[33mcommit 65252a5dfe114956c6b26814f56cd839ada8697e[m[33m ([m[1;31morigin/nars[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Mar 1 17:04:47 2019 +0800
+
+    update before upgrading
+
+[33mcommit d7cfe8d2eb560b5d1974e1dc87e2aacab5730b7e[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Feb 28 12:22:02 2019 +0800
+
+    ok
+
+[33mcommit c7abf425d650b37ae334aa2237108be4412460e1[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Feb 28 12:20:27 2019 +0800
+
+    update
+
+[33mcommit 6ab48d5c4e22924a92b4ebfa82cf78fed17ddaca[m[33m ([m[1;31morigin/optima[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Feb 17 13:30:04 2019 +0800
+
+    updated optima modules
+
+[33mcommit bbb8fe68ea8629b4c2c416198e1cb21dadf8f5ab[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Feb 12 18:40:30 2019 +0800
+
+    updated routing documents--mydocuments--createdocuments
+
+[33mcommit 28d00ab9ba840c36d47a11e055683635c3092020[m
+Merge: b8461c4 b6e4b39
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 31 06:53:20 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit b6e4b39f93a4d5e84bc56be50111b15c93eedfc1[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 31 14:53:05 2019 +0800
+
+    update
+
+[33mcommit 545eb24a9ce1ee664199a9a0d930d64fc7299f5b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 31 14:49:25 2019 +0800
+
+    update
+
+[33mcommit b8461c474f07827ebd247759ca607f6baea34268[m
+Merge: c41a17d fa50f34
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 31 06:43:21 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit fa50f340d21554f0fa96aae7ea1523cb3a63bd5b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 31 14:43:07 2019 +0800
+
+    updated
+
+[33mcommit c41a17d9a8d6e2d822071727ab886468a80ea66e[m
+Merge: 193b448 d2d7468
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 31 06:42:29 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit d2d746845b9f323f52214ecfc81158a964f2df2e[m[33m ([m[1;31morigin/routingRemarks[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 31 14:40:32 2019 +0800
+
+    update
+
+[33mcommit acb26c714b43a2b2e7873ece890a7279cbff7c8e[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 30 17:34:05 2019 +0800
+
+    update
+
+[33mcommit c525dee174e8e8c765af977a80260d7771669a0b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 30 12:48:47 2019 +0800
+
+    tracked files
+
+[33mcommit b68ad1b5b275940134645c51aa8bd01760c3d10e[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 19:52:28 2019 +0800
+
+    update
+
+[33mcommit e4f1fcae67918044d595b8a697e45e048f395c5f[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 19:46:14 2019 +0800
+
+    update
+
+[33mcommit 193b4483bc9d55424d145c6dd3eb6f0730ef48ca[m
+Merge: a9f78c3 f4eb31e
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 10:56:52 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit f4eb31ee5429d14c8ef9d79a2286ab8d25a7822d[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 18:56:19 2019 +0800
+
+    update
+
+[33mcommit 079ea703ac3aef9c3c90ba6ad61a0437bc034543[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 18:55:47 2019 +0800
+
+    update
+
+[33mcommit 0921d34ca82f157973bea9cc2ab6ef338141efef[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 14:29:52 2019 +0800
+
+    update keywords
+
+[33mcommit a9f78c30b86e1cf6b14ecd5765ad342c39daacb8[m
+Merge: 73215d2 9a9f1b2
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 02:29:44 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 9a9f1b2b4446bd6badbec3a571bcca3d25826679[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 29 10:29:12 2019 +0800
+
+    update
+
+[33mcommit 73215d271c6830db901f5c7f3807ef6c604642a9[m
+Merge: d42d9de 41be1a3
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 09:40:39 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 41be1a3981ecb6b38fc02f8ce5ef0690cb02c3ab[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 17:40:20 2019 +0800
+
+    update
+
+[33mcommit d42d9deec37899d69ebb858f3e3c203977b2aad6[m
+Merge: b85ddc7 4e0b661
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 06:32:36 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 4e0b6616045f80aa7b0184fb884e27b2b2e54756[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 14:32:21 2019 +0800
+
+    update
+
+[33mcommit b85ddc763105011b3c6dda7cca0f4341ddb6d8bc[m
+Merge: 857b1a1 fc54391
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 06:30:30 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit fc543917300ac188d7eed73336c5bad193e79ba7[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 14:30:11 2019 +0800
+
+    update
+
+[33mcommit 857b1a13fc95883c734c015a2bb4f2a8587c0981[m
+Merge: d0a7b14 70d5049
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 06:28:05 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 70d5049714213abcc9de30e186c9935e176df4b9[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 14:27:41 2019 +0800
+
+    update
+
+[33mcommit d0a7b14546c053ac38b93d6269f3b4e5c885b90e[m
+Merge: be3eccf 45a6883
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 05:52:50 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 45a688384420a32bf29cb279e2a6d6eb0f254e05[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 13:52:35 2019 +0800
+
+    update
+
+[33mcommit be3eccfc45206359b7dbe75c6a2a4b17c9aed56a[m
+Merge: 2741318 27220ef
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 05:42:51 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 27220ef2d93c9d2ff21c235e822bba75304d996f[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 13:41:12 2019 +0800
+
+    updated logs with export
+
+[33mcommit f8c52bad42cd8a984770989dd2a4dc21b134d7d7[m
+Merge: 2e51a71 cd0da23
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 13:33:39 2019 +0800
+
+    update
+
+[33mcommit 2e51a71189898edb3876275c8bcc46b7f4f49c8b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 13:31:39 2019 +0800
+
+    merge
+
+[33mcommit cd0da23ebffef1c261fbdb67a40ee2eb332db71b[m[33m ([m[1;31morigin/excel[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 13:28:24 2019 +0800
+
+    update
+
+[33mcommit 588b0494d624ee6bcbe528a3f1d0c21caea8e2ad[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 11:07:26 2019 +0800
+
+    update
+
+[33mcommit aee61fc0f5ec92da30f9b548353093125482a16f[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 10:13:50 2019 +0800
+
+    pull
+
+[33mcommit 274131817544fbde533cea5123821423e13c4ba8[m
+Merge: 2053a25 96e4f4e
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 01:03:05 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 96e4f4ea3ed91ea155bde9a3c7eb50770da1d3bb[m[33m ([m[1;31morigin/dev2[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 25 09:02:33 2019 +0800
+
+    update
+
+[33mcommit 2053a25957c990e0ad9cec409f0536b900c987a3[m
+Merge: 13448be f09453a
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 05:14:15 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit f09453a65104ae8268e4e8938f3f0d01590a1573[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 13:14:00 2019 +0800
+
+    update
+
+[33mcommit 13448be3a9e3e3465681db6c751c421d936399a0[m
+Merge: 6f5f9de e34674d
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 04:08:14 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit e34674d22984579127c496feb60ae362de1d7825[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 12:07:56 2019 +0800
+
+    update
+
+[33mcommit 6f5f9dec407770897935a6f8ef49365e6823dbee[m
+Merge: 7fb6886 a69bf5c
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 04:06:49 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit a69bf5cb9ef9345fb2230d5e88d7347994fb8cb2[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 12:06:35 2019 +0800
+
+    update
+
+[33mcommit 7fb688600d14c45d9ec95854e1312727213f664f[m
+Merge: 5e6ba20 fcf0e75
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 03:57:04 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit fcf0e757e49e5f1fbb4a8bf5a6f04542ce80c3dd[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 23 11:56:34 2019 +0800
+
+    updated
+
+[33mcommit 5e6ba2063a2532b28e00e27be5078b02911a9784[m
+Merge: 268b148 917a41f
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 10:26:11 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 917a41fa4fe0daa65a2b7089e375db7eb1b5819f[m[33m ([m[1;31morigin/modifylogs[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 18:24:37 2019 +0800
+
+    update
+
+[33mcommit 2c03c6c46d0fd52e6b53568ee43e6b7947c211c2[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 18:15:06 2019 +0800
+
+    update
+
+[33mcommit 4ec8102f2baf43308d59552d0add1fc806d78dcc[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 17:45:52 2019 +0800
+
+    update
+
+[33mcommit 268b1485e6da0e7adc50f3e29695d869f6e9053c[m
+Merge: 0c56214 232c2c1
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 08:59:25 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 232c2c14a8810379c78dd59e416b1e30c0733540[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 16:59:11 2019 +0800
+
+    update
+
+[33mcommit 0c56214d6ff680ccc54550d6c3fc2a316403f726[m
+Merge: 83490bd cf55dac
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 08:57:50 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit cf55dac81b8eb41c5b0fb64f589575a7c00661d7[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 16:57:32 2019 +0800
+
+    update
+
+[33mcommit 60af7a66e5b8c229f1d06163aea461f19209403c[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 15:53:28 2019 +0800
+
+    update
+
+[33mcommit 83490bdd56ecd62a2fc5a5d4165cc33bebbe3976[m
+Merge: 178841a 356aac7
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 07:36:11 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 356aac71b9c1f34a6b9a594a6d6d7a73da1f9b1d[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 15:35:54 2019 +0800
+
+    update
+
+[33mcommit 178841a58bb59c330773d903cc6b70b1dab9ad41[m
+Merge: 7cbfd73 90e1014
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 01:43:35 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 90e101446aaa9eb3906839b92e5ebcfd9b9bdd71[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 14 09:42:57 2019 +0800
+
+    update
+
+[33mcommit 7cbfd7398c99c09ec41e7fc9713d7bd61c6b8524[m
+Merge: e4b7918 724e239
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 11 07:04:05 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 724e23998a9f830dbe9bcfe5e355d1a4a02d5f17[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 11 15:03:07 2019 +0800
+
+    Update
+
+[33mcommit e4b7918dd7eda04bd933cd423361d556107ced9a[m
+Merge: ae163f4 807f644
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 09:18:24 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 807f6442bd16af562da3420c685eda4b83876a20[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 17:13:32 2019 +0800
+
+    update
+
+[33mcommit ae163f4112550fac78d3b06e27d1abeb85c4966d[m
+Merge: 12a53a0 5fe73ab
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 08:28:06 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 5fe73ab37a3348b3ff1cd2a937a05506526462f5[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 16:27:50 2019 +0800
+
+    update form route document
+
+[33mcommit 12a53a0e828a7c8e49c855c8d9d0f72772265f09[m
+Merge: 80559ff 1f7942e
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 03:42:53 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 1f7942e910c09ae51af861103093d327b1d9fa28[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 11:42:29 2019 +0800
+
+    updated logger on documenttrackercontroller
+
+[33mcommit 80559ff7d681e5daf0a928b9d6c24a51af688bbb[m
+Merge: 1dd0e97 14fc158
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 00:13:38 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 14fc158f07a32583de6cabd11c1f25ad9b5f838e[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 10 08:13:10 2019 +0800
+
+    update
+
+[33mcommit 1dd0e974bbc937127baf9514207b8a6f57674755[m
+Merge: 05837a2 3203124
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 10:18:27 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 320312480fedf62ee4a1992ebc7cc2570c644093[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 18:18:10 2019 +0800
+
+    update
+
+[33mcommit 05837a2d6505c5a67d1b195e50a7e2c0d98ce4aa[m
+Merge: 876b5ae d2e276a
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 10:15:43 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit d2e276a1d54221e45ec766b91b2845d11b4cdb41[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 18:15:20 2019 +0800
+
+    updated
+
+[33mcommit 876b5aed97545b402673be2676027154f00ce504[m
+Merge: a38d557 1e01362
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 10:14:11 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 1e013622d5730d275acc144b0725601b80892f8c[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 18:13:48 2019 +0800
+
+    updated
+
+[33mcommit 106d0871d85e5e7dc310fdf3799bc39b8f92185a[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 18:04:45 2019 +0800
+
+    added Route Documents page
+
+[33mcommit 79f75038c1e8219364da329702f7a1b26084cf44[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Jan 9 16:47:32 2019 +0800
+
+    updated
+
+[33mcommit a38d5579617c744a1e9a576ba7aa95b15171f6b3[m
+Merge: 168c7bd 09cc104
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 8 08:45:11 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 09cc104dd8f257cd27cf976ad0a4d3f12969a360[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 8 16:44:38 2019 +0800
+
+    update
+
+[33mcommit 168c7bd35ba7ea417ceb9d9f7f30356080b3bc5f[m
+Merge: cfea207 34a0039
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 8 07:43:07 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 34a0039a27ef04298dec49b70bb2fd0a537811b9[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Jan 8 15:42:11 2019 +0800
+
+    updated incoming modal
+
+[33mcommit cfea207d20592672e0466d19f909d97a41a4a99c[m
+Merge: fc35a68 ec75281
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 7 09:13:15 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit ec75281a901f76fe094c3d4569b37a61fcacce41[m
+Merge: 80ffbb5 d2a54c1
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 7 17:12:39 2019 +0800
+
+    update
+
+[33mcommit 80ffbb52c3b9e9dab81b7b903573fcb55d7f9c56[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 7 17:11:35 2019 +0800
+
+    merge with userlog
+
+[33mcommit d2a54c1d5330853a73c35de3b8f051233999d1ad[m[33m ([m[1;31morigin/userlog[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 7 17:09:51 2019 +0800
+
+    updated
+
+[33mcommit fc35a6876af5e572f852d09870ee740593400bc0[m
+Merge: eeef140 6090465
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 7 07:11:30 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 609046547a8d93f4314d12c5bce9d65b94532e7a[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Jan 7 15:10:46 2019 +0800
+
+    updated
+
+[33mcommit eeef140bc6383748b017f975750e74600f1594aa[m
+Merge: 29fb45c 88ee6ee
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Sun Jan 6 09:10:53 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 88ee6eeda6791f6345118723686afae3761a37a2[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Jan 6 17:10:26 2019 +0800
+
+    updated
+
+[33mcommit 29fb45cd9e3f99daf97d99bea8b18b38af2fa2fe[m
+Merge: d4160a9 db4a8d2
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 4 11:09:30 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit db4a8d2b364d92bb355b8c2f88a756f0ec0f7372[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 4 19:09:06 2019 +0800
+
+    updated document tracker forms with sweetalert2 notifs
+
+[33mcommit d4160a93e2411d74c0cd013dc88a9b894cc237f8[m
+Merge: 7ddedbc 12ef272
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 4 02:54:14 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 12ef272ca3dba4624a293f469181c3e79ca6d032[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 4 10:53:53 2019 +0800
+
+    updated
+
+[33mcommit 3ef567c8b37612df605a32012311e004dec94fae[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Jan 4 09:42:07 2019 +0800
+
+    updated with progress bar
+
+[33mcommit 7ddedbc1190c741beeca3c82b5d9e52b244294ed[m
+Merge: 54d6810 d443d02
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 08:54:50 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit d443d0223424850455c8c42ccaf464149ac1a4bf[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 16:54:21 2019 +0800
+
+    updated doctracker-optima
+
+[33mcommit 54d6810af1e847c1ce5259481839f88997090c80[m
+Merge: 16f364c 1ce6be3
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 06:17:35 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 1ce6be37069fe4cd9a80e1c8faa9b24eade1b9f6[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 14:16:56 2019 +0800
+
+    updated forgot password function
+
+[33mcommit 16f364cd317bd2008d66b870ab206dcecf0b90fe[m
+Merge: b4f6641 0568100
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 03:11:17 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 056810008b313d90a051997a537c27f788f9142b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 11:11:02 2019 +0800
+
+    updated
+
+[33mcommit b4f66411e24a5346fdc9bf2f93babfe3dc644a3e[m
+Merge: 0a9a158 44bdb90
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 02:01:42 2019 +0000
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 44bdb9085ebe2affa1a98495153a28f915f7a86b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 10:01:26 2019 +0800
+
+    updated
+
+[33mcommit 0a9a158a20e7abfdb1f94e9ffa59f130ebb0a553[m
+Merge: 6ad4988 0126312
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 01:34:08 2019 +0000
+
+    update for merge
+
+[33mcommit 01263126deaad3c185480c6d1d4637778b6df750[m
+Merge: f9d880e 74d1764
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 09:32:42 2019 +0800
+
+    Merge branch 'settings'
+
+[33mcommit 74d17645241430545b1e542479945e8f89c1fcc7[m[33m ([m[1;31morigin/settings[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 09:32:12 2019 +0800
+
+    update
+
+[33mcommit f9d880e94fa6ef1fecd0fb042239ad4d0ce54131[m
+Merge: 28bf4cb 4b692bc
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 09:06:13 2019 +0800
+
+    Merge branch 'master' of https://github.com/nmbatingal/hrmisv2.0
+
+[33mcommit 28bf4cbac513c4ef730dfd68ffc30ca2c7bc8806[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Jan 3 09:05:01 2019 +0800
+
+    updated settings
+
+[33mcommit 6ad4988d28a75dc031081f375ccca107c59d2504[m
+Merge: 4b692bc b65d5fb
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 28 09:19:18 2018 +0000
+
+    Merge remote-tracking branch 'origin/settings'
+
+[33mcommit b65d5fb7fb2414b74c3a1d991b44b901c8d94070[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 28 17:18:25 2018 +0800
+
+    update
+
+[33mcommit 4b692bce2b34e6acaeecb54cee7a3887c3acbdc3[m
+Merge: def14cf 9855982
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 28 06:41:44 2018 +0000
+
+    merge master
+
+[33mcommit 98559826c0ffcfb1824e024b6806247ccfe405ab[m[33m ([m[1;31morigin/morss[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 28 14:33:56 2018 +0800
+
+    update
+
+[33mcommit def14cfe9b5f4314a66ea02cab0be5b6054f0c1e[m[33m ([m[1;31morigin/production[m[33m, [m[1;32mproduction[m[33m)[m
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 28 02:47:40 2018 +0000
+
+    production mode
+
+[33mcommit 367f70fe2722ec36eee49e416185fd05f5bd4eb7[m
+Author: Narciso Batingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 28 01:45:55 2018 +0000
+
+    update
+
+[33mcommit b71e6371654f70556055b3189ec91b59340fa210[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 28 09:41:58 2018 +0800
+
+    update master
+
+[33mcommit bfb5b04c4ecab9c21c3f601378a6d976d0d29222[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Dec 27 12:01:43 2018 +0800
+
+    added mysql command for creating db
+
+[33mcommit 2734328ded5a6126c2ea146004033900cf306da2[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Dec 27 10:14:26 2018 +0800
+
+    updated
+
+[33mcommit 5c62a6dc27d8b136d48f6d295ae4cedeab1ea23f[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Dec 14 17:59:11 2018 +0800
+
+    update
+
+[33mcommit 117d2aa3ee0e766797c3a23b3ff7a3e10be3cfdb[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Dec 13 17:27:55 2018 +0800
+
+    update
+
+[33mcommit e5a1cd4934b7c3bcd7d05eb67c4f2ade13cc895e[m[33m ([m[1;31morigin/sass[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Dec 12 17:16:30 2018 +0800
+
+    updated
+
+[33mcommit 6e00e3df7c399f66b1bb823d2bd2611974c9f92b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Dec 10 12:59:13 2018 +0800
+
+    update
+
+[33mcommit 0253f70f41398f1e9daa6888fdb43b0ae442948b[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 9 16:23:36 2018 +0800
+
+    update
+
+[33mcommit d719c29993469acd11c92aecc5e94627509fbeac[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Dec 4 17:19:52 2018 +0800
+
+    updated
+
+[33mcommit 27784f45939ae4ba4189771641b800ff1cc172c6[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Dec 4 17:09:36 2018 +0800
+
+    updated
+
+[33mcommit 6d4f01ddae486079ff8e4b755758b9bf5182d79c[m[33m ([m[1;31morigin/barcode2[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Dec 3 09:10:46 2018 +0800
+
+    updated
+
+[33mcommit 4a27ee0388483a9be67341f5b4a607cc553020a3[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 2 18:29:21 2018 +0800
+
+    updated forms
+
+[33mcommit 1bc28c822f43fc0027b998ee7347751aaabaf45c[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 2 17:01:00 2018 +0800
+
+    update
+
+[33mcommit d98a4db57cac0e730fee8a3fb97f26359cbcebf6[m
+Merge: 8137c53 77b0f81
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 2 17:00:02 2018 +0800
+
+    update
+
+[33mcommit 8137c53166dfa44ea635cde26c00519d9f44473c[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 2 16:58:53 2018 +0800
+
+    updated
+
+[33mcommit e1e8cdc17d63f91f87b92cf8152d13ebcd8abdb0[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 2 16:30:16 2018 +0800
+
+    update
+
+[33mcommit b988b20ac2e04885ce37ca1457424cddab0323b6[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 2 15:53:31 2018 +0800
+
+    update
+
+[33mcommit 9711dfa4c5e5104d029d97a3173987969f4cabd9[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Sun Dec 2 15:50:23 2018 +0800
+
+    update
+
+[33mcommit 397b3ea8c44a91ca2375e5bcfa14e96b8f613941[m
+Merge: f84913f fc9e237
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Nov 29 18:25:25 2018 +0800
+
+    update
+
+[33mcommit 77b0f8177e0a33a8552695e893b8ebbded040071[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Nov 29 18:20:18 2018 +0800
+
+    updated incoming and logs link
+
+[33mcommit 5bd1144897ab4c73f0655056891ac3db06ed58b1[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Nov 28 19:25:15 2018 +0800
+
+    updated
+
+[33mcommit e55e3145cc6da86c256efa23634466c09c1a1b3f[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Nov 27 18:16:53 2018 +0800
+
+    updated with new database tables
+
+[33mcommit 4e73d0e8e21e67c167f8f50e50bffd587b3a8ca9[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Nov 16 17:41:15 2018 +0800
+
+    update
+
+[33mcommit fc9e2378c38cd4f52a8592571d1856c5154b8193[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Nov 15 18:43:27 2018 +0800
+
+    update
+
+[33mcommit 633805af1dcf42ebe21d1ed042f2ae3efc97a8de[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Nov 15 14:23:51 2018 +0800
+
+    update
+
+[33mcommit 91dc499e43893986c1d9ffcf52cae3f2c9763839[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Nov 15 10:23:39 2018 +0800
+
+    updated for beta test
+
+[33mcommit d6acfa77f70a28885440d708250b8b29cbaeb41d[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Nov 14 17:33:43 2018 +0800
+
+    update
+
+[33mcommit 007bbd5812d7684b78f75d8f58aa1d9f200778fb[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Nov 13 19:08:33 2018 +0800
+
+    updated with mydocuments joined tables
+
+[33mcommit 8086a9d47c290be7efeacc8907b8d948975fc0de[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Nov 12 17:15:49 2018 +0800
+
+    updated
+
+[33mcommit 5ab60435d2ac817eae9455a76f1ba9875f59875c[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Nov 9 18:52:52 2018 +0800
+
+    updated
+
+[33mcommit 8ae850701b5ba462c3efc73e5462fd9def22ab45[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Nov 8 17:49:03 2018 +0800
+
+    updated documents trackers and received
+
+[33mcommit e4fea98e9ac3f4464ef586d5d613803125d756d4[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Nov 8 11:27:14 2018 +0800
+
+    updated
+
+[33mcommit e50a86174848a8893b8e292ed13f25fcb7f894c5[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Nov 7 18:27:35 2018 +0800
+
+    update
+
+[33mcommit 36d93280ab165d161a1db475035de57eb62815dd[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Nov 7 18:25:03 2018 +0800
+
+    update
+
+[33mcommit 5a4e5fc2c13def29b8aa303722dc205c8fbac6e9[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Nov 7 18:08:05 2018 +0800
+
+    updated doctracker CR functions
+
+[33mcommit c1945d8b1406d0acae5851f69fa6ec1b7bc8854c[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Tue Nov 6 20:02:43 2018 +0800
+
+    updated form
+
+[33mcommit 3c5602aa84806c7069aec6027806d2d60aa26aad[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Nov 5 17:59:57 2018 +0800
+
+    update
+
+[33mcommit d213815231375dd85706d91b5d4f0485e035f0a0[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Nov 5 17:39:01 2018 +0800
+
+    updated form
+
+[33mcommit 38f0126a3318e6122e337818f62d418a916b11a2[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Nov 5 13:50:23 2018 +0800
+
+    configuration on login with multiple database --unworking
+
+[33mcommit 86a9ca40d573aa6b2e2b63dd04e2f0e155bcf0f0[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Oct 31 15:29:16 2018 +0800
+
+    updated
+
+[33mcommit 6c90078a03f66a7e6ea73088ecdc50f4ca19ec79[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Oct 31 15:28:08 2018 +0800
+
+    added document tracker
+
+[33mcommit c951311eebd80183c443382fd9f4aa69766ac23e[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Oct 29 17:18:19 2018 +0800
+
+    updated
+
+[33mcommit 88335d3d88a87e8f81381b31dafc9ca8bab43ac7[m[33m ([m[1;31morigin/qrCode[m[33m)[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Oct 29 16:45:36 2018 +0800
+
+    updated
+
+[33mcommit 353a83fa6dc99f3a7c940b70dc82dab8739de321[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Oct 26 17:14:56 2018 +0800
+
+    update
+
+[33mcommit 6b569689864bc45b5c3fed93232ceaeb91c638e1[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Oct 26 16:46:39 2018 +0800
+
+    update
+
+[33mcommit d2dc70acc4c52ef4838d8632e60e9b1bcd668592[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Oct 26 16:13:02 2018 +0800
+
+    updated composer
+
+[33mcommit f84913f37676152a1c22778e6ed2e06dc23dacf6[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Oct 26 16:07:39 2018 +0800
+
+    updated home dashboard
+
+[33mcommit 5eb541a01e001f47b70356495d10b8cd65087c88[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Fri Oct 26 15:50:18 2018 +0800
+
+    updated with applicants list
+
+[33mcommit 8c4019d10ac8d809538f490eadbdb3a815d599c5[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Thu Oct 25 17:26:56 2018 +0800
+
+    updated applicants create form
+
+[33mcommit e4f279ced5d22b64e55cecb8e609491ac043bc91[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Oct 24 18:16:47 2018 +0800
+
+    update
+
+[33mcommit d8f4485edc4f9d50c20d60cb06feedc7dcab4622[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Wed Oct 24 18:02:43 2018 +0800
+
+    updated create form for applicants
+
+[33mcommit 5fca2fdbdf9065d6371ff4b81619267be7878df0[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Oct 22 17:09:01 2018 +0800
+
+    updated
+
+[33mcommit 65aa91798aed47254823bb010e488cb4bda64bd2[m
+Author: nmbatingal <batingalnarz11@gmail.com>
+Date:   Mon Oct 15 17:35:03 2018 +0800
+
+    added
