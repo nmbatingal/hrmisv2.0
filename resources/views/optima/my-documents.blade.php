@@ -174,10 +174,13 @@ My Documents
                                         </h4>
                                         <div class="btnOptionHover p-t-20">
                                             <a href="{{ route('optima.my-documents.edit',$document->id) }}" class="btn btn-sm btn-info btnOption" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-note"></i></a>
-                                            @if ( $document->trackLogs[0]['user_id'] == auth()->user()->id )
-                                                <a href="" class="btn btn-sm btn-danger btnOption" data-toggle="tooltip" data-placement="top" title="Cancel Routing"><i class="icon-close"></i></a>
-                                                <a href="" class="btn btn-sm btn-success btnOption" data-toggle="tooltip" data-placement="top" title="Routing Complete"><i class="icon-check"></i></a>
-                                            @endif
+                                            @foreach ( $document->trackLogs as $log )
+                                                @if ( $log->user_id == auth()->user()->id )
+                                                    <a href="" class="btn btn-sm btn-danger btnOption" data-toggle="tooltip" data-placement="top" title="Cancel Routing"><i class="icon-close"></i></a>
+                                                    <a href="" class="btn btn-sm btn-success btnOption" data-toggle="tooltip" data-placement="top" title="Routing Complete"><i class="icon-check"></i></a>
+                                                @endif
+                                                @break
+                                            @endforeach
                                         </div>
                                     </td>
                                     <td>
@@ -185,6 +188,10 @@ My Documents
                                             {{ $document->subject }}
                                             <br><small>{{ $document->tracking_date }}</small>
                                         </h5>
+                                        @foreach ( explode(',', $document->keywords) as $keyword ) 
+                                            <span class="badge badge-info">{{ $keyword }}</span>&nbsp;
+                                        @endforeach
+
                                         @foreach ( $document->documentKeywords as $keyword )
                                             <span class="badge badge-info">{{ $keyword->keywords }}</span>&nbsp;
                                         @endforeach
