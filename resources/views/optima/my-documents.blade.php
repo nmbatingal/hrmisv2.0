@@ -29,17 +29,26 @@ My Documents
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
-<div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">My Documents</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
+<div class="row page-titles p-b-0 p-t-10">
+    <div class="col-md-7 align-self-center">
+        <div class="d-flex align-items-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
-                <li class="breadcrumb-item active">My Documents</li>
+                <li class="breadcrumb-item"><h5 class="btn waves-effect waves-light btn-light"><a href="{{ route('optima.index') }}">Home</a></h5></li>
+                <li class="breadcrumb-item active">
+                    <div class="btn-group">
+                        <h5 class="btn waves-effect waves-light btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="0,10">
+                            <a href="#">My Documents &nbsp;&nbsp;</a></h5>
+                        <div class="dropdown-menu" x-placement="bottom-start">
+                          <a class="dropdown-item" href="{{ route('optima.my-documents.create') }}">Create new tracker</a>
+                        </div>
+                    </div>
+                </li>
             </ol>
-            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
+        </div>
+    </div>
+    <div class="col-md-5 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
         </div>
     </div>
 </div>
@@ -108,20 +117,22 @@ My Documents
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="m-b-0 text-white">
-                    My Documents
-                    <div class="btn-group float-right">
-                        <button type="button" class="btn waves-effect waves-light btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="icon-settings"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a id="drpdown-table-refresh" class="dropdown-item" href="javascript:void(0)">Refresh Table</a>
-                            <div class="dropdown-divider"></div>
-                            <a id="drpdown-export-log" class="dropdown-item" href="javascript:void(0)">Export Log</a>
-                        </div>
-                    </div>  
-                </h4>
+            <div class="card-header bg-light">
+                <span class="align-middle">
+                    <h4 class="m-b-0">
+                        My Documents
+                        <div class="btn-group float-right">
+                            <button type="button" class="btn waves-effect waves-light btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-settings"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a id="drpdown-table-refresh" class="dropdown-item" href="javascript:void(0)">Refresh Table</a>
+                                <div class="dropdown-divider"></div>
+                                <a id="drpdown-export-log" class="dropdown-item" href="javascript:void(0)">Export Log</a>
+                            </div>
+                        </div>  
+                    </h4>
+                </span>
             </div>
             <div class="card-body p-b-0">
                 <div class="row">

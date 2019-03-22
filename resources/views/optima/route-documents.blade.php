@@ -771,6 +771,7 @@ Route Documents
     function appendTableRowReceived (item) {
 
         var row = $('<tr>' +
+                        '<td class="text-center"></td>' +
                         '<td class="text-center">' +
                             '<h4><a id="'+item.tracking_code+'" href="javascript:void(0)" class="show-code">'+item.tracking_code+'</a></h4>' +
                         '</td>'+
