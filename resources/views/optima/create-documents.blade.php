@@ -12,27 +12,6 @@ Create new tracker
 <link href="{{ asset('js/jQuery-tagEditor/jquery.tag-editor.css') }}" rel="stylesheet" type="text/css" />
 <!-- <link href="{{ asset('js/node_modules/jquery-tags-input/dist/jquery.tagsinput.min.css') }}" rel="stylesheet" type="text/css" /> -->
 <style type="text/css">
-    /*.bootstrap-tagsinput {
-        width: 100% !important;
-        box-shadow: none;
-        min-height: 38px;
-        border: 1px solid #e9ecef;
-    }
-
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background: #fb9678;
-        color: #fff;
-        border-color: #fb9678;
-    }
-
-    .select2-container--default .select2-selection--single {
-        min-height: 38px;
-        border: 1px solid #e9ecef;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 38px;
-    }*/
     .form-control-line .form-control {
         border-bottom: none;
     }
@@ -74,17 +53,31 @@ Create new tracker
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
-<div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Create New Tracker</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
+<div class="row page-titles p-b-0 p-t-10">
+    <div class="col-md-7 align-self-center">
+        <div class="d-flex align-items-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('optima.my-documents') }}">My Documents</a></li>
-                <li class="breadcrumb-item active">Create New Tracker</li>
+                <li class="breadcrumb-item">
+                    <h5 class="btn waves-effect waves-light btn-light"><a href="{{ route('optima.index') }}">Home</a></h5>
+                </li>
+                <li class="breadcrumb-item">
+                    <h5 class="btn waves-effect waves-light btn-light"><a href="{{ route('optima.my-documents') }}">My Documents</a></h5>
+                </li>
+                <li class="breadcrumb-item active">
+                    <div class="btn-group">
+                        <h5 class="btn waves-effect waves-light btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="0,10">
+                            <a href="#">Create &nbsp;&nbsp;</a></h5>
+                        <div class="dropdown-menu" x-placement="bottom-start">
+                          <a class="dropdown-item" href="{{ route('optima.my-documents.create') }}">Create new tracker</a>
+                        </div>
+                    </div>
+                </li>
             </ol>
+        </div>
+    </div>
+    <div class="col-md-5 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-outline-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create new tracker</a>
         </div>
     </div>
 </div>
@@ -94,7 +87,7 @@ Create new tracker
 
         <div class="card border-dark">
             <div class="card-header bg-dark">
-                <h4 class="m-b-0 text-white">Document Routing Form</h4>
+                <h4 class="m-b-0 text-white">Create Routing Form</h4>
             </div>
             <div class="card-body p-10">
                 <!-- ALERT NOTIF -->
