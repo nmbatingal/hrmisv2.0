@@ -185,14 +185,14 @@ Route Documents
     <!-- END RELEASE MODAL -->
 
     <!-- MODAL TRACKER LOGS CONTENT -->
-    <div id="modalLogs" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
+    <div id="modalLogs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLogs" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-9">
                             <h4 class="modal-title font-bold" id="modalLogsTitle">Log Details</h4>
-                            <h5 id="modalLogsDocuType">aaaa</h5>
+                            <h5 id="modalLogsDocuType" class="m-t-20"></h5>
                         </div>
                         <div class="col-md-3">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -517,8 +517,8 @@ Route Documents
                 data   : {code: tracking_code},
                 success: function(data) {
                     $('#modalBodyLogs').html(data.html);
-                    $('#modalLogs').find('#modalLogsTitle').html(data.title + ' <span class="badge badge-info">' + data.docutype + '</span>');
-                    $('#modalLogs').find('#modalLogsDocuType').html(data.subject);
+                    $('#modalLogs').find('#modalLogsTitle').html(data.title+' <span class="badge badge-info">' + data.docutype + '</span>');
+                    $('#modalLogs').find('#modalLogsDocuType').html('<span class="font-bold">Subject:</span>&nbsp;'+data.subject);
                     $('#modalLogs').modal('show');
                 },
                 error  : function(xhr, err) {
