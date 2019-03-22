@@ -7,7 +7,7 @@
         <div class="user-profile">
             <div class="user-pro-body">
                 <div>
-                        <img id="img-left-sidebar-togglemenu" src="{{ asset('img/blank.png') }}" alt="user-img" class="img-circle img-fluid">
+                    <img src="{{ asset('img/blank.png') }}" alt="user-img" class="img-circle img-fluid dropdown-toggle" data-toggle="dropdown"></a>
                 </div>
                 <div class="dropdown">
                     <a id="left-sidebar-togglemenu" href="javascript:void(0)" class="dropdown-toggle u-dropdown link hide-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->full_name }} <span class="caret"></span></a>

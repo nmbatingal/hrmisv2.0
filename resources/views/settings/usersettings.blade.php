@@ -1,7 +1,7 @@
 @extends('layouts.home.app')
 
 @section('title')
-Profile Setting -
+My Account -
 @endsection
 
 @section('styles')

@@ -129,7 +129,7 @@ class DocumentTrackerController extends Controller
         $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
                                                     ->where('action', "Forward")
                                                     ->latest()->get();
-        $myDocuments = DocumentTracker::with([
+        $myDocuments = DocumentTracker::where('user_id', '=', Auth::user()->id )->with([
                                 'trackLogs' => function($query) {
                                     $query->latest(); },
                                 'documentKeywords'
