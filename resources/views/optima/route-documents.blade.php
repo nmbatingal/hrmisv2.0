@@ -306,10 +306,10 @@ Route Documents
                 <div class="row">
                     <div class="col-md-12">
                         <button id="btnReceive" class="btn waves-effect waves-light btn-primary" data-toggle="tooltip" data-placement="bottom" title="Receive Document (alt + 3)">
-                            <span data-toggle="modal" data-target="#receiveModal">Receive Document</span>
+                            <span data-toggle="modal" data-target="#receiveModal"><i class="mdi mdi-arrow-down-bold-circle"></i> Receive Document</span>
                         </button>
                         <button id="btnRelease" class="btn waves-effect waves-light btn-primary" data-toggle="tooltip" data-placement="bottom" title="Release Document (alt + 4)">
-                            <span data-toggle="modal" data-target="#releaseModal">Release Document</span>
+                            <span data-toggle="modal" data-target="#releaseModal"><i class="mdi mdi-arrow-up-bold-circle"></i> Release Document</span>
                         </button>
 
                         <!-- SEARCH TOGGLE -->

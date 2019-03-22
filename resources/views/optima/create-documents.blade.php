@@ -75,11 +75,6 @@ Create new tracker
             </ol>
         </div>
     </div>
-    <div class="col-md-5 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-outline-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create new tracker</a>
-        </div>
-    </div>
 </div>
 
 <div class="row">
