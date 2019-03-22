@@ -48,7 +48,7 @@ My Documents
     </div>
     <div class="col-md-5 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
-            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
+            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-outline-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
         </div>
     </div>
 </div>
@@ -77,38 +77,46 @@ My Documents
 </div>
 <!-- END ODAL TRACKER LOGS CONTENT -->
 
-<div class="card-group">
+<div class="row">
     <!-- Column -->
-    <div class="card">
-        <div class="card-body text-center p-b-0">
-            <h4 class="text-center">Documents Created</h4>
-        </div>
-        <div class="box b-t text-center p-t-0">
-            <h3 class="font-medium m-b-0 text-success">
-                <i class="icon-docs"></i> <span id="count-created">{{ $documentsCreated->count() }}</span>
-            </h3>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center p-b-0">
+                <h4 class="text-center">Documents Created</h4>
+            </div>
+            <div class="box b-t text-center p-t-0">
+                <h3 class="font-medium text-success">
+                    <i class="icon-docs"></i> <span id="count-created">{{ $documentsCreated->count() }}</span>
+                </h3>
+            </div>
         </div>
     </div>
+
     <!-- Column -->
-    <div class="card">
-        <div class="card-body text-center p-b-0">
-            <h4 class="text-center">Documents Received</h4>
-        </div>
-        <div class="box b-t text-center p-t-0">
-            <h3 class="font-medium m-b-0 text-info">
-                <i class="ti-import"></i> <span id="count-receive">{{ $documentsReceived->count() }}</span>
-            </h3>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center p-b-0">
+                <h4 class="text-center">Documents Received</h4>
+            </div>
+            <div class="box b-t text-center p-t-0">
+                <h3 class="font-medium text-info">
+                    <i class="ti-import"></i> <span id="count-receive">{{ $documentsReceived->count() }}</span>
+                </h3>
+            </div>
         </div>
     </div>
+
     <!-- Column -->
-    <div class="card">
-        <div class="card-body text-center p-b-0">
-            <h4 class="text-center">Documents Released</h4>
-        </div>
-        <div class="box b-t text-center p-t-0">
-            <h3 class="font-medium m-b-0 text-primary">
-                <i class="ti-export"></i> <span id="count-release">{{ $documentsReleased->count() }}</span>
-            </h3>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center p-b-0">
+                <h4 class="text-center">Documents Released</h4>
+            </div>
+            <div class="box b-t text-center p-t-0">
+                <h3 class="font-medium text-primary">
+                    <i class="ti-export"></i> <span id="count-release">{{ $documentsReleased->count() }}</span>
+                </h3>
+            </div>
         </div>
     </div>
 </div>
@@ -117,22 +125,24 @@ My Documents
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header bg-light">
-                <span class="align-middle">
-                    <h4 class="m-b-0">
-                        My Documents
-                        <div class="btn-group float-right">
-                            <button type="button" class="btn waves-effect waves-light btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="card-header bg-dark">
+                <div class="row">
+                    <div class="col-md-7 align-middle">
+                        <h4 class="m-b-0 text-white">
+                            My Documents 
+                        </h4>
+                    </div>
+                    <div class="col-md-5 align-self-center text-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn waves-effect waves-light btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  data-offset="0,10">
                                 <i class="icon-settings"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a id="drpdown-table-refresh" class="dropdown-item" href="javascript:void(0)">Refresh Table</a>
-                                <div class="dropdown-divider"></div>
                                 <a id="drpdown-export-log" class="dropdown-item" href="javascript:void(0)">Export Log</a>
                             </div>
                         </div>  
-                    </h4>
-                </span>
+                    </div>
+                </div>
             </div>
             <div class="card-body p-b-0">
                 <div class="row">
@@ -197,7 +207,7 @@ My Documents
                                     <td>
                                         <h5 class="font-weight-bold">
                                             {{ $document->subject }}
-                                            <br><small>{{ $document->tracking_date }}</small>
+                                            <br><small class="text-muted">{{ $document->tracking_date }}</small>
                                         </h5>
                                         @foreach ( explode(',', $document->keywords) as $keyword ) 
                                             <span class="badge badge-info">{{ $keyword }}</span>&nbsp;
@@ -212,9 +222,9 @@ My Documents
                                     </td>
                                     <td>
                                         @foreach ( $document->trackLogs as $log )
-                                            <h5 class="font-weight-bold">
+                                            <h5 class="font-bold m-b-0">
                                                 {{ $log->action }}
-                                                <br><small>{{ $log->date_action }}</small>
+                                                <br><small class="text-muted">{{ $log->date_action }}</small>
                                             </h5>
                                             @if ( $log->action == "Forward" )
                                                 @if ( !is_null($log->recipients) )

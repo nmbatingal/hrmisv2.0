@@ -44,21 +44,32 @@ Route Documents
 <!-- ============================================================== -->
 <!-- Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
-<div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Route Documents</h4>
-    </div>
-    <div class="col-md-7 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
+<div class="row page-titles p-b-0 p-t-10">
+    <div class="col-md-7 align-self-center">
+        <div class="d-flex align-items-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('optima.index') }}">Home</a></li>
-                <li class="breadcrumb-item active">Route Documents</li>
+                <li class="breadcrumb-item"><h5 class="btn waves-effect waves-light btn-light"><a href="{{ route('optima.index') }}">Home</a></h5></li>
+                <li class="breadcrumb-item active">
+                    <div class="btn-group">
+                        <h5 class="btn waves-effect waves-light btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="0,10">
+                            <a href="#">Route Documents &nbsp;&nbsp;</a></h5>
+                        <div class="dropdown-menu" x-placement="bottom-start">
+                          <a class="dropdown-item" href="{{ route('optima.my-documents.create') }}">Create new tracker</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#receiveModal">Receive Document</a>
+                          <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#releaseModal">Release Document</a>
+                        </div>
+                    </div>
+                </li>
             </ol>
-            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-rounded btn-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
+        </div>
+    </div>
+    <div class="col-md-5 align-self-center text-right">
+        <div class="d-flex justify-content-end align-items-center">
+            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-outline-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Tracker</a>
         </div>
     </div>
 </div>
-
 <!-- MODALS -->
 <div>
     <!-- RECEIVE MODAL -->
@@ -231,39 +242,44 @@ Route Documents
     <!-- END MODAL TRACKER LOGS CONTENT -->
 </div>
 <!-- MODALS -->
-
-<div class="card-group">
+<div class="row">
     <!-- Column -->
-    <div class="card">
-        <div class="card-body text-center p-b-0">
-            <h4 class="text-center">Documents Created</h4>
-        </div>
-        <div class="box b-t text-center p-t-0">
-            <h3 class="font-medium m-b-0 text-success">
-                <i class="icon-docs"></i> <span id="count-created">{{ $documentsCreated->count() }}</span>
-            </h3>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center p-b-0">
+                <h4 class="text-center">Documents Created</h4>
+            </div>
+            <div class="box b-t text-center p-t-0">
+                <h3 class="font-medium text-success">
+                    <i class="icon-docs"></i> <span id="count-created">{{ $documentsCreated->count() }}</span>
+                </h3>
+            </div>
         </div>
     </div>
     <!-- Column -->
-    <div class="card">
-        <div class="card-body text-center p-b-0">
-            <h4 class="text-center">Documents Received</h4>
-        </div>
-        <div class="box b-t text-center p-t-0">
-            <h3 class="font-medium m-b-0 text-info">
-                <i class="ti-import"></i> <span id="count-receive">{{ $documentsReceived->count() }}</span>
-            </h3>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center p-b-0">
+                <h4 class="text-center">Documents Received</h4>
+            </div>
+            <div class="box b-t text-center p-t-0">
+                <h3 class="font-medium text-info">
+                    <i class="ti-import"></i> <span id="count-receive">{{ $documentsReceived->count() }}</span>
+                </h3>
+            </div>
         </div>
     </div>
     <!-- Column -->
-    <div class="card">
-        <div class="card-body text-center p-b-0">
-            <h4 class="text-center">Documents Released</h4>
-        </div>
-        <div class="box b-t text-center p-t-0">
-            <h3 class="font-medium m-b-0 text-primary">
-                <i class="ti-export"></i> <span id="count-release">{{ $documentsReleased->count() }}</span>
-            </h3>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center p-b-0">
+                <h4 class="text-center">Documents Released</h4>
+            </div>
+            <div class="box b-t text-center p-t-0">
+                <h3 class="font-medium text-primary">
+                    <i class="ti-export"></i> <span id="count-release">{{ $documentsReleased->count() }}</span>
+                </h3>
+            </div>
         </div>
     </div>
 </div>
@@ -273,7 +289,7 @@ Route Documents
         <div class="card m-b-0">
             <div class="card-header bg-dark">
                 <h4 class="m-b-0 text-white">
-                    Receive and Release Document
+                    Route Documents
                     <div class="btn-group float-right">
                         <button type="button" class="btn waves-effect waves-light btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-settings"></i>
@@ -342,6 +358,7 @@ Route Documents
                         </thead>
                         <tbody class="table-sm">
                             @forelse( $documentsLog as $log )
+                                @if ( !empty($log->documentCode->userEmployee) )
                                 <tr id="row-{{ $log->id }}">
                                     <td class="text-right"></td>
                                     <td class="text-center">
@@ -358,20 +375,21 @@ Route Documents
                                     </td>
                                     <td>
                                         <h5 class="font-bold m-b-0">
-                                            {{ $log->documentCode->subject }}
+                                            {{ $log->documentCode->subject }} &#9702; <small class="text-info">{{ $log->documentCode->other_document }}</small>
                                         </h5>
-                                        <h5 class="m-b-0"><span class="badge badge-info">{{ $log->documentCode->other_document }}</span></h5>
-                                        <h5 class="m-b-0">{{ $log->userEmployee->full_name }}</h5>
-                                        <small>{{ $log->documentCode->tracking_date }}</small>
+                                        <h5 class="m-b-0">{{ $log->documentCode->userEmployee->full_name }}</h5>
+                                        <small class="text-muted">{{ $log->documentCode->tracking_date }}</small>
                                     </td>
                                     <!-- <td>{{ $log->notes }}</td> -->
                                     <td>
                                         <h5 class="font-bold m-b-0">
                                             {{ $log->action }}
                                         </h5>
-                                        <small>{{ $log->date_action }}</small>
                                         @if ( $log->action == "Receive")
+                                            <span class="m-b-0">{{ $log->userEmployee->full_name }}</span><br>
+                                            <small class="text-muted">{{ $log->date_action }}</small>
                                         @else
+                                        <small class="text-muted">{{ $log->date_action }}</small>
                                         <ul class="p-l-20 m-b-0">
                                             @if ( !is_null( $log->recipients ) )
                                                 @foreach( $log->recipients as $recipient)
@@ -401,6 +419,7 @@ Route Documents
                                         <button type="button" class="btn btn-danger btn-sm btnCancelEvent" data-id="{{ $log->id }}" title="Cancel"><i class="ti-close"></i></button>
                                     </td> -->
                                 </tr>
+                                @endif
                             @empty
                             @endforelse
                         </tbody>

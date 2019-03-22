@@ -171,11 +171,11 @@ class DocumentTrackerController extends Controller
         $documentsReleased   = DocumentTrackingLogs::where('user_id', Auth::user()->id)
                                                     ->where('action', "Forward")
                                                     ->latest()->get();
-        $documentsLog = DocumentTrackingLogs::with('documentCode.documentKeywords')->where('user_id', Auth::user()->id)->latest()->get();
+        $documentsLog = DocumentTrackingLogs::with(['documentCode.documentKeywords', 'documentCode.userEmployee'])->where('user_id', Auth::user()->id)->latest()->get();
         $dataList    = $this->recipientsList();
 
         return view('optima.route-documents', compact('documentsCreated', 'documentsReceived', 'documentsReleased', 'documentsLog', 'dataList'));
-        // return dd($documentsLog);
+        // return $documentsLog;
     }
 
     public function exportRoutedDocuments() 
