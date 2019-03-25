@@ -7,6 +7,10 @@ My Account -
 @section('styles')
 @endsection
 
+@section('toptitle')
+<small class="text-muted">Account</small>
+@endsection
+
 @section('content')
 <!-- ============================================================== -->
 <!-- Over Visitor, Our income , slaes different and  sales prediction -->
@@ -18,7 +22,7 @@ My Account -
         <div class="card">
             <div class="card-body">
                 <div class="row float-right">
-                    <a href="{{ route('user.setting.edit', $user->id) }}" class="text-info" title="Edit"><i class="icon-pencil"></i> Edit Profile</a>
+                    <a href="{{ route('myaccount.edit', $user->id) }}" class="text-info" title="Edit"><i class="icon-pencil"></i> Edit Profile</a>
                 </div>
                 <center class="m-t-30"> 
                     <img src="{{ asset($user->userProfilPic) }}" class="img-circle" width="150" />

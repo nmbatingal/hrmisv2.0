@@ -4,7 +4,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header p-l-20">
-            <a class="navbar-brand" href="{{ route('home') }}">
+            <a class="navbar-brand" href="{{ route('optima.index') }}">
                 <!-- Logo icon -->
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
@@ -96,9 +96,31 @@
                 <!-- ============================================================== -->
                 <!-- mega menu -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-layout-grid2"></i></a>
-                    <div class="dropdown-menu">
-                        
+                <li class="nav-item dropdown m-l-20"> 
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-layout-grid2"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right mailbox p-0">
+                        <ul>
+                            <li>
+                                <div class="message-center">
+                                    <a href="{{ route('home') }}">
+                                        <div class="user-img m-0"> 
+                                            <img src="" alt="home" class="img-fluid">
+                                        </div>
+                                        <div class="mail-contnet align-middle">
+                                            <h5>Home</h5>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('optima.index') }}">
+                                        <div class="user-img m-0"> 
+                                            <img src="{{ asset('img/optima-icon.png') }}" alt="optima" class="img-fluid">
+                                        </div>
+                                        <div class="mail-contnet align-middle">
+                                            <h5>Optima</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </li>
                 <!-- ============================================================== -->
@@ -112,12 +134,10 @@
                     @else
                         <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" width="30" alt="user" class="img-circle"></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="javascript:void(0)" class="dropdown-item"><b>&#64;{{ Auth::user()->username }}</b></a>
-                            <div class="dropdown-divider"></div>
                             <!-- Profile Setting -->
-                            <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
+                            <a href="{{ route('myaccount.index') }}" class="dropdown-item"><i class="ti-settings"></i> My Account</a>
                             <!-- User Activity Log -->
-                            <a href="{{ route('user.setting.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> Activity Log</a>
+                            <a href="{{ route('myaccount.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> My Activity</a>
                             <!-- text-->
                             <div class="dropdown-divider"></div>
                             <!-- text-->

@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
-    <title>@yield('title') MyApp</title>
+    <title>MyApp @yield('title')</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--alerts CSS -->
@@ -18,6 +18,7 @@
     <!-- Custom CSS -->
     <link href="{{ asset('homedist/css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('homedist/css/pages/progressbar-page.css') }}" rel="stylesheet">
+    <link  href="{{ asset('js/node_modules/cropperjs/dist/cropper.css') }}" rel="stylesheet">
     @yield('styles')
     <style>
         .page-titles {
@@ -28,19 +29,19 @@
             background: rgba(0, 0, 0, 0);
         }
 
-        /*.footer {
-            position: absolute;
-        }*/
-
         .right-sidebar {
             top: 67px;
             z-index: 0;
         }
 
         .right-sidebar .rpanel-title{color: #000000;font-size:14px;background:#f8f9fa;margin:0;padding:12px 20px;text-transform:uppercase;font-weight:500;}.right-sidebar .r-panel-body{padding:20px}.right-sidebar .r-panel-body ul{margin:10px 0;padding:0px}.right-sidebar .r-panel-body ul li{list-style:none;padding:5px 0;border:0}.right-sidebar .r-panel-body .daydrop{border:0;background:0 0;padding:0;font-size:12px;font-weight:500;text-transform:uppercase}
+
+        #my-image {
+            max-width: 100%; /* This rule is very important, please do not ignore this! */
+        }
     </style>
 </head>
-<body class="fixed-layout skin-default">
+<body class="skin-default fixed-layout">
     <div id="app">
         <!-- ============================================================== -->
         <!-- Preloader - style you can find in spinners.css -->
@@ -48,19 +49,56 @@
         <div class="preloader">
             <div class="loader">
                 <div class="loader__figure"></div>
-                <p class="loader__label">DOST13</p>
+                <p class="loader__label">MyApp</p>
             </div>
         </div>
         <!-- ============================================================== -->
         <!-- Main wrapper - style you can find in pages.scss -->
         <!-- ============================================================== -->
         <div id="main-wrapper">
+            <!-- RELEASE MODAL -->
+            <div id="changePhoto" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="vcenter">Select Profile Photo</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn-group">
+                                            <label class="btn btn-secondary btn-outline btn-upload" for="inputImage" title="Upload image file">
+                                                <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                                                <span class="docs-tooltip" data-toggle="tooltip" title="Import image">Select a photo from your computer</span>
+                                            </label>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <center>
+                                            <img id="my-image" src="@yield('setDefaultPhoto')" height="200" />
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="setProfilePhoto" class="btn btn-info waves-effect">Set as profile photo</button>
+                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END RELEASE MODAL -->
             <!-- ============================================================== -->
             <!-- Topbar header - style you can find in pages.scss -->
             <!-- ============================================================== -->
             @include('layouts.home.topbar')
             <!-- ============================================================== -->
             <!-- End Topbar header -->
+            <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Page wrapper  -->
@@ -73,11 +111,6 @@
                     @yield('content')
                     <!-- ============================================================== -->
                     <!-- Right sidebar -->
-                    <!-- ============================================================== -->
-                    <!-- .right-sidebar -->
-                    @auth
-                        @include('layouts.home.rightsidebar')
-                    @endauth
                     <!-- ============================================================== -->
                     <!-- End Right sidebar -->
                     <!-- ============================================================== -->
@@ -124,6 +157,26 @@
     <!--Custom JavaScript -->
     <script src="{{ asset('homedist/js/custom.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
+    <script src="{{ asset('js/node_modules/cropperjs/dist/cropper.js') }}"></script>
+    <script src="{{ asset('js/home/cropper.init.js') }}"></script>
+    <script>
+        // var $image            = document.getElementById('my-image'),
+        //     URL               = window.URL || window.webkitURL,
+        //     // originalImageURL  = $image.attr('src'),
+        //     uploadedImageName = 'img/blank.png',
+        //     uploadedImageType = 'image/jpeg',
+        //     uploadedImageURL;
+
+        // var cropper = new Cropper($image, {
+        //     aspectRatio: 1 / 1,
+        //     minContainerWidth: 600,
+        //     minContainerHeight: 400,
+        //     movable: false,
+        //     zoomable: false,
+        //     rotatable: false,
+        //     scalable: false
+        // });
+    </script>
     @yield('scripts')
 </body>
 </html>

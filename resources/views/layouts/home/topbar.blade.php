@@ -1,4 +1,4 @@
-<header class="topbar" style="background: none;">
+<header class="topbar" style="background: #edf1f5;">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
         <!-- ============================================================== -->
         <!-- Logo -->
@@ -7,7 +7,7 @@
             <a class="navbar-brand" href="{{ route('home') }}">
                 <!-- Logo icon -->
                 <b>
-                    <h3 style="color: #000000">DOST Caraga</h3> 
+                    <h3 style="color: #000000">MyApp&nbsp;<small class="text-muted">Account</small></h3> 
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
                     <!-- <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo" />
@@ -87,6 +87,39 @@
                 <!-- End Notification -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
+                <!-- mega menu -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown m-l-20"> 
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #000000"><i class="ti-layout-grid2"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right mailbox p-0">
+                        <ul>
+                            <li>
+                                <div class="message-center">
+                                    <a href="{{ route('home') }}">
+                                        <div class="user-img m-0"> 
+                                            <img src="" alt="home" class="img-fluid">
+                                        </div>
+                                        <div class="mail-contnet align-middle">
+                                            <h5>Home</h5>
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('optima.index') }}">
+                                        <div class="user-img m-0"> 
+                                            <img src="{{ asset('img/optima-icon.png') }}" alt="optima" class="img-fluid">
+                                        </div>
+                                        <div class="mail-contnet align-middle">
+                                            <h5>Optima</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End mega menu -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
                 <!-- User Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown u-pro">
@@ -96,12 +129,10 @@
                     @endguest
                     
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="javascript:void(0)" class="dropdown-item"><b>&#64;{{ Auth::user()->username }}</b></a>
-                        <div class="dropdown-divider"></div>
                         <!-- Profile Setting -->
-                        <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
+                        <a href="{{ route('myaccount.index') }}" class="dropdown-item"><i class="ti-settings"></i> My Account</a>
                         <!-- User Activity Log -->
-                        <a href="{{ route('user.setting.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> Activity Log</a>
+                        <a href="{{ route('myaccount.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> My Activity</a>
                         <!-- text-->
                         <div class="dropdown-divider"></div>
                         <!-- text-->
