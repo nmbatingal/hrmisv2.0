@@ -430,7 +430,7 @@ class DocumentTrackerController extends Controller
         $document                 = new DocumentTracker;
         $document->code           = $code;
         $document->tracking_code  = $tracking_code;
-        $document->tracking_code  = $request->taggedDocument;
+        $document->tagged_doc_id  = $request->taggedDocument;
         $document->user_id        = $userFrom->id;
         $document->doc_type_id    = $request->docType;
         $document->other_document = $request->otherDocument;
