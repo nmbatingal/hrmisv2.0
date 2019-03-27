@@ -82,7 +82,7 @@ Create new tracker
 
         <div class="card border-dark">
             <div class="card-header bg-dark">
-                <h4 class="m-b-0 text-white">Create Routing Form</h4>
+                <h4 class="m-b-0 text-white">Routing Information Form</h4>
             </div>
             <div class="card-body p-10">
                 <!-- ALERT NOTIF -->
@@ -104,12 +104,22 @@ Create new tracker
                         </div>
                     </div>
 
-                    <div class="form-group row m-b-20">
+                    <div class="form-group row m-b-10">
                         <div class="col-md-12 p-0">
                             <textarea class="form-control autosize" name="subject" rows="1" placeholder="Subject" required autofocus></textarea>
                             <!-- <span class="help-block p-l-10 text-muted">
                                 <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
                             </span> -->
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <hr class="m-0">
+                        </div>
+                    </div>
+
+                    <div class="form-group row m-b-20">
+                        <div class="col-md-12 p-10">
+                            <select id="taggedDocument" class="select2 form-control" name="taggedDocument" multiple="">
+                            </select>
                         </div>
                         <div class="col-md-12 p-0">
                             <hr class="m-0">
@@ -171,7 +181,7 @@ Create new tracker
 
                     <div class="form-group row m-b-10">
                         <div class="col-md-12 p-0">
-                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes"></textarea>
+                            <textarea class="form-control autosize" name="note" rows="4" style="background-image: none;" placeholder="Additional notes (optional)"></textarea>
                             <!-- <span class="help-block p-l-10 text-muted">
                                 <small>A block of help text that breaks onto a new line and may extend beyond one line.</small>
                             </span> -->
@@ -225,12 +235,8 @@ Create new tracker
             time: false,
             // format: 'MMMM DD, YYYY'
         });
-
         autosize($('textarea.autosize'));
-
         $('input[name=documentDate]').bootstrapMaterialDatePicker('setDate', moment());
-
-        
 
         $("select[name=docType]").change(function(){
             
@@ -248,8 +254,6 @@ Create new tracker
                 $("input[name=otherDocument]").val($document);
             }
         });
-
-
 
         // sweetalert
         // formCreate.validate({
@@ -302,7 +306,6 @@ Create new tracker
         // });
 
         formCreate.on('submit', function(e) {
-
             e.preventDefault();
             var form = $(this); 
 
@@ -459,6 +462,8 @@ Create new tracker
         // $('input#keywords').tagsinput({ confirmKeys: [186] });
         // $("input#keywords").materialtags();
 
+        var dataList = {!! json_encode($dataList) !!},
+            codeList = {!! json_encode($codeList) !!};
 
         $(".keywords").tagEditor({
             autocomplete: {
@@ -477,7 +482,20 @@ Create new tracker
             allowClear: true
         });
 
-        var dataList = {!! json_encode($dataList) !!};
+        $("#taggedDocument").select2({
+            width: '100%',
+            data: codeList,
+            placeholder: "Tag document code (optional)",
+            maximumSelectionLength: 1,
+            templateSelection: function (data, container) {
+                var $recipient = $(
+                        '<span>'+ data.code +'</span>'
+                    );
+
+                return $recipient;
+            }
+        });
+
 
         $("#recipient").select2({
             width: '100%',

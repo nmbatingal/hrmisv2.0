@@ -60,6 +60,37 @@ class UserAccountsController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storePhoto(Request $request)
+    {
+        if ( $request->has('croppedImage'))
+        {
+            // foreach ($request->croppedImage as $i => $file) {
+                // $doc_id      = $document->id;
+                // $foldercode  = $document->tracking_code;
+                // $code        = $document->code;
+                // $destination = 'upload/documenttracker/'.$foldercode.'/'; 
+                // $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
+                // $filesize    = $file->getClientSize();
+
+                // $docu                = new DocumentTrackerAttachment;
+                // $docu->doctracker_id = $doc_id;
+                // $docu->filename      = $file->getClientOriginalName();
+                // $docu->filepath      = $destination.$filename;
+                // $docu->filesize      = $filesize;
+
+                // $file->move($destination, $filename);
+                // $docu->save();
+            // }
+            return $request->croppedImage->getClientOriginalName();
+        }
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

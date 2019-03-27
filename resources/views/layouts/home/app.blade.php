@@ -58,35 +58,40 @@
         <div id="main-wrapper">
             <!-- RELEASE MODAL -->
             <div id="changePhoto" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="vcenter">Select Profile Photo</h4>
+                        <div class="modal-header p-b-0">
+                            <h4 class="modal-title" id="vcenter">
+                                Select Profile Photo
+                                <br><br>
+                                <div class="btn-group">
+                                    <label class="btn btn-secondary btn-outline btn-upload" for="inputImage" title="Upload image file">
+                                        <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                                        <input type="hidden" id="userId" name="userId" value="{{ $user->id }}">
+                                        <span class="docs-tooltip" data-toggle="tooltip" title="Import image"><i class="fas fa-image"></i>&nbsp;&nbsp;&nbsp;Select a photo from your computer</span>
+                                    </label>
+                                </div>
+                            </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="btn-group">
-                                            <label class="btn btn-secondary btn-outline btn-upload" for="inputImage" title="Upload image file">
-                                                <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="Import image">Select a photo from your computer</span>
-                                            </label>
-                                        </div>
-                                        <hr>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <center>
-                                            <img id="my-image" src="@yield('setDefaultPhoto')" height="200" />
+                                        <center id="imgCanvass">
+                                            <!-- <img id="my-image" src="@yield('setDefaultPhoto')" height="200" /> -->
                                         </center>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="setProfilePhoto" class="btn btn-info waves-effect">Set as profile photo</button>
-                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                            <form id="savePhotoForm" action="{{ route( 'myaccount.store.photo', $user->id ) }}" method="POST" enctype="multipart/form-data" style="display: none;">
+                                @csrf
+                                <input type="text" name="userId" value="{{ $user->id }}">
+                            </form>
+                            <button type="button" id="setProfilePhoto" class="btn btn-info waves-effect" disabled="">Set as profile photo</button>
+                            <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -126,7 +131,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © {{ date("Y") }} DOST Caraga MyApp by <a href="http://caraga.dost.gov.ph/" target="_blank">ICT DOST-Caraga</a>.
+                © {{ date("Y") }} DOST Caraga MyApp by <a href="http://caraga.dost.gov.ph/" target="_blank">DOST Caraga</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

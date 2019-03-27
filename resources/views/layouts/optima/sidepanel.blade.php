@@ -13,7 +13,7 @@
                     <a id="left-sidebar-togglemenu" href="javascript:void(0)" class="dropdown-toggle u-dropdown link hide-menu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->full_name }} <span class="caret"></span></a>
                     <div class="dropdown-menu animated">
                         <!-- Profile Setting -->
-                        <a href="{{ route('myaccount.index') }}" class="dropdown-item" target="_blank"><i class="ti-settings"></i> My Account</a>
+                        <a href="{{ route('home') }}" class="dropdown-item" target="_blank"><i class="ti-settings"></i> My Account</a>
                         <!-- User Activity Log -->
                         <a href="{{ route('myaccount.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> My Activity</a>
                         <!-- text-->

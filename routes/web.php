@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth', 'as' => 'optima.', 'prefix' => '/optima'],
 
 // ACCOUNT 
 Route::group(['middleware' => 'auth', 'as' => 'myaccount.', 'prefix' => '/myaccount'], function() {
+	Route::post('/{id}/save-photo', 'Accounts\UserAccountsController@storePhoto')->name('store.photo');
 	Route::post('/{id}/password', 'Accounts\UserAccountsController@updatePassword')->name('password.update');
 	Route::get('/{id}/log', 'Accounts\UserAccountsController@log')->name('log');
 	Route::resource('/', 'Accounts\UserAccountsController');

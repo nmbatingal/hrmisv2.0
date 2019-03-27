@@ -135,7 +135,7 @@
                         <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" width="30" alt="user" class="img-circle"></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <!-- Profile Setting -->
-                            <a href="{{ route('myaccount.index') }}" class="dropdown-item"><i class="ti-settings"></i> My Account</a>
+                            <a href="{{ route('home') }}" class="dropdown-item"><i class="ti-settings"></i> My Account</a>
                             <!-- User Activity Log -->
                             <a href="{{ route('myaccount.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> My Activity</a>
                             <!-- text-->

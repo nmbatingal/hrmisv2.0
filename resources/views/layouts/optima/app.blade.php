@@ -120,7 +120,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © {{ date("Y") }} DOST Caraga MyApp by <a href="http://caraga.dost.gov.ph/" target="_blank">ICT DOST-Caraga</a>.
+                © {{ date("Y") }} DOST Caraga MyApp by <a href="http://caraga.dost.gov.ph/" target="_blank">DOST Caraga</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

@@ -38,6 +38,7 @@ class DocumentTracker extends Model
     protected $fillable = [
         'code',
         'tracking_code',
+        'tagged_doc_id',
         'user_id',
         'route_mode',
         'doc_type_id',
@@ -49,6 +50,16 @@ class DocumentTracker extends Model
         'isRouteComplete',
         'isDocCancelled',
     ];
+
+    public function parentDocument()
+    {
+        return $this->belongsTo('tagged_doc_id', 'id');
+    }
+
+    public function tagDocuments()
+    {
+        return $this->hasMany('tagged_doc_id', 'id');
+    }
 
     public function userEmployee()
     {
