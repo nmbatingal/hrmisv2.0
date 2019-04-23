@@ -67,27 +67,29 @@ class UserAccountsController extends Controller
      */
     public function storePhoto(Request $request)
     {
-        if ( $request->has('croppedImage'))
-        {
-            // foreach ($request->croppedImage as $i => $file) {
-                // $doc_id      = $document->id;
-                // $foldercode  = $document->tracking_code;
-                // $code        = $document->code;
-                // $destination = 'upload/documenttracker/'.$foldercode.'/'; 
-                // $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
-                // $filesize    = $file->getClientSize();
+        // if ( $request->has('croppedImage'))
+        // {
+        //     // foreach ($request->croppedImage as $i => $file) {
+        //         // $doc_id      = $document->id;
+        //         // $foldercode  = $document->tracking_code;
+        //         // $code        = $document->code;
+        //         // $destination = 'upload/documenttracker/'.$foldercode.'/'; 
+        //         // $filename    = $doc_id .'-TR-'. $code .' '. $file->getClientOriginalName();
+        //         // $filesize    = $file->getClientSize();
 
-                // $docu                = new DocumentTrackerAttachment;
-                // $docu->doctracker_id = $doc_id;
-                // $docu->filename      = $file->getClientOriginalName();
-                // $docu->filepath      = $destination.$filename;
-                // $docu->filesize      = $filesize;
+        //         // $docu                = new DocumentTrackerAttachment;
+        //         // $docu->doctracker_id = $doc_id;
+        //         // $docu->filename      = $file->getClientOriginalName();
+        //         // $docu->filepath      = $destination.$filename;
+        //         // $docu->filesize      = $filesize;
 
-                // $file->move($destination, $filename);
-                // $docu->save();
-            // }
-            return $request->croppedImage->getClientOriginalName();
-        }
+        //         // $file->move($destination, $filename);
+        //         // $docu->save();
+        //     // }
+        //     return $request->croppedImage->getClientOriginalName();
+        // }
+
+        return dd($request);
     }
 
     /**

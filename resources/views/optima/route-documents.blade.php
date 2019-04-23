@@ -64,11 +64,6 @@ Route Documents
             </ol>
         </div>
     </div>
-    <div class="col-md-5 align-self-center text-right">
-        <div class="d-flex justify-content-end align-items-center">
-            <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-outline-primary d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create new tracker</a>
-        </div>
-    </div>
 </div>
 <!-- MODALS -->
 <div>
@@ -242,47 +237,7 @@ Route Documents
     <!-- END MODAL TRACKER LOGS CONTENT -->
 </div>
 <!-- MODALS -->
-<div class="row">
-    <!-- Column -->
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body text-center p-b-0">
-                <h4 class="text-center">Documents Created</h4>
-            </div>
-            <div class="box b-t text-center p-t-0">
-                <h3 class="font-medium text-success">
-                    <i class="icon-docs"></i> <span id="count-created">{{ $documentsCreated->count() }}</span>
-                </h3>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body text-center p-b-0">
-                <h4 class="text-center">Documents Received</h4>
-            </div>
-            <div class="box b-t text-center p-t-0">
-                <h3 class="font-medium text-info">
-                    <i class="ti-import"></i> <span id="count-receive">{{ $documentsReceived->count() }}</span>
-                </h3>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body text-center p-b-0">
-                <h4 class="text-center">Documents Released</h4>
-            </div>
-            <div class="box b-t text-center p-t-0">
-                <h3 class="font-medium text-primary">
-                    <i class="ti-export"></i> <span id="count-release">{{ $documentsReleased->count() }}</span>
-                </h3>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="row">
     <div class="col-md-12">
@@ -312,13 +267,14 @@ Route Documents
                             <span data-toggle="modal" data-target="#releaseModal"><i class="mdi mdi-arrow-up-bold-circle"></i> Release Document</span>
                         </button>
 
+                        <a id="btnCreateNewTracker" href="{{ route('optima.my-documents.create') }}" class="btn btn-outline-primary m-l-20"><i class="fa fa-plus"></i> Create new tracker</a>
                         <!-- SEARCH TOGGLE -->
-                        <a class="get-code float-right" data-toggle="collapse" href="#tt1" aria-expanded="true"><i class="ti-search" title="Get Code" data-toggle="tooltip"></i> Search Tracker</a>
+                        <!-- <a class="get-code float-right" data-toggle="collapse" href="#tt1" aria-expanded="true"><i class="ti-search" title="Get Code" data-toggle="tooltip"></i> Search Tracker</a> -->
                         <!-- END SEARCH TOGGLE -->
                     </div>
                 </div>
                 <div class="collapse m-t-15" id="tt1" aria-expanded="true">
-                    <form class="form-horizontal">
+                    <!-- <form class="form-horizontal">
                         <div class="form-group m-b-0">
                             <div class="input-group p-0">
                                 <input id="searchTracker" type="text" class="form-control" placeholder="Search document tracker">
@@ -328,7 +284,7 @@ Route Documents
                             </div>
                             <small class="form-control-feedback text-muted">&nbsp;</small> 
                         </div>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </div>
@@ -337,18 +293,12 @@ Route Documents
             <div class="card-body p-t-0">
                 <div class="table-responsive">
                     <table id="tableRoutedDocument" class="table table-hover table-bordered table-striped">
-                        <colgroup>
-                            <col width="">
-                            <col width="15%">
-                            <col width="30%">
-                            <col width="15%">
-                            <col width="40%">
-                        </colgroup>
+                        
                         <thead>
                             <tr>
                                 <th></th>
                                 <th>Tracking Code</th>
-                                <th>Subject</th>
+                                <th>Document Info</th>
                                 <!-- <th>Notes</th> -->
                                 <th>Status</th>
                                 <th>Note</th>
@@ -375,7 +325,8 @@ Route Documents
                                     </td>
                                     <td>
                                         <h5 class="font-bold m-b-0">
-                                            {{ $log->documentCode->subject }} &#9702; <small class="text-info">{{ $log->documentCode->other_document }}</small>
+                                            {{ $log->documentCode->subject }} <br>
+                                            <small class="text-info">{{ $log->documentCode->other_document }}</small>
                                         </h5>
                                         <h5 class="m-b-0">{{ $log->documentCode->userEmployee->full_name }}</h5>
                                         <small class="text-muted">{{ $log->documentCode->tracking_date }}</small>
@@ -490,7 +441,7 @@ Route Documents
             fixedHeader: true,
             columnDefs: [
                 {
-                    "targets": [ 5 ],
+                    "targets": [ 4, 5 ],
                     "visible": false,
                     "searchable": true
                 },

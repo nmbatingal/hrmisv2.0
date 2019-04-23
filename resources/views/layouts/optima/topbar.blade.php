@@ -33,8 +33,8 @@
                     </a> 
                 </li>
                 <li class="nav-item">
-                    <form action="{{ route('optima.search') }}" method="GET" class="app-search d-none d-md-block d-lg-block">
-                        <input type="text" class="form-control" name="q" placeholder="Search & enter" value="{{ request('q') }}">
+                    <form action="#" method="GET" class="app-search d-none d-md-block d-lg-block">
+                        <input id="searchTracker" type="text" class="form-control" name="q" placeholder="Search tracker">
                     </form>
                 </li>
             </ul>

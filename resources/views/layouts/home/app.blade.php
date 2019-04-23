@@ -181,6 +181,10 @@
         //     rotatable: false,
         //     scalable: false
         // });
+
+        $('#changePhoto').on('hidden.bs.modal', function () {
+            $('#imgCanvass').html('');
+        })
     </script>
     @yield('scripts')
 </body>

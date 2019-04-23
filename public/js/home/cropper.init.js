@@ -3,8 +3,10 @@ $(function () {
     'use strict';
 
     var URL = window.URL || window.webkitURL,
+        cropper, 
         canvass = document.getElementById('imgCanvass'),
         $image  = document.getElementById('my-image'),
+        $import = $('#setProfilePhoto'),
         options = {
                 aspectRatio: 1 / 1,
                 viewMode: 2,
@@ -64,118 +66,118 @@ $(function () {
         if (files && files.length) {
 
             file = files[0];
+            
+            if (/^image\/\w+$/.test(file.type)) {
 
-            var img    = document.createElement('img');
+                var img         = document.createElement('img');
+
+                uploadedImageName = file.name;
+                uploadedImageType = file.type;
+
+                if (uploadedImageURL) {
+                    URL.revokeObjectURL(uploadedImageURL);
+                }
+
+                uploadedImageURL = URL.createObjectURL(file);
+                // clean result before
+                canvass.innerHTML = '';
+
                 img.id      = 'image';
                 img.width   = 650;
-                img.src     = URL.createObjectURL(file);
+                img.src     = uploadedImageURL;
 
-            // console.log($(img));
+                // canvass.find('#btnImport').css('display', 'none');
+                // append new image
+                canvass.append(img);
+                $import.attr('disabled', false);
+                // $import.disabled(false);
 
-            // clean result before
-            canvass.innerHTML = '';
-            // canvass.find('#btnImport').css('display', 'none');
-            // append new image
-            canvass.append(img);
-            
-            var cropper = new Cropper(img, options);
-            // show save btn and options
+                // console.log($import);
 
-            // console.log(img);
+                cropper = new Cropper(img, options);
+                // show save btn and options
 
-            // if (/^image\/\w+$/.test(file.type)) {
+                // console.log(img);
 
-            //     var img = document.createElement('img');
+                // console.log(cropper);
+                // cropper.destroy().replace(uploadedImageURL, options);
+                // cropper.replace(uploadedImageURL, options);
 
-            //     uploadedImageName = file.name;
-            //     uploadedImageType = file.type;
+                // var replaced = new Cropper
 
-            //     if (uploadedImageURL) {
-            //         URL.revokeObjectURL(uploadedImageURL);
-            //     }
-
-            //     uploadedImageURL = URL.createObjectURL(file);
-
-            //     // console.log(cropper);
-            //     cropper.destroy().replace(uploadedImageURL, options);
-            //     // cropper.replace(uploadedImageURL, options);
-
-            //     // var replaced = new Cropper
-
-            // } else {
-            //     window.alert('Please choose an image file.');
-            // }
+            } else {
+                window.alert('Please choose an image file.');
+            }
         }
     });
 
     $('#setProfilePhoto').on('click', function (e) {
         e.preventDefault();
 
-        var cropped = cropper.cropped,
-            url     = $(this).attr('href');
-
-        
-
+        var cropped = cropper.cropped;
         if ( cropped )
         {
             // console.log(result);
 
-            var formData = $('#savePhotoForm'),
+            var formData = $('#savePhotoForm');
                 // userId   = $('input#userId').val(),
                 // token    = $('input[name=_token]').val(),
-                result   = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+                // result   = cropper.getCroppedCanvas().toDataURL('image/jpeg'),
+                // resultData   = cropper.getCroppedCanvas().toDataURL('image/jpeg');
 
-            formData.append('croppedImage', result);
+            // formData.append('croppedImage', result);
             // formData.append('id', userId);
             // formData.append('_token', token);
 
+            // console.log(resultData);
+            // console.log(resultBlob);
+
             // console.log(url);
 
-            $.ajax({
-                method: "POST",
-                url   : url,
-                data  : formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function () {
-                    console.log('Upload error');
-                }
-            });
+            // $.ajax({
+            //     method: "POST",
+            //     url   : formData.attr('action'),
+            //     data  : formData.serialize(),
+            //     // processData: false,
+            //     // contentType: false,
+            //     success: function (data) {
+            //         console.log(data);
+            //     },
+            //     error: function () {
+            //         console.log('Upload error');
+            //     }
+            // });
 
             // var result = cropper.getCroppedCanvas().toBlob(function (blob) {
 
-            //     var formData = new FormData(),
-            //         userId   = $('input#userId').val(),
-            //         token    = $('input[name=_token]').val();
 
-            //     formData.append('croppedImage', blob);
-            //     formData.append('id', userId);
-            //     formData.append('_token', token);
+            //     // console.log(blob);
+            //     var formData = new FormData();
+            //     //     userId   = $('input#userId').val(),
+            //     //     token    = $('input[name=_token]').val();
 
-            //     // console.log(url);
+            //     formData.append('croppedImage', blob, 'sample.jpeg');
+            //     // formData.append('id', userId);
+            //     // formData.append('_token', token);
 
-            //     $.ajax({
-            //         method: "POST",
-            //         url   : url,
-            //         data  : formData,
-            //         processData: false,
-            //         contentType: false,
-            //         success: function (data) {
-            //             console.log(data);
-            //         },
-            //         error: function () {
-            //             console.log('Upload error');
-            //         }
-            //     });
+            //     // // console.log(url);
+            //     console.log(formData);
+
+            //     // $.ajax({
+            //     //     method: "POST",
+            //     //     url   : url,
+            //     //     data  : formData,
+            //     //     processData: false,
+            //     //     contentType: false,
+            //     //     success: function (data) {
+            //     //         console.log(data);
+            //     //     },
+            //     //     error: function () {
+            //     //         console.log('Upload error');
+            //     //     }
+            //     // });
             // });
-        }
-
-
-
-
+        } 
     });
 
 });
