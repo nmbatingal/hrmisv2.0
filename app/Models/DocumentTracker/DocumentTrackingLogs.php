@@ -17,7 +17,10 @@ class DocumentTrackingLogs extends Model
     protected $connection = "mysql2";
     protected $table = "document_tracking_logs";
     protected $casts = [
-        'recipients' => 'array',
+        'recipients'     => 'array',
+        'forSignature'   => 'boolean',
+        'forCompliance'  => 'boolean',
+        'forInformation' => 'boolean',
     ];
     protected $dates = [ 
         'deleted_at',
@@ -33,18 +36,24 @@ class DocumentTrackingLogs extends Model
         'tracking_code',
         'user_id',
         'action',
+        'forSignature',
+        'forCompliance',
+        'forInformation',
         'route_mode',
         'recipients',
         'notes',
+        'remarks',
     ];
 
     public function documentCode()
     {
+        // return $this->belongsTo(DocumentTracker::class, 'code', 'code')->withTrashed();
         return $this->belongsTo(DocumentTracker::class, 'code', 'code');
     }
 
     public function documentTracker()
     {
+        // return $this->belongsTo(DocumentTracker::class, 'tracking_code', 'tracking_code')->withTrashed();
         return $this->belongsTo(DocumentTracker::class, 'tracking_code', 'tracking_code');
     }
 
@@ -60,7 +69,10 @@ class DocumentTrackingLogs extends Model
 
     public function getDateActionAttribute()
     {
-        return Carbon::parse($this->created_at)->toDayDateTimeString();
+        // return Carbon::parse($this->created_at)->toDayDateTimeString();
+        // return Carbon::parse($this->created_at)->toFormattedDateString() . ' ' . Carbon::parse($this->created_at)->toTimeString();
+        return Carbon::parse($this->created_at)->format('M-d-o h:ia');
+        // return date_format($this->created_at, 'M-d-o h:ia');
     }
 
     public function getDiffForHumansAttribute()

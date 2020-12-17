@@ -58,6 +58,13 @@
                                 {!! session('warning') !!}
                             </div>
                         @endif
+                        
+                        <!-- RESET LINK NOTIFICATION -->
+                        @if (session('status')) 
+                            <div class="alert alert-success">
+                                {!! session('status') !!}
+                            </div>
+                        @endif
 
                         @if ($errors->has('email'))
                             <div class="alert alert-danger">
@@ -98,7 +105,8 @@
                             </div>
                         </div>
                     </form>
-                    <form class="form-horizontal" id="recoverform" action="index.html">
+                    <form class="form-horizontal" id="recoverform" action="{{ route('password.email') }}" method="POST">
+                        @csrf
                         <div class="form-group ">
                             <div class="col-xs-12">
                                 <h3>Recover Password</h3>
@@ -107,7 +115,13 @@
                         </div>
                         <div class="form-group ">
                             <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Email"> </div>
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                                <input class="form-control" type="text" name="email" value="{{ old('email') }}" required placeholder="Email"> 
+                            </div>
                         </div>
                         <div class="form-group text-center m-t-20">
                             <div class="col-xs-12">

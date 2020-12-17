@@ -29,7 +29,7 @@ class CreateDocumentTrackersTable extends Migration
             $table->date('document_date')->nullable();
             $table->string('subject')->nullable();
             $table->text('details')->nullable();
-            $table->string('keywords')->nullable();
+            $table->text('keywords')->nullable();
             $table->boolean('isRouteComplete')->default(false);
             $table->boolean('isDocCancelled')->default(false);
             $table->timestamps();

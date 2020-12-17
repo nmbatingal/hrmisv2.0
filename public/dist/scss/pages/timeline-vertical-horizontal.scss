@@ -6,12 +6,6 @@ File: scss
 */
 
 @import '../variable';
-
-
-
-
-
-
 /*******************
 Timeline page
 ******************/
@@ -165,25 +159,22 @@ Timeline page
 }
 
 
-
-
-
 /*******************
 Horizontal Timeline page
 ******************/
 
 .cd-horizontal-timeline .events a {
     padding-bottom: 6px;
-    color: $themecolor;
+    color: $blue;
 }
 
 .cd-horizontal-timeline .filling-line,
 .cd-horizontal-timeline .events a.selected::after {
-    background: $themecolor;
+    background: $blue;
 }
 
 .cd-horizontal-timeline .events a.selected::after {
-    border-color: $themecolor;
+    border-color: $blue;
 }
 
 .cd-horizontal-timeline .m-t-40 {

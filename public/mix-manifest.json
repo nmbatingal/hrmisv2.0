@@ -1,4 +1,4 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/mdc.chips.min.css": "/css/mdc.chips.min.css",
+    "/js/mdc.chips.min.js": "/js/mdc.chips.min.js"
 }

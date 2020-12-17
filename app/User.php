@@ -4,7 +4,10 @@ namespace App;
 
 use Auth;
 use App\Office;
+use Carbon\Carbon;
 use App\VerifyUser;
+use App\Models\Settings\UserGroups;
+use App\Notifications\MailResetPasswordNotification;
 use App\Models\MoraleSurvey\MorssSurvey;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -64,14 +67,64 @@ class User extends Authenticatable
         return $this->belongsTo(VerifyUser::class, 'user_id', 'id');
     }
 
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MailResetPasswordNotification($token));
+    }
+
+    // USER FIELDS MUTATOR
+    public function setFirstnameAttribute($value)
+    {
+        $this->attributes['firstname'] = ucwords($value);
+    }
+
+    public function setLastnameAttribute($value)
+    {
+        $this->attributes['lastname'] = ucwords($value);
+    }
+
+    public function setMiddlenameAttribute($value)
+    {
+        $this->attributes['middlename'] = ucwords($value);
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->firstname} {$this->lastname}";
     }
 
+    public function getUserProfilPicAttribute()
+    {
+        $img = $this->user_image;
+
+        if ( !$img ) {
+
+            return "img/blank.png";
+        } else {
+
+            return $img;
+        }
+    }
+
+    public function getDiffTimeAttribute()
+    {
+        return Carbon::parse($this->updated_at)->diffForHumans();
+    }
+
     public function office()
     {
         return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(UserGroups::class, 'user_id', 'id');
     }
 
     public function scopeNotSelf($query)

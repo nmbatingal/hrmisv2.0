@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use DB;
+use PDO;
+use PDOException;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class MysqlDatabase extends Command
 {
@@ -12,7 +14,7 @@ class MysqlDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'mysql:createdb {name?}';
+    protected $signature = 'make:database {name?}';
 
     /**
      * The console command description.
@@ -38,16 +40,37 @@ class MysqlDatabase extends Command
      */
     public function handle()
     {
-        $schemaName = $this->argument('name') ?: config("database.connections.mysql.database");
-        $charset = config("database.connections.mysql.charset",'utf8mb4');
+        $schemaName = $this->argument('name');
+		$username = config("database.connections.mysql.username",'');
+		$password = config("database.connections.mysql.password",'');
+		$charset = config("database.connections.mysql.charset",'utf8mb4');
         $collation = config("database.connections.mysql.collation",'utf8mb4_unicode_ci');
+		
+		try {
+            $pdo = $this->getPDOConnection(env('DB_HOST'), env('DB_PORT'), $username, $password);
 
-        // config(["database.connections.mysql.database" => null]);
+            $pdo->exec(sprintf(
+                'CREATE DATABASE IF NOT EXISTS %s CHARACTER SET %s COLLATE %s;',
+                $schemaName,
+                $charset,
+                $collation
+            ));
 
-        $query = "CREATE DATABASE IF NOT EXISTS $schemaName CHARACTER SET $charset COLLATE $collation;";
-
-        DB::statement($query);
-
-        // config(["database.connections.mysql.database" => $schemaName]);
+            $this->info(sprintf('Successfully created %s database', $schemaName));
+        } catch (PDOException $exception) {
+            $this->error(sprintf('Failed to create %s database, %s', $schemaName, $exception->getMessage()));
+        }
+    }
+	
+	/**
+     * @param  string $host
+     * @param  integer $port
+     * @param  string $username
+     * @param  string $password
+     * @return PDO
+     */
+    private function getPDOConnection($host, $port, $username, $password)
+    {
+        return new PDO(sprintf('mysql:host=%s;port=%d;', $host, $port), $username, $password);
     }
 }

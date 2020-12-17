@@ -8,6 +8,7 @@ use App\User;
 use App\Office;
 use Carbon\Carbon;
 use App\Models\DocumentTracker\DocumentTypes;
+use App\Models\DocumentTracker\DocumentKeyword;
 use App\Models\DocumentTracker\DocumentTrackingLogs;
 use App\Models\DocumentTracker\DocumentTrackerAttachment;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +22,6 @@ class DocumentTracker extends Model
     protected $connection = "mysql2";
     protected $table = "document_trackers";
     protected $casts = [
-        'keywords'        => 'array',
         'isRouteComplete' => 'boolean',
         'isDocCancelled'  => 'boolean',
     ];
@@ -38,6 +38,7 @@ class DocumentTracker extends Model
     protected $fillable = [
         'code',
         'tracking_code',
+        'tagged_doc_id',
         'user_id',
         'route_mode',
         'doc_type_id',
@@ -49,6 +50,16 @@ class DocumentTracker extends Model
         'isRouteComplete',
         'isDocCancelled',
     ];
+
+    public function parentDocument()
+    {
+        return $this->belongsTo('tagged_doc_id', 'id');
+    }
+
+    public function tagDocuments()
+    {
+        return $this->hasMany('tagged_doc_id', 'id');
+    }
 
     public function userEmployee()
     {
@@ -68,6 +79,11 @@ class DocumentTracker extends Model
     public function trackLogs()
     {
         return $this->hasMany(DocumentTrackingLogs::class, 'tracking_code', 'tracking_code');
+    }
+
+    public function documentKeywords()
+    {
+        return $this->hasMany(DocumentKeyword::class, 'document_id', 'id');
     }
 
     public function scopeLastTracked($query)
@@ -102,6 +118,16 @@ class DocumentTracker extends Model
                             });
     }
 
+    /**
+     * Explode keyword attributes to array.
+     *  
+     **/
+    public function getKeywordListAttribute()
+    {   
+        $keywords = explode(",", $this->keywords);
+        return $keywords;
+    }
+
     public function getDateOfDocumentAttribute()
     {
         return Carbon::parse($this->document_date)->format('M-d-Y');
@@ -109,7 +135,8 @@ class DocumentTracker extends Model
 
     public function getTrackingDateAttribute()
     {
-        return Carbon::parse($this->created_at)->toDayDateTimeString();
+        // return Carbon::parse($this->created_at)->toDayDateTimeString();
+        return Carbon::parse($this->created_at)->format('M-d-o h:ia');
     }
 
     public function getBarcodeLogoAttribute()

@@ -23,30 +23,60 @@
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav p-r-20 m-r-40">
                 <li class="d-none d-md-block d-lg-block">
-                    <a href="javascript:void(0)" class="p-l-20">
+                    <a href="{{ route('home') }}" class="p-l-20">
                         <!--This is logo text-->
                         <!-- <img src="{{ asset('assets/images/logo-light-text.png') }}" alt="home" class="light-logo" alt="home" /> -->
-                        <span class="text-white p-0 m-0">MyApplication</span>
+                        <h3 class="text-white p-l-20 m-0">DOST Caraga</h3>
                     </a>
                 </li>
             </ul>
+            <div class="navbar-nav mr-auto">
+                <!-- <form class="form-horizontal">
+                    <input type="text" class="form-control" style="width: 500px;" placeholder="Search & enter">
+                </form> -->
+            </div>
             <!-- ============================================================== -->
             <!-- User profile and search -->
             <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
                 <!-- ============================================================== -->
-                <!-- Comment -->
+                <!-- Message -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="ti-email"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Messages"> <i class="ti-email"></i>
+                        <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox">
                         <ul>
                             <li>
-                                <div class="drop-title">Notifications</div>
+                                <div class="drop-title">Messages <span class="badge badge-info">0</span></div>
+                            </li>
+                            <li>
+                                <div class="message-center">
+                                </div>
+                            </li>
+                            <li>
+                                <a class="nav-link text-center link" href="javascript:void(0);"> <strong>Check all messages</strong> <i class="fa fa-angle-right"></i> </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Message -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Notification -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications"> <i class="ti-bell"></i>
+                        <!-- <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> -->
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mailbox">
+                        <ul>
+                            <li>
+                                <div class="drop-title">Notifications <span class="badge badge-info">0</span></div>
                             </li>
                             <li>
                                 <div class="message-center">
@@ -59,44 +89,28 @@
                     </div>
                 </li>
                 <!-- ============================================================== -->
-                <!-- End Comment -->
+                <!-- End Notification -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
-                <!-- Messages -->
-                <!-- ============================================================== -->
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon-note"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                    </a>
-                    <div class="dropdown-menu mailbox dropdown-menu-right" aria-labelledby="2">
-                        <ul>
-                            <li>
-                                <div class="drop-title">You have 0 messages</div>
-                            </li>
-                            <li>
-                                <div class="message-center">
-                                    
-                                </div>
-                            </li>
-                            <li>
-                                <a class="nav-link text-center link" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> -->
-                <!-- ============================================================== -->
-                <!-- End Messages -->
-                <!-- ============================================================== -->
+                @yield('navbutton')
                 <!-- ============================================================== -->
                 <!-- User Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown u-pro">
                     @guest
                     @else
-                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" alt="user" class=""> <span class="hidden-md-down">{{ Auth::user()->firstname }} &nbsp;<i class="fa fa-angle-down"></i></span> </a>
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('img/blank.png') }}" alt="user" class=""> </a>
                     @endguest
                     
                     <div class="dropdown-menu dropdown-menu-right">
+                        <a href="javascript:void(0)" class="dropdown-item"><b>&#64;{{ Auth::user()->username }}</b></a>
+                        <div class="dropdown-divider"></div>
+                        <!-- Profile Setting -->
+                        <a href="{{ route('user.setting.index') }}" class="dropdown-item"><i class="ti-settings"></i> Profile Setting</a>
+                        <!-- User Activity Log -->
+                        <a href="{{ route('user.setting.log', Auth::user()->id) }}" class="dropdown-item"><i class="ti-list"></i> Activity Log</a>
+                        <!-- text-->
+                        <div class="dropdown-divider"></div>
                         <!-- text-->
                         <a href="{{ route('logout') }}" class="dropdown-item text-danger" 
                             onclick="event.preventDefault();
@@ -111,7 +125,15 @@
                 <!-- ============================================================== -->
                 <!-- End User Profile -->
                 <!-- ============================================================== -->
-                <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)"><i class="ti-arrow-right ti-arrow-left"></i></a></li>
+                <!-- ============================================================== -->
+                <!-- Chat Bubble -->
+                <!-- ============================================================== -->
+                <li class="nav-item right-side-toggle"> 
+                    <a class="nav-link  waves-effect waves-light" href="javascript:void(0)" title="More options"><i class="ti-arrow-right ti-arrow-left"></i></a>
+                </li>
+                <!-- ============================================================== -->
+                <!-- End Chat Bubble -->
+                <!-- ============================================================== -->
             </ul>
         </div>
     </nav>
